@@ -1,0 +1,225 @@
+package srparasites_traps.features.sentry_turret;
+
+import com.dhanantry.scapeandrunparasites.client.model.entity.deterrent.ModelUnvo;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
+
+public class SentryTurretModel extends ModelUnvo {
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        /* Animation code copied from SRP tweaked to make it work with a Entity that does not inherit from EntityParasiteBase */
+
+        SentryTurretEntity sentryTurret = (SentryTurretEntity) entityIn;
+
+        // Idle
+        this.tacleJoint1.rotateAngleX = 0.0F;
+        this.tacleJoint1.rotateAngleY = 0.0F;
+        this.tacleJoint2.rotateAngleX = 0.0F;
+        this.tacleJoint2.rotateAngleY = 0.0F;
+        this.tacleJoint3.rotateAngleX = 0.0F;
+        this.tacleJoint3.rotateAngleY = 0.0F;
+        this.tacleJoint4.rotateAngleX = 0.0F;
+        this.tacleJoint4.rotateAngleY = 0.0F;
+        this.tacleJoint5.rotateAngleX = 0.0F;
+        this.tacleJoint5.rotateAngleY = 0.0F;
+        this.tacleJoint6.rotateAngleX = 0.0F;
+        this.tacleJoint6.rotateAngleY = 0.0F;
+        this.tacleJoint7.rotateAngleX = 0.0F;
+        this.tacleJoint7.rotateAngleY = 0.0F;
+        this.tacleJoint9.rotateAngleX = 0.0F;
+        this.tacleJoint9.rotateAngleY = 0.0F;
+        this.tacleJoint10.rotateAngleX = 0.0F;
+        this.tacleJoint10.rotateAngleY = 0.0F;
+        this.jointULT.rotateAngleY = 0.0F;
+        this.jointULT1.rotateAngleY = 0.0F;
+        this.jointULT2.rotateAngleY = 0.0F;
+        this.jointULT.rotateAngleX = 0.0F;
+        this.jointULT1.rotateAngleX = 0.0F;
+        this.jointULT2.rotateAngleX = 0.0F;
+        this.jointDLT.rotateAngleY = 0.0F;
+        this.jointDLT1.rotateAngleY = 0.0F;
+        this.jointDLT2.rotateAngleY = 0.0F;
+        this.jointDLT.rotateAngleX = 0.0F;
+        this.jointDLT1.rotateAngleX = 0.0F;
+        this.jointDLT2.rotateAngleX = 0.0F;
+        this.jointURT.rotateAngleY = 0.0F;
+        this.jointURT1.rotateAngleY = 0.0F;
+        this.jointURT2.rotateAngleY = 0.0F;
+        this.jointURT.rotateAngleX = 0.0F;
+        this.jointURT1.rotateAngleX = 0.0F;
+        this.jointURT2.rotateAngleX = 0.0F;
+        this.jointDRT.rotateAngleY = 0.0F;
+        this.jointDRT1.rotateAngleY = 0.0F;
+        this.jointDRT2.rotateAngleY = 0.0F;
+        this.jointDRT.rotateAngleX = 0.0F;
+        this.jointDRT1.rotateAngleX = 0.0F;
+        this.jointDRT2.rotateAngleX = 0.0F;
+        this.jointMRT.rotateAngleY = 0.0F;
+        this.jointMRT1.rotateAngleY = 0.0F;
+        this.jointMRT2.rotateAngleY = 0.0F;
+        this.jointMRT.rotateAngleX = 0.0F;
+        this.jointMRT1.rotateAngleX = 0.0F;
+        this.jointMRT2.rotateAngleX = 0.0F;
+        this.jointMLT.rotateAngleY = 0.0F;
+        this.jointMLT1.rotateAngleY = 0.0F;
+        this.jointMLT2.rotateAngleY = 0.0F;
+        this.jointMLT.rotateAngleX = 0.0F;
+        this.jointMLT1.rotateAngleX = 0.0F;
+        this.jointMLT2.rotateAngleX = 0.0F;
+        this.jointULM.rotateAngleX = 0.0F;
+        this.jointURM.rotateAngleX = 0.0F;
+        this.jointDLM.rotateAngleX = 0.0F;
+        this.jointDRM.rotateAngleX = 0.0F;
+        this.jointUM.rotateAngleX = 0.0F;
+        this.jointDM.rotateAngleX = 0.0F;
+        this.jointLM.rotateAngleY = 0.0F;
+        this.jointRM.rotateAngleY = 0.0F;
+        this.jointH.rotateAngleX = headPitch * 0.016F;
+        this.jointH.rotateAngleY = netHeadYaw * -0.016F;
+
+        // Idle
+        if (!sentryTurret.isAttacking()) {
+            float f1 = 0.3F * MathHelper.sin(ageInTicks * 0.051688F) * 0.011F;
+            float f2 = -0.6F * MathHelper.sin(ageInTicks * 0.13515F) * 0.011F;
+            this.tacleJoint1.rotateAngleX = f1;
+            this.tacleJoint1.rotateAngleY = f2;
+            this.tacleJoint2.rotateAngleX = f1;
+            this.tacleJoint2.rotateAngleY = f2;
+            this.tacleJoint3.rotateAngleX = f1;
+            this.tacleJoint3.rotateAngleY = f2;
+            this.tacleJoint4.rotateAngleX = f1;
+            this.tacleJoint4.rotateAngleY = f2;
+            this.tacleJoint5.rotateAngleX = f1;
+            this.tacleJoint5.rotateAngleY = f2;
+            this.tacleJoint6.rotateAngleX = f1;
+            this.tacleJoint6.rotateAngleY = f2;
+            this.tacleJoint7.rotateAngleX = f1;
+            this.tacleJoint7.rotateAngleY = f2;
+            this.tacleJoint9.rotateAngleX = f1;
+            this.tacleJoint9.rotateAngleY = f2;
+            this.tacleJoint10.rotateAngleX = f1;
+            this.tacleJoint10.rotateAngleY = f2;
+            float f11 = 0.3F * MathHelper.sin(ageInTicks * 0.15F) * 0.1F;
+            float f22 = 0.6F * MathHelper.sin(ageInTicks * 0.07F) * 0.2F;
+            float f33 = 0.6F * MathHelper.sin(ageInTicks * 0.1F) * 0.1F;
+            this.jointULT.rotateAngleY = -1.0F * f11;
+            this.jointULT1.rotateAngleY = -1.0F * f11;
+            this.jointULT2.rotateAngleY = -1.0F * f11;
+            this.jointULT.rotateAngleX = 0.5F + f33;
+            this.jointULT1.rotateAngleX = 0.3F + f33;
+            this.jointULT2.rotateAngleX = 0.1F + f33;
+            this.jointURT.rotateAngleY = f11;
+            this.jointURT1.rotateAngleY = f11;
+            this.jointURT2.rotateAngleY = f11;
+            this.jointURT.rotateAngleX = 0.5F + f33;
+            this.jointURT1.rotateAngleX = 0.3F + f33;
+            this.jointURT2.rotateAngleX = 0.1F + f33;
+            this.jointMLT.rotateAngleY = f11;
+            this.jointMLT1.rotateAngleY = f11;
+            this.jointMLT2.rotateAngleY = f11;
+            this.jointMLT.rotateAngleX = 0.5F + -1.0F * f33;
+            this.jointMLT1.rotateAngleX = 0.3F + -1.0F * f33;
+            this.jointMLT2.rotateAngleX = 0.1F + -1.0F * f33;
+            this.jointMRT.rotateAngleY = f11;
+            this.jointMRT1.rotateAngleY = f11;
+            this.jointMRT2.rotateAngleY = f11;
+            this.jointMRT.rotateAngleX = 0.5F + -1.0F * f33;
+            this.jointMRT1.rotateAngleX = 0.3F + -1.0F * f33;
+            this.jointMRT2.rotateAngleX = 0.1F + -1.0F * f33;
+            this.jointDLT.rotateAngleY = -1.0F * f11;
+            this.jointDLT1.rotateAngleY = -1.0F * f11;
+            this.jointDLT2.rotateAngleY = -1.0F * f11;
+            this.jointDLT.rotateAngleX = 0.5F + f33;
+            this.jointDLT1.rotateAngleX = 0.3F + f33;
+            this.jointDLT2.rotateAngleX = 0.1F + f33;
+            this.jointDRT.rotateAngleY = -1.0F * f11;
+            this.jointDRT1.rotateAngleY = -1.0F * f11;
+            this.jointDRT2.rotateAngleY = -1.0F * f11;
+            this.jointDRT.rotateAngleX = 0.5F + f33;
+            this.jointDRT1.rotateAngleX = 0.3F + f33;
+            this.jointDRT2.rotateAngleX = 0.1F + f33;
+            this.jointULM.rotateAngleX = -1.0F * f22;
+            this.jointURM.rotateAngleX = -1.0F * f22;
+            this.jointDLM.rotateAngleX = f22;
+            this.jointDRM.rotateAngleX = f22;
+            this.jointUM.rotateAngleX = 0.5F + f11;
+            this.jointDM.rotateAngleX = -0.5F + f11;
+            this.jointLM.rotateAngleY = -0.5F + f11;
+            this.jointRM.rotateAngleY = 0.5F + f11;
+        } else {
+            // Attacking
+            float f1 = 0.3F * MathHelper.sin(ageInTicks * 0.021688F) * 0.006F;
+            float f2 = -0.6F * MathHelper.sin(ageInTicks * 0.083515F) * 0.006F;
+            this.tacleJoint1.rotateAngleX = f1;
+            this.tacleJoint1.rotateAngleY = f2;
+            this.tacleJoint2.rotateAngleX = f1;
+            this.tacleJoint2.rotateAngleY = f2;
+            this.tacleJoint3.rotateAngleX = f1;
+            this.tacleJoint3.rotateAngleY = f2;
+            this.tacleJoint4.rotateAngleX = f1;
+            this.tacleJoint4.rotateAngleY = f2;
+            this.tacleJoint5.rotateAngleX = f1;
+            this.tacleJoint5.rotateAngleY = f2;
+            this.tacleJoint6.rotateAngleX = f1;
+            this.tacleJoint6.rotateAngleY = f2;
+            this.tacleJoint7.rotateAngleX = f1;
+            this.tacleJoint7.rotateAngleY = f2;
+            this.tacleJoint9.rotateAngleX = f1;
+            this.tacleJoint9.rotateAngleY = f2;
+            this.tacleJoint10.rotateAngleX = f1;
+            this.tacleJoint10.rotateAngleY = f2;
+            float f11 = 0.3F * MathHelper.sin(ageInTicks * 0.15F) * 0.05F;
+            float f22 = 0.6F * MathHelper.sin(ageInTicks * 0.07F) * 0.1F;
+            float f33 = 0.6F * MathHelper.sin(ageInTicks * 0.1F) * 0.05F;
+            this.jointULT.rotateAngleY = -1.0F * f11;
+            this.jointULT1.rotateAngleY = -1.0F * f11;
+            this.jointULT2.rotateAngleY = -1.0F * f11;
+            this.jointULT.rotateAngleX = 0.0F + f33;
+            this.jointULT1.rotateAngleX = 0.0F + f33;
+            this.jointULT2.rotateAngleX = 0.0F + f33;
+            this.jointURT.rotateAngleY = f11;
+            this.jointURT1.rotateAngleY = f11;
+            this.jointURT2.rotateAngleY = f11;
+            this.jointURT.rotateAngleX = 0.0F + f33;
+            this.jointURT1.rotateAngleX = 0.0F + f33;
+            this.jointURT2.rotateAngleX = 0.0F + f33;
+            this.jointMLT.rotateAngleY = f11;
+            this.jointMLT1.rotateAngleY = f11;
+            this.jointMLT2.rotateAngleY = f11;
+            this.jointMLT.rotateAngleX = 0.0F + -1.0F * f33;
+            this.jointMLT1.rotateAngleX = 0.0F + -1.0F * f33;
+            this.jointMLT2.rotateAngleX = 0.0F + -1.0F * f33;
+            this.jointMRT.rotateAngleY = f11;
+            this.jointMRT1.rotateAngleY = f11;
+            this.jointMRT2.rotateAngleY = f11;
+            this.jointMRT.rotateAngleX = 0.0F + -1.0F * f33;
+            this.jointMRT1.rotateAngleX = 0.0F + -1.0F * f33;
+            this.jointMRT2.rotateAngleX = 0.0F + -1.0F * f33;
+            this.jointDLT.rotateAngleY = -1.0F * f11;
+            this.jointDLT1.rotateAngleY = -1.0F * f11;
+            this.jointDLT2.rotateAngleY = -1.0F * f11;
+            this.jointDLT.rotateAngleX = 0.0F + f33;
+            this.jointDLT1.rotateAngleX = 0.0F + f33;
+            this.jointDLT2.rotateAngleX = 0.0F + f33;
+            this.jointDRT.rotateAngleY = -1.0F * f11;
+            this.jointDRT1.rotateAngleY = -1.0F * f11;
+            this.jointDRT2.rotateAngleY = -1.0F * f11;
+            this.jointDRT.rotateAngleX = 0.0F + f33;
+            this.jointDRT1.rotateAngleX = 0.0F + f33;
+            this.jointDRT2.rotateAngleX = 0.0F + f33;
+            this.jointULM.rotateAngleX = -1.0F * f22;
+            this.jointURM.rotateAngleX = -1.0F * f22;
+            this.jointDLM.rotateAngleX = f22;
+            this.jointDRM.rotateAngleX = f22;
+            this.jointUM.rotateAngleX = -0.5F + f11;
+            this.jointDM.rotateAngleX = 0.5F + f11;
+            this.jointLM.rotateAngleY = 0.5F + f11;
+            this.jointRM.rotateAngleY = -0.5F + f11;
+        }
+    }
+
+    @Override
+    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    }
+}
