@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret;
+package srparasites_traps.features.sentry_turret.turret;
 
 import com.dhanantry.scapeandrunparasites.client.model.entity.deterrent.ModelUnvo;
 import net.minecraft.entity.Entity;

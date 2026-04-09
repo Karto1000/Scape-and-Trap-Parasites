@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret;
+package srparasites_traps.features.sentry_turret.turret;
 
 import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +17,11 @@ public class SentryTurretAI extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        super.startExecuting();
+        int elapsedTicks = (int) (this.world.getTotalWorldTime() - this.sentryTurret.ticksWhenTargetLost);
+        if (elapsedTicks <= this.sentryTurret.currentAttackCooldown)
+            this.sentryTurret.currentAttackCooldown -= elapsedTicks;
+        else this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
+        this.sentryTurret.ticksWhenTargetLost = 0;
     }
 
     @Override
@@ -31,19 +35,33 @@ public class SentryTurretAI extends EntityAIBase {
     }
 
     @Override
+    public void resetTask() {
+        this.sentryTurret.ticksWhenTargetLost = world.getTotalWorldTime();
+    }
+
+    @Override
     public void updateTask() {
         if (this.sentryTurret.getAttackTarget() == null) return;
 
         EntityLivingBase target = this.sentryTurret.getAttackTarget();
         this.sentryTurret.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
 
-        if (this.sentryTurret.attackCooldown > 0) {
-            this.sentryTurret.attackCooldown--;
+        System.out.println(this.sentryTurret.currentAttackCooldown);
+        if (this.sentryTurret.currentAttackCooldown > 0) {
+            this.sentryTurret.currentAttackCooldown--;
+
+            if (this.sentryTurret.currentAttackCooldown == 10) {
+                this.sentryTurret.playSound(SRPSounds.UNVO_SHOOTING, 2.0F, 1.0F);
+            }
+
             return;
         }
 
+        System.out.println("Shoot");
         Vec3d shootPosition = this.sentryTurret.getPositionVector().add(0, this.sentryTurret.getEyeHeight(), 0);
-        Vec3d hitPosition = target.getPositionVector().add(new Vec3d(0, target.width / 2, 0));
+        Vec3d hitPosition = target.getPositionVector()
+                .add(new Vec3d(0, target.width / 2, 0))
+                .add(new Vec3d(target.motionX, target.motionY, target.motionZ).scale(2));
 
         Vec3d direction = hitPosition.subtract(shootPosition).normalize();
         SentryTurretSpineball projectile = new SentryTurretSpineball(this.world, this.sentryTurret);
@@ -52,6 +70,6 @@ public class SentryTurretAI extends EntityAIBase {
         world.spawnEntity(projectile);
         this.sentryTurret.playSound(SRPSounds.EMANA_SHOOTING, 2.0F, 1.0F);
 
-        this.sentryTurret.attackCooldown = this.sentryTurret.attackDelay;
+        this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
     }
 }

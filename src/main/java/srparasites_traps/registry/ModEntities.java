@@ -4,8 +4,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.features.sentry_turret.SentryTurretEntity;
-import srparasites_traps.features.sentry_turret.SentryTurretSpineball;
+import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
+import srparasites_traps.features.sentry_turret.turret.SentryTurretSpineball;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ public class ModEntities {
             .id(new ResourceLocation(SRParasitesTraps.MOD_ID, "sentry_turret"), 1)
             .name("sentry_turret")
             .tracker(64, 1, true)
-            .egg(0, 0xFFFFFF)
             .build();
     public static EntityEntry SENTRY_TURRET_SPINEBALL_ENTITY = EntityEntryBuilder.create()
             .entity(SentryTurretSpineball.class)

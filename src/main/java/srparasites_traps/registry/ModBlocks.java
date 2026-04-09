@@ -2,7 +2,7 @@ package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.features.sentry_turret.SentryTurretBase;
+import srparasites_traps.features.sentry_turret.base.SentryTurretBase;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

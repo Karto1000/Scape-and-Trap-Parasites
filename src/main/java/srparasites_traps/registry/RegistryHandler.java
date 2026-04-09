@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class RegistryHandler {
 
     public static void init() {
+        ModTileEntities.registerTileEntities();
     }
 
     @SubscribeEvent

@@ -3,9 +3,9 @@ package srparasites_traps.proxy;
 import com.dhanantry.scapeandrunparasites.client.SRPProjectile;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import srparasites_traps.features.sentry_turret.SentryTurretEntity;
-import srparasites_traps.features.sentry_turret.SentryTurretRenderer;
-import srparasites_traps.features.sentry_turret.SentryTurretSpineball;
+import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
+import srparasites_traps.features.sentry_turret.turret.SentryTurretRenderer;
+import srparasites_traps.features.sentry_turret.turret.SentryTurretSpineball;
 import srparasites_traps.util.Constants;
 
 public class ClientProxy extends CommonProxy {

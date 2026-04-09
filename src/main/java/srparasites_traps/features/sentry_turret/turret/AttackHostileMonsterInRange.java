@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret;
+package srparasites_traps.features.sentry_turret.turret;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +24,7 @@ public class AttackHostileMonsterInRange extends EntityAIBase {
 
     @Override
     public void startExecuting() {
+        System.out.println("Starting attacking");
         List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class,
                 this.entity.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
 
@@ -38,8 +39,7 @@ public class AttackHostileMonsterInRange extends EntityAIBase {
     @Override
     public boolean shouldContinueExecuting() {
         EntityLivingBase target = this.entity.getAttackTarget();
-        if (target == null || !target.isEntityAlive()) return false;
-        return !(this.entity.getDistanceSq(target) > 256.0D);
+        return target != null && target.isEntityAlive();
     }
 
 

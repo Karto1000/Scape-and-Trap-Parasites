@@ -1,5 +1,7 @@
-package srparasites_traps.features.sentry_turret;
+package srparasites_traps.features.sentry_turret.turret;
 
+import com.dhanantry.scapeandrunparasites.entity.EntityBody;
+import com.dhanantry.scapeandrunparasites.entity.EntityHitbox;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -27,6 +29,11 @@ public class SentryTurretSpineball extends EntityFireball {
     }
 
     @Override
+    protected float getMotionFactor() {
+        return 1;
+    }
+
+    @Override
     protected EnumParticleTypes getParticleType() {
         return EnumParticleTypes.SLIME;
     }
@@ -43,12 +50,20 @@ public class SentryTurretSpineball extends EntityFireball {
     protected void onImpact(RayTraceResult result) {
         if (this.world.isRemote) return;
 
+        EntityLivingBase target = null;
         if (result.entityHit instanceof EntityLivingBase) {
             if (result.entityHit == this.shootingEntity) return;
             if (result.entityHit instanceof SentryTurretEntity) return;
             if (result.entityHit instanceof EntityPlayer) return;
 
-            EntityLivingBase target = (EntityLivingBase) result.entityHit;
+            target = (EntityLivingBase) result.entityHit;
+        } else if (result.entityHit instanceof EntityBody) {
+            target = ((EntityBody) result.entityHit).getFather();
+        } else if (result.entityHit instanceof EntityHitbox) {
+            target = ((EntityHitbox) result.entityHit).getParent();
+        }
+
+        if (target != null) {
             DamageSource damageSource = DamageSource.causeThrownDamage(this, this);
             target.attackEntityFrom(damageSource, damage);
             target.addPotionEffect(new PotionEffect(MobEffects.POISON, this.poisonDuration, this.poisonAmplifier));
