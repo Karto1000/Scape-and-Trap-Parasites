@@ -6,10 +6,15 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 
 import javax.annotation.Nullable;
@@ -28,7 +33,7 @@ public class SentryTurretBase extends Block {
     }
 
     public static SentryTurretEntity spawnTurret(World world, BlockPos pos) {
-        SentryTurretEntity entity = new SentryTurretEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+        SentryTurretEntity entity = new SentryTurretEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, pos);
         world.spawnEntity(entity);
         return entity;
     }
@@ -69,5 +74,19 @@ public class SentryTurretBase extends Block {
         }
 
         super.breakBlock(worldIn, pos, state);
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (worldIn.isRemote) return true;
+
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof SentryTurretTileEntity) {
+            SentryTurretTileEntity sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
+            FluidUtil.interactWithFluidHandler(playerIn, hand, worldIn, pos, facing);
+            playerIn.sendMessage(new TextComponentString(String.format("(%d / %d) Biomass", sentryTurretTileEntity.getBiomassAmount(), sentryTurretTileEntity.getBiomassCapacity())));
+        }
+
+        return true;
     }
 }

@@ -24,7 +24,6 @@ public class AttackHostileMonsterInRange extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        System.out.println("Starting attacking");
         List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class,
                 this.entity.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
 
