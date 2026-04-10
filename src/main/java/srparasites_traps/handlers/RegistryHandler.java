@@ -1,4 +1,4 @@
-package srparasites_traps.registry;
+package srparasites_traps.handlers;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -7,6 +7,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.registry.ModBlocks;
+import srparasites_traps.registry.ModEntities;
+import srparasites_traps.registry.ModItems;
+import srparasites_traps.registry.ModTileEntities;
 
 import java.util.ArrayList;
 
@@ -15,6 +19,13 @@ public class RegistryHandler {
 
     public static void init() {
         ModTileEntities.registerTileEntities();
+    }
+
+    public static void registerItemRenderers() {
+        for (Item item : ModItems.getItemList()) {
+            SRParasitesTraps.LOGGER.info("Registering Item Renderer for {}", item);
+            SRParasitesTraps.PROXY.registerItemRenderer(item, 0, "inventory");
+        }
     }
 
     @SubscribeEvent

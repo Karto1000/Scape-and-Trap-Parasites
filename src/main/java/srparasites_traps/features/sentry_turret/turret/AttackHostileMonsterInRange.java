@@ -11,10 +11,12 @@ import java.util.List;
 public class AttackHostileMonsterInRange extends EntityAIBase {
     private final EntityLiving entity;
     private final World world;
+    private final double range;
 
-    public AttackHostileMonsterInRange(EntityLiving entity, World world) {
+    public AttackHostileMonsterInRange(EntityLiving entity, World world, double range) {
         this.entity = entity;
         this.world = world;
+        this.range = range;
     }
 
     @Override
@@ -24,11 +26,10 @@ public class AttackHostileMonsterInRange extends EntityAIBase {
 
     @Override
     public void startExecuting() {
-        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class,
-                this.entity.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.entity.getEntityBoundingBox().grow(range));
 
         for (EntityLivingBase target : list) {
-            if (target instanceof IMob && target.isEntityAlive() && this.entity.canEntityBeSeen(target)) {
+            if (target instanceof IMob && target.isEntityAlive() && this.entity.canEntityBeSeen(target) && this.entity.getDistance(target) <= range) {
                 this.entity.setAttackTarget(target);
                 break;
             }

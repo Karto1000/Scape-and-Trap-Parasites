@@ -7,8 +7,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import srparasites_traps.handlers.RegistryHandler;
 import srparasites_traps.proxy.CommonProxy;
-import srparasites_traps.registry.RegistryHandler;
 
 @Mod(modid = SRParasitesTraps.MOD_ID, version = SRParasitesTraps.VERSION, name = SRParasitesTraps.NAME, dependencies = "required-after:fermiumbooter")
 public class SRParasitesTraps {
@@ -18,7 +18,7 @@ public class SRParasitesTraps {
     public static final Logger LOGGER = LogManager.getLogger();
     public static boolean completedLoading = false;
 
-    @SidedProxy(clientSide = "srparasites_traps.proxy.ClientProxy", serverSide = "srparasites_traps.proxy.CommonProxy")
+    @SidedProxy(clientSide = "srparasites_traps.proxy.ClientProxy", serverSide = "srparasites_traps.proxy.ServerProxy")
     public static CommonProxy PROXY;
 
     @Instance(MOD_ID)

@@ -1,1 +1,25 @@
+# §0 -> Black
+# §1 -> Dark Blue
+# §2 -> Dark Green
+# §3 -> Dark Aqua
+# §4 -> Dark Red
+# §5 -> Dark Purple
+# §6 -> Gold : Adapted Tool
+# §7 -> Gray
+# §8 -> Dark Gray
+# §9 -> Blue
+# §a -> Green
+# §b -> Aqua : Crafting Components
+# §c -> Red : Enemy Name
+# §d -> Light Purple
+# §e -> Yellow
+# §f -> White
+
+# Tiles
 tile.srparasites_traps.sentry_turret_base.name=Sentry Turret
+
+# Items
+item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit
+
+# Tooltips
+tooltip.srparasites_traps.item.two_way_communication_unit=A chip designed to enable two-way communication between mechanical machines and §cparasitic entities§f.

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " f ",
+    "cnb",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "srparasites:semiorganic_ingot"
+    },
+    "c": {
+      "item": "srparasites_traps:two_way_communication_unit"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "f": {
+      "item": "minecraft:gravel"
+    },
+    "n": {
+      "item": "srparasites:dispatchern"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:sentry_turret_base",
+    "count": 1
+  }
+}

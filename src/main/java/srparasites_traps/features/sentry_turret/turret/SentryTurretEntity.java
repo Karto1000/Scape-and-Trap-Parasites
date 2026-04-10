@@ -1,20 +1,22 @@
 package srparasites_traps.features.sentry_turret.turret;
 
+import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SentryTurretEntity extends EntityLiving {
+    public BlockPos baseBlockPosition;
     public int attackDelay = 20;
     public int currentAttackCooldown = attackDelay;
+    public final double attackRangeBlocks = 16.0D;
     public long ticksWhenTargetLost = 0;
-    public int biomassPerShot = 100;
-    public BlockPos baseBlockPosition;
     private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.BOOLEAN);
 
     public SentryTurretEntity(World worldIn) {
@@ -46,6 +48,15 @@ public class SentryTurretEntity extends EntityLiving {
         this.dataManager.register(ATTACKING, Boolean.FALSE);
     }
 
+    @Override
+    public boolean isPotionApplicable(PotionEffect potioneffectIn) {
+        if (potioneffectIn.getPotion() == SRPPotions.COTH_E) {
+            return false;
+        }
+
+        return super.isPotionApplicable(potioneffectIn);
+    }
+
     public boolean isAttacking() {
         return this.dataManager.get(ATTACKING);
     }
@@ -71,7 +82,7 @@ public class SentryTurretEntity extends EntityLiving {
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(1, new SentryTurretAI(this, this.world));
-        this.targetTasks.addTask(1, new AttackHostileMonsterInRange(this, this.world));
+        this.targetTasks.addTask(1, new AttackHostileMonsterInRange(this, this.world, this.attackRangeBlocks));
     }
 
     @Override

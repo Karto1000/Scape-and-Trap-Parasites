@@ -6,11 +6,14 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
+import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
+
+import java.util.Objects;
 
 public class SentryTurretAI extends EntityAIBase {
     private final SentryTurretEntity sentryTurret;
     private final World world;
+    private Vec3d lastTargetPosition;
 
     public SentryTurretAI(SentryTurretEntity sentryTurret, World world) {
         this.sentryTurret = sentryTurret;
@@ -33,21 +36,25 @@ public class SentryTurretAI extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.shouldExecute();
+        if (!this.shouldExecute()) return false;
+        EntityLivingBase target = Objects.requireNonNull(this.sentryTurret.getAttackTarget());
+        return (this.sentryTurret.canEntityBeSeen(target) && this.sentryTurret.getDistance(target) <= this.sentryTurret.attackRangeBlocks);
     }
 
     @Override
     public void resetTask() {
         this.sentryTurret.ticksWhenTargetLost = world.getTotalWorldTime();
+        this.sentryTurret.setAttackTarget(null);
     }
 
-    private void shootSpineball(Vec3d direction, SentryTurretTileEntity sentryTurret) {
+    private void shootSpineball(Vec3d direction, SentryTurretBaseTileEntity sentryTurret) {
         SentryTurretSpineball projectile = new SentryTurretSpineball(this.world, this.sentryTurret);
         projectile.setPosition(this.sentryTurret.posX + direction.x, this.sentryTurret.posY + this.sentryTurret.getEyeHeight(), this.sentryTurret.posZ + direction.z);
         projectile.setVelocity(direction.x, direction.y, direction.z);
         world.spawnEntity(projectile);
         this.sentryTurret.playSound(SRPSounds.EMANA_SHOOTING, 2.0F, 1.0F);
-        sentryTurret.consumeBiomass(this.sentryTurret.biomassPerShot);
+        sentryTurret.consumeBiomass(sentryTurret.biomassPerShot);
+        sentryTurret.consumeEnergy(sentryTurret.energyPerShot);
     }
 
     @Override
@@ -57,10 +64,11 @@ public class SentryTurretAI extends EntityAIBase {
         this.sentryTurret.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
 
         TileEntity tileEntity = this.world.getTileEntity(this.sentryTurret.baseBlockPosition);
-        SentryTurretTileEntity sentryTurretTileEntity;
-        if (tileEntity instanceof SentryTurretTileEntity) {
-            sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
-            if (!sentryTurretTileEntity.hasMoreBiomassThan(this.sentryTurret.biomassPerShot)) return;
+        SentryTurretBaseTileEntity sentryTurretBaseTileEntity;
+        if (tileEntity instanceof SentryTurretBaseTileEntity) {
+            sentryTurretBaseTileEntity = (SentryTurretBaseTileEntity) tileEntity;
+            if (!sentryTurretBaseTileEntity.hasEnoughBiomassToShoot()) return;
+            if (!sentryTurretBaseTileEntity.hasEnoughEnergyToShoot()) return;
         } else {
             return;
         }
@@ -72,16 +80,23 @@ public class SentryTurretAI extends EntityAIBase {
                 this.sentryTurret.playSound(SRPSounds.UNVO_SHOOTING, 2.0F, 1.0F);
             }
 
+            this.lastTargetPosition = target.getPositionVector();
             return;
         }
 
+
         Vec3d shootPosition = this.sentryTurret.getPositionVector().add(0, this.sentryTurret.getEyeHeight(), 0);
         Vec3d hitPosition = target.getPositionVector()
-                .add(new Vec3d(0, target.width / 2, 0))
-                .add(new Vec3d(target.motionX, target.motionY, target.motionZ).scale(2));
+                .add(new Vec3d(0, target.height / 2, 0));
 
-        Vec3d direction = hitPosition.subtract(shootPosition).normalize();
-        this.shootSpineball(direction, sentryTurretTileEntity);
+        Vec3d shooterToTargetDelta = hitPosition.subtract(shootPosition);
+        Vec3d unCorrectedVelocity = shooterToTargetDelta.normalize();
+        Vec3d targetDistanceTraveledSinceLastTick = target.getPositionVector().subtract(this.lastTargetPosition);
+
+        double distanceToTarget = shooterToTargetDelta.length();
+        int ticksUntilHit = (int) (distanceToTarget / unCorrectedVelocity.length());
+        Vec3d actualVelocity = shooterToTargetDelta.add(targetDistanceTraveledSinceLastTick.scale(ticksUntilHit)).normalize();
+        this.shootSpineball(actualVelocity, sentryTurretBaseTileEntity);
 
         this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
     }

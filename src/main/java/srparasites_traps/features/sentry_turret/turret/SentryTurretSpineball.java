@@ -2,6 +2,7 @@ package srparasites_traps.features.sentry_turret.turret;
 
 import com.dhanantry.scapeandrunparasites.entity.EntityBody;
 import com.dhanantry.scapeandrunparasites.entity.EntityHitbox;
+import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPMalleable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -12,10 +13,15 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class SentryTurretSpineball extends EntityFireball {
     private final float damage = 25;
     private final int poisonDuration = 100;
     private final int poisonAmplifier = 1;
+    private final int chanceToReduceResistance = 25;
+    private final int resistanceReductionAmount = 4;
 
     public SentryTurretSpineball(World worldIn) {
         super(worldIn);
@@ -46,24 +52,51 @@ public class SentryTurretSpineball extends EntityFireball {
         return false;
     }
 
+    private void meabyReduceResistanceOfParasite(EntityPMalleable parasite) {
+        ArrayList<Integer> resistanceI = parasite.getResistanceI();
+        ArrayList<String> resistanceS = parasite.getResistanceS();
+
+        if (resistanceI.isEmpty() || resistanceS.isEmpty()) return;
+
+        Random random = new Random();
+        if (random.nextInt(100) < chanceToReduceResistance) {
+            int randomResistance = random.nextInt(resistanceI.size());
+            int newPoints = resistanceI.get(randomResistance) - resistanceReductionAmount;
+            if (newPoints <= 0) {
+                resistanceI.remove(randomResistance);
+                resistanceS.remove(randomResistance);
+            } else {
+                resistanceI.set(randomResistance, newPoints);
+            }
+        }
+    }
+
     @Override
     protected void onImpact(RayTraceResult result) {
         if (this.world.isRemote) return;
 
         EntityLivingBase target = null;
         DamageSource damageSource = DamageSource.causeThrownDamage(this, this);
-        if (result.entityHit instanceof EntityLivingBase) {
+
+        // Entity is a parasite that can adapt
+        if (result.entityHit instanceof EntityPMalleable) {
+            meabyReduceResistanceOfParasite((EntityPMalleable) result.entityHit);
+            target = ((EntityPMalleable) result.entityHit);
+            // Entity is any living entity
+        } else if (result.entityHit instanceof EntityLivingBase) {
             if (result.entityHit == this.shootingEntity) return;
             if (result.entityHit instanceof SentryTurretEntity) return;
             if (result.entityHit instanceof EntityPlayer) return;
 
             target = (EntityLivingBase) result.entityHit;
+            // Entity is a parasite body part
         } else if (result.entityHit instanceof EntityBody) {
             // We want the spineballs to be able to remove limbs off of parasites
             result.entityHit.attackEntityFrom(damageSource, damage);
+            meabyReduceResistanceOfParasite((EntityPMalleable) ((EntityBody) result.entityHit).getFather());
             return;
         } else if (result.entityHit instanceof EntityHitbox) {
-            target = ((EntityHitbox) result.entityHit).getParent();
+            return;
         }
 
         if (target != null) {
