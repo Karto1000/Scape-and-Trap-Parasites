@@ -2,7 +2,6 @@ package srparasites_traps.features.sentry_turret.turret;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -14,6 +13,7 @@ public class SentryTurretEntity extends EntityLiving {
     public int attackDelay = 20;
     public int currentAttackCooldown = attackDelay;
     public long ticksWhenTargetLost = 0;
+    public int biomassPerShot = 100;
     public BlockPos baseBlockPosition;
     private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.BOOLEAN);
 
@@ -55,6 +55,11 @@ public class SentryTurretEntity extends EntityLiving {
     }
 
     @Override
+    public boolean canBePushed() {
+        return false;
+    }
+
+    @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
         this.renderYawOffset = this.rotationYawHead;
@@ -66,7 +71,6 @@ public class SentryTurretEntity extends EntityLiving {
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(1, new SentryTurretAI(this, this.world));
-        this.tasks.addTask(2, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new AttackHostileMonsterInRange(this, this.world));
     }
 

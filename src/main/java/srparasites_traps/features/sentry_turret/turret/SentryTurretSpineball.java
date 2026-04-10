@@ -51,6 +51,7 @@ public class SentryTurretSpineball extends EntityFireball {
         if (this.world.isRemote) return;
 
         EntityLivingBase target = null;
+        DamageSource damageSource = DamageSource.causeThrownDamage(this, this);
         if (result.entityHit instanceof EntityLivingBase) {
             if (result.entityHit == this.shootingEntity) return;
             if (result.entityHit instanceof SentryTurretEntity) return;
@@ -58,13 +59,14 @@ public class SentryTurretSpineball extends EntityFireball {
 
             target = (EntityLivingBase) result.entityHit;
         } else if (result.entityHit instanceof EntityBody) {
-            target = ((EntityBody) result.entityHit).getFather();
+            // We want the spineballs to be able to remove limbs off of parasites
+            result.entityHit.attackEntityFrom(damageSource, damage);
+            return;
         } else if (result.entityHit instanceof EntityHitbox) {
             target = ((EntityHitbox) result.entityHit).getParent();
         }
 
         if (target != null) {
-            DamageSource damageSource = DamageSource.causeThrownDamage(this, this);
             target.attackEntityFrom(damageSource, damage);
             target.addPotionEffect(new PotionEffect(MobEffects.POISON, this.poisonDuration, this.poisonAmplifier));
         }

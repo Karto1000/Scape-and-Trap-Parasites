@@ -47,7 +47,7 @@ public class SentryTurretAI extends EntityAIBase {
         projectile.setVelocity(direction.x, direction.y, direction.z);
         world.spawnEntity(projectile);
         this.sentryTurret.playSound(SRPSounds.EMANA_SHOOTING, 2.0F, 1.0F);
-        sentryTurret.consumeBiomass(20);
+        sentryTurret.consumeBiomass(this.sentryTurret.biomassPerShot);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SentryTurretAI extends EntityAIBase {
         SentryTurretTileEntity sentryTurretTileEntity;
         if (tileEntity instanceof SentryTurretTileEntity) {
             sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
-            if (!sentryTurretTileEntity.hasMoreBiomassThan(10)) return;
+            if (!sentryTurretTileEntity.hasMoreBiomassThan(this.sentryTurret.biomassPerShot)) return;
         } else {
             return;
         }
