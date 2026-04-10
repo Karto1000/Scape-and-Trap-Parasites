@@ -1,5 +1,10 @@
 {
   "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:sentry_enabled"
+    }
+  ],
   "pattern": [
     " f ",
     "cnb",

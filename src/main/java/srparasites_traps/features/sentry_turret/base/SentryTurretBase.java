@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 import srparasites_traps.util.Constants;
 
@@ -30,7 +31,7 @@ public class SentryTurretBase extends Block {
 
         setRegistryName(MOD_ID, "sentry_turret_base");
         setTranslationKey(getTranslationKeyFor("sentry_turret_base"));
-        setCreativeTab(SRPMain.SRP_CREATIVETAB);
+        if (ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) setCreativeTab(SRPMain.SRP_CREATIVETAB);
     }
 
     public static SentryTurretEntity spawnTurret(World world, BlockPos pos) {

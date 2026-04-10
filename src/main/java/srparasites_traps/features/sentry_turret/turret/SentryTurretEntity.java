@@ -10,12 +10,13 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import srparasites_traps.config.ForgeConfigHandler;
 
 public class SentryTurretEntity extends EntityLiving {
     public BlockPos baseBlockPosition;
-    public int attackDelay = 20;
+    public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
     public int currentAttackCooldown = attackDelay;
-    public final double attackRangeBlocks = 16.0D;
+    public final double attackRangeBlocks = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
     public long ticksWhenTargetLost = 0;
     private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.BOOLEAN);
 

@@ -12,16 +12,17 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import srparasites_traps.config.ForgeConfigHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SentryTurretSpineball extends EntityFireball {
-    private final float damage = 25;
-    private final int poisonDuration = 100;
-    private final int poisonAmplifier = 1;
-    private final int chanceToReduceResistance = 25;
-    private final int resistanceReductionAmount = 4;
+    private final float damage = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_DAMAGE;
+    private final int poisonDuration = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_DURATION;
+    private final int poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
+    private final int chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
+    private final int resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
 
     public SentryTurretSpineball(World worldIn) {
         super(worldIn);

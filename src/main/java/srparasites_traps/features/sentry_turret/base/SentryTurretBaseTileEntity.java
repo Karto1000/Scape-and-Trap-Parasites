@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import srparasites_traps.capability.BiomassTank;
 import srparasites_traps.capability.DualEnergyStorage;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 
 import javax.annotation.Nullable;
@@ -24,10 +25,10 @@ import java.util.UUID;
 public class SentryTurretBaseTileEntity extends TileCore implements ITickable, ICapabilityProvider {
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
-    public int biomassPerShot = 100;
-    public int energyPerShot = 1000;
-    public final BiomassTank biomassStorage = new BiomassTank(2000);
-    public final DualEnergyStorage energyStorage = new DualEnergyStorage(10000);
+    public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
+    public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
+    public final BiomassTank biomassStorage = new BiomassTank(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS);
+    public final DualEnergyStorage energyStorage = new DualEnergyStorage(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
 
     public SentryTurretBaseTileEntity() {
         this.biomassStorage.setTileEntity(this);

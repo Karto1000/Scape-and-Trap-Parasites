@@ -1,0 +1,5 @@
+{
+  "conditions": {
+    "sentry_enabled": "srparasites_traps.config.SentryConditionFactory"
+  }
+}
