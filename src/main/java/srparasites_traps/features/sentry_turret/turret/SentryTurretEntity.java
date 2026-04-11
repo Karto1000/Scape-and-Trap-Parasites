@@ -8,17 +8,24 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
+import srparasites_traps.util.Constants;
+import srparasites_traps.util.Serializers;
 
 public class SentryTurretEntity extends EntityLiving {
     public BlockPos baseBlockPosition;
     public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
     public int currentAttackCooldown = attackDelay;
-    public final double attackRangeBlocks = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
-    public long ticksWhenTargetLost = 0;
-    private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.BOOLEAN);
+    public double attackRangeBlocks = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
+    public final double emergeTimeSeconds = 5.1;
+
+    private static final DataParameter<Long> ticksWhenTargetLost = EntityDataManager.createKey(SentryTurretEntity.class, Serializers.LONG);
+    private static final DataParameter<Float> currentEmergeTime = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.FLOAT);
+    private static final DataParameter<Integer> state = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.VARINT);
 
     public SentryTurretEntity(World worldIn) {
         super(worldIn);
@@ -30,6 +37,31 @@ public class SentryTurretEntity extends EntityLiving {
         this.setSize(0.7F, 4.1F);
         this.setPosition(x, y, z);
         this.baseBlockPosition = baseBlockPosition;
+    }
+
+    public double getCurrentEmergeTime() {
+        return dataManager.get(SentryTurretEntity.currentEmergeTime);
+    }
+
+    public void setCurrentEmergeTime(double time) {
+        dataManager.set(SentryTurretEntity.currentEmergeTime, (float) time);
+    }
+
+    public void setEntityState(SentryTurretEntityState eState) {
+        this.dataManager.set(state, eState.ordinal());
+    }
+
+    public SentryTurretEntityState getEntityState() {
+        int ordinal = this.dataManager.get(state);
+        return SentryTurretEntityState.values()[ordinal];
+    }
+
+    public long getTicksWhenTargetLost() {
+        return this.dataManager.get(ticksWhenTargetLost);
+    }
+
+    public void setTicksWhenTargetLost(long ticks) {
+        this.dataManager.set(ticksWhenTargetLost, ticks);
     }
 
     @Override
@@ -46,7 +78,9 @@ public class SentryTurretEntity extends EntityLiving {
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(ATTACKING, Boolean.FALSE);
+        this.dataManager.register(state, SentryTurretEntityState.EMERGING.ordinal());
+        this.dataManager.register(currentEmergeTime, (float) emergeTimeSeconds);
+        this.dataManager.register(ticksWhenTargetLost, 0L);
     }
 
     @Override
@@ -58,32 +92,46 @@ public class SentryTurretEntity extends EntityLiving {
         return super.isPotionApplicable(potioneffectIn);
     }
 
-    public boolean isAttacking() {
-        return this.dataManager.get(ATTACKING);
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.dataManager.set(ATTACKING, attacking);
-    }
-
     @Override
     public boolean canBePushed() {
         return false;
     }
 
     @Override
+    protected void onDeathUpdate() {
+        super.onDeathUpdate();
+        if (this.world.isRemote) return;
+
+        TileEntity tileEntity = this.world.getTileEntity(this.baseBlockPosition);
+        if (tileEntity == null) return;
+        SentryTurretBaseTileEntity sentryTurretBaseTileEntity = (SentryTurretBaseTileEntity) tileEntity;
+
+        sentryTurretBaseTileEntity.setState(SentryTileEntityState.DEAD);
+        sentryTurretBaseTileEntity.clearAssignedSentryTurret();
+    }
+
+    @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+
+        SentryTurretEntityState state = getEntityState();
+        if (state == SentryTurretEntityState.EMERGING) {
+            double currentEmergeTime = getCurrentEmergeTime();
+            setCurrentEmergeTime(currentEmergeTime - 1. / Constants.TPS_LIMIT);
+
+            if (getCurrentEmergeTime() <= 0.00) {
+                setEntityState(SentryTurretEntityState.IDLE);
+            }
+        }
+
         this.renderYawOffset = this.rotationYawHead;
-        if (!this.world.isRemote)
-            this.setAttacking(this.getAttackTarget() != null || this.world.getTotalWorldTime() - ticksWhenTargetLost <= attackDelay);
         this.setVelocity(0, 0, 0);
     }
 
     @Override
     protected void initEntityAI() {
-        this.tasks.addTask(1, new SentryTurretAI(this, this.world));
-        this.targetTasks.addTask(1, new AttackHostileMonsterInRange(this, this.world, this.attackRangeBlocks));
+        this.tasks.addTask(1, new SentryTurretAttackTarget(this, this.world));
+        this.targetTasks.addTask(1, new SentryTurretFindHostileMonster(this, this.world, this.attackRangeBlocks));
     }
 
     @Override

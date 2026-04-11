@@ -2,7 +2,6 @@ package srparasites_traps.features.two_way_communication_unit;
 
 
 import com.dhanantry.scapeandrunparasites.SRPMain;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,6 +12,7 @@ import srparasites_traps.SRParasitesTraps;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class TwoWayCommunicationUnitItem extends Item {
@@ -27,6 +27,6 @@ public class TwoWayCommunicationUnitItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + I18n.format("tooltip.srparasites_traps.item.two_way_communication_unit"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.two_way_communication_unit"));
     }
 }

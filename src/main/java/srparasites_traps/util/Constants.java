@@ -7,4 +7,15 @@ public class Constants {
     public static final String SRPARASITES_MOD_ID = "srparasites";
     public static final int SENTRY_TURRET_GUI_ID = 0;
     public static final Fluid SENTRY_TURRET_ACCEPTED_FLUID = SRPFluids.DEADBLOOD_FLUID;
+    public static final int TPS_LIMIT = 20;
+    public static final int BUTTON_SPRITESHEET_BUTTON_WIDTH = 22;
+    public static final int BUTTON_SPRITESHEET_BUTTON_HEIGHT = 22;
+    public static final int BUTTON_SPRITESHEET_X = 0;
+    public static final int BUTTON_SPRITESHEET_Y = 0;
+    public static final int BUTTON_SPRITESHEET_DISABLED_X = BUTTON_SPRITESHEET_BUTTON_WIDTH;
+    public static final int BUTTON_SPRITESHEET_DISABLED_Y = 0;
+    public static final int BUTTON_SPRITESHEET_HOVER_X = BUTTON_SPRITESHEET_BUTTON_WIDTH * 2;
+    public static final int BUTTON_SPRITESHEET_HOVER_Y = 0;
+    public static final int MOUSE_BUTTON_LEFT = 0;
+    public static final int MOUSE_BUTTON_RIGHT = 1;
 }

@@ -16,7 +16,9 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import srparasites_traps.capability.BiomassTank;
 import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.sentry_turret.turret.SentryTileEntityState;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
+import srparasites_traps.util.Constants;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -27,8 +29,12 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
     private UUID assignedSentryTurretUUID;
     public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
     public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
+    public int biomassForSpawn = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_FOR_SPAWN;
+    public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
+    private double currentRespawnTime = respawnTimeSeconds;
     public final BiomassTank biomassStorage = new BiomassTank(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS);
     public final DualEnergyStorage energyStorage = new DualEnergyStorage(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
+    private SentryTileEntityState state = SentryTileEntityState.INACTIVE;
 
     public SentryTurretBaseTileEntity() {
         this.biomassStorage.setTileEntity(this);
@@ -40,30 +46,53 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         this.markDirty();
     }
 
+    public SentryTileEntityState getState() {
+        return this.state;
+    }
+
+    public void setState(SentryTileEntityState state) {
+        this.state = state;
+    }
+
     public Optional<SentryTurretEntity> getAssignedSentryTurret() {
         if (this.world.isRemote) return Optional.empty();
 
         if (this.assignedSentryTurret != null) {
             if (this.assignedSentryTurret.isDead) {
-                this.assignedSentryTurret = null;
-                this.assignedSentryTurretUUID = null;
+                this.clearAssignedSentryTurret();
+                this.markDirty();
                 return Optional.empty();
             }
+
             return Optional.of(assignedSentryTurret);
         }
 
         Entity entity = ((WorldServer) this.world).getEntityFromUuid(this.assignedSentryTurretUUID);
-        if (entity == null) return Optional.empty();
-        if (!(entity instanceof SentryTurretEntity)) return Optional.empty();
+        if (entity == null) {
+            this.assignedSentryTurretUUID = null;
+            this.markDirty();
+            return Optional.empty();
+        }
+        if (!(entity instanceof SentryTurretEntity)) {
+            this.assignedSentryTurretUUID = null;
+            this.markDirty();
+            return Optional.empty();
+        }
 
         if (entity.isDead) {
-            this.assignedSentryTurret = null;
             this.assignedSentryTurretUUID = null;
+            this.markDirty();
             return Optional.empty();
         }
 
         this.assignedSentryTurret = (SentryTurretEntity) entity;
+        this.markDirty();
         return Optional.of(this.assignedSentryTurret);
+    }
+
+    public void clearAssignedSentryTurret() {
+        this.assignedSentryTurret = null;
+        this.assignedSentryTurretUUID = null;
     }
 
     @Override
@@ -74,6 +103,8 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         }
         compound.setTag("BiomassStorage", this.biomassStorage.writeToNBT(new NBTTagCompound()));
         compound.setTag("EnergyStorage", this.energyStorage.writeToNBT(new NBTTagCompound()));
+        compound.setInteger("State", this.state.ordinal());
+        compound.setDouble("CurrentRespawnTime", this.currentRespawnTime);
         return compound;
     }
 
@@ -88,6 +119,12 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         }
         if (compound.hasKey("EnergyStorage")) {
             this.energyStorage.readFromNBT(compound.getCompoundTag("EnergyStorage"));
+        }
+        if (compound.hasKey("State")) {
+            this.state = SentryTileEntityState.values()[compound.getInteger("State")];
+        }
+        if (compound.hasKey("CurrentRespawnTime")) {
+            this.currentRespawnTime = compound.getDouble("CurrentRespawnTime");
         }
     }
 
@@ -112,8 +149,47 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         return super.getCapability(capability, facing);
     }
 
+    public void removeTurret() {
+        if (this.world.isRemote) return;
+        Optional<SentryTurretEntity> entity = this.getAssignedSentryTurret();
+        if (!entity.isPresent()) return;
+        world.removeEntity(entity.get());
+        this.clearAssignedSentryTurret();
+        this.setState(SentryTileEntityState.INACTIVE);
+        this.markDirty();
+    }
+
+    private void spawnTurret() {
+        SentryTurretEntity newTurret = new SentryTurretEntity(this.world, this.pos.getX() + 0.5, this.pos.getY() + 1, this.pos.getZ() + 0.5, this.pos);
+        this.world.spawnEntity(newTurret);
+        this.setAssignedSentryTurret(newTurret);
+        this.consumeBiomass(this.biomassForSpawn);
+        this.setState(SentryTileEntityState.ACTIVE);
+        this.markDirty();
+    }
+
+    public void toggleEntity() {
+        if (!this.getAssignedSentryTurret().isPresent()) {
+            if (!this.hasEnoughBiomassForSpawn()) return;
+            if (this.state == SentryTileEntityState.DEAD) return;
+            this.spawnTurret();
+        } else this.removeTurret();
+    }
+
     @Override
     public void update() {
+        if (this.world.isRemote) return;
+        if (this.state != SentryTileEntityState.DEAD) return;
+
+        if (this.currentRespawnTime > 0) {
+            this.currentRespawnTime -= 1. / Constants.TPS_LIMIT;
+            return;
+        }
+
+        if (!this.hasEnoughBiomassForSpawn()) return;
+
+        this.spawnTurret();
+        this.currentRespawnTime = this.respawnTimeSeconds;
     }
 
     @Override
@@ -121,6 +197,8 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, 0, this.biomassStorage.getFluidAmount());
         player.sendWindowProperty(container, 1, this.energyStorage.getEnergyStored());
+        player.sendWindowProperty(container, 2, this.getState().ordinal());
+        player.sendWindowProperty(container, 3, (int) this.currentRespawnTime);
     }
 
     @Override
@@ -142,6 +220,11 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
             case 1:
                 this.energyStorage.setEnergy(data);
                 break;
+            case 2:
+                this.setState(SentryTileEntityState.values()[data]);
+            case 3:
+                this.currentRespawnTime = data;
+                break;
         }
     }
 
@@ -161,8 +244,15 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         return this.biomassStorage.getFluidAmount() >= this.biomassPerShot;
     }
 
+    public boolean hasEnoughBiomassForSpawn() {
+        return this.biomassStorage.getFluidAmount() >= this.biomassForSpawn;
+    }
+
     public boolean hasEnoughEnergyToShoot() {
         return this.energyStorage.getEnergyStored() >= this.energyPerShot;
     }
 
+    public double getCurrentRespawnTime() {
+        return this.currentRespawnTime;
+    }
 }

@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import srparasites_traps.handlers.RegistryHandler;
+import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.proxy.CommonProxy;
 
 @Mod(modid = SRParasitesTraps.MOD_ID, version = SRParasitesTraps.VERSION, name = SRParasitesTraps.NAME, dependencies = "required-after:fermiumbooter")
@@ -27,6 +28,7 @@ public class SRParasitesTraps {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         RegistryHandler.init();
+        SRParasitesTrapsNetwork.init();
         SRParasitesTraps.PROXY.init();
     }
 

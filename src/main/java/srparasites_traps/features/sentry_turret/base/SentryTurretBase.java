@@ -5,9 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -16,11 +14,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
-import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 import srparasites_traps.util.Constants;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 import static srparasites_traps.SRParasitesTraps.MOD_ID;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
@@ -34,12 +30,6 @@ public class SentryTurretBase extends Block {
         if (ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) setCreativeTab(SRPMain.SRP_CREATIVETAB);
     }
 
-    public static SentryTurretEntity spawnTurret(World world, BlockPos pos) {
-        SentryTurretEntity entity = new SentryTurretEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, pos);
-        world.spawnEntity(entity);
-        return entity;
-    }
-
     @Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
@@ -51,28 +41,13 @@ public class SentryTurretBase extends Block {
         return new SentryTurretBaseTileEntity();
     }
 
-    // When the tile entity is placed, spawn a SentryTurretEntity ontop, when it is broken, kill the SentryTurretEntity
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        if (!worldIn.isRemote) {
-            SentryTurretEntity entity = spawnTurret(worldIn, pos);
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof SentryTurretBaseTileEntity)
-                ((SentryTurretBaseTileEntity) tileEntity).setAssignedSentryTurret(entity);
-        }
-
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-    }
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof SentryTurretBaseTileEntity) {
-                Optional<SentryTurretEntity> entity = ((SentryTurretBaseTileEntity) tileEntity).getAssignedSentryTurret();
-                if (!entity.isPresent()) return;
-                worldIn.removeEntity(entity.get());
-            }
+            if (tileEntity instanceof SentryTurretBaseTileEntity)
+                ((SentryTurretBaseTileEntity) tileEntity).removeTurret();
         }
 
         super.breakBlock(worldIn, pos, state);

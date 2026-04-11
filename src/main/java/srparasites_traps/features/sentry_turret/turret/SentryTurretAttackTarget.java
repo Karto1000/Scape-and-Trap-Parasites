@@ -8,43 +8,42 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
 
-import java.util.Objects;
-
-public class SentryTurretAI extends EntityAIBase {
+public class SentryTurretAttackTarget extends EntityAIBase {
     private final SentryTurretEntity sentryTurret;
     private final World world;
     private Vec3d lastTargetPosition;
 
-    public SentryTurretAI(SentryTurretEntity sentryTurret, World world) {
+    public SentryTurretAttackTarget(SentryTurretEntity sentryTurret, World world) {
         this.sentryTurret = sentryTurret;
         this.world = world;
     }
 
     @Override
     public void startExecuting() {
-        int elapsedTicks = (int) (this.world.getTotalWorldTime() - this.sentryTurret.ticksWhenTargetLost);
+        int elapsedTicks = (int) (this.world.getTotalWorldTime() - this.sentryTurret.getTicksWhenTargetLost());
         if (elapsedTicks <= this.sentryTurret.currentAttackCooldown)
             this.sentryTurret.currentAttackCooldown -= elapsedTicks;
         else this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
-        this.sentryTurret.ticksWhenTargetLost = 0;
+        this.sentryTurret.setTicksWhenTargetLost(0);
     }
 
     @Override
     public boolean shouldExecute() {
-        return this.sentryTurret.getAttackTarget() != null;
+        return this.sentryTurret.getAttackTarget() != null && this.sentryTurret.getEntityState() != SentryTurretEntityState.EMERGING;
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        if (!this.shouldExecute()) return false;
-        EntityLivingBase target = Objects.requireNonNull(this.sentryTurret.getAttackTarget());
-        return (this.sentryTurret.canEntityBeSeen(target) && this.sentryTurret.getDistance(target) <= this.sentryTurret.attackRangeBlocks);
+        if (this.sentryTurret.getAttackTarget() == null) return false;
+        EntityLivingBase target = this.sentryTurret.getAttackTarget();
+        return (this.sentryTurret.canEntityBeSeen(target) && target.isEntityAlive() && this.sentryTurret.getDistance(target) <= this.sentryTurret.attackRangeBlocks);
     }
 
     @Override
     public void resetTask() {
-        this.sentryTurret.ticksWhenTargetLost = world.getTotalWorldTime();
+        this.sentryTurret.setTicksWhenTargetLost(world.getTotalWorldTime());
         this.sentryTurret.setAttackTarget(null);
+        this.sentryTurret.setEntityState(SentryTurretEntityState.IDLE);
     }
 
     private void shootSpineball(Vec3d direction, SentryTurretBaseTileEntity sentryTurret) {

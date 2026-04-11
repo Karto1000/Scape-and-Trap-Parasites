@@ -54,7 +54,7 @@ public class ForgeConfigHandler {
 
         @Config.Name("Default sentry turret max biomass (mB)")
         @Config.Comment("The maximum amount of biomass that a sentry turret can hold")
-        public int DEFAULT_SENTRY_TURRET_MAX_BIOMASS = 10000;
+        public int DEFAULT_SENTRY_TURRET_MAX_BIOMASS = 1000;
 
         @Config.Name("Default sentry turret biomass per shot (mB)")
         @Config.Comment("The amount of biomass that a sentry turret uses per shot")
@@ -63,6 +63,14 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret energy per shot (RF)")
         @Config.Comment("The amount of energy that a sentry turret uses per shot")
         public int DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT = 1000;
+
+        @Config.Name("Default sentry turret biomass for spawn (mB)")
+        @Config.Comment("The amount of biomass that a sentry turret spawns with")
+        public int DEFAULT_SENTRY_TURRET_BIOMASS_FOR_SPAWN = 1000;
+
+        @Config.Name("Default sentry turret respawn time after dying (Seconds)")
+        @Config.Comment("The time that the sentry takes before being able to be deployed again")
+        public int DEFAULT_SENTRY_TURRET_RESPAWN_TIME = 10;
     }
 
     @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)

@@ -7,20 +7,31 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.sentry_turret.turret.SentryTileEntityState;
+import srparasites_traps.network.SRParasitesTrapsNetwork;
+import srparasites_traps.network.ToggleSentryPacket;
+import srparasites_traps.util.Constants;
+import srparasites_traps.util.GuiHelper;
+import srparasites_traps.util.Translation;
 
 public class SentryTurretBaseGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/sentry_turret.png");
+    private final static ResourceLocation BUTTON_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/button.png");
     private final static int TANK_X_POSITION_PX = 8;
     private final static int TANK_Y_POSITION_PX = 16;
     private final static int TANK_WIDTH_PX = 16;
     private final static int TANK_HEIGHT_PX = 53;
-    private final static int ENERGY_X_POSITION_PX = TANK_X_POSITION_PX + TANK_WIDTH_PX + 5;
+    private final static int ENERGY_X_POSITION_PX = TANK_X_POSITION_PX + TANK_WIDTH_PX + 3;
     private final static int ENERGY_Y_POSITION_PX = TANK_Y_POSITION_PX - 1;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
     private final static double textScale = 1;
-    private final static int CONSOLE_X_POSITION_PX = 74;
-    private final static int CONSOLE_Y_POSITION_PX = 18;
+    private final static int TEXT_PADDING_PX = 2;
+    private final static int CONSOLE_X_POSITION_PX = 72;
+    private final static int CONSOLE_Y_POSITION_PX = 15;
+    private final static int BUTTON_X_POSITION_PX = 46;
+    private final static int BUTTON_Y_POSITION_PX = 15;
+    private final static String TOGGLE_BUTTON_NAME = "toggle";
     private final SentryTurretBaseTileEntity tileEntity;
 
     public SentryTurretBaseGui(InventoryPlayer playerInv, SentryTurretBaseTileEntity tileEntity) {
@@ -34,29 +45,48 @@ public class SentryTurretBaseGui extends GuiContainerCore {
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
+        addElement(GuiHelper.createNewButton(this, TOGGLE_BUTTON_NAME, BUTTON_X_POSITION_PX, BUTTON_Y_POSITION_PX).setToolTip(Translation.getTooltipFor("gui.sentry_turret.toggle")));
     }
 
-    enum SentryState {
-        ONLINE,
-        MISSING_ENERGY,
-        MISSING_BIOMASS;
+    enum SentryGuiState {
+        INACTIVE, DEPLOYED, MISSING_ENERGY, MISSING_BIOMASS_SHOOT, MISSING_BIOMASS_SPAWN, SENTRY_DEAD;
 
-        public String toString() {
-            if (this == ONLINE) return "Online";
-            if (this == MISSING_ENERGY) return "Offline\n> Reason: Missing\n energy";
-            if (this == MISSING_BIOMASS) return "Offline\n> Reason: Missing\n biomass";
+        public String toString(SentryTurretBaseTileEntity tileEntity) {
+            if (this == DEPLOYED) return "Deployed";
+            if (this == MISSING_ENERGY) return "Deployed\n> Missing energy";
+            if (this == MISSING_BIOMASS_SHOOT) return "Deployed\n> Missing biomass";
+            if (this == MISSING_BIOMASS_SPAWN) return "Inactive\n> Missing biomass\n  for spawn";
+            if (this == INACTIVE) return "Inactive\n> Press button to\n activate";
+            if (this == SENTRY_DEAD)
+                return String.format("Inactive\n> Cooldown %ds", (int) tileEntity.getCurrentRespawnTime());
             return "Unknown";
         }
     }
 
-    private SentryState getSentryState() {
-        if (!tileEntity.hasEnoughEnergyToShoot()) return SentryState.MISSING_ENERGY;
-        if (!tileEntity.hasEnoughBiomassToShoot()) return SentryState.MISSING_BIOMASS;
-        return SentryState.ONLINE;
+    @Override
+    public void handleElementButtonClick(String buttonName, int mouseButton) {
+        if (buttonName.equals(TOGGLE_BUTTON_NAME)) {
+            if (mouseButton == Constants.MOUSE_BUTTON_LEFT) {
+                playClickSound(1F);
+                SRParasitesTrapsNetwork.CHANNEL.sendToServer(new ToggleSentryPacket(tileEntity.getPos()));
+            }
+        }
     }
 
-    private int getSentryStateColor(SentryState state) {
-        if (state == SentryState.ONLINE) return 0x00FF00;
+    private SentryGuiState getSentryGuiState() {
+        if (tileEntity.getState() == SentryTileEntityState.DEAD) return SentryGuiState.SENTRY_DEAD;
+        if (!tileEntity.hasEnoughBiomassToShoot() && tileEntity.getState() != SentryTileEntityState.DEAD)
+            return SentryGuiState.MISSING_BIOMASS_SHOOT;
+        if (!tileEntity.hasEnoughBiomassForSpawn() && tileEntity.getState() != SentryTileEntityState.ACTIVE)
+            return SentryGuiState.MISSING_BIOMASS_SPAWN;
+        if (tileEntity.getState() == SentryTileEntityState.INACTIVE) return SentryGuiState.INACTIVE;
+        if (!tileEntity.hasEnoughEnergyToShoot()) return SentryGuiState.MISSING_ENERGY;
+        return SentryGuiState.DEPLOYED;
+    }
+
+    private int getSentryStateColor(SentryGuiState state) {
+        if (state == SentryGuiState.DEPLOYED) return 0x00FF00;
+        if (state == SentryGuiState.INACTIVE) return 0xFFEB3B;
         return 0xFF0000;
     }
 
@@ -65,11 +95,11 @@ public class SentryTurretBaseGui extends GuiContainerCore {
         super.drawElements(partialTick, foreground);
         GlStateManager.pushMatrix();
         GlStateManager.scale(textScale, textScale, textScale);
-        SentryState sentryState = getSentryState();
+        SentryGuiState sentryState = getSentryGuiState();
         this.fontRenderer.drawSplitString(
-                String.format("> Sentry %s", sentryState),
-                (int) (CONSOLE_X_POSITION_PX / textScale),
-                (int) (CONSOLE_Y_POSITION_PX / textScale),
+                String.format("> Sentry %s", sentryState.toString(tileEntity)),
+                (int) (CONSOLE_X_POSITION_PX / textScale) + TEXT_PADDING_PX,
+                (int) (CONSOLE_Y_POSITION_PX / textScale) + TEXT_PADDING_PX,
                 164,
                 getSentryStateColor(sentryState)
         );
