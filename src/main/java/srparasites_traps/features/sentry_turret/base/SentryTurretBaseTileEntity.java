@@ -199,7 +199,6 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
             if (!this.consumeEnergy(this.energyPerTick)) {
                 this.toggleEntity();
             }
-            ;
         }
 
         tryRespawn();
