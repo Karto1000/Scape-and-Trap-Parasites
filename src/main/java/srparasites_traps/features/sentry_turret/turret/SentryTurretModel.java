@@ -80,7 +80,6 @@ public class SentryTurretModel extends ModelUnvo {
         SentryTurretEntityState state = sentryTurret.getEntityState();
         long ticksSinceTargetLost = (sentryTurret.world.getTotalWorldTime() - sentryTurret.getTicksWhenTargetLost());
 
-        System.out.println(ticksSinceTargetLost);
         if (state == SentryTurretEntityState.ATTACKING || ticksSinceTargetLost <= sentryTurret.attackDelay) {
             float f1a = 0.3F * MathHelper.sin(ageInTicks * 0.021688F) * 0.006F;
             float f2a = -0.6F * MathHelper.sin(ageInTicks * 0.083515F) * 0.006F;

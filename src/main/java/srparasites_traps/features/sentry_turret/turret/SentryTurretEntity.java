@@ -129,6 +129,11 @@ public class SentryTurretEntity extends EntityLiving {
     }
 
     @Override
+    protected boolean canDespawn() {
+        return false;
+    }
+
+    @Override
     protected void initEntityAI() {
         this.tasks.addTask(1, new SentryTurretAttackTarget(this, this.world));
         this.targetTasks.addTask(1, new SentryTurretFindHostileMonster(this, this.world, this.attackRangeBlocks));

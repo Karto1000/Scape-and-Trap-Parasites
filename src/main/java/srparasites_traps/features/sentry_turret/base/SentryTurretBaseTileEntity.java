@@ -27,6 +27,7 @@ import java.util.UUID;
 public class SentryTurretBaseTileEntity extends TileCore implements ITickable, ICapabilityProvider {
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
+    public int energyPerTick = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_TICK;
     public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
     public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
     public int biomassForSpawn = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_FOR_SPAWN;
@@ -176,9 +177,7 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         } else this.removeTurret();
     }
 
-    @Override
-    public void update() {
-        if (this.world.isRemote) return;
+    private void tryRespawn() {
         if (this.state != SentryTileEntityState.DEAD) return;
 
         if (this.currentRespawnTime > 0) {
@@ -190,6 +189,20 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
 
         this.spawnTurret();
         this.currentRespawnTime = this.respawnTimeSeconds;
+    }
+
+    @Override
+    public void update() {
+        if (this.world.isRemote) return;
+
+        if (this.state == SentryTileEntityState.ACTIVE) {
+            if (!this.consumeEnergy(this.energyPerTick)) {
+                this.toggleEntity();
+            }
+            ;
+        }
+
+        tryRespawn();
     }
 
     @Override

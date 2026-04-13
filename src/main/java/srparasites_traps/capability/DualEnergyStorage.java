@@ -4,13 +4,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class DualEnergyStorage extends EnergyStorage {
-    private final cofh.redstoneflux.impl.EnergyStorage rfEnergyStorage = new cofh.redstoneflux.impl.EnergyStorage(0);
+    private final cofh.redstoneflux.impl.EnergyStorage rfEnergyStorage;
 
     public DualEnergyStorage(int capacity) {
         super(capacity);
-        this.rfEnergyStorage.setCapacity(capacity);
-        this.rfEnergyStorage.setMaxReceive(this.maxReceive);
-        this.rfEnergyStorage.setMaxExtract(this.maxExtract);
+        this.maxExtract = capacity;
+        this.rfEnergyStorage = new cofh.redstoneflux.impl.EnergyStorage(capacity);
     }
 
     public cofh.redstoneflux.impl.EnergyStorage getRfEnergyStorage() {
@@ -19,14 +18,16 @@ public class DualEnergyStorage extends EnergyStorage {
 
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
-        this.rfEnergyStorage.extractEnergy(maxExtract, simulate);
-        return super.extractEnergy(maxExtract, simulate);
+        int extracted = super.extractEnergy(maxExtract, simulate);
+        this.rfEnergyStorage.setEnergyStored(this.energy);
+        return extracted;
     }
 
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
-        this.rfEnergyStorage.receiveEnergy(maxReceive, simulate);
-        return super.receiveEnergy(maxReceive, simulate);
+        int received = super.receiveEnergy(maxReceive, simulate);
+        this.rfEnergyStorage.setEnergyStored(this.energy);
+        return received;
     }
 
     public void setEnergy(int energy) {
