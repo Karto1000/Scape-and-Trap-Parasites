@@ -14,6 +14,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the sentry turret")
     public static final SentryTurretConfig sentry = new SentryTurretConfig();
 
+    @Config.Name("Common")
+    @Config.Comment("Settings that are common to all mods")
+    public static final CommonConfig common = new CommonConfig();
+
     public static class SentryTurretConfig {
         @Config.Name("Enable sentry turret")
         @Config.Comment("If true, the sentry turret will be enabled")
@@ -75,6 +79,16 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret respawn time after dying (Seconds)")
         @Config.Comment("The time that the sentry takes before being able to be deployed again")
         public int DEFAULT_SENTRY_TURRET_RESPAWN_TIME = 10;
+    }
+
+    public static class CommonConfig {
+        @Config.Name("Sentry flesh drop chance (%)")
+        @Config.Comment("The chance that a sentry will drop sentry flesh")
+        public int SENTRY_FLESH_DROP_CHANCE = 20;
+
+        @Config.Name("Sentry flesh max drop amount")
+        @Config.Comment("The max amount of sentry flesh dropped by a sentry")
+        public int MAX_SENTRY_FLESH_DROP_AMOUNT = 2;
     }
 
     @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)
