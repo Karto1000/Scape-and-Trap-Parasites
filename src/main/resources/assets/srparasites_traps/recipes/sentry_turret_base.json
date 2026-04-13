@@ -6,9 +6,9 @@
     }
   ],
   "pattern": [
-    "fff",
-    "cnb",
-    "sss"
+    " f ",
+    "cfb",
+    "sns"
   ],
   "key": {
     "s": {
@@ -21,7 +21,7 @@
       "item": "minecraft:bucket"
     },
     "f": {
-      "item": "srparasites_traps:sentry_flesh"
+      "item": "srparasites_traps:sentry_skin"
     },
     "n": {
       "item": "srparasites:dispatchern"

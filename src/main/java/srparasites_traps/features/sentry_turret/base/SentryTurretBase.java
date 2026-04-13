@@ -2,6 +2,7 @@ package srparasites_traps.features.sentry_turret.base;
 
 import com.dhanantry.scapeandrunparasites.SRPMain;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +21,6 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 import static srparasites_traps.SRParasitesTraps.MOD_ID;
@@ -33,6 +33,11 @@ public class SentryTurretBase extends Block {
 
         setRegistryName(MOD_ID, "sentry_turret_base");
         setTranslationKey(getTranslationKeyFor("sentry_turret_base"));
+        // Same as obsidian
+        setHardness(50);
+        setResistance(1200);
+        setHarvestLevel("pickaxe", 2);
+        setSoundType(SoundType.METAL);
         if (ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) setCreativeTab(SRPMain.SRP_CREATIVETAB);
     }
 

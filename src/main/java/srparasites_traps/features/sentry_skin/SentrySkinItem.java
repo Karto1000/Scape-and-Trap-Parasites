@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_flesh;
+package srparasites_traps.features.sentry_skin;
 
 import com.dhanantry.scapeandrunparasites.SRPMain;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,13 +16,13 @@ import java.util.List;
 import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
-public class SentryFleshItem extends Item {
-    public SentryFleshItem() {
+public class SentrySkinItem extends Item {
+    public SentrySkinItem() {
         super();
 
-        setRegistryName(SRParasitesTraps.MOD_ID, "sentry_flesh");
+        setRegistryName(SRParasitesTraps.MOD_ID, "sentry_skin");
         setMaxStackSize(16);
-        setTranslationKey(getTranslationKeyFor("sentry_flesh"));
+        setTranslationKey(getTranslationKeyFor("sentry_skin"));
         setCreativeTab(SRPMain.SRP_CREATIVETAB);
     }
 
@@ -33,6 +33,6 @@ public class SentryFleshItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.sentry_flesh"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.sentry_skin"));
     }
 }
