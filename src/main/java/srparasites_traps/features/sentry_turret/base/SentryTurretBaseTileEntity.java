@@ -172,6 +172,7 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
     public void toggleEntity() {
         if (!this.getAssignedSentryTurret().isPresent()) {
             if (!this.hasEnoughBiomassForSpawn()) return;
+            if (this.energyStorage.getEnergyStored() <= 0) return;
             if (this.state == SentryTileEntityState.DEAD) return;
             this.spawnTurret();
         } else this.removeTurret();
@@ -260,8 +261,8 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         return this.biomassStorage.getFluidAmount() >= this.biomassForSpawn;
     }
 
-    public boolean hasEnoughEnergyToShoot() {
-        return this.energyStorage.getEnergyStored() >= this.energyPerShot;
+    public boolean hasEnoughEnergy() {
+        return this.energyStorage.getEnergyStored() >= this.energyPerShot && this.energyStorage.getEnergyStored() >= this.energyPerTick;
     }
 
     public double getCurrentRespawnTime() {

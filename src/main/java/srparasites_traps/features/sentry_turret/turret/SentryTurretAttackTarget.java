@@ -67,7 +67,7 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         if (tileEntity instanceof SentryTurretBaseTileEntity) {
             sentryTurretBaseTileEntity = (SentryTurretBaseTileEntity) tileEntity;
             if (!sentryTurretBaseTileEntity.hasEnoughBiomassToShoot()) return;
-            if (!sentryTurretBaseTileEntity.hasEnoughEnergyToShoot()) return;
+            if (!sentryTurretBaseTileEntity.hasEnoughEnergy()) return;
         } else {
             return;
         }

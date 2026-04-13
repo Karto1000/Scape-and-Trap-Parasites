@@ -6,7 +6,7 @@
     }
   ],
   "pattern": [
-    " f ",
+    "fff",
     "cnb",
     "sss"
   ],
@@ -21,7 +21,7 @@
       "item": "minecraft:bucket"
     },
     "f": {
-      "item": "minecraft:gravel"
+      "item": "srparasites_traps:sentry_flesh"
     },
     "n": {
       "item": "srparasites:dispatchern"

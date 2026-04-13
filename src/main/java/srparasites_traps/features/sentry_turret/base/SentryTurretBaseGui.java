@@ -49,13 +49,14 @@ public class SentryTurretBaseGui extends GuiContainerCore {
     }
 
     enum SentryGuiState {
-        INACTIVE, DEPLOYED, MISSING_ENERGY, MISSING_BIOMASS_SHOOT, MISSING_BIOMASS_SPAWN, SENTRY_DEAD;
+        INACTIVE, DEPLOYED, MISSING_ENERGY_SPAWN, DEPLOYED_MISSING_ENERGY, MISSING_BIOMASS_SHOOT, MISSING_BIOMASS_SPAWN, SENTRY_DEAD;
 
         public String toString(SentryTurretBaseTileEntity tileEntity) {
             if (this == DEPLOYED) return "Deployed";
-            if (this == MISSING_ENERGY) return "Deployed\n> Missing energy";
+            if (this == DEPLOYED_MISSING_ENERGY) return "Deployed\n> Missing energy";
             if (this == MISSING_BIOMASS_SHOOT) return "Deployed\n> Missing biomass";
-            if (this == MISSING_BIOMASS_SPAWN) return "Inactive\n> Missing biomass\n  for spawn";
+            if (this == MISSING_ENERGY_SPAWN) return "Inactive\n> Missing energy\n for spawn";
+            if (this == MISSING_BIOMASS_SPAWN) return "Inactive\n> Missing biomass\n for spawn";
             if (this == INACTIVE) return "Inactive\n> Press button to\n activate";
             if (this == SENTRY_DEAD)
                 return String.format("Inactive\n> Cooldown %ds", (int) tileEntity.getCurrentRespawnTime());
@@ -75,12 +76,14 @@ public class SentryTurretBaseGui extends GuiContainerCore {
 
     private SentryGuiState getSentryGuiState() {
         if (tileEntity.getState() == SentryTileEntityState.DEAD) return SentryGuiState.SENTRY_DEAD;
-        if (!tileEntity.hasEnoughBiomassToShoot() && tileEntity.getState() != SentryTileEntityState.DEAD)
-            return SentryGuiState.MISSING_BIOMASS_SHOOT;
         if (!tileEntity.hasEnoughBiomassForSpawn() && tileEntity.getState() != SentryTileEntityState.ACTIVE)
             return SentryGuiState.MISSING_BIOMASS_SPAWN;
+        if (tileEntity.getState() == SentryTileEntityState.INACTIVE && !tileEntity.hasEnoughEnergy())
+            return SentryGuiState.MISSING_ENERGY_SPAWN;
+        if (!tileEntity.hasEnoughBiomassToShoot() && tileEntity.getState() != SentryTileEntityState.DEAD)
+            return SentryGuiState.MISSING_BIOMASS_SHOOT;
         if (tileEntity.getState() == SentryTileEntityState.INACTIVE) return SentryGuiState.INACTIVE;
-        if (!tileEntity.hasEnoughEnergyToShoot()) return SentryGuiState.MISSING_ENERGY;
+        if (!tileEntity.hasEnoughEnergy()) return SentryGuiState.DEPLOYED_MISSING_ENERGY;
         return SentryGuiState.DEPLOYED;
     }
 
@@ -96,13 +99,7 @@ public class SentryTurretBaseGui extends GuiContainerCore {
         GlStateManager.pushMatrix();
         GlStateManager.scale(textScale, textScale, textScale);
         SentryGuiState sentryState = getSentryGuiState();
-        this.fontRenderer.drawSplitString(
-                String.format("> Sentry %s", sentryState.toString(tileEntity)),
-                (int) (CONSOLE_X_POSITION_PX / textScale) + TEXT_PADDING_PX,
-                (int) (CONSOLE_Y_POSITION_PX / textScale) + TEXT_PADDING_PX,
-                164,
-                getSentryStateColor(sentryState)
-        );
+        this.fontRenderer.drawSplitString(String.format("> Sentry %s", sentryState.toString(tileEntity)), (int) (CONSOLE_X_POSITION_PX / textScale) + TEXT_PADDING_PX, (int) (CONSOLE_Y_POSITION_PX / textScale) + TEXT_PADDING_PX, 164, getSentryStateColor(sentryState));
         GlStateManager.popMatrix();
     }
 

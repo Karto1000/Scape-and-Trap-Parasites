@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import srparasites_traps.handlers.LootHandler;
 import srparasites_traps.handlers.RegistryHandler;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.proxy.CommonProxy;
@@ -28,6 +29,7 @@ public class SRParasitesTraps {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         RegistryHandler.init();
+        LootHandler.init();
         SRParasitesTrapsNetwork.init();
         SRParasitesTraps.PROXY.init();
     }
