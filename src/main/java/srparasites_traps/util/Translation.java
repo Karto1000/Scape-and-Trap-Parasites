@@ -11,4 +11,12 @@ public class Translation {
     public static String getTooltipFor(String id) {
         return I18n.format("tooltip." + SRParasitesTraps.MOD_ID + "." + id);
     }
+
+    public static String getTooltipFor(String id, Object... args) {
+        return I18n.format("tooltip." + SRParasitesTraps.MOD_ID + "." + id, args);
+    }
+
+    public static String getStatusFor(String id, Object... args) {
+        return I18n.format("status." + SRParasitesTraps.MOD_ID + "." + id, args);
+    }
 }

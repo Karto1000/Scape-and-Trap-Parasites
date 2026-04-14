@@ -2,6 +2,7 @@ package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBase;
 
 import java.lang.reflect.Field;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 public class ModBlocks {
     public static Block SENTRY_TURRET_BASE = new SentryTurretBase();
+    public static Block RELOCATOR = new RelocatorBlock();
 
     public static ArrayList<Block> getBlockList() {
         ArrayList<Block> blocks = new ArrayList<>();

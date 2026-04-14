@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseContainer;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseGui;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
@@ -54,5 +56,9 @@ public class GuiHandler implements IGuiHandler {
         }
 
         return null;
+    }
+
+    public static void init() {
+        NetworkRegistry.INSTANCE.registerGuiHandler(SRParasitesTraps.instance, new GuiHandler());
     }
 }

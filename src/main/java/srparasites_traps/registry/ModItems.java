@@ -3,6 +3,7 @@ package srparasites_traps.registry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
 import srparasites_traps.features.sentry_skin.SentrySkinItem;
 import srparasites_traps.features.two_way_communication_unit.TwoWayCommunicationUnitItem;
 
@@ -11,8 +12,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ModItems {
-    public static Item SENTRY_TURRET_BASE_ITEM = new ItemBlock(ModBlocks.SENTRY_TURRET_BASE)
-            .setRegistryName(Objects.requireNonNull(ModBlocks.SENTRY_TURRET_BASE.getRegistryName()));
+    public static Item SENTRY_TURRET_BASE_ITEM = new ItemBlock(ModBlocks.SENTRY_TURRET_BASE).setRegistryName(Objects.requireNonNull(ModBlocks.SENTRY_TURRET_BASE.getRegistryName()));
+    public static Item RELOCATOR_ITEM = new ItemBlock(ModBlocks.RELOCATOR).setRegistryName(Objects.requireNonNull(ModBlocks.RELOCATOR.getRegistryName()));
+    public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item TWO_WAY_COMMUNICATION_UNIT = new TwoWayCommunicationUnitItem();
     public static Item SENTRY_FLESH = new SentrySkinItem();
 

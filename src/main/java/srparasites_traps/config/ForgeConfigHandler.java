@@ -14,6 +14,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the sentry turret")
     public static final SentryTurretConfig sentry = new SentryTurretConfig();
 
+    @Config.Name("Relocator")
+    @Config.Comment("Settings for the relocator")
+    public static final RelocatorConfig relocator = new RelocatorConfig();
+
     @Config.Name("Common")
     @Config.Comment("Settings that are common to all mods")
     public static final CommonConfig common = new CommonConfig();
@@ -81,7 +85,25 @@ public class ForgeConfigHandler {
         public int DEFAULT_SENTRY_TURRET_RESPAWN_TIME = 10;
     }
 
+    public static class RelocatorConfig {
+        @Config.Name("Enable relocator")
+        @Config.Comment("If true, the relocator will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_RELOCATOR = true;
+
+        @Config.Name("Default relocation marker search area (Blocks)")
+        @Config.Comment("The search area (x * y * z) that the relocation marker can be set to")
+        public int DEFAULT_RELOCATION_MARKER_MAX_SEARCH_AREA = 200;
+
+        @Config.Name("Default relocation marker destination area (Blocks)")
+        @Config.Comment("The destination area (x * y * z) that the relocation marker can be set to")
+        public int DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_AREA = 200;
+    }
+
     public static class CommonConfig {
+        @Config.Name("Debug Mode")
+        public boolean DEBUG_MODE = false;
+
         @Config.Name("Sentry flesh drop chance (%)")
         @Config.Comment("The chance that a sentry will drop sentry flesh")
         public int SENTRY_FLESH_DROP_CHANCE = 20;
