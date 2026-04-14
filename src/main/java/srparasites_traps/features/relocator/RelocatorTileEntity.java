@@ -1,6 +1,8 @@
 package srparasites_traps.features.relocator;
 
 import cofh.core.block.TileCore;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.item.ItemStack;
@@ -21,8 +23,10 @@ import java.util.stream.Collectors;
 public class RelocatorTileEntity extends TileCore implements ITickable {
     private ItemStack assignedRelocationMarker = ItemStack.EMPTY;
     public int relocationDelay = 100;
+    private int randomBlockSelectionRetries = 10;
     private int currentRelocationDelay = 0;
     private RelocatorTileEntityState state = RelocatorTileEntityState.IDLE;
+    private RelocatorEntity spawnedRelocator;
 
     public RelocatorTileEntity() {
         super();
@@ -90,15 +94,38 @@ public class RelocatorTileEntity extends TileCore implements ITickable {
 
         Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundDestinationArea(this.assignedRelocationMarker);
         if (!searchAABB.isPresent()) return Optional.empty();
+        AxisAlignedBB aabb = searchAABB.get();
 
-        BlockPos pos = VecHelper.getRandomPosition(this.world.rand, searchAABB.get());
-        return Optional.of(pos);
+        Optional<BlockPos> result = Optional.empty();
+        for (int i = 0; i < this.randomBlockSelectionRetries; i++) {
+            if (result.isPresent()) break;
+
+            BlockPos pos = VecHelper.getRandomPosition(this.world.rand, aabb);
+            double deltaToBottom = pos.getY() - aabb.minY;
+
+            for (int j = 0; j <= deltaToBottom; j++) {
+                IBlockState blockState = this.world.getBlockState(pos.down(j));
+                if (blockState.getMaterial() == Material.AIR || blockState.getMaterial().isLiquid()) continue;
+
+                result = Optional.of(pos.down(j - 1));
+                break;
+            }
+        }
+
+        return result;
     }
 
     @Override
     public void update() {
         if (this.world.isRemote) return;
         if (this.assignedRelocationMarker.isEmpty()) return;
+
+        if (this.state == RelocatorTileEntityState.RELOCATING) {
+            if (this.spawnedRelocator.isDead) {
+                this.setState(RelocatorTileEntityState.IDLE);
+                this.spawnedRelocator = null;
+            }
+        }
 
         if (this.currentRelocationDelay > 0) {
             this.currentRelocationDelay--;
@@ -110,10 +137,7 @@ public class RelocatorTileEntity extends TileCore implements ITickable {
         Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundSearchArea(this.assignedRelocationMarker);
         if (!searchAABB.isPresent()) return;
 
-        List<EntityLivingBase> entities = this.world.getEntitiesWithinAABB(EntityLivingBase.class, searchAABB.get())
-                .stream()
-                .filter(e -> e instanceof IMob && e.isEntityAlive())
-                .collect(Collectors.toList());
+        List<EntityLivingBase> entities = this.world.getEntitiesWithinAABB(EntityLivingBase.class, searchAABB.get()).stream().filter(e -> e instanceof IMob && e.isEntityAlive()).collect(Collectors.toList());
 
         if (entities.isEmpty()) return;
 
@@ -122,14 +146,8 @@ public class RelocatorTileEntity extends TileCore implements ITickable {
         Optional<BlockPos> randomPos = getRandomDestinationPosition();
         if (!randomPos.isPresent()) return;
 
-        RelocatorEntity relocator = new RelocatorEntity(
-                world,
-                this.pos,
-                entity.getPosition(),
-                randomPos.get(),
-                entity
-        );
-        world.spawnEntity(relocator);
+        this.spawnedRelocator = new RelocatorEntity(world, this.pos, entity.getPosition(), randomPos.get(), entity);
+        world.spawnEntity(this.spawnedRelocator);
         this.setState(RelocatorTileEntityState.RELOCATING);
 
         this.currentRelocationDelay = this.relocationDelay;

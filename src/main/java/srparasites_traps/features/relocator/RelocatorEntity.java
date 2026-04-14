@@ -219,6 +219,9 @@ public class RelocatorEntity extends EntityLiving {
             double currentEmergeTime = getCurrentEmergeTime();
             setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
 
+            Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
+            entityToRelocate.ifPresent(e -> e.setPositionAndUpdate(spawnPosition.getX() + 0.5, spawnPosition.getY(), spawnPosition.getZ() + 0.5));
+
             if (getCurrentEmergeTime() <= 0.00) {
                 setEntityState(RelocatorEntityState.RETRACTING);
             }
@@ -227,7 +230,10 @@ public class RelocatorEntity extends EntityLiving {
             setCurrentEmergeTime(currentEmergeTime + 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
 
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
-            entityToRelocate.ifPresent(e -> e.setPositionAndUpdate(spawnPosition.getX(), spawnPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime, spawnPosition.getZ()));
+            entityToRelocate.ifPresent(e -> {
+                e.setPositionAndUpdate(spawnPosition.getX() + 0.5, spawnPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime, spawnPosition.getZ() + 0.5);
+                e.setVelocity(0, 0, 0);
+            });
 
             if (getCurrentEmergeTime() >= 1.00) {
                 if (!entityToRelocate.isPresent()) {
@@ -236,14 +242,18 @@ public class RelocatorEntity extends EntityLiving {
                 }
 
                 setEntityState(RelocatorEntityState.RELOCATING);
-                this.setPosition(targetPosition.getX(), targetPosition.getY(), targetPosition.getZ());
+                this.setPosition(targetPosition.getX() + 0.5, targetPosition.getY(), targetPosition.getZ() + 0.5);
             }
         } else if (state == RelocatorEntityState.RELOCATING) {
             double currentEmergeTime = getCurrentEmergeTime();
             setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
 
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
-            entityToRelocate.ifPresent(e -> e.setPositionAndUpdate(targetPosition.getX(), targetPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime, targetPosition.getZ()));
+            // Move the entity to the target position and a bit above so it doesn't clip through the block
+            entityToRelocate.ifPresent(e -> {
+                e.setPositionAndUpdate(targetPosition.getX() + 0.5, targetPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime + 0.5, targetPosition.getZ() + 0.5);
+                e.setVelocity(0, 0, 0);
+            });
 
             if (getCurrentEmergeTime() <= 0.00) {
                 setEntityState(RelocatorEntityState.RETRACTING);
