@@ -21,7 +21,7 @@ public class SentryTurretEntity extends EntityLiving {
     public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
     public int currentAttackCooldown = attackDelay;
     public double attackRangeBlocks = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
-    public final double emergeTimeSeconds = 5.1;
+    public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
 
     private static final DataParameter<Long> ticksWhenTargetLost = EntityDataManager.createKey(SentryTurretEntity.class, Serializers.LONG);
     private static final DataParameter<Float> currentEmergeTime = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.FLOAT);
@@ -79,7 +79,7 @@ public class SentryTurretEntity extends EntityLiving {
     protected void entityInit() {
         super.entityInit();
         this.dataManager.register(state, SentryTurretEntityState.EMERGING.ordinal());
-        this.dataManager.register(currentEmergeTime, (float) emergeTimeSeconds);
+        this.dataManager.register(currentEmergeTime, 1F);
         this.dataManager.register(ticksWhenTargetLost, 0L);
     }
 
@@ -117,7 +117,7 @@ public class SentryTurretEntity extends EntityLiving {
         SentryTurretEntityState state = getEntityState();
         if (state == SentryTurretEntityState.EMERGING) {
             double currentEmergeTime = getCurrentEmergeTime();
-            setCurrentEmergeTime(currentEmergeTime - 1. / Constants.TPS_LIMIT);
+            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
 
             if (getCurrentEmergeTime() <= 0.00) {
                 setEntityState(SentryTurretEntityState.IDLE);

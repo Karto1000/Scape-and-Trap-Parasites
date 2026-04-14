@@ -83,6 +83,10 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret respawn time after dying (Seconds)")
         @Config.Comment("The time that the sentry takes before being able to be deployed again")
         public int DEFAULT_SENTRY_TURRET_RESPAWN_TIME = 10;
+
+        @Config.Name("Default sentry turret emerge time (Seconds)")
+        @Config.Comment("The time that the sentry turret takes to emerge from the ground")
+        public double DEFAULT_SENTRY_TURRET_EMERGE_TIME = 5.1F;
     }
 
     public static class RelocatorConfig {
@@ -98,6 +102,10 @@ public class ForgeConfigHandler {
         @Config.Name("Default relocation marker destination area (Blocks)")
         @Config.Comment("The destination area (x * y * z) that the relocation marker can be set to")
         public int DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_AREA = 200;
+
+        @Config.Name("Default relocator entity emerge time (Seconds)")
+        @Config.Comment("The time that relocator entity takes to emerge from the ground")
+        public double DEFAULT_RELOCATOR_EMERGE_TIME = 4.0;
     }
 
     public static class CommonConfig {

@@ -6,6 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import srparasites_traps.features.relocator.RelocatorEntity;
+import srparasites_traps.features.relocator.RelocatorEntityRenderer;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretRenderer;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretSpineball;
@@ -24,7 +26,6 @@ public class ClientProxy extends CommonProxy {
         RenderHandler.init();
     }
 
-    @Override
     public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
     }
@@ -38,6 +39,11 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
                 SentryTurretSpineball.class,
                 manager -> new SRPProjectile(manager, 0.5F, new ResourceLocation(Constants.SRPARASITES_MOD_ID, "textures/entity/projectile/spineball.png"))
+        );
+
+        RenderingRegistry.registerEntityRenderingHandler(
+                RelocatorEntity.class,
+                RelocatorEntityRenderer::new
         );
     }
 }

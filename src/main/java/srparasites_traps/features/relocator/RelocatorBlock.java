@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -52,11 +53,17 @@ public class RelocatorBlock extends Block {
             ItemStack heldItem = playerIn.getHeldItemMainhand();
             if (!RelocationMarkerItem.hasBoundPositions(heldItem)) return false;
 
+            ItemStack relocationMarkerItem = relocatorTileEntity.getRelocationMarker().copy();
             relocatorTileEntity.setRelocationMarker(heldItem.copy());
             relocatorTileEntity.markDirty();
             worldIn.notifyBlockUpdate(pos, state, state, 3);
             heldItem.shrink(1);
-        } else {
+
+            if (relocationMarkerItem.isEmpty()) return true;
+
+            // Swap the held item with the old one
+            playerIn.setHeldItem(hand, relocationMarkerItem);
+        } else if (item instanceof ItemAir) {
             ItemStack relocationMarker = relocatorTileEntity.getRelocationMarker();
             if (relocationMarker.isEmpty()) return false;
 

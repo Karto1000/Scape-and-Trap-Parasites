@@ -33,10 +33,10 @@ public class RenderHandler {
         double renderZ = Minecraft.getMinecraft().getRenderManager().viewerPosZ;
 
         Optional<AxisAlignedBB> boundSearchArea = RelocationMarkerItem.getBoundSearchArea(stack);
-        boundSearchArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX + 1, box.maxY - box.minY + 1, box.maxZ - box.minZ + 1, 0.5F, 0.0F, 0.0F));
+        boundSearchArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ, 0.5F, 0.0F, 0.0F));
 
         Optional<AxisAlignedBB> boundDestinationArea = RelocationMarkerItem.getBoundDestinationArea(stack);
-        boundDestinationArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX + 1, box.maxY - box.minY + 1, box.maxZ - box.minZ + 1, 0.0F, 0.5F, 0.0F));
+        boundDestinationArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ, 0.0F, 0.5F, 0.0F));
     }
 
     private void drawSelectionBox(double x, double y, double z, float r, float g, float b) {

@@ -249,7 +249,7 @@ public class SentryTurretModel extends ModelUnvo {
         double emergeTime = sentry.getCurrentEmergeTime();
 
         if (emergeTime >= 0.0F) {
-            this.mainbody.offsetY = (float) emergeTime;
+            this.mainbody.offsetY = (sentry.getEyeHeight() + 1) * (float) emergeTime;
             this.mainbody.offsetX = partialTickTime * 0.091F;
             this.mainbody.offsetZ = partialTickTime * 0.092F;
         } else {

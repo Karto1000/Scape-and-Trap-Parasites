@@ -4,6 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.relocator.RelocatorEntity;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretSpineball;
 
@@ -22,6 +23,13 @@ public class ModEntities {
             .id(new ResourceLocation(SRParasitesTraps.MOD_ID, "sentry_turret_spineball"), 2)
             .tracker(64, 1, true)
             .name("sentry_turret_spineball")
+            .build();
+    public static EntityEntry RELOCATOR_ENTITY = EntityEntryBuilder.create()
+            .entity(RelocatorEntity.class)
+            .id(new ResourceLocation(SRParasitesTraps.MOD_ID, "relocator"), 3)
+            .tracker(64, 1, true)
+            .name("relocator")
+            .egg(0x000000, 0xFFFFFF)
             .build();
 
     public static ArrayList<EntityEntry> getEntityList() {

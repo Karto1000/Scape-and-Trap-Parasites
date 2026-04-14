@@ -13,6 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -145,7 +146,17 @@ public class RelocationMarkerItem extends Item {
         BlockPos pos1BlockPos = BlockPos.fromLong(pos1);
         BlockPos pos2BlockPos = BlockPos.fromLong(pos2);
 
-        return Optional.of(new AxisAlignedBB(pos1BlockPos, pos2BlockPos));
+        if (pos1BlockPos.getX() > pos2BlockPos.getX()) pos1BlockPos = pos1BlockPos.add(new Vec3i(1, 0, 0));
+        else pos2BlockPos = pos2BlockPos.add(new Vec3i(1, 0, 0));
+
+        if (pos1BlockPos.getY() > pos2BlockPos.getY()) pos1BlockPos = pos1BlockPos.add(new Vec3i(0, 1, 0));
+        else pos2BlockPos = pos2BlockPos.add(new Vec3i(0, 1, 0));
+
+        if (pos1BlockPos.getZ() > pos2BlockPos.getZ()) pos1BlockPos = pos1BlockPos.add(new Vec3i(0, 0, 1));
+        else pos2BlockPos = pos2BlockPos.add(new Vec3i(0, 0, 1));
+
+        AxisAlignedBB searchArea = new AxisAlignedBB(pos1BlockPos, pos2BlockPos);
+        return Optional.of(searchArea);
     }
 
     public static Optional<AxisAlignedBB> getBoundDestinationArea(ItemStack item) {
@@ -161,7 +172,17 @@ public class RelocationMarkerItem extends Item {
         BlockPos pos1BlockPos = BlockPos.fromLong(pos1);
         BlockPos pos2BlockPos = BlockPos.fromLong(pos2);
 
-        return Optional.of(new AxisAlignedBB(pos1BlockPos, pos2BlockPos));
+        if (pos1BlockPos.getX() > pos2BlockPos.getX()) pos1BlockPos = pos1BlockPos.add(new Vec3i(1, 0, 0));
+        else pos2BlockPos = pos2BlockPos.add(new Vec3i(1, 0, 0));
+
+        if (pos1BlockPos.getY() > pos2BlockPos.getY()) pos1BlockPos = pos1BlockPos.add(new Vec3i(0, 1, 0));
+        else pos2BlockPos = pos2BlockPos.add(new Vec3i(0, 1, 0));
+
+        if (pos1BlockPos.getZ() > pos2BlockPos.getZ()) pos1BlockPos = pos1BlockPos.add(new Vec3i(0, 0, 1));
+        else pos2BlockPos = pos2BlockPos.add(new Vec3i(0, 0, 1));
+
+        AxisAlignedBB destinationArea = new AxisAlignedBB(pos1BlockPos, pos2BlockPos);
+        return Optional.of(destinationArea);
     }
 
     public static boolean hasBoundPositions(ItemStack item) {
