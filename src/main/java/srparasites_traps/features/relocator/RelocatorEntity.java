@@ -214,7 +214,9 @@ public class RelocatorEntity extends EntityLiving {
         if (tileEntity instanceof RelocatorTileEntity) {
             RelocatorTileEntity relocatorTileEntity = (RelocatorTileEntity) tileEntity;
             relocatorTileEntity.setState(RelocatorTileEntityState.IDLE);
-            relocatorTileEntity.setCurrentRelocatorCount(relocatorTileEntity.getCurrentRelocatorCount() + 1);
+            if (relocatorTileEntity.getCurrentRelocatorCount() < relocatorTileEntity.maxRelocatorsInReserve) {
+                relocatorTileEntity.setCurrentRelocatorCount(relocatorTileEntity.getCurrentRelocatorCount() + 1);
+            }
         }
 
         this.world.removeEntity(this);
@@ -272,7 +274,7 @@ public class RelocatorEntity extends EntityLiving {
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
             // Move the entity to the target position and a bit above so it doesn't clip through the block
             entityToRelocate.ifPresent(e -> {
-                e.setPositionAndUpdate(targetPosition.getX() + 0.5, targetPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime + 0.5, targetPosition.getZ() + 0.5);
+                e.setPositionAndUpdate(targetPosition.getX() + 0.5, targetPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime + 0.25, targetPosition.getZ() + 0.5);
                 e.setVelocity(0, 0, 0);
             });
 

@@ -54,7 +54,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     private UUID spawnedRelocatorUUID;
 
     private int currentRelocationDelay = 0;
-    private int currentRelocatorCount = 0;
+    private int currentRelocatorCount = maxRelocatorsInReserve;
     private int currentRelocatorCreateDelay = 0;
 
     public RelocatorTileEntity() {
@@ -78,6 +78,14 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     public int getCurrentRelocatorCount() {
         return this.currentRelocatorCount;
+    }
+
+    public int getCurrentRelocatorCreateDelay()  {
+        return this.currentRelocatorCreateDelay;
+    }
+
+    public void setCurrentRelocationDelay(int delay) {
+        this.currentRelocationDelay = delay;
     }
 
     public Optional<ItemStack> getAssignedRelocationMarker() {
@@ -189,6 +197,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public void sendGuiNetworkData(Container container, IContainerListener player) {
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, this.currentRelocatorCount);
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 2, this.currentRelocatorCreateDelay);
     }
 
     @Override
@@ -197,6 +207,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         switch (id) {
             case AVAILABLE_WINDOW_VAR:
                 this.setState(RelocatorTileEntityState.values()[data]);
+            case AVAILABLE_WINDOW_VAR + 1:
+                this.currentRelocatorCount = data;
+            case AVAILABLE_WINDOW_VAR + 2:
+                this.currentRelocatorCreateDelay = data;
         }
     }
 
@@ -274,19 +288,13 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             if (!isRelocatorValidForState) this.setState(RelocatorTileEntityState.IDLE);
         }
 
-        Optional<ItemStack> arm = getAssignedRelocationMarker();
-        if (!arm.isPresent() || arm.get().isEmpty()) return;
-        ItemStack assignedRelocationMarker = arm.get();
-
-        if (this.energyStorage.getEnergyStored() < this.energyPerTick) return;
-        else this.energyStorage.extractEnergy(this.energyPerTick, false);
-
         // Slowly increase the number of relocators in reserve
-        if (this.currentRelocatorCount < this.maxRelocatorsInReserve) {
+        if (this.currentRelocatorCount < this.maxRelocatorsInReserve && this.biomassStorage.getFluidAmount() >= this.biomassPerRelocatorSpawn) {
             if (this.currentRelocatorCreateDelay > 0) {
                 this.currentRelocatorCreateDelay--;
             } else {
                 this.currentRelocatorCreateDelay = this.relocatorCreateDelay;
+                this.biomassStorage.drain(this.biomassPerRelocatorSpawn, true);
                 this.currentRelocatorCount++;
             }
         }
@@ -295,6 +303,13 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             this.currentRelocationDelay--;
             return;
         }
+
+        Optional<ItemStack> arm = getAssignedRelocationMarker();
+        if (!arm.isPresent() || arm.get().isEmpty()) return;
+        ItemStack assignedRelocationMarker = arm.get();
+
+        if (this.energyStorage.getEnergyStored() < this.energyPerTick) return;
+        else this.energyStorage.extractEnergy(this.energyPerTick, false);
 
         if (this.state != RelocatorTileEntityState.IDLE) return;
         if (this.currentRelocatorCount <= 0) return;
@@ -313,7 +328,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         this.spawnedRelocator = new RelocatorEntity(world, this.pos, entity.getPosition(), randomPos.get(), entity);
         world.spawnEntity(this.spawnedRelocator);
         this.setState(RelocatorTileEntityState.RELOCATING);
-        this.biomassStorage.drain(this.biomassPerRelocatorSpawn, true);
 
         this.currentRelocatorCount--;
         this.currentRelocationDelay = this.relocationDelay;

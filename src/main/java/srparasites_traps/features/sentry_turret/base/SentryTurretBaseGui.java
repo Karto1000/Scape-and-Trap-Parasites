@@ -24,10 +24,7 @@ public class SentryTurretBaseGui extends GuiContainerCore {
     private final static int ENERGY_Y_POSITION_PX = TANK_Y_POSITION_PX - 1;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
-    private final static double textScale = 1;
-    private final static int TEXT_PADDING_PX = 2;
-    private final static int CONSOLE_X_POSITION_PX = 72;
-    private final static int CONSOLE_Y_POSITION_PX = 15;
+    private final static double textScale = 0.75;
     private final static int BUTTON_X_POSITION_PX = 46;
     private final static int BUTTON_Y_POSITION_PX = 15;
     private final static String TOGGLE_BUTTON_NAME = "toggle";
@@ -98,7 +95,7 @@ public class SentryTurretBaseGui extends GuiContainerCore {
         GlStateManager.pushMatrix();
         GlStateManager.scale(textScale, textScale, textScale);
         SentryGuiState sentryState = getSentryGuiState();
-        this.fontRenderer.drawSplitString(String.format("> Sentry %s", sentryState.toString(tileEntity)), (int) (CONSOLE_X_POSITION_PX / textScale) + TEXT_PADDING_PX, (int) (CONSOLE_Y_POSITION_PX / textScale) + TEXT_PADDING_PX, 164, getSentryStateColor(sentryState));
+        this.fontRenderer.drawSplitString(String.format("> Sentry %s", sentryState.toString(tileEntity)), (int) (Constants.CONSOLE_X_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX, (int) (Constants.CONSOLE_Y_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX, 164, getSentryStateColor(sentryState));
         GlStateManager.popMatrix();
     }
 

@@ -19,4 +19,7 @@ public class Constants {
     public static final int BUTTON_SPRITESHEET_HOVER_Y = 0;
     public static final int MOUSE_BUTTON_LEFT = 0;
     public static final int MOUSE_BUTTON_RIGHT = 1;
+    public final static int CONSOLE_X_POSITION_PX = 72;
+    public final static int CONSOLE_Y_POSITION_PX = 15;
+    public final static int CONSOLE_TEXT_PADDING_PX = 2;
 }

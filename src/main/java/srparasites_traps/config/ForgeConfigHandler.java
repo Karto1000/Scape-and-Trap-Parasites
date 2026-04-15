@@ -115,7 +115,7 @@ public class ForgeConfigHandler {
         @Config.Comment("The max health of the relocator entity")
         public int DEFAULT_RELOCATOR_MAX_HEALTH = 30;
 
-        @Config.Name("Default relocator block selection retires")
+        @Config.Name("Default relocator block selection retries")
         @Config.Comment("The amount of times the relocator tries to find a valid block to relocate an entity to")
         public int DEFAULT_RELOCATOR_BLOCK_SELECTION_RETRIES = 10;
 
@@ -125,11 +125,11 @@ public class ForgeConfigHandler {
 
         @Config.Name("Default relocator max relocators in reserve")
         @Config.Comment("The max amount of relocators that can be spawned after one another")
-        public int DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE = 10;
+        public int DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE = 2;
 
         @Config.Name("Default relocator max relocator spawn delay (Ticks)")
         @Config.Comment("The time in ticks between each possible relocator spawn")
-        public int DEFAULT_RELOCATOR_RELOCATOR_CREATE_DELAY = 200;
+        public int DEFAULT_RELOCATOR_RELOCATOR_CREATE_DELAY = 400;
 
         @Config.Name("Default relocator max energy (RF)")
         @Config.Comment("The maximum amount of energy that a relocation turret can hold")
@@ -144,7 +144,7 @@ public class ForgeConfigHandler {
         public int DEFAULT_RELOCATOR_ENERGY_PER_TICK = 25;
 
         @Config.Name("Default relocator biomass per relocator spawn (mB)")
-        @Config.Comment("The amount of biomass that a relocator spawns with")
+        @Config.Comment("The amount of biomass that a relocator requires to spawn")
         public int DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN = 100;
     }
 

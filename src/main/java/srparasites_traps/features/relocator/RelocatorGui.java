@@ -3,9 +3,13 @@ package srparasites_traps.features.relocator;
 import cofh.core.gui.GuiContainerCore;
 import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.util.Constants;
+
+import static srparasites_traps.util.Constants.*;
 
 public class RelocatorGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/relocator.png");
@@ -17,6 +21,7 @@ public class RelocatorGui extends GuiContainerCore {
     private final static int ENERGY_Y_POSITION_PX = TANK_Y_POSITION_PX - 1;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
+    private final static double textScale = 0.75;
     private final RelocatorTileEntity tileEntity;
 
     public RelocatorGui(InventoryPlayer playerInv, RelocatorTileEntity tileEntity) {
@@ -30,6 +35,28 @@ public class RelocatorGui extends GuiContainerCore {
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
+    }
+
+    @Override
+    protected void drawElements(float partialTick, boolean foreground) {
+        super.drawElements(partialTick, foreground);
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(textScale, textScale, textScale);
+        this.fontRenderer.drawSplitString(
+                String.format("> %s Relocators available", tileEntity.getCurrentRelocatorCount()),
+                (int) (CONSOLE_X_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX,
+                (int) (CONSOLE_Y_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX,
+                164,
+                0xFFFFFF
+        );
+        this.fontRenderer.drawSplitString(
+                String.format("> %ss until new Relocator", tileEntity.getCurrentRelocatorCreateDelay() / Constants.TPS_LIMIT),
+                (int) (CONSOLE_X_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX,
+                (int) (CONSOLE_Y_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX + 16,
+                164,
+                0xFFFFFF
+        );
+        GlStateManager.popMatrix();
     }
 
     @Override
