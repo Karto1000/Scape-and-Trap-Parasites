@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sbs",
+    "sss"
+  ],
+  "key": {
+    "b": {
+      "item": "srparasites_traps:dispatcher_brainstem"
+    },
+    "s": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "srparasites:evolutionlure",
+    "data": 3,
+    "count": 1
+  }
+}

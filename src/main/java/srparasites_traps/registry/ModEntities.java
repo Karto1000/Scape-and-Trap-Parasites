@@ -29,7 +29,6 @@ public class ModEntities {
             .id(new ResourceLocation(SRParasitesTraps.MOD_ID, "relocator"), 3)
             .tracker(64, 1, true)
             .name("relocator")
-            .egg(0x000000, 0xFFFFFF)
             .build();
 
     public static ArrayList<EntityEntry> getEntityList() {

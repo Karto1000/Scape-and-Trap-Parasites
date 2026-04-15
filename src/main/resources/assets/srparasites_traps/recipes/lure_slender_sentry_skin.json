@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "p p",
+    "sss",
+    "sss"
+  ],
+  "key": {
+    "p": {
+      "item": "srparasites_traps:sentry_skin"
+    },
+    "s": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "srparasites:evolutionlure",
+    "data": 2,
+    "count": 1
+  }
+}

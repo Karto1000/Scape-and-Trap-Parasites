@@ -159,6 +159,22 @@ public class ForgeConfigHandler {
         @Config.Name("Sentry flesh max drop amount")
         @Config.Comment("The max amount of sentry flesh dropped by a sentry")
         public int MAX_SENTRY_FLESH_DROP_AMOUNT = 2;
+
+        @Config.Name("Dispatcher cerebrum drop chance (%)")
+        @Config.Comment("The chance that a dispatcher will drop its cerebrum")
+        public int DISPATCHER_CEREBRUM_DROP_CHANCE = 20;
+
+        @Config.Name("Dispatcher cerebrum max drop amount")
+        @Config.Comment("The max amount of cerebrums dropped by a dispatcher")
+        public int MAX_DISPATCHER_CEREBRUM_DROP_AMOUNT = 1;
+
+        @Config.Name("Dispatcher brainstem drop chance (%)")
+        @Config.Comment("The chance that a dispatcher will drop its brainstem")
+        public int DISPATCHER_BRAINSTEM_DROP_CHANCE = 20;
+
+        @Config.Name("Dispatcher brainstem max drop amount")
+        @Config.Comment("The max amount of brainstems dropped by a dispatcher")
+        public int MAX_DISPATCHER_BRAINSTEM_DROP_AMOUNT = 1;
     }
 
     @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)

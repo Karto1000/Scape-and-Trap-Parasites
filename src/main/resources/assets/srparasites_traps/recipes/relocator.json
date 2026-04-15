@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "conditions": [
     {
-      "type": "srparasites_traps:sentry_enabled"
+      "type": "srparasites_traps:relocator_enabled"
     }
   ],
   "pattern": [
     " f ",
-    "crb",
+    "cab",
     "sns"
   ],
   "key": {
@@ -26,12 +26,12 @@
     "n": {
       "item": "srparasites:dispatchern"
     },
-    "r": {
-      "item": "srparasites_traps:dispatcher_cerebrum"
+    "a": {
+      "item": "srparasites_traps:dispatcher_brainstem"
     }
   },
   "result": {
-    "item": "srparasites_traps:sentry_turret_base",
+    "item": "srparasites_traps:relocator",
     "count": 1
   }
 }

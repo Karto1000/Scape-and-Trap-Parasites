@@ -1,5 +1,6 @@
 {
   "conditions": {
-    "sentry_enabled": "srparasites_traps.config.SentryConditionFactory"
+    "sentry_enabled": "srparasites_traps.config.SentryConditionFactory",
+    "relocator_enabled": "srparasites_traps.config.RelocatorConditionFactory"
   }
 }

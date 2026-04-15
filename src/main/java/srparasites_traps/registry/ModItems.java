@@ -3,6 +3,8 @@ package srparasites_traps.registry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.dispatcher_brainstem.DispatcherBrainstem;
+import srparasites_traps.features.disptacher_cerebrum.DispatcherCerebrum;
 import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
 import srparasites_traps.features.sentry_skin.SentrySkinItem;
 import srparasites_traps.features.two_way_communication_unit.TwoWayCommunicationUnitItem;
@@ -17,6 +19,8 @@ public class ModItems {
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item TWO_WAY_COMMUNICATION_UNIT = new TwoWayCommunicationUnitItem();
     public static Item SENTRY_FLESH = new SentrySkinItem();
+    public static Item DISPATCHER_BRAINSTEM = new DispatcherBrainstem();
+    public static Item DISPATCHER_CEREBRUM = new DispatcherCerebrum();
 
     public static ArrayList<Item> getItemList() {
         ArrayList<Item> items = new ArrayList<>();

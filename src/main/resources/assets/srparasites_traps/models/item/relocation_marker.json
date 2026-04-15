@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "srparasites_traps:item/relocation_marker"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ 0, -90, 25 ],
+      "translation": [ 1.13, 5.2, 1.13 ],
+      "scale": [ 0.68, 0.68, 0.68 ]
+    }
+  }
+}

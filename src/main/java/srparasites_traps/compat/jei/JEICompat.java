@@ -28,6 +28,11 @@ public class JEICompat implements IModPlugin {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SENTRY_TURRET_BASE));
         }
 
+        if (!ForgeConfigHandler.relocator.ENABLE_RELOCATOR) {
+            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.RELOCATOR));
+        }
+
         for (Item item : ModItems.getItemList()) {
             String infoKey = String.format("info.srparasites_traps.%s", item.getRegistryName().getPath());
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);
