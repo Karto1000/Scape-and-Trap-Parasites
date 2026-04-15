@@ -35,6 +35,11 @@ public class DualEnergyStorage extends EnergyStorage {
         this.rfEnergyStorage.setEnergyStored(energy);
     }
 
+    public void setCapacity(int maxCapacity) {
+        this.capacity = maxCapacity;
+        this.rfEnergyStorage.setCapacity(maxCapacity);
+    }
+
     public EnergyStorage readFromNBT(NBTTagCompound nbt) {
         this.energy = nbt.getInteger("Energy");
         if (this.energy > this.capacity) {

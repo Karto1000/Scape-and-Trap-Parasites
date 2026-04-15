@@ -6,7 +6,8 @@ import net.minecraftforge.fluids.Fluid;
 public class Constants {
     public static final String SRPARASITES_MOD_ID = "srparasites";
     public static final int SENTRY_TURRET_GUI_ID = 0;
-    public static final Fluid SENTRY_TURRET_ACCEPTED_FLUID = SRPFluids.DEADBLOOD_FLUID;
+    public static final int RELOCATOR_GUI_ID = 1;
+    public static final Fluid BIOMASS_FLUID = SRPFluids.DEADBLOOD_FLUID;
     public static final int TPS_LIMIT = 20;
     public static final int BUTTON_SPRITESHEET_BUTTON_WIDTH = 22;
     public static final int BUTTON_SPRITESHEET_BUTTON_HEIGHT = 22;

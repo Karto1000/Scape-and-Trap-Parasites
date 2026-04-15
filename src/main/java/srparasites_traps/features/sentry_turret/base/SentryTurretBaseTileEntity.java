@@ -1,30 +1,22 @@
 package srparasites_traps.features.sentry_turret.base;
 
-import cofh.core.block.TileCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import srparasites_traps.capability.BiomassTank;
-import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.sentry_turret.turret.SentryTileEntityState;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 import srparasites_traps.util.Constants;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class SentryTurretBaseTileEntity extends TileCore implements ITickable, ICapabilityProvider {
+public class SentryTurretBaseTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
     public int energyPerTick = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_TICK;
@@ -33,12 +25,10 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
     public int biomassForSpawn = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_FOR_SPAWN;
     public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
     private double currentRespawnTime = respawnTimeSeconds;
-    public final BiomassTank biomassStorage = new BiomassTank(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS);
-    public final DualEnergyStorage energyStorage = new DualEnergyStorage(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
     private SentryTileEntityState state = SentryTileEntityState.INACTIVE;
 
     public SentryTurretBaseTileEntity() {
-        this.biomassStorage.setTileEntity(this);
+        super(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS, ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
     }
 
     public void setAssignedSentryTurret(SentryTurretEntity sentryTurret) {
@@ -102,8 +92,6 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         if (this.assignedSentryTurretUUID != null) {
             compound.setUniqueId("TurretUUID", this.assignedSentryTurretUUID);
         }
-        compound.setTag("BiomassStorage", this.biomassStorage.writeToNBT(new NBTTagCompound()));
-        compound.setTag("EnergyStorage", this.energyStorage.writeToNBT(new NBTTagCompound()));
         compound.setInteger("State", this.state.ordinal());
         compound.setDouble("CurrentRespawnTime", this.currentRespawnTime);
         return compound;
@@ -115,39 +103,12 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
         if (compound.hasUniqueId("TurretUUID")) {
             this.assignedSentryTurretUUID = compound.getUniqueId("TurretUUID");
         }
-        if (compound.hasKey("BiomassStorage")) {
-            this.biomassStorage.readFromNBT(compound.getCompoundTag("BiomassStorage"));
-        }
-        if (compound.hasKey("EnergyStorage")) {
-            this.energyStorage.readFromNBT(compound.getCompoundTag("EnergyStorage"));
-        }
         if (compound.hasKey("State")) {
             this.state = SentryTileEntityState.values()[compound.getInteger("State")];
         }
         if (compound.hasKey("CurrentRespawnTime")) {
             this.currentRespawnTime = compound.getDouble("CurrentRespawnTime");
         }
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return true;
-        } else if (capability == CapabilityEnergy.ENERGY) {
-            return true;
-        }
-        return super.hasCapability(capability, facing);
-    }
-
-    @Nullable
-    @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.biomassStorage);
-        } else if (capability == CapabilityEnergy.ENERGY) {
-            return CapabilityEnergy.ENERGY.cast(this.energyStorage);
-        }
-        return super.getCapability(capability, facing);
     }
 
     public void removeTurret() {
@@ -208,34 +169,17 @@ public class SentryTurretBaseTileEntity extends TileCore implements ITickable, I
     @Override
     public void sendGuiNetworkData(Container container, IContainerListener player) {
         super.sendGuiNetworkData(container, player);
-        player.sendWindowProperty(container, 0, this.biomassStorage.getFluidAmount());
-        player.sendWindowProperty(container, 1, this.energyStorage.getEnergyStored());
-        player.sendWindowProperty(container, 2, this.getState().ordinal());
-        player.sendWindowProperty(container, 3, (int) this.currentRespawnTime);
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, (int) this.currentRespawnTime);
     }
 
     @Override
     public void receiveGuiNetworkData(int id, int data) {
         super.receiveGuiNetworkData(id, data);
         switch (id) {
-            case 0:
-                if (data == 0) this.biomassStorage.setFluid(null);
-                else {
-                    FluidStack currentFluid = this.biomassStorage.getFluid();
-                    if (currentFluid != null) {
-                        currentFluid.amount = data;
-                        this.biomassStorage.setFluid(currentFluid);
-                    } else {
-                        this.biomassStorage.setFluid(new FluidStack(srparasites_traps.util.Constants.SENTRY_TURRET_ACCEPTED_FLUID, data));
-                    }
-                }
-                break;
-            case 1:
-                this.energyStorage.setEnergy(data);
-                break;
-            case 2:
+            case AVAILABLE_WINDOW_VAR:
                 this.setState(SentryTileEntityState.values()[data]);
-            case 3:
+            case AVAILABLE_WINDOW_VAR + 1:
                 this.currentRespawnTime = data;
                 break;
         }

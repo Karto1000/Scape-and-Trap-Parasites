@@ -6,6 +6,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.relocator.RelocatorContainer;
+import srparasites_traps.features.relocator.RelocatorGui;
+import srparasites_traps.features.relocator.RelocatorTileEntity;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseContainer;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseGui;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
@@ -32,6 +35,10 @@ public class GuiHandler implements IGuiHandler {
             return new SentryTurretBaseContainer(player.inventory, (SentryTurretBaseTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
+        if (ID == Constants.RELOCATOR_GUI_ID) {
+            return new RelocatorContainer(player.inventory, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
         return null;
     }
 
@@ -53,6 +60,10 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
             return new SentryTurretBaseGui(player.inventory, (SentryTurretBaseTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.RELOCATOR_GUI_ID) {
+            return new RelocatorGui(player.inventory, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;

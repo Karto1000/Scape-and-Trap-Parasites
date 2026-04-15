@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
-public class DamageHandler {
+public class EntityHandler {
     private static boolean isEntityGrabbedByRelocator(EntityLivingBase entity) {
         return entity.getEntityData().getBoolean("GrabbedByRelocator");
     }
@@ -34,6 +34,6 @@ public class DamageHandler {
     }
 
     public static void init() {
-        MinecraftForge.EVENT_BUS.register(new DamageHandler());
+        MinecraftForge.EVENT_BUS.register(new EntityHandler());
     }
 }

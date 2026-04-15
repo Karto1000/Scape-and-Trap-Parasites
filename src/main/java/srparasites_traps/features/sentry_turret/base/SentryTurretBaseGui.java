@@ -16,7 +16,6 @@ import srparasites_traps.util.Translation;
 
 public class SentryTurretBaseGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/sentry_turret.png");
-    private final static ResourceLocation BUTTON_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/button.png");
     private final static int TANK_X_POSITION_PX = 8;
     private final static int TANK_Y_POSITION_PX = 16;
     private final static int TANK_WIDTH_PX = 16;

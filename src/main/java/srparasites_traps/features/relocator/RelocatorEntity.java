@@ -1,5 +1,6 @@
 package srparasites_traps.features.relocator;
 
+import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -11,6 +12,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -116,6 +118,8 @@ public class RelocatorEntity extends EntityLiving {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_HEALTH);
+        this.getEntityData().setInteger("srpcothimmunity", 0);
     }
 
     @Override
@@ -125,6 +129,11 @@ public class RelocatorEntity extends EntityLiving {
         }
 
         return super.isPotionApplicable(potioneffectIn);
+    }
+
+    @Override
+    public boolean canBePushed() {
+        return false;
     }
 
     @Override
@@ -198,15 +207,24 @@ public class RelocatorEntity extends EntityLiving {
         this.dataManager.register(state, RelocatorEntityState.EMERGING.ordinal());
     }
 
-    private void despawnThis() {
+    public void despawn() {
         if (this.world.isRemote) return;
 
         TileEntity tileEntity = this.world.getTileEntity(this.tileEntityPosition);
         if (tileEntity instanceof RelocatorTileEntity) {
-            ((RelocatorTileEntity) tileEntity).setState(RelocatorTileEntityState.IDLE);
+            RelocatorTileEntity relocatorTileEntity = (RelocatorTileEntity) tileEntity;
+            relocatorTileEntity.setState(RelocatorTileEntityState.IDLE);
+            relocatorTileEntity.setCurrentRelocatorCount(relocatorTileEntity.getCurrentRelocatorCount() + 1);
         }
 
         this.world.removeEntity(this);
+    }
+
+    @Override
+    public void onDeath(DamageSource cause) {
+        super.onDeath(cause);
+
+        this.releaseEntity();
     }
 
     @Override
@@ -231,13 +249,16 @@ public class RelocatorEntity extends EntityLiving {
 
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
             entityToRelocate.ifPresent(e -> {
+                // The entity should only attack them once it is actually grabbed
+                e.setRevengeTarget(this);
+                if (e instanceof EntityParasiteBase) ((EntityParasiteBase) e).setAttackTarget(this);
                 e.setPositionAndUpdate(spawnPosition.getX() + 0.5, spawnPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime, spawnPosition.getZ() + 0.5);
                 e.setVelocity(0, 0, 0);
             });
 
             if (getCurrentEmergeTime() >= 1.00) {
                 if (!entityToRelocate.isPresent()) {
-                    despawnThis();
+                    despawn();
                     return;
                 }
 

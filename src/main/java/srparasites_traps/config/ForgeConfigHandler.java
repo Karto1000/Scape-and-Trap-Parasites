@@ -95,17 +95,57 @@ public class ForgeConfigHandler {
         @Config.RequiresMcRestart
         public boolean ENABLE_RELOCATOR = true;
 
-        @Config.Name("Default relocation marker search area (Blocks)")
-        @Config.Comment("The search area (x * y * z) that the relocation marker can be set to")
-        public int DEFAULT_RELOCATION_MARKER_MAX_SEARCH_AREA = 200;
+        @Config.Name("Default relocator relocation delay (Ticks)")
+        @Config.Comment("The time in ticks between each possible relocation by a relocator")
+        public int DEFAULT_RELOCATOR_RELOCATION_DELAY = 100;
 
-        @Config.Name("Default relocation marker destination area (Blocks)")
+        @Config.Name("Default relocation marker search volume (Blocks)")
+        @Config.Comment("The search area (x * y * z) that the relocation marker can be set to")
+        public int DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME = 200;
+
+        @Config.Name("Default relocation marker destination volume (Blocks)")
         @Config.Comment("The destination area (x * y * z) that the relocation marker can be set to")
-        public int DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_AREA = 200;
+        public int DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME = 200;
 
         @Config.Name("Default relocator entity emerge time (Seconds)")
         @Config.Comment("The time that relocator entity takes to emerge from the ground")
         public double DEFAULT_RELOCATOR_EMERGE_TIME = 4.0;
+
+        @Config.Name("Default relocator entity max health")
+        @Config.Comment("The max health of the relocator entity")
+        public int DEFAULT_RELOCATOR_MAX_HEALTH = 30;
+
+        @Config.Name("Default relocator block selection retires")
+        @Config.Comment("The amount of times the relocator tries to find a valid block to relocate an entity to")
+        public int DEFAULT_RELOCATOR_BLOCK_SELECTION_RETRIES = 10;
+
+        @Config.Name("Default relocator block selection max block hardness")
+        @Config.Comment("The max hardness that a block can have to be considered valid for a relocator to spawn")
+        public int DEFAULT_RELOCATOR_MAX_BLOCK_HARDNESS = 5;
+
+        @Config.Name("Default relocator max relocators in reserve")
+        @Config.Comment("The max amount of relocators that can be spawned after one another")
+        public int DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE = 10;
+
+        @Config.Name("Default relocator max relocator spawn delay (Ticks)")
+        @Config.Comment("The time in ticks between each possible relocator spawn")
+        public int DEFAULT_RELOCATOR_RELOCATOR_CREATE_DELAY = 200;
+
+        @Config.Name("Default relocator max energy (RF)")
+        @Config.Comment("The maximum amount of energy that a relocation turret can hold")
+        public int DEFAULT_RELOCATOR_MAX_ENERGY = 10000;
+
+        @Config.Name("Default sentry turret max biomass (mB)")
+        @Config.Comment("The maximum amount of biomass that a relocation turret can hold")
+        public int DEFAULT_RELOCATOR_MAX_BIOMASS = 1000;
+
+        @Config.Name("Default relocator energy per tick (RF)")
+        @Config.Comment("The amount of energy that a relocation turret uses per tick")
+        public int DEFAULT_RELOCATOR_ENERGY_PER_TICK = 25;
+
+        @Config.Name("Default relocator biomass per relocator spawn (mB)")
+        @Config.Comment("The amount of biomass that a relocator spawns with")
+        public int DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN = 100;
     }
 
     public static class CommonConfig {

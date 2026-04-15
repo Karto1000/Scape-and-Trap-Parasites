@@ -100,8 +100,8 @@ public class RelocationMarkerItem extends Item {
             BlockPos pos1 = BlockPos.fromLong(nbt.getLong(TAG_BOUND_SEARCH_AREA_POSITION_1));
             long volume = VecHelper.area(pos1, pos);
 
-            if (volume > ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_AREA) {
-                player.sendStatusMessage(new TextComponentString(getStatusFor("relocation_marker.search_area_too_big", ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_AREA)), true);
+            if (volume > ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME) {
+                player.sendStatusMessage(new TextComponentString(getStatusFor("relocation_marker.search_area_too_big", ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME)), true);
                 return EnumActionResult.FAIL;
             }
 
@@ -124,8 +124,8 @@ public class RelocationMarkerItem extends Item {
         BlockPos pos1 = BlockPos.fromLong(nbt.getLong(TAG_BOUND_DESTINATION_AREA_POSITION_1));
         long volume = VecHelper.area(pos1, pos);
 
-        if (volume > ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_AREA) {
-            player.sendStatusMessage(new TextComponentString(getStatusFor("relocation_marker.destination_area_too_big", ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_AREA)), true);
+        if (volume > ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME) {
+            player.sendStatusMessage(new TextComponentString(getStatusFor("relocation_marker.destination_area_too_big", ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME)), true);
             return EnumActionResult.FAIL;
         }
 
