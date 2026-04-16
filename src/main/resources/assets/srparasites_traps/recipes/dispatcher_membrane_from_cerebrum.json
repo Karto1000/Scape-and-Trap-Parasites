@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c"
+  ],
+  "key": {
+    "c": {
+      "item": "srparasites_traps:dispatcher_cerebrum"
+    }
+  },
+  "result": {
+    "item": "srparasites:dispatcher_drop",
+    "count": 2
+  }
+}

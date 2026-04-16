@@ -17,9 +17,9 @@ import srparasites_traps.registry.ModItems;
 @Mod.EventBusSubscriber
 public class LootHandler {
     private void doDrop(LivingDropsEvent e, World world, int dropChance, int maxDropAmount, Item item) {
-        double chance = world.rand.nextInt(100);
+        double chance = world.rand.nextDouble();
 
-        if (chance < dropChance) {
+        if (chance < dropChance / 100. + e.getLootingLevel() * 0.05) {
             ItemStack stack = new ItemStack(item, world.rand.nextInt(maxDropAmount + 1));
             Entity entity = e.getEntity();
             EntityItem drop = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, stack);
