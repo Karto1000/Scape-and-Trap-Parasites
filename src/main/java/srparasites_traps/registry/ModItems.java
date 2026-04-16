@@ -1,5 +1,6 @@
 package srparasites_traps.registry;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import srparasites_traps.SRParasitesTraps;
@@ -14,13 +15,18 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ModItems {
-    public static Item SENTRY_TURRET_BASE_ITEM = new ItemBlock(ModBlocks.SENTRY_TURRET_BASE).setRegistryName(Objects.requireNonNull(ModBlocks.SENTRY_TURRET_BASE.getRegistryName()));
-    public static Item RELOCATOR_ITEM = new ItemBlock(ModBlocks.RELOCATOR).setRegistryName(Objects.requireNonNull(ModBlocks.RELOCATOR.getRegistryName()));
+    public static Item SENTRY_TURRET_BASE_ITEM = getItemBlock(ModBlocks.SENTRY_TURRET_BASE);
+    public static Item RELOCATOR_ITEM = getItemBlock(ModBlocks.RELOCATOR);
+    public static Item SERRATED_GRATE_ITEM = getItemBlock(ModBlocks.SERRATED_GRATE);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item TWO_WAY_COMMUNICATION_UNIT = new TwoWayCommunicationUnitItem();
     public static Item SENTRY_FLESH = new SentrySkinItem();
     public static Item DISPATCHER_BRAINSTEM = new DispatcherBrainstem();
     public static Item DISPATCHER_CEREBRUM = new DispatcherCerebrum();
+
+    private static Item getItemBlock(Block block) {
+        return new ItemBlock(block).setRegistryName(Objects.requireNonNull(block.getRegistryName()));
+    }
 
     public static ArrayList<Item> getItemList() {
         ArrayList<Item> items = new ArrayList<>();
