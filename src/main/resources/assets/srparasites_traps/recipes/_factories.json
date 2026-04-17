@@ -1,6 +1,7 @@
 {
   "conditions": {
     "sentry_enabled": "srparasites_traps.config.SentryConditionFactory",
-    "relocator_enabled": "srparasites_traps.config.RelocatorConditionFactory"
+    "relocator_enabled": "srparasites_traps.config.RelocatorConditionFactory",
+    "serrated_spikes_enabled": "srparasites_traps.config.SerratedSpikesConditionFactory"
   }
 }
