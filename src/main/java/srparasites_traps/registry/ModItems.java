@@ -17,7 +17,7 @@ import java.util.Objects;
 public class ModItems {
     public static Item SENTRY_TURRET_BASE_ITEM = getItemBlock(ModBlocks.SENTRY_TURRET_BASE);
     public static Item RELOCATOR_ITEM = getItemBlock(ModBlocks.RELOCATOR);
-    public static Item SERRATED_GRATE_ITEM = getItemBlock(ModBlocks.SERRATED_GRATE);
+    public static Item SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.SERRATED_SPIKES);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item TWO_WAY_COMMUNICATION_UNIT = new TwoWayCommunicationUnitItem();
     public static Item SENTRY_FLESH = new SentrySkinItem();

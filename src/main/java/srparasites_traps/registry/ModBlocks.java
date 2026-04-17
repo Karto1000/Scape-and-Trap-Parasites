@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBase;
-import srparasites_traps.features.serrated_grate.SerratedGrateBlock;
+import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ModBlocks {
     public static Block SENTRY_TURRET_BASE = new SentryTurretBase();
     public static Block RELOCATOR = new RelocatorBlock();
-    public static Block SERRATED_GRATE = new SerratedGrateBlock();
+    public static Block SERRATED_SPIKES = new SerratedSpikesBlock();
 
     public static ArrayList<Block> getBlockList() {
         ArrayList<Block> blocks = new ArrayList<>();
