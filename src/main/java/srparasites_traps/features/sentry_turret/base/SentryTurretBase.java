@@ -1,6 +1,5 @@
 package srparasites_traps.features.sentry_turret.base;
 
-import com.dhanantry.scapeandrunparasites.SRPMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -38,7 +37,7 @@ public class SentryTurretBase extends Block {
         setResistance(1200);
         setHarvestLevel("pickaxe", 2);
         setSoundType(SoundType.METAL);
-        if (ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) setCreativeTab(SRPMain.SRP_CREATIVETAB);
+        if (ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

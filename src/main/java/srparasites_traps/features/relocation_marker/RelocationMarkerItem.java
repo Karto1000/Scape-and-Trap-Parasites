@@ -1,6 +1,6 @@
 package srparasites_traps.features.relocation_marker;
 
-import com.dhanantry.scapeandrunparasites.SRPMain;
+import com.mojang.realmsclient.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,9 +15,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
@@ -41,7 +43,14 @@ public class RelocationMarkerItem extends Item {
         setMaxStackSize(1);
         setRegistryName("relocation_marker");
         setTranslationKey(getTranslationKeyFor("relocation_marker"));
-        if (ForgeConfigHandler.relocator.ENABLE_RELOCATOR) setCreativeTab(SRPMain.SRP_CREATIVETAB);
+        if (ForgeConfigHandler.relocator.ENABLE_RELOCATOR) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+    }
+
+    public static Pair<Double, Double> getDistancesOfAreaTo(AxisAlignedBB aabb, BlockPos pos1) {
+        return Pair.of(
+                Math.sqrt(pos1.distanceSq(aabb.minX, aabb.minY, aabb.minZ)),
+                Math.sqrt(pos1.distanceSq(aabb.maxX, aabb.maxY, aabb.maxZ))
+        );
     }
 
     private boolean isBlockAtPositionRelocator(World world, BlockPos pos) {
@@ -57,7 +66,7 @@ public class RelocationMarkerItem extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(getTooltipFor("item.relocation_marker.base"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.relocation_marker.base", ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE, ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE));
 
         if (worldIn == null) return;
 
@@ -67,12 +76,12 @@ public class RelocationMarkerItem extends Item {
         if (nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_1) && nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_2)) {
             BlockPos pos1 = BlockPos.fromLong(nbt.getLong(TAG_BOUND_SEARCH_AREA_POSITION_1));
             BlockPos pos2 = BlockPos.fromLong(nbt.getLong(TAG_BOUND_SEARCH_AREA_POSITION_2));
-            tooltip.add(getTooltipFor("item.relocation_marker.search_defined", pos1.getX(), pos2.getX(), pos1.getY(), pos2.getY(), pos1.getZ(), pos2.getZ()));
+            tooltip.add(TextFormatting.WHITE + getTooltipFor("item.relocation_marker.search_defined", pos1.getX(), pos2.getX(), pos1.getY(), pos2.getY(), pos1.getZ(), pos2.getZ()));
         }
         if (nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_1) && nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_2)) {
             BlockPos pos1 = BlockPos.fromLong(nbt.getLong(TAG_BOUND_DESTINATION_AREA_POSITION_1));
             BlockPos pos2 = BlockPos.fromLong(nbt.getLong(TAG_BOUND_DESTINATION_AREA_POSITION_2));
-            tooltip.add(getTooltipFor("item.relocation_marker.destination_defined", pos1.getX(), pos2.getX(), pos1.getY(), pos2.getY(), pos1.getZ(), pos2.getZ()));
+            tooltip.add(TextFormatting.WHITE + getTooltipFor("item.relocation_marker.destination_defined", pos1.getX(), pos2.getX(), pos1.getY(), pos2.getY(), pos1.getZ(), pos2.getZ()));
         }
     }
 
@@ -89,6 +98,8 @@ public class RelocationMarkerItem extends Item {
             if (nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_1) && nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_2)) {
                 nbt.removeTag(TAG_BOUND_SEARCH_AREA_POSITION_1);
                 nbt.removeTag(TAG_BOUND_SEARCH_AREA_POSITION_2);
+                player.sendStatusMessage(new TextComponentString(getStatusFor("relocation_marker.remove_positions", pos.getX(), pos.getY(), pos.getZ())), true);
+                return EnumActionResult.SUCCESS;
             }
 
             if (!nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_1)) {
@@ -113,6 +124,8 @@ public class RelocationMarkerItem extends Item {
         if (nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_1) && nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_2)) {
             nbt.removeTag(TAG_BOUND_DESTINATION_AREA_POSITION_1);
             nbt.removeTag(TAG_BOUND_DESTINATION_AREA_POSITION_2);
+            player.sendStatusMessage(new TextComponentString(getStatusFor("relocation_marker.remove_positions", pos.getX(), pos.getY(), pos.getZ())), true);
+            return EnumActionResult.SUCCESS;
         }
 
         if (!nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_1)) {
@@ -134,8 +147,7 @@ public class RelocationMarkerItem extends Item {
         return EnumActionResult.SUCCESS;
     }
 
-    public static Optional<AxisAlignedBB> getBoundSearchArea(ItemStack item) {
-        NBTTagCompound nbt = item.getTagCompound();
+    public static Optional<AxisAlignedBB> getBoundSearchArea(NBTTagCompound nbt) {
         if (nbt == null) return Optional.empty();
 
         if (!nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_1)) return Optional.empty();
@@ -159,8 +171,7 @@ public class RelocationMarkerItem extends Item {
         return Optional.of(searchArea);
     }
 
-    public static Optional<AxisAlignedBB> getBoundDestinationArea(ItemStack item) {
-        NBTTagCompound nbt = item.getTagCompound();
+    public static Optional<AxisAlignedBB> getBoundDestinationArea(NBTTagCompound nbt) {
         if (nbt == null) return Optional.empty();
 
         if (!nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_1)) return Optional.empty();
@@ -186,6 +197,7 @@ public class RelocationMarkerItem extends Item {
     }
 
     public static boolean hasBoundPositions(ItemStack item) {
-        return getBoundSearchArea(item).isPresent() && getBoundDestinationArea(item).isPresent();
+        if (item.getTagCompound() == null) return false;
+        return getBoundSearchArea(item.getTagCompound()).isPresent() && getBoundDestinationArea(item.getTagCompound()).isPresent();
     }
 }

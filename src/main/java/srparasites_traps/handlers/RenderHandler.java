@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,10 +33,13 @@ public class RenderHandler {
         double renderY = Minecraft.getMinecraft().getRenderManager().viewerPosY;
         double renderZ = Minecraft.getMinecraft().getRenderManager().viewerPosZ;
 
-        Optional<AxisAlignedBB> boundSearchArea = RelocationMarkerItem.getBoundSearchArea(stack);
+        NBTTagCompound tagCompound = stack.getTagCompound();
+        if (tagCompound == null) return;
+
+        Optional<AxisAlignedBB> boundSearchArea = RelocationMarkerItem.getBoundSearchArea(tagCompound);
         boundSearchArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ, 0.5F, 0.0F, 0.0F));
 
-        Optional<AxisAlignedBB> boundDestinationArea = RelocationMarkerItem.getBoundDestinationArea(stack);
+        Optional<AxisAlignedBB> boundDestinationArea = RelocationMarkerItem.getBoundDestinationArea(tagCompound);
         boundDestinationArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ, 0.0F, 0.5F, 0.0F));
     }
 

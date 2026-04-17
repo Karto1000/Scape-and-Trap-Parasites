@@ -19,6 +19,7 @@ public class ModItems {
     public static Item RELOCATOR_ITEM = getItemBlock(ModBlocks.RELOCATOR);
     public static Item SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.SERRATED_SPIKES);
     public static Item FLAME_COATED_SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.FLAME_COATED_SERRATED_SPIKES);
+    public static Item BIOMASS_PIT_ITEM = getItemBlock(ModBlocks.BIOMASS_PIT);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item TWO_WAY_COMMUNICATION_UNIT = new TwoWayCommunicationUnitItem();
     public static Item SENTRY_FLESH = new SentrySkinItem();

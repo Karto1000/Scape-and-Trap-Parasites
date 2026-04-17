@@ -4,7 +4,7 @@ import cofh.core.gui.GuiContainerCore;
 import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.util.Constants;
@@ -24,8 +24,8 @@ public class RelocatorGui extends GuiContainerCore {
     private final static double textScale = 0.75;
     private final RelocatorTileEntity tileEntity;
 
-    public RelocatorGui(InventoryPlayer playerInv, RelocatorTileEntity tileEntity) {
-        super(new RelocatorContainer(playerInv, tileEntity), TEXTURE);
+    public RelocatorGui(EntityPlayer player, RelocatorTileEntity tileEntity) {
+        super(new RelocatorContainer(player, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }
 

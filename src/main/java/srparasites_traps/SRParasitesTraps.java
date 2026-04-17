@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import srparasites_traps.config.SRParasitesTrapsCreativeTab;
 import srparasites_traps.handlers.EntityHandler;
 import srparasites_traps.handlers.LootHandler;
 import srparasites_traps.handlers.RegistryHandler;
@@ -20,6 +21,7 @@ public class SRParasitesTraps {
     public static final String NAME = "Scape and Trap Parasites";
     public static final Logger LOGGER = LogManager.getLogger();
     public static boolean completedLoading = false;
+    public static final SRParasitesTrapsCreativeTab CREATIVE_TAB = new SRParasitesTrapsCreativeTab();
 
     @SidedProxy(clientSide = "srparasites_traps.proxy.ClientProxy", serverSide = "srparasites_traps.proxy.ServerProxy")
     public static CommonProxy PROXY;

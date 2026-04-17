@@ -1,6 +1,5 @@
 package srparasites_traps.features.serrated_spikes;
 
-import com.dhanantry.scapeandrunparasites.SRPMain;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
@@ -30,6 +29,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 
 import javax.annotation.Nullable;
@@ -52,11 +52,11 @@ public class SerratedSpikesBlock extends Block {
 
         this.setRegistryName(registryName);
         this.setTranslationKey(getTranslationKeyFor(registryName));
-        this.setCreativeTab(SRPMain.SRP_CREATIVETAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(direction, EnumFacing.NORTH));
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
+        if (ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

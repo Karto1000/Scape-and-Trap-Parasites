@@ -1,6 +1,5 @@
 package srparasites_traps.features.sentry_skin;
 
-import com.dhanantry.scapeandrunparasites.SRPMain;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -23,7 +22,7 @@ public class SentrySkinItem extends Item {
         setRegistryName(SRParasitesTraps.MOD_ID, "sentry_skin");
         setMaxStackSize(16);
         setTranslationKey(getTranslationKeyFor("sentry_skin"));
-        setCreativeTab(SRPMain.SRP_CREATIVETAB);
+        setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

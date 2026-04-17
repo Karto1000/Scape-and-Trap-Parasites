@@ -36,7 +36,7 @@ public class GuiHandler implements IGuiHandler {
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {
-            return new RelocatorContainer(player.inventory, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new RelocatorContainer(player, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;
@@ -63,7 +63,7 @@ public class GuiHandler implements IGuiHandler {
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {
-            return new RelocatorGui(player.inventory, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new RelocatorGui(player, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;

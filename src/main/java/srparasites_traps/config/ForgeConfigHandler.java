@@ -178,6 +178,16 @@ public class ForgeConfigHandler {
         @Config.Comment("The amount of biomass that a relocator requires to spawn")
         @Config.RangeInt(min = 0)
         public int DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN = 100;
+
+        @Config.Name("Default relocator max search area distance (Blocks)")
+        @Config.Comment("The max distance the search area can be away from the source block")
+        @Config.RangeInt(min = 0)
+        public final int DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE = 20;
+
+        @Config.Name("Default relocator max destination area distance (Blocks)")
+        @Config.Comment("The max distance the destination area can be away from the source block")
+        @Config.RangeInt(min = 0)
+        public final int DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE = 20;
     }
 
     public static class SerratedSpikesConfig {

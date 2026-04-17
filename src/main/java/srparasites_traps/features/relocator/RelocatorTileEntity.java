@@ -1,5 +1,6 @@
 package srparasites_traps.features.relocator;
 
+import com.mojang.realmsclient.util.Pair;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -41,10 +42,31 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public int relocatorCreateDelay = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_RELOCATOR_CREATE_DELAY;
     public int biomassPerRelocatorSpawn = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN;
     public int energyPerTick = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_ENERGY_PER_TICK;
+    public int allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE;
+    public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE;
 
     public final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            if (stack.isEmpty()) return false;
+
+            NBTTagCompound tagCompound = stack.getTagCompound();
+            if (tagCompound == null) return false;
+
+            Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundSearchArea(tagCompound);
+            if (!searchAABB.isPresent()) return false;
+
+            Pair<Double, Double> searchAreaDistances = RelocationMarkerItem.getDistancesOfAreaTo(searchAABB.get(), pos);
+            if (searchAreaDistances.first() > allowedMaxSearchAreaDistance || searchAreaDistances.second() > allowedMaxDestinationAreaDistance)
+                return false;
+
+            Optional<AxisAlignedBB> destinationAABB = RelocationMarkerItem.getBoundDestinationArea(tagCompound);
+            if (!destinationAABB.isPresent()) return false;
+
+            Pair<Double, Double> destinationAreaDistances = RelocationMarkerItem.getDistancesOfAreaTo(destinationAABB.get(), pos);
+            if (destinationAreaDistances.first() > allowedMaxDestinationAreaDistance || destinationAreaDistances.second() > allowedMaxDestinationAreaDistance)
+                return false;
+
             return stack.getItem() instanceof RelocationMarkerItem;
         }
     };
@@ -80,7 +102,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         return this.currentRelocatorCount;
     }
 
-    public int getCurrentRelocatorCreateDelay()  {
+    public int getCurrentRelocatorCreateDelay() {
         return this.currentRelocatorCreateDelay;
     }
 
@@ -223,7 +245,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         if (!arm.isPresent() || arm.get().isEmpty()) return Optional.empty();
         ItemStack assignedRelocationMarker = arm.get();
 
-        Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundDestinationArea(assignedRelocationMarker);
+        NBTTagCompound tagCompound = assignedRelocationMarker.getTagCompound();
+        if (tagCompound == null) return Optional.empty();
+
+        Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundDestinationArea(tagCompound);
         if (!searchAABB.isPresent()) return Optional.empty();
         AxisAlignedBB aabb = searchAABB.get();
 
@@ -257,7 +282,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         if (!arm.isPresent() || arm.get().isEmpty()) return new ArrayList<>();
         ItemStack assignedRelocationMarker = arm.get();
 
-        Optional<AxisAlignedBB> aabb = RelocationMarkerItem.getBoundSearchArea(assignedRelocationMarker);
+        NBTTagCompound tagCompound = assignedRelocationMarker.getTagCompound();
+        if (tagCompound == null) return new ArrayList<>();
+
+        Optional<AxisAlignedBB> aabb = RelocationMarkerItem.getBoundSearchArea(tagCompound);
         if (!aabb.isPresent()) return new ArrayList<>();
 
         List<EntityLivingBase> entities = this.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb.get())
@@ -314,7 +342,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         if (this.state != RelocatorTileEntityState.IDLE) return;
         if (this.currentRelocatorCount <= 0) return;
 
-        Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundSearchArea(assignedRelocationMarker);
+        NBTTagCompound tagCompound = assignedRelocationMarker.getTagCompound();
+        if (tagCompound == null) return;
+
+        Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundSearchArea(tagCompound);
         if (!searchAABB.isPresent()) return;
 
         List<EntityLivingBase> entities = getRelocatableEntities();

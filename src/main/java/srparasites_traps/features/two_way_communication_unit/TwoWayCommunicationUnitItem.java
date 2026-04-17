@@ -1,7 +1,6 @@
 package srparasites_traps.features.two_way_communication_unit;
 
 
-import com.dhanantry.scapeandrunparasites.SRPMain;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +21,7 @@ public class TwoWayCommunicationUnitItem extends Item {
         setRegistryName(SRParasitesTraps.MOD_ID, "two_way_communication_unit");
         setMaxStackSize(1);
         setTranslationKey(getTranslationKeyFor("two_way_communication_unit"));
-        setCreativeTab(SRPMain.SRP_CREATIVETAB);
+        setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

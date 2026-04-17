@@ -2,21 +2,45 @@ package srparasites_traps.features.relocator;
 
 import cofh.core.gui.container.ContainerCore;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
+import srparasites_traps.config.ForgeConfigHandler;
+
+import javax.annotation.Nonnull;
+
+import static srparasites_traps.util.Translation.getStatusFor;
 
 public class RelocatorContainer extends ContainerCore {
     private final RelocatorTileEntity tileEntity;
     private final static int SLOT_X_POSITION_PX = 49;
     private final static int SLOT_Y_POSITION_PX = 16;
 
-    public RelocatorContainer(InventoryPlayer playerInv, RelocatorTileEntity tileEntity) {
+    public RelocatorContainer(EntityPlayer player, RelocatorTileEntity tileEntity) {
         this.tileEntity = tileEntity;
-        addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 0, SLOT_X_POSITION_PX, SLOT_Y_POSITION_PX));
-        bindPlayerInventory(playerInv);
+        addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 0, SLOT_X_POSITION_PX, SLOT_Y_POSITION_PX) {
+            @Override
+            public boolean isItemValid(@Nonnull ItemStack stack) {
+                boolean valid = super.isItemValid(stack);
+
+                if (!valid && !stack.isEmpty()) {
+                    if (!player.world.isRemote) {
+                        player.sendMessage(
+                                new TextComponentString(getStatusFor(
+                                        "relocation_marker.invalid_areas",
+                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE,
+                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE)
+                                )
+                        );
+                    }
+                }
+                return valid;
+            }
+        });
+        bindPlayerInventory(player.inventory);
     }
 
     @Override
