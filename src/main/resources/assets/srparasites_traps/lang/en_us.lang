@@ -20,6 +20,7 @@
 tile.srparasites_traps.sentry_turret_base.name=§6Sentry Turret§f
 tile.srparasites_traps.relocator.name=§6Relocator§f
 tile.srparasites_traps.serrated_spikes.name=Serrated Spikes
+tile.srparasites_traps.flame_coated_serrated_spikes.name=Flame-Coated Serrated Spikes
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit
@@ -40,6 +41,7 @@ tooltip.srparasites_traps.item.relocation_marker.destination_defined=§aDestinat
 tooltip.srparasites_traps.item.dispatcher_brainstem=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.dispatcher_cerebrum=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.serrated_spikes=A trap with sharp angled spikes jutting out of it. Does more damage the faster someone moves over it and causes §cBleeding§f.
+tooltip.srparasites_traps.item.flame_coated_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a burning substance. Does more damage the faster someone moves over it, causes §cBleeding§f and §6sets enemies on fire§f.
 
 # Status Messages
 status.srparasites_traps.relocation_marker.search_area_too_big=§cSearch area exceeds limit of %d blocks.§f

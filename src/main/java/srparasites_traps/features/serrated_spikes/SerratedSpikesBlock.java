@@ -17,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
@@ -41,16 +42,16 @@ public class SerratedSpikesBlock extends Block {
     public float baseDamage = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_DAMAGE;
     public double damageThreshold = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_DAMAGE_MOVE_THRESHOLD;
     public double slowDownAmount = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_SLOW_DOWN_AMOUNT;
-    public int maxHurtResistantTime = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_MAX_HURT_RESISTANT_TIME;
-    private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0, 0, 0D, 1, 0.1D, 1);
-    private static final PropertyDirection direction = PropertyDirection.create("direction", EnumFacing.Plane.HORIZONTAL);
-    private static final DamageSource serratedSpikesDamage = new DamageSource("serrated_spikes").setDamageBypassesArmor();
+    public int minHurtResistanceTime = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_MIN_HURT_RESISTANT_TIME;
+    protected static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0, 0, 0D, 1, 0.1D, 1);
+    protected static final PropertyDirection direction = PropertyDirection.create("direction", EnumFacing.Plane.HORIZONTAL);
+    protected static final DamageSource serratedSpikesDamage = new SerratedSpikesDamageSource();
 
-    public SerratedSpikesBlock() {
+    public SerratedSpikesBlock(String registryName) {
         super(Material.IRON, MapColor.IRON);
 
-        this.setRegistryName("serrated_spikes");
-        this.setTranslationKey(getTranslationKeyFor("serrated_spikes"));
+        this.setRegistryName(registryName);
+        this.setTranslationKey(getTranslationKeyFor(registryName));
         this.setCreativeTab(SRPMain.SRP_CREATIVETAB);
         this.setDefaultState(this.blockState.getBaseState().withProperty(direction, EnumFacing.NORTH));
         this.setHardness(1.5F);
@@ -97,6 +98,12 @@ public class SerratedSpikesBlock extends Block {
             worldIn.setBlockToAir(pos);
             worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(this)));
         }
+    }
+
+    @Nullable
+    @Override
+    public net.minecraft.pathfinding.PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable EntityLiving entity) {
+        return PathNodeType.WALKABLE;
     }
 
     @Override
@@ -158,28 +165,34 @@ public class SerratedSpikesBlock extends Block {
         return false;
     }
 
-    @Override
-    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if (worldIn.getTotalWorldTime() % maxHurtResistantTime != 0) return;
+    protected void damageEntity(Entity entity, float damage) {
+        entity.hurtResistantTime = 0;
+        entity.attackEntityFrom(serratedSpikesDamage, damage);
 
-        if (entityIn instanceof EntityPlayer) {
-            if (entityIn.isSneaking()) return;
-            entityIn.attackEntityFrom(serratedSpikesDamage, baseDamage);
-            if (ForgeConfigHandler.serratedSpikes.SERRATED_SPIKES_DEAL_BLEEDING_DAMAGE) {
-                ((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION));
-            }
-        } else if (entityIn instanceof EntityLiving) {
-            double dX = entityIn.prevPosX - entityIn.posX;
-            double dY = entityIn.prevPosY - entityIn.posY;
-            double dZ = entityIn.prevPosZ - entityIn.posZ;
-            float motionSum = (float) (Math.abs(dX) + Math.abs(dY) + Math.abs(dZ));
-            if (motionSum < damageThreshold) return;
-            entityIn.attackEntityFrom(serratedSpikesDamage, baseDamage * motionSum * 5);
-            if (ForgeConfigHandler.serratedSpikes.SERRATED_SPIKES_DEAL_BLEEDING_DAMAGE) {
-                ((EntityLiving) entityIn).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION));
+        if (ForgeConfigHandler.serratedSpikes.SERRATED_SPIKES_DEAL_BLEEDING_DAMAGE) {
+            if (entity instanceof EntityPlayer) {
+                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION));
+            } else if (entity instanceof EntityLiving) {
+                ((EntityLiving) entity).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION));
             }
         }
+    }
 
+    @Override
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        if (worldIn.isRemote) return;
+        if (entityIn instanceof EntityPlayer && entityIn.isSneaking()) return;
+
+        double dX = entityIn.posX - entityIn.prevPosX;
+        double dY = entityIn.posY - entityIn.prevPosY;
+        double dZ = entityIn.posZ - entityIn.prevPosZ;
+        float motionSum = (float) (Math.abs(dX) + Math.abs(dY) + Math.abs(dZ));
+
+        if (motionSum <= 0) return;
+        if (entityIn.hurtResistantTime > minHurtResistanceTime + motionSum * ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER) return;
+        if (motionSum < damageThreshold) return;
+
+        damageEntity(entityIn, baseDamage);
         entityIn.motionX *= slowDownAmount;
         entityIn.motionY *= slowDownAmount;
         entityIn.motionZ *= slowDownAmount;

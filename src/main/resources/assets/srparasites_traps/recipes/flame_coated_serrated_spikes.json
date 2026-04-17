@@ -6,19 +6,17 @@
     }
   ],
   "pattern": [
-    "nnn",
-    "iii"
+    "sc"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
+    "s": {
+      "item": "srparasites_traps:serrated_spikes"
     },
-    "n": {
-      "item": "minecraft:iron_nugget"
+    "c": {
+      "item": "minecraft:magma_cream"
     }
   },
   "result": {
-    "item": "srparasites_traps:serrated_spikes",
-    "count": 2
+    "item": "srparasites_traps:flame_coated_serrated_spikes"
   }
 }

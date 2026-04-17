@@ -196,15 +196,20 @@ public class ForgeConfigHandler {
         @Config.RangeDouble(min = 0.0)
         public float DEFAULT_SERRATED_SPIKES_DAMAGE_MOVE_THRESHOLD = 0.1F;
 
+        @Config.Name("Default serrated spikes move sum multiplier")
+        @Config.Comment("Multiplies motion sum that reduces the invulnerability time of the entity")
+        @Config.RangeDouble(min = 0.0)
+        public float DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER = 10.0F;
+
         @Config.Name("Default serrated spikes slow down amount")
         @Config.Comment("The amount of motion that the entity will lose when the spikes hit it 0.1 -> lose 90% of movement speed")
         @Config.RangeDouble(min = 0.0, max = 1.0)
         public float DEFAULT_SERRATED_SPIKES_SLOW_DOWN_AMOUNT = 0.9F;
 
-        @Config.Name("Default serrated spikes max hurt resistance time (Ticks)")
-        @Config.Comment("The time in ticks that the entity will be immune to damage from the spikes")
+        @Config.Name("Default serrated spikes min hurt resistance time (Ticks)")
+        @Config.Comment("The time in ticks that the hurtResistance has to be lower than to cause more damage")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SERRATED_SPIKES_MAX_HURT_RESISTANT_TIME = 10;
+        public int DEFAULT_SERRATED_SPIKES_MIN_HURT_RESISTANT_TIME = 10;
 
         @Config.Name("Default serrated spikes deal bleeding damage")
         @Config.Comment("If true, the serrated spikes will deal bleeding damage to the entity they hit")
@@ -214,6 +219,11 @@ public class ForgeConfigHandler {
         @Config.Comment("The duration in ticks that the entity will be bleeding")
         @Config.RangeInt(min = 0)
         public int DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION = 40;
+
+        @Config.Name("Default flame coated serrated spikes flame duration (Seconds)")
+        @Config.Comment("The duration in seconds that the entity will be flaming")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_FLAME_COATED_SERRATED_SPIKES_FLAME_DURATION = 2;
     }
 
     public static class CommonConfig {
