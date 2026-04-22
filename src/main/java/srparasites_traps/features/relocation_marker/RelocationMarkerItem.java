@@ -41,7 +41,7 @@ public class RelocationMarkerItem extends Item {
         super();
 
         setMaxStackSize(1);
-        setRegistryName("relocation_marker");
+        setRegistryName(SRParasitesTraps.MOD_ID, "relocation_marker");
         setTranslationKey(getTranslationKeyFor("relocation_marker"));
         if (ForgeConfigHandler.relocator.ENABLE_RELOCATOR) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }

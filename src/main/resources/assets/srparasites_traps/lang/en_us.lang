@@ -21,6 +21,7 @@ itemGroup.tab.srparasites_traps.name=Scape and Trap Parasites
 # Tiles
 tile.srparasites_traps.sentry_turret_base.name=§6Sentry Turret§f
 tile.srparasites_traps.relocator.name=§6Relocator§f
+tile.srparasites_traps.biomass_factory.name=§6Biomass Factory§f
 tile.srparasites_traps.serrated_spikes.name=Serrated Spikes
 tile.srparasites_traps.flame_coated_serrated_spikes.name=Flame-Coated Serrated Spikes
 tile.srparasites_traps.biomass_pit.name=Biomass Pit
@@ -31,10 +32,11 @@ item.srparasites_traps.sentry_skin.name=§bSentry Skin§f
 item.srparasites_traps.relocation_marker.name=Relocation Marker
 item.srparasites_traps.dispatcher_brainstem.name=§cDispatcher Brainstem§f
 item.srparasites_traps.dispatcher_cerebrum.name=§cDispatcher Cerebrum§f
+item.srparasites_traps.reconstructed_sentry.name=Reconstructed Sentry
 
 # Tooltips
-tooltip.srparasites_traps.item.two_way_communication_unit=A chip designed to enable two-way communication between mechanical machines and §cparasitic entities§f.
-tooltip.srparasites_traps.item.sentry_skin=Skin ripped off a §cSentries§f body.
+tooltip.srparasites_traps.item.two_way_communication_unit=§7A chip designed to enable two-way communication between mechanical machines and §cparasitic entities.
+tooltip.srparasites_traps.item.sentry_skin=Skin harvested from a §cSentries§f corpse.
 tooltip.srparasites_traps.item.sentry_turret_base=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §abiomass§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires a §aRelocation Marker§f to define coordinates aswell as §abiomass§f and §4energy§f to function.
 tooltip.srparasites_traps.gui.sentry_turret.toggle=Activate / Deactivate the sentry turret.
@@ -45,6 +47,8 @@ tooltip.srparasites_traps.item.dispatcher_brainstem=An important part of a §cDi
 tooltip.srparasites_traps.item.dispatcher_cerebrum=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.serrated_spikes=A trap with sharp angled spikes jutting out of it. Does more damage the faster someone moves over it and causes §cBleeding§f.
 tooltip.srparasites_traps.item.flame_coated_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a burning substance. Does more damage the faster someone moves over it, causes §cBleeding§f and §6sets enemies on fire§f.
+tooltip.srparasites_traps.item.reconstructed_sentry=§7A haphazard reconstruction of a §cSentry§f.
+tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §abeckons§f power to create the essence all parasites are made of.
 
 # Status Messages
 status.srparasites_traps.relocation_marker.search_area_too_big=§cSearch area exceeds limit of %d blocks.§f

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "mcm",
+    "mbm",
+    "mmm"
+  ],
+  "key": {
+    "m": {
+      "item": "srparasites:dispatcher_drop"
+    },
+    "c": {
+      "item": "srparasites_traps:dispatcher_cerebrum"
+    },
+    "b": {
+      "item": "srparasites_traps:dispatcher_brainstem"
+    }
+  },
+  "result": {
+    "item": "srparasites:dispatchern",
+    "count": 1
+  }
+}

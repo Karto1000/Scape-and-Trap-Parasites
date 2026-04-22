@@ -29,7 +29,7 @@ public class RelocatorBlock extends Block {
     public RelocatorBlock() {
         super(Material.IRON, MapColor.IRON);
 
-        setRegistryName("relocator");
+        setRegistryName(SRParasitesTraps.MOD_ID, "relocator");
         setTranslationKey(getTranslationKeyFor("relocator"));
         setHardness(50);
         setResistance(1200);

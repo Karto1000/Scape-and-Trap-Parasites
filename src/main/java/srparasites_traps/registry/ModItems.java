@@ -1,14 +1,12 @@
 package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.features.dispatcher_brainstem.DispatcherBrainstem;
-import srparasites_traps.features.disptacher_cerebrum.DispatcherCerebrum;
+import srparasites_traps.features.BasicItem;
 import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
-import srparasites_traps.features.sentry_skin.SentrySkinItem;
-import srparasites_traps.features.two_way_communication_unit.TwoWayCommunicationUnitItem;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,12 +17,13 @@ public class ModItems {
     public static Item RELOCATOR_ITEM = getItemBlock(ModBlocks.RELOCATOR);
     public static Item SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.SERRATED_SPIKES);
     public static Item FLAME_COATED_SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.FLAME_COATED_SERRATED_SPIKES);
-    public static Item BIOMASS_PIT_ITEM = getItemBlock(ModBlocks.BIOMASS_PIT);
+    public static Item BIOMASS_FACTORY_ITEM = getItemBlock(ModBlocks.BIOMASS_FACTORY);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
-    public static Item TWO_WAY_COMMUNICATION_UNIT = new TwoWayCommunicationUnitItem();
-    public static Item SENTRY_FLESH = new SentrySkinItem();
-    public static Item DISPATCHER_BRAINSTEM = new DispatcherBrainstem();
-    public static Item DISPATCHER_CEREBRUM = new DispatcherCerebrum();
+    public static Item SENTRY_SKIN = new BasicItem("sentry_skin").maxStackSize(16).rarity(EnumRarity.RARE);
+    public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
+    public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);
+    public static Item DISPATCHER_CEREBRUM = new BasicItem("dispatcher_cerebrum").maxStackSize(16).rarity(EnumRarity.RARE);
+    public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
 
     private static Item getItemBlock(Block block) {
         return new ItemBlock(block).setRegistryName(Objects.requireNonNull(block.getRegistryName()));

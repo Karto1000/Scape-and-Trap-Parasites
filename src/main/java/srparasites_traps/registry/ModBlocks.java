@@ -2,7 +2,7 @@ package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.features.biomass_pit.BiomassPit;
+import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBase;
 import srparasites_traps.features.serrated_spikes.FlameCoatedSerratedSpikes;
@@ -16,7 +16,7 @@ public class ModBlocks {
     public static Block RELOCATOR = new RelocatorBlock();
     public static Block SERRATED_SPIKES = new SerratedSpikesBlock("serrated_spikes");
     public static Block FLAME_COATED_SERRATED_SPIKES = new FlameCoatedSerratedSpikes();
-    public static Block BIOMASS_PIT = new BiomassPit();
+    public static Block BIOMASS_FACTORY = new BiomassFactoryBlock();
 
     public static ArrayList<Block> getBlockList() {
         ArrayList<Block> blocks = new ArrayList<>();

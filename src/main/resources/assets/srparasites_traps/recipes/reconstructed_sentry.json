@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    " c ",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "item": "srparasites_traps:sentry_skin"
+    },
+    "c": {
+      "item": "srparasites:living_core"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:reconstructed_sentry",
+    "count": 1
+  }
+}

@@ -50,7 +50,7 @@ public class SerratedSpikesBlock extends Block {
     public SerratedSpikesBlock(String registryName) {
         super(Material.IRON, MapColor.IRON);
 
-        this.setRegistryName(registryName);
+        this.setRegistryName(SRParasitesTraps.MOD_ID, registryName);
         this.setTranslationKey(getTranslationKeyFor(registryName));
         this.setDefaultState(this.blockState.getBaseState().withProperty(direction, EnumFacing.NORTH));
         this.setHardness(1.5F);

@@ -31,7 +31,7 @@ public class LootHandler {
     public void onLivingDrops(LivingDropsEvent event) {
         if (event.getEntity() instanceof EntityUnvo) {
             World world = event.getEntity().world;
-            doDrop(event, world, ForgeConfigHandler.common.SENTRY_FLESH_DROP_CHANCE, ForgeConfigHandler.common.MAX_SENTRY_FLESH_DROP_AMOUNT, ModItems.SENTRY_FLESH);
+            doDrop(event, world, ForgeConfigHandler.common.SENTRY_FLESH_DROP_CHANCE, ForgeConfigHandler.common.MAX_SENTRY_FLESH_DROP_AMOUNT, ModItems.SENTRY_SKIN);
         } else if (event.getEntity() instanceof EntityDod) {
             World world = event.getEntity().world;
             doDrop(event, world, ForgeConfigHandler.common.DISPATCHER_CEREBRUM_DROP_CHANCE, ForgeConfigHandler.common.MAX_DISPATCHER_CEREBRUM_DROP_AMOUNT, ModItems.DISPATCHER_CEREBRUM);
