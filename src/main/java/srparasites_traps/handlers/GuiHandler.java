@@ -6,6 +6,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.biomass_factory.BiomassFactoryContainer;
+import srparasites_traps.features.biomass_factory.BiomassFactoryGui;
+import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
 import srparasites_traps.features.relocator.RelocatorContainer;
 import srparasites_traps.features.relocator.RelocatorGui;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
@@ -39,6 +42,10 @@ public class GuiHandler implements IGuiHandler {
             return new RelocatorContainer(player, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
+        if (ID == Constants.BIOMASS_FACTORY_GUI_ID) {
+            return new BiomassFactoryContainer(player, (BiomassFactoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
         return null;
     }
 
@@ -59,11 +66,15 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
-            return new SentryTurretBaseGui(player.inventory, (SentryTurretBaseTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new SentryTurretBaseGui(player, (SentryTurretBaseTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {
             return new RelocatorGui(player, (RelocatorTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.BIOMASS_FACTORY_GUI_ID) {
+            return new BiomassFactoryGui(player, (BiomassFactoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;

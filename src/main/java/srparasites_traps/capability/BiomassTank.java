@@ -20,4 +20,8 @@ public class BiomassTank extends FluidTank {
         if (fluid.getFluid() == null) return false;
         return fluid.getFluid().equals(Constants.BIOMASS_FLUID);
     }
+
+    public void fillBiomass(int amount) {
+        this.fill(new FluidStack(Constants.BIOMASS_FLUID, amount), true);
+    }
 }

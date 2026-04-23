@@ -24,6 +24,7 @@ public class ModItems {
     public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item DISPATCHER_CEREBRUM = new BasicItem("dispatcher_cerebrum").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
+    public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
 
     private static Item getItemBlock(Block block) {
         return new ItemBlock(block).setRegistryName(Objects.requireNonNull(block.getRegistryName()));

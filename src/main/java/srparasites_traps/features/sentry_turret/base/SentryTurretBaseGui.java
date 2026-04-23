@@ -4,7 +4,7 @@ import cofh.core.gui.GuiContainerCore;
 import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.sentry_turret.turret.SentryTileEntityState;
@@ -30,8 +30,8 @@ public class SentryTurretBaseGui extends GuiContainerCore {
     private final static String TOGGLE_BUTTON_NAME = "toggle";
     private final SentryTurretBaseTileEntity tileEntity;
 
-    public SentryTurretBaseGui(InventoryPlayer playerInv, SentryTurretBaseTileEntity tileEntity) {
-        super(new SentryTurretBaseContainer(playerInv, tileEntity), TEXTURE);
+    public SentryTurretBaseGui(EntityPlayer player, SentryTurretBaseTileEntity tileEntity) {
+        super(new SentryTurretBaseContainer(player.inventory, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }
 

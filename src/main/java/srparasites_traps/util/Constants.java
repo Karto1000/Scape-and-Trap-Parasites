@@ -7,6 +7,7 @@ public class Constants {
     public static final String SRPARASITES_MOD_ID = "srparasites";
     public static final int SENTRY_TURRET_GUI_ID = 0;
     public static final int RELOCATOR_GUI_ID = 1;
+    public static final int BIOMASS_FACTORY_GUI_ID = 2;
     public static final Fluid BIOMASS_FLUID = SRPFluids.DEADBLOOD_FLUID;
     public static final int TPS_LIMIT = 20;
     public static final int BUTTON_SPRITESHEET_BUTTON_WIDTH = 22;
@@ -22,4 +23,7 @@ public class Constants {
     public final static int CONSOLE_X_POSITION_PX = 72;
     public final static int CONSOLE_Y_POSITION_PX = 15;
     public final static int CONSOLE_TEXT_PADDING_PX = 2;
+    public final static int INVENTORY_SLOT_WIDTH_PX = 18;
+    public final static int INVENTORY_SLOT_HEIGHT_PX = 18;
+    public final static int FIRST_FREE_SLOT = 4 * 9;
 }

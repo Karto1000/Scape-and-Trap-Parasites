@@ -50,6 +50,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
             if (stack.isEmpty()) return false;
 
+            if (!(stack.getItem() instanceof RelocationMarkerItem)) return false;
+
             NBTTagCompound tagCompound = stack.getTagCompound();
             if (tagCompound == null) return false;
 

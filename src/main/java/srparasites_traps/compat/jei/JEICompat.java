@@ -39,6 +39,12 @@ public class JEICompat implements IModPlugin {
             return;
         }
 
+        if (!ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) {
+            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BIOMASS_FACTORY));
+            return;
+        }
+
         for (Item item : ModItems.getItemList()) {
             String infoKey = String.format("info.srparasites_traps.%s", item.getRegistryName().getPath());
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);

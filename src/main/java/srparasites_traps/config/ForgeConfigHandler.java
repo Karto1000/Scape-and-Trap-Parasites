@@ -22,6 +22,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the serrated spikes")
     public static final SerratedSpikesConfig serratedSpikes = new SerratedSpikesConfig();
 
+    @Config.Name("Biomass Factory")
+    @Config.Comment("Settings for the biomass factory")
+    public static final BiomassFactoryConfig biomassFactory = new BiomassFactoryConfig();
+
     @Config.Name("Common")
     @Config.Comment("Settings that are common to all mods")
     public static final CommonConfig common = new CommonConfig();
@@ -234,6 +238,23 @@ public class ForgeConfigHandler {
         @Config.Comment("The duration in seconds that the entity will be flaming")
         @Config.RangeInt(min = 0)
         public int DEFAULT_FLAME_COATED_SERRATED_SPIKES_FLAME_DURATION = 2;
+    }
+
+    public static class BiomassFactoryConfig {
+        @Config.Name("Enable biomass factory")
+        @Config.Comment("If true, the biomass factory will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_BIOMASS_FACTORY = true;
+
+        @Config.Name("Default biomass factory max biomass storage (mB)")
+        @Config.Comment("The maximum amount of biomass that a biomass factory can store")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_BIOMASS_FACTORY_MAX_BIOMASS = 1000;
+
+        @Config.Name("Default biomass factory item consume time (Ticks)")
+        @Config.Comment("The amount of ticks between each item consumption")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY = 5;
     }
 
     public static class CommonConfig {

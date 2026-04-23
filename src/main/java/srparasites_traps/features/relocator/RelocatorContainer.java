@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
 
 import javax.annotation.Nonnull;
 
@@ -24,9 +25,12 @@ public class RelocatorContainer extends ContainerCore {
         addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 0, SLOT_X_POSITION_PX, SLOT_Y_POSITION_PX) {
             @Override
             public boolean isItemValid(@Nonnull ItemStack stack) {
+                if (stack.isEmpty()) return false;
+                if (!(stack.getItem() instanceof RelocationMarkerItem)) return false;
+
                 boolean valid = super.isItemValid(stack);
 
-                if (!valid && !stack.isEmpty()) {
+                if (!valid) {
                     if (!player.world.isRemote) {
                         player.sendMessage(
                                 new TextComponentString(getStatusFor(
@@ -37,6 +41,7 @@ public class RelocatorContainer extends ContainerCore {
                         );
                     }
                 }
+
                 return valid;
             }
         });
