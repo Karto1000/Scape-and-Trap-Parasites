@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+    " mm",
     " m ",
-    " c ",
-    "mmm"
+    " c "
   ],
   "key": {
     "m": {
@@ -14,7 +14,7 @@
     }
   },
   "result": {
-    "item": "srparasites_traps:reconstructed_sentry",
+    "item": "srparasites_traps:reconstructed_seizer",
     "count": 1
   }
 }

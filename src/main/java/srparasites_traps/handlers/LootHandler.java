@@ -34,7 +34,7 @@ public class LootHandler {
 
         if (entity instanceof EntityUnvo) {
             World world = entity.world;
-            doDrop(event, world, ForgeConfigHandler.common.SENTRY_FLESH_DROP_CHANCE, ForgeConfigHandler.common.MAX_SENTRY_FLESH_DROP_AMOUNT, ModItems.SENTRY_SKIN);
+            doDrop(event, world, ForgeConfigHandler.common.SENTRY_FLESH_DROP_CHANCE, ForgeConfigHandler.common.MAX_SENTRY_FLESH_DROP_AMOUNT, ModItems.PARASITIC_MATTER);
         } else if (entity instanceof EntityPDispatcher) {
             EntityPDispatcher dod = (EntityPDispatcher) entity;
             World world = entity.world;

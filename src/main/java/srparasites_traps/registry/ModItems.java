@@ -19,11 +19,12 @@ public class ModItems {
     public static Item FLAME_COATED_SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.FLAME_COATED_SERRATED_SPIKES);
     public static Item BIOMASS_FACTORY_ITEM = getItemBlock(ModBlocks.BIOMASS_FACTORY);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
-    public static Item SENTRY_SKIN = new BasicItem("sentry_skin").maxStackSize(16).rarity(EnumRarity.RARE);
+    public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
     public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item DISPATCHER_CEREBRUM = new BasicItem("dispatcher_cerebrum").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
+    public static Item RECONSTRUCTED_SEIZER = new BasicItem("reconstructed_seizer").maxStackSize(1);
     public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
 
     private static Item getItemBlock(Block block) {
