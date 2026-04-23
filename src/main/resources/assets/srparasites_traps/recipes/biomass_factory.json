@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "thb",
+    "sss"
+  ],
+  "key": {
+    "t": {
+      "item": "srparasites_traps:two_way_communication_unit"
+    },
+    "h": {
+      "item": "srparasites_traps:beckon_heart"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "s": {
+      "item": "srparasites:semiorganic_ingot"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:biomass_factory",
+    "count": 1
+  }
+}

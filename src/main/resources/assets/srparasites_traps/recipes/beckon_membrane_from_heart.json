@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b"
+  ],
+  "key": {
+    "b": {
+      "item": "srparasites_traps:beckon_heart"
+    }
+  },
+  "result": {
+    "item": "srparasites:beckon_drop",
+    "count": 2
+  }
+}

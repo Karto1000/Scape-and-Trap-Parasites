@@ -263,27 +263,43 @@ public class ForgeConfigHandler {
 
         @Config.Name("Sentry flesh drop chance (%)")
         @Config.Comment("The chance that a sentry will drop sentry flesh")
+        @Config.RangeInt(min = 0, max = 100)
         public int SENTRY_FLESH_DROP_CHANCE = 20;
 
         @Config.Name("Sentry flesh max drop amount")
         @Config.Comment("The max amount of sentry flesh dropped by a sentry")
+        @Config.RangeInt(min = 0)
         public int MAX_SENTRY_FLESH_DROP_AMOUNT = 2;
 
         @Config.Name("Dispatcher cerebrum drop chance (%)")
         @Config.Comment("The chance that a dispatcher will drop its cerebrum")
+        @Config.RangeInt(min = 0, max = 100)
         public int DISPATCHER_CEREBRUM_DROP_CHANCE = 20;
 
         @Config.Name("Dispatcher cerebrum max drop amount")
         @Config.Comment("The max amount of cerebrums dropped by a dispatcher")
+        @Config.RangeInt(min = 0)
         public int MAX_DISPATCHER_CEREBRUM_DROP_AMOUNT = 1;
 
         @Config.Name("Dispatcher brainstem drop chance (%)")
         @Config.Comment("The chance that a dispatcher will drop its brainstem")
+        @Config.RangeInt(min = 0, max = 100)
         public int DISPATCHER_BRAINSTEM_DROP_CHANCE = 20;
 
         @Config.Name("Dispatcher brainstem max drop amount")
         @Config.Comment("The max amount of brainstems dropped by a dispatcher")
+        @Config.RangeInt(min = 0)
         public int MAX_DISPATCHER_BRAINSTEM_DROP_AMOUNT = 1;
+
+        @Config.Name("Beckon heart drop chance (%)")
+        @Config.Comment("The chance that a beckon will drop a heart")
+        @Config.RangeInt(min = 0, max = 100)
+        public int BECKON_HEART_DROP_CHANCE = 20;
+
+        @Config.Name("Beckon heart max drop amount")
+        @Config.Comment("The max amount of hearts dropped by a beckon")
+        @Config.RangeInt(min = 0)
+        public int MAX_BECKON_HEART_DROP_AMOUNT = 1;
     }
 
     @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)
