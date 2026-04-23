@@ -50,7 +50,7 @@ tooltip.srparasites_traps.item.serrated_spikes=A trap with sharp angled spikes j
 tooltip.srparasites_traps.item.flame_coated_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a burning substance. Does more damage the faster someone moves over it, causes §cBleeding§f and §6sets enemies on fire§f.
 tooltip.srparasites_traps.item.reconstructed_sentry=§7A crude reconstruction of a §cSentry§f.
 tooltip.srparasites_traps.item.reconstructed_seizer=§7A haphazard reconstruction of a §cSeizer§f.
-tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §abeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create biomass.
+tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §aBeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create biomass.
 tooltip.srparasites_traps.item.beckon_heart=An important part of a §aBeckon§f that somehow still remains intact.
 tooltip.srparasites_traps.gui.sentry_turret.toggle=Activate / Deactivate the sentry turret.
 
