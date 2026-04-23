@@ -13,7 +13,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -112,17 +111,8 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         super.receiveGuiNetworkData(id, data);
         switch (id) {
             case 0:
-                System.out.println(data);
                 if (data == 0) this.biomassStorage.setFluid(null);
-                else {
-                    FluidStack currentFluid = this.biomassStorage.getFluid();
-                    if (currentFluid != null) {
-                        currentFluid.amount = data;
-                        this.biomassStorage.setFluid(currentFluid);
-                    } else {
-                        this.biomassStorage.setFluid(new FluidStack(this.biomassStorage.getAcceptedFluid(), data));
-                    }
-                }
+                else this.biomassStorage.setBiomass(data);
                 break;
         }
     }

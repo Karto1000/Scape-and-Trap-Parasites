@@ -8,7 +8,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import srparasites_traps.capability.BiomassTank;
 import srparasites_traps.capability.DualEnergyStorage;
@@ -80,15 +79,7 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
         switch (id) {
             case 0:
                 if (data == 0) this.biomassStorage.setFluid(null);
-                else {
-                    FluidStack currentFluid = this.biomassStorage.getFluid();
-                    if (currentFluid != null) {
-                        currentFluid.amount = data;
-                        this.biomassStorage.setFluid(currentFluid);
-                    } else {
-                        this.biomassStorage.setFluid(new FluidStack(this.biomassStorage.getAcceptedFluid(), data));
-                    }
-                }
+                else this.biomassStorage.setBiomass(data);
                 break;
             case 1:
                 this.energyStorage.setEnergy(data);

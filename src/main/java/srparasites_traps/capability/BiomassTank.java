@@ -22,6 +22,18 @@ public class BiomassTank extends FluidTank {
     }
 
     public void fillBiomass(int amount) {
-        this.fill(new FluidStack(Constants.BIOMASS_FLUID, amount), true);
+        this.fill(new FluidStack(this.getAcceptedFluid(), amount), true);
+    }
+
+    public void setBiomass(int amount) {
+        FluidStack currentFluid = this.getFluid();
+
+        if (currentFluid != null) {
+            currentFluid.amount = amount;
+            this.setFluid(currentFluid);
+            return;
+        }
+
+        this.setFluid(new FluidStack(this.getAcceptedFluid(), amount));
     }
 }
