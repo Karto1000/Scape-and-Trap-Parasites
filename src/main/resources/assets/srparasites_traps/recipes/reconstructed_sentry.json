@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " m ",
-    " c ",
-    "mmm"
+    "mcm",
+    "mdm"
   ],
   "key": {
     "m": {
@@ -11,6 +11,9 @@
     },
     "c": {
       "item": "srparasites:living_core"
+    },
+    "d": {
+      "item": "srparasites:infestedstain"
     }
   },
   "result": {
