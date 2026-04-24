@@ -261,15 +261,15 @@ public class ForgeConfigHandler {
         @Config.Name("Debug Mode")
         public boolean DEBUG_MODE = false;
 
-        @Config.Name("Sentry flesh drop chance (%)")
-        @Config.Comment("The chance that a sentry will drop sentry flesh")
+        @Config.Name("Parasitic matter drop chance (%)")
+        @Config.Comment("The chance that a sentry or seizer will drop parasitic matter")
         @Config.RangeInt(min = 0, max = 100)
-        public int SENTRY_FLESH_DROP_CHANCE = 20;
+        public int PARASITIC_MATTER_DROP_CHANCE = 20;
 
-        @Config.Name("Sentry flesh max drop amount")
-        @Config.Comment("The max amount of sentry flesh dropped by a sentry")
+        @Config.Name("Parasitic matter max drop amount")
+        @Config.Comment("The max amount of parasitic matter dropped")
         @Config.RangeInt(min = 0)
-        public int MAX_SENTRY_FLESH_DROP_AMOUNT = 2;
+        public int MAX_PARASITIC_MATTER_DROP_AMOUNT = 2;
 
         @Config.Name("Dispatcher cerebrum drop chance (%)")
         @Config.Comment("The chance that a dispatcher will drop its cerebrum")

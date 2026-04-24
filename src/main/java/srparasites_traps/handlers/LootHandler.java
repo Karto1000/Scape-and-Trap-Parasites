@@ -2,6 +2,7 @@ package srparasites_traps.handlers;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPBeckon;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPDispatcher;
+import com.dhanantry.scapeandrunparasites.entity.monster.deterrent.EntityNak;
 import com.dhanantry.scapeandrunparasites.entity.monster.deterrent.EntityUnvo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -32,9 +33,9 @@ public class LootHandler {
     public void onLivingDrops(LivingDropsEvent event) {
         Entity entity = event.getEntity();
 
-        if (entity instanceof EntityUnvo) {
+        if (entity instanceof EntityUnvo || entity instanceof EntityNak) {
             World world = entity.world;
-            doDrop(event, world, ForgeConfigHandler.common.SENTRY_FLESH_DROP_CHANCE, ForgeConfigHandler.common.MAX_SENTRY_FLESH_DROP_AMOUNT, ModItems.PARASITIC_MATTER);
+            doDrop(event, world, ForgeConfigHandler.common.PARASITIC_MATTER_DROP_CHANCE, ForgeConfigHandler.common.MAX_PARASITIC_MATTER_DROP_AMOUNT, ModItems.PARASITIC_MATTER);
         } else if (entity instanceof EntityPDispatcher) {
             EntityPDispatcher dod = (EntityPDispatcher) entity;
             World world = entity.world;
