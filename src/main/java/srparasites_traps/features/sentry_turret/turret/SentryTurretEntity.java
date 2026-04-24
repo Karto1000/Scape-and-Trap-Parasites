@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
+import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.Serializers;
 
@@ -105,10 +105,10 @@ public class SentryTurretEntity extends EntityLiving {
 
         TileEntity tileEntity = this.world.getTileEntity(this.baseBlockPosition);
         if (tileEntity == null) return;
-        SentryTurretBaseTileEntity sentryTurretBaseTileEntity = (SentryTurretBaseTileEntity) tileEntity;
+        SentryTurretTileEntity sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
 
-        sentryTurretBaseTileEntity.setState(SentryTileEntityState.DEAD);
-        sentryTurretBaseTileEntity.clearAssignedSentryTurret();
+        sentryTurretTileEntity.setState(SentryTileEntityState.DEAD);
+        sentryTurretTileEntity.clearAssignedSentryTurret();
     }
 
     @Override

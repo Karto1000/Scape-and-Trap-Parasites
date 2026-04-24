@@ -26,12 +26,12 @@ import static srparasites_traps.SRParasitesTraps.MOD_ID;
 import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
-public class SentryTurretBase extends Block {
-    public SentryTurretBase() {
+public class SentryTurretBlock extends Block {
+    public SentryTurretBlock() {
         super(Material.IRON, MapColor.IRON);
 
-        setRegistryName(MOD_ID, "sentry_turret_base");
-        setTranslationKey(getTranslationKeyFor("sentry_turret_base"));
+        setRegistryName(MOD_ID, "sentry_turret");
+        setTranslationKey(getTranslationKeyFor("sentry_turret"));
         // Same as obsidian
         setHardness(50);
         setResistance(1200);
@@ -48,7 +48,7 @@ public class SentryTurretBase extends Block {
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new SentryTurretBaseTileEntity();
+        return new SentryTurretTileEntity();
     }
 
 
@@ -56,8 +56,8 @@ public class SentryTurretBase extends Block {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof SentryTurretBaseTileEntity)
-                ((SentryTurretBaseTileEntity) tileEntity).removeTurret();
+            if (tileEntity instanceof SentryTurretTileEntity)
+                ((SentryTurretTileEntity) tileEntity).removeTurret();
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -68,7 +68,7 @@ public class SentryTurretBase extends Block {
         if (worldIn.isRemote) return true;
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof SentryTurretBaseTileEntity) {
+        if (tileEntity instanceof SentryTurretTileEntity) {
             if (FluidUtil.interactWithFluidHandler(playerIn, hand, worldIn, pos, facing)) return true;
         }
 
@@ -78,6 +78,6 @@ public class SentryTurretBase extends Block {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.sentry_turret_base"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.sentry_turret"));
     }
 }

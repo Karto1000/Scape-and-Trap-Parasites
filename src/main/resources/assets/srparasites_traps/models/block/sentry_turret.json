@@ -6,8 +6,8 @@
     32
   ],
   "textures": {
-    "2": "srparasites_traps:block/sentry_turret_base",
-    "particle": "srparasites_traps:block/sentry_turret_base"
+    "2": "srparasites_traps:block/sentry_turret",
+    "particle": "srparasites_traps:block/sentry_turret"
   },
   "elements": [
     {

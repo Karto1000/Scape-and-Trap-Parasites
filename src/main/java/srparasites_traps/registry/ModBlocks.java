@@ -3,8 +3,9 @@ package srparasites_traps.registry;
 import net.minecraft.block.Block;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
+import srparasites_traps.features.cleaner.CleanerBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBase;
+import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.FlameCoatedSerratedSpikes;
 import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
 
@@ -12,11 +13,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ModBlocks {
-    public static Block SENTRY_TURRET_BASE = new SentryTurretBase();
+    public static Block sentry_turret = new SentryTurretBlock();
     public static Block RELOCATOR = new RelocatorBlock();
     public static Block SERRATED_SPIKES = new SerratedSpikesBlock("serrated_spikes");
     public static Block FLAME_COATED_SERRATED_SPIKES = new FlameCoatedSerratedSpikes();
     public static Block BIOMASS_FACTORY = new BiomassFactoryBlock();
+    public static Block CLEANER = new CleanerBlock();
 
     public static ArrayList<Block> getBlockList() {
         ArrayList<Block> blocks = new ArrayList<>();

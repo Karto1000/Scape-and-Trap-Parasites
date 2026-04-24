@@ -36,4 +36,8 @@ public class BiomassTank extends FluidTank {
 
         this.setFluid(new FluidStack(this.getAcceptedFluid(), amount));
     }
+
+    public boolean isFull() {
+        return this.getFluidAmount() >= this.getCapacity();
+    }
 }

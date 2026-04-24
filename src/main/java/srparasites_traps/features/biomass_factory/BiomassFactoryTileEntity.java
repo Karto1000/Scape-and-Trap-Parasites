@@ -89,6 +89,8 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
             return;
         }
 
+        if (this.biomassStorage.isFull()) return;
+
         for (int i = 0; i < inventory.getSlots(); i++) {
             ItemStack stack = inventory.getStackInSlot(i);
             if (stack.isEmpty()) continue;

@@ -7,10 +7,10 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class SentryTurretBaseContainer extends ContainerCore {
-    private final SentryTurretBaseTileEntity tileEntity;
+public class SentryTurretContainer extends ContainerCore {
+    private final SentryTurretTileEntity tileEntity;
 
-    public SentryTurretBaseContainer(InventoryPlayer playerInv, SentryTurretBaseTileEntity tileEntity) {
+    public SentryTurretContainer(InventoryPlayer playerInv, SentryTurretTileEntity tileEntity) {
         this.tileEntity = tileEntity;
         bindPlayerInventory(playerInv);
     }

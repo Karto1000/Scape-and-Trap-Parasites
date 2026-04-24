@@ -6,14 +6,15 @@
     }
   ],
   "pattern": [
-    "sc"
+    "b",
+    "s"
   ],
   "key": {
     "s": {
       "item": "srparasites_traps:serrated_spikes"
     },
-    "c": {
-      "item": "minecraft:magma_cream"
+    "b": {
+      "item": "minecraft:blaze_powder"
     }
   },
   "result": {

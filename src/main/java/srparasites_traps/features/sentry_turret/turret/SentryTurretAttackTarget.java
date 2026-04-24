@@ -6,7 +6,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
+import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
 
 public class SentryTurretAttackTarget extends EntityAIBase {
     private final SentryTurretEntity sentryTurret;
@@ -46,7 +46,7 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         this.sentryTurret.setEntityState(SentryTurretEntityState.IDLE);
     }
 
-    private void shootSpineball(Vec3d direction, SentryTurretBaseTileEntity sentryTurret) {
+    private void shootSpineball(Vec3d direction, SentryTurretTileEntity sentryTurret) {
         SentryTurretSpineball projectile = new SentryTurretSpineball(this.world, this.sentryTurret);
         projectile.setPosition(this.sentryTurret.posX + direction.x, this.sentryTurret.posY + this.sentryTurret.getEyeHeight(), this.sentryTurret.posZ + direction.z);
         projectile.setVelocity(direction.x, direction.y, direction.z);
@@ -63,11 +63,11 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         this.sentryTurret.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
 
         TileEntity tileEntity = this.world.getTileEntity(this.sentryTurret.baseBlockPosition);
-        SentryTurretBaseTileEntity sentryTurretBaseTileEntity;
-        if (tileEntity instanceof SentryTurretBaseTileEntity) {
-            sentryTurretBaseTileEntity = (SentryTurretBaseTileEntity) tileEntity;
-            if (!sentryTurretBaseTileEntity.hasEnoughBiomassToShoot()) return;
-            if (!sentryTurretBaseTileEntity.hasEnoughEnergy()) return;
+        SentryTurretTileEntity sentryTurretTileEntity;
+        if (tileEntity instanceof SentryTurretTileEntity) {
+            sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
+            if (!sentryTurretTileEntity.hasEnoughBiomassToShoot()) return;
+            if (!sentryTurretTileEntity.hasEnoughEnergy()) return;
         } else {
             return;
         }
@@ -95,7 +95,7 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         double distanceToTarget = shooterToTargetDelta.length();
         int ticksUntilHit = (int) (distanceToTarget / unCorrectedVelocity.length());
         Vec3d actualVelocity = shooterToTargetDelta.add(targetDistanceTraveledSinceLastTick.scale(ticksUntilHit)).normalize();
-        this.shootSpineball(actualVelocity, sentryTurretBaseTileEntity);
+        this.shootSpineball(actualVelocity, sentryTurretTileEntity);
 
         this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
     }

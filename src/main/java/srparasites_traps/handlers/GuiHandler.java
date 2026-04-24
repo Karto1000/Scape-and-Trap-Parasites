@@ -12,9 +12,9 @@ import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
 import srparasites_traps.features.relocator.RelocatorContainer;
 import srparasites_traps.features.relocator.RelocatorGui;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBaseContainer;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBaseGui;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
+import srparasites_traps.features.sentry_turret.base.SentryTurretContainer;
+import srparasites_traps.features.sentry_turret.base.SentryTurretGui;
+import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
 import srparasites_traps.util.Constants;
 
 import javax.annotation.Nullable;
@@ -35,7 +35,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
-            return new SentryTurretBaseContainer(player.inventory, (SentryTurretBaseTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new SentryTurretContainer(player.inventory, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {
@@ -66,7 +66,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
-            return new SentryTurretBaseGui(player, (SentryTurretBaseTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new SentryTurretGui(player, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {

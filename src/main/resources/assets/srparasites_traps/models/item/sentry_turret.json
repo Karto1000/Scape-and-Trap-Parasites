@@ -1,5 +1,5 @@
 {
-  "parent": "srparasites_traps:block/sentry_turret_base",
+  "parent": "srparasites_traps:block/sentry_turret",
   "display": {
     "gui": {
       "rotation": [

@@ -1,6 +1,7 @@
 package srparasites_traps.features.biomass_factory;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,6 +30,10 @@ public class BiomassFactoryBlock extends Block {
         this.setRegistryName(SRParasitesTraps.MOD_ID, "biomass_factory");
         this.setTranslationKey(getTranslationKeyFor("biomass_factory"));
         this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        setHardness(50);
+        setResistance(1200);
+        setHarvestLevel("pickaxe", 2);
+        setSoundType(SoundType.METAL);
     }
 
     @Override

@@ -14,7 +14,7 @@ import srparasites_traps.util.Constants;
 import srparasites_traps.util.GuiHelper;
 import srparasites_traps.util.Translation;
 
-public class SentryTurretBaseGui extends GuiContainerCore {
+public class SentryTurretGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/sentry_turret.png");
     private final static int TANK_X_POSITION_PX = 8;
     private final static int TANK_Y_POSITION_PX = 16;
@@ -28,10 +28,10 @@ public class SentryTurretBaseGui extends GuiContainerCore {
     private final static int BUTTON_X_POSITION_PX = 46;
     private final static int BUTTON_Y_POSITION_PX = 15;
     private final static String TOGGLE_BUTTON_NAME = "toggle";
-    private final SentryTurretBaseTileEntity tileEntity;
+    private final SentryTurretTileEntity tileEntity;
 
-    public SentryTurretBaseGui(EntityPlayer player, SentryTurretBaseTileEntity tileEntity) {
-        super(new SentryTurretBaseContainer(player.inventory, tileEntity), TEXTURE);
+    public SentryTurretGui(EntityPlayer player, SentryTurretTileEntity tileEntity) {
+        super(new SentryTurretContainer(player.inventory, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }
 
@@ -47,7 +47,7 @@ public class SentryTurretBaseGui extends GuiContainerCore {
     enum SentryGuiState {
         INACTIVE, DEPLOYED, MISSING_ENERGY_SPAWN, DEPLOYED_MISSING_ENERGY, MISSING_BIOMASS_SHOOT, MISSING_BIOMASS_SPAWN, SENTRY_DEAD;
 
-        public String toString(SentryTurretBaseTileEntity tileEntity) {
+        public String toString(SentryTurretTileEntity tileEntity) {
             if (this == DEPLOYED) return "Deployed";
             if (this == DEPLOYED_MISSING_ENERGY) return "Deployed\n> Missing energy";
             if (this == MISSING_BIOMASS_SHOOT) return "Deployed\n> Missing biomass";

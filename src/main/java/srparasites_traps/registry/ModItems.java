@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ModItems {
-    public static Item SENTRY_TURRET_BASE_ITEM = getItemBlock(ModBlocks.SENTRY_TURRET_BASE);
+    public static Item sentry_turret_ITEM = getItemBlock(ModBlocks.sentry_turret);
     public static Item RELOCATOR_ITEM = getItemBlock(ModBlocks.RELOCATOR);
     public static Item SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.SERRATED_SPIKES);
     public static Item FLAME_COATED_SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.FLAME_COATED_SERRATED_SPIKES);
     public static Item BIOMASS_FACTORY_ITEM = getItemBlock(ModBlocks.BIOMASS_FACTORY);
+    public static Item CLEANER_ITEM = getItemBlock(ModBlocks.CLEANER);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);

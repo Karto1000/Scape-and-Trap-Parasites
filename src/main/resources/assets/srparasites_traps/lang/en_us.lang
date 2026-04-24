@@ -19,12 +19,12 @@
 itemGroup.tab.srparasites_traps.name=Scape and Trap Parasites
 
 # Tiles
-tile.srparasites_traps.sentry_turret_base.name=§6Sentry Turret§f
+tile.srparasites_traps.sentry_turret.name=§6Sentry Turret§f
 tile.srparasites_traps.relocator.name=§6Relocator§f
 tile.srparasites_traps.biomass_factory.name=§6Biomass Factory§f
 tile.srparasites_traps.serrated_spikes.name=Serrated Spikes
 tile.srparasites_traps.flame_coated_serrated_spikes.name=Flame-Coated Serrated Spikes
-tile.srparasites_traps.biomass_pit.name=Biomass Pit
+tile.srparasites_traps.cleaner.name=§6Cleaner§f
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit
@@ -39,7 +39,7 @@ item.srparasites_traps.beckon_heart.name=§aBeckon Heart§f
 # Tooltips
 tooltip.srparasites_traps.item.two_way_communication_unit=§7A chip designed to enable two-way communication between mechanical machines and §cparasitic entities.
 tooltip.srparasites_traps.item.parasitic_matter=Matter that is formed into various parasites by §cDispatchers§f.
-tooltip.srparasites_traps.item.sentry_turret_base=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §abiomass§f and §4energy§f to function.
+tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §abiomass§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires a §aRelocation Marker§f to define coordinates aswell as §abiomass§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocation_marker.base=Can be placed inside a relocator to define the area it searches for enemies and where it will place them.\n--------------------------\nShift + Right-Click with item in hand to define §carea to search§f for enemies.\nRight-Click with item in hand to define §adestination area§f to put enemies.\n--------------------------\nBoth have to be defined before it can be put inside a relocator and both areas have to have their start and end positions within a certain range to said relocator (Search Area: <%d Blocks, Destination Area: <%d Blocks).
 tooltip.srparasites_traps.item.relocation_marker.search_defined=§cSearch area (x: %d to %d, y: %d to %d, z: %d to %d)§f
@@ -52,6 +52,7 @@ tooltip.srparasites_traps.item.reconstructed_sentry=§7A crude reconstruction of
 tooltip.srparasites_traps.item.reconstructed_seizer=§7A haphazard reconstruction of a §cSeizer§f.
 tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §aBeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create biomass.
 tooltip.srparasites_traps.item.beckon_heart=An important part of a §aBeckon§f that somehow still remains intact.
+tooltip.srparasites_traps.item.cleaner=A machine that rids any nearby player of the §aViral§f effect.
 tooltip.srparasites_traps.gui.sentry_turret.toggle=Activate / Deactivate the sentry turret.
 
 # Status Messages

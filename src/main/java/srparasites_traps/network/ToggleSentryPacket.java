@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBaseTileEntity;
+import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
 
 public class ToggleSentryPacket implements IMessage {
     public BlockPos sentryBlockPosition;
@@ -62,8 +62,8 @@ public class ToggleSentryPacket implements IMessage {
                         TileEntity tileEntity = world.getTileEntity(message.sentryBlockPosition);
                         if (tileEntity == null) return;
 
-                        if (tileEntity instanceof SentryTurretBaseTileEntity) {
-                            ((SentryTurretBaseTileEntity) tileEntity).toggleEntity();
+                        if (tileEntity instanceof SentryTurretTileEntity) {
+                            ((SentryTurretTileEntity) tileEntity).toggleEntity();
                         }
                     });
             return null;

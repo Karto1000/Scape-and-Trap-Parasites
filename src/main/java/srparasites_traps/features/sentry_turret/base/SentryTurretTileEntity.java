@@ -16,7 +16,7 @@ import srparasites_traps.util.Constants;
 import java.util.Optional;
 import java.util.UUID;
 
-public class SentryTurretBaseTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
+public class SentryTurretTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
     public int energyPerTick = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_TICK;
@@ -27,7 +27,7 @@ public class SentryTurretBaseTileEntity extends TurretTileEntity implements ITic
     private double currentRespawnTime = respawnTimeSeconds;
     private SentryTileEntityState state = SentryTileEntityState.INACTIVE;
 
-    public SentryTurretBaseTileEntity() {
+    public SentryTurretTileEntity() {
         super(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS, ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
     }
 

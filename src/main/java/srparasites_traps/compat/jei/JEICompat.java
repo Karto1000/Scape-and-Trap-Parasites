@@ -25,7 +25,7 @@ public class JEICompat implements IModPlugin {
     public void register(IModRegistry registry) {
         if (!ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) {
             IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
-            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SENTRY_TURRET_BASE));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.sentry_turret));
         }
 
         if (!ForgeConfigHandler.relocator.ENABLE_RELOCATOR) {
