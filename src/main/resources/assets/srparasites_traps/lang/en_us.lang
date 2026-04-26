@@ -61,3 +61,6 @@ status.srparasites_traps.relocation_marker.destination_area_too_big=§cDestinati
 status.srparasites_traps.relocation_marker.invalid_areas=§cUnbound search or destination area or search area distance too big (> %d Blocks) or destination area distance too big (> %d Blocks).§f
 status.srparasites_traps.relocation_marker.set_position=Successfully set position to (%d, %d, %d)
 status.srparasites_traps.relocation_marker.remove_positions=Successfully removed bound positions
+
+# Subtitles
+subtitle.srparasites_traps.cleaner_spray=Cleaner sprays

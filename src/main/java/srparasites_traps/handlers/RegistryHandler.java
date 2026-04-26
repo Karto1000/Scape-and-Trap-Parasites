@@ -2,6 +2,7 @@ package srparasites_traps.handlers;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,6 +32,13 @@ public class RegistryHandler {
         ArrayList<EntityEntry> entities = ModEntities.getEntityList();
         SRParasitesTraps.LOGGER.info("Registering Entities {}", entities);
         event.getRegistry().registerAll(entities.toArray(new EntityEntry[0]));
+    }
+
+    @SubscribeEvent
+    public static void registerSoundEvent(RegistryEvent.Register<SoundEvent> event) {
+        ArrayList<SoundEvent> sounds = ModSounds.getSoundList();
+        SRParasitesTraps.LOGGER.info("Registering Sounds {}", sounds);
+        event.getRegistry().registerAll(sounds.toArray(new SoundEvent[0]));
     }
 
     @SubscribeEvent

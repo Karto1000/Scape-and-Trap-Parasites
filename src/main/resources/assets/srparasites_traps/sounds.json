@@ -1,0 +1,32 @@
+{
+  "cleaner_spray": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.cleaner_spray",
+    "sounds": [
+      {
+        "name": "srparasites_traps:cleaner_spray",
+        "stream": false
+      }
+    ]
+  },
+  "cleaner_open": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.cleaner_open",
+    "sounds": [
+      {
+        "name": "srparasites_traps:cleaner_open",
+        "stream": false
+      }
+    ]
+  },
+  "cleaner_close": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.cleaner_close",
+    "sounds": [
+      {
+        "name": "srparasites_traps:cleaner_close",
+        "stream": false
+      }
+    ]
+  }
+}
