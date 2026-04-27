@@ -2,14 +2,18 @@ package srparasites_traps.features.cleaner;
 
 import cofh.core.block.TileCore;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
 import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.NBTHelper;
@@ -22,14 +26,18 @@ public class CleanerTileEntity extends TileCore implements ITickable {
     private final static int DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN = 10;
     private final static int DEFAULT_CLEANER_CAPACITY = 3;
     private final static int DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS = 20;
-    private final static int DEFAULT_CLEANER_OPEN_COOLDOWN_TICKS = 10;
-    private final static int DEFAULT_CLEANER_CLOSE_COOLDOWN_TICKS = 10;
+    private final static int DEFAULT_CLEANER_OPEN_DURATION_TICKS = 40;
+    private final static int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = 40;
     private final static int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = 100;
     private int currentCheckCooldown = 0;
     private int currentSprayCooldown = 0;
-    private int currentOpenCooldown = 0;
-    private int currentCloseCooldown = 0;
+    private int currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
+    private int currentCloseCooldown = DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
     private int currentCapacity = DEFAULT_CLEANER_CAPACITY;
+    private final static Potion[] removableEffects = new Potion[]{
+            SRPPotions.VIRA_E,
+            SRPPotions.COTH_E
+    };
 
     private final StateManager<CleanerState> state = new StateManager<>(CleanerState.IDLE);
 
@@ -78,32 +86,40 @@ public class CleanerTileEntity extends TileCore implements ITickable {
         readFromNBT(pkt.getNbtCompound());
     }
 
+    private EnumFacing getGrateFacingDirection() {
+        IBlockState state = this.world.getBlockState(this.pos);
+        if (state.getBlock() instanceof CleanerBlock) return state.getValue(CleanerBlock.grateDirection);
+        return EnumFacing.NORTH;
+    }
+
     private List<EntityPlayer> getPlayersInRange() {
-        AxisAlignedBB aabb = new AxisAlignedBB(this.getPos()).grow(1, 1, 1);
+        EnumFacing facing = this.getGrateFacingDirection();
+        Vec3i dirVec = facing.getDirectionVec();
+        AxisAlignedBB aabb = new AxisAlignedBB(this.getPos())
+                .offset(dirVec.getX(), dirVec.getY(), dirVec.getZ())
+                .expand(dirVec.getX(), dirVec.getY(), dirVec.getZ());
         return this.world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
     }
 
     private void shootParticles() {
-        // Shoot particles in a hexagonal pattern outwards
-        double originX = pos.getX() + 0.5;
-        double originY = pos.getY() + 0.5;
-        double originZ = pos.getZ() + 0.5;
+        EnumFacing facing = this.getGrateFacingDirection();
+        Vec3i dirVec = facing.getDirectionVec();
 
-        for (int i = 0; i < 6; i++) {
-            double spinAngle = (i * 2 * Math.PI) / 6 * Math.random();
-            double x = Math.cos(spinAngle) * 0.2;
-            double z = Math.sin(spinAngle) * 0.2;
+        double originX = pos.getX() + 0.5 + (double) dirVec.getX() / 2;
+        double originY = pos.getY() + 0.5 + (double) dirVec.getY() / 2;
+        double originZ = pos.getZ() + 0.5 + (double) dirVec.getZ() / 2;
 
+        for (int i = 0; i < 10; i++) {
             ((WorldServer) this.world).spawnParticle(
                     EnumParticleTypes.CLOUD,
                     originX,
                     originY,
                     originZ,
                     0,
-                    x,
-                    0.5,
-                    z,
-                    0.5
+                    dirVec.getX(),
+                    dirVec.getY(),
+                    dirVec.getZ(),
+                   Math.random()
             );
         }
     }
@@ -118,7 +134,7 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                         this.pos.getZ() + 0.5,
                         ModSounds.CLEANER_OPEN,
                         SoundCategory.BLOCKS,
-                        0.2f,
+                        0.4f,
                         1.0f
                 );
                 this.state.setState(CleanerState.OPENING, this.world.getTotalWorldTime());
@@ -131,7 +147,7 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                         this.pos.getZ() + 0.5,
                         ModSounds.CLEANER_CLOSE,
                         SoundCategory.BLOCKS,
-                        0.2f,
+                        0.4f,
                         1.0f
                 );
                 this.state.setState(CleanerState.CLOSING, this.world.getTotalWorldTime());
@@ -143,6 +159,16 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                 this.state.setState(CleanerState.IDLE, this.world.getTotalWorldTime());
                 break;
         }
+    }
+
+    private boolean anyPlayerHasBadEffect(List<EntityPlayer> players) {
+        return players.stream().anyMatch(player -> {
+            for (Potion effect : removableEffects) {
+                if (player.isPotionActive(effect)) return true;
+            }
+
+            return false;
+        });
     }
 
     @Override
@@ -165,6 +191,9 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                 List<EntityPlayer> players = this.getPlayersInRange();
                 this.currentCheckCooldown = DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN;
                 if (players.isEmpty()) return;
+
+                if (!anyPlayerHasBadEffect(players)) return;
+
                 this.switchState();
                 this.callBlockUpdate();
                 break;
@@ -182,8 +211,14 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                     return;
                 }
 
+                if (!anyPlayerHasBadEffect(playersInRange)) {
+                    this.switchState();
+                    this.callBlockUpdate();
+                    return;
+                }
+
                 for (EntityPlayer player : playersInRange) {
-                    player.removePotionEffect(SRPPotions.VIRA_E);
+                    for (Potion effect : removableEffects) player.removePotionEffect(effect);
                 }
 
                 shootParticles();
@@ -194,7 +229,7 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                         this.pos.getZ() + 0.5,
                         ModSounds.CLEANER_SPRAY,
                         SoundCategory.BLOCKS,
-                        0.2f,
+                        0.4f,
                         1.0f
                 );
 
@@ -209,7 +244,7 @@ public class CleanerTileEntity extends TileCore implements ITickable {
 
                 this.switchState();
                 this.callBlockUpdate();
-                this.currentOpenCooldown = DEFAULT_CLEANER_OPEN_COOLDOWN_TICKS;
+                this.currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
                 break;
             case CLOSING:
                 if (this.currentCloseCooldown > 0) {
@@ -219,7 +254,7 @@ public class CleanerTileEntity extends TileCore implements ITickable {
 
                 this.switchState();
                 this.callBlockUpdate();
-                this.currentCloseCooldown = DEFAULT_CLEANER_CLOSE_COOLDOWN_TICKS;
+                this.currentCloseCooldown = DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
                 break;
             default:
         }

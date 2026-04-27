@@ -3,10 +3,16 @@ package srparasites_traps.features.cleaner;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
@@ -18,6 +24,8 @@ import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class CleanerBlock extends Block {
+    public static final PropertyDirection grateDirection = PropertyDirection.create("grate_direction");
+
     public CleanerBlock() {
         super(Material.IRON, Material.IRON.getMaterialMapColor());
 
@@ -28,6 +36,29 @@ public class CleanerBlock extends Block {
         this.setResistance(1200);
         this.setHarvestLevel("pickaxe", 2);
         this.setSoundType(SoundType.METAL);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(grateDirection, EnumFacing.NORTH));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, grateDirection);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        EnumFacing facing = state.getValue(grateDirection);
+        return facing.getIndex();
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(grateDirection, EnumFacing.byIndex(meta));
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        EnumFacing playerFacing = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+        return this.getDefaultState().withProperty(grateDirection, playerFacing);
     }
 
     @Override
