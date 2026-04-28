@@ -5,7 +5,10 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import srparasites_traps.features.cleaner.CleanerTESR;
+import srparasites_traps.features.cleaner.CleanerTileEntity;
 import srparasites_traps.features.relocator.RelocatorEntity;
 import srparasites_traps.features.relocator.RelocatorEntityRenderer;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
@@ -22,11 +25,16 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init() {
         registerEntityRenderers();
+        registerTileEntitySpecialRenderers();
         GuiHandler.init();
         RenderHandler.init();
     }
 
-    public void registerItemRenderer(Item item, int meta, String id) {
+    public void registerTileEntitySpecialRenderers() {
+        ClientRegistry.bindTileEntitySpecialRenderer(CleanerTileEntity.class, new CleanerTESR());
+    }
+
+    public void registerItemRenderers(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
     }
 

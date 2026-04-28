@@ -6,5 +6,5 @@ public abstract class CommonProxy {
 
     public abstract void init();
 
-    public abstract void registerItemRenderer(Item item, int meta, String id);
+    public abstract void registerItemRenderers(Item item, int meta, String id);
 }

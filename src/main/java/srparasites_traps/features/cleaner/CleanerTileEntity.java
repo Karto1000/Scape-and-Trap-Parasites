@@ -1,6 +1,5 @@
 package srparasites_traps.features.cleaner;
 
-import cofh.core.block.TileCore;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
@@ -22,13 +22,14 @@ import srparasites_traps.util.StateManager;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CleanerTileEntity extends TileCore implements ITickable {
+// We can't inherit from TileCore since that doesn't allow the update method to be called on the client
+public class CleanerTileEntity extends TileEntity implements ITickable {
     private final static int DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN = 10;
-    private final static int DEFAULT_CLEANER_CAPACITY = 3;
+    private final static int DEFAULT_CLEANER_CAPACITY = 2;
     private final static int DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS = 20;
-    private final static int DEFAULT_CLEANER_OPEN_DURATION_TICKS = 40;
-    private final static int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = 40;
-    private final static int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = 100;
+    private final static int DEFAULT_CLEANER_OPEN_DURATION_TICKS = 20;
+    private final static int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = 20;
+    private final static int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = 200;
     private int currentCheckCooldown = 0;
     private int currentSprayCooldown = 0;
     private int currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
@@ -38,8 +39,8 @@ public class CleanerTileEntity extends TileCore implements ITickable {
             SRPPotions.VIRA_E,
             SRPPotions.COTH_E
     };
-
     private final StateManager<CleanerState> state = new StateManager<>(CleanerState.IDLE);
+    public static final int ANIMATION_FRAMES = 6;
 
     public CleanerTileEntity() {
         super();
@@ -54,6 +55,9 @@ public class CleanerTileEntity extends TileCore implements ITickable {
         compound.setInteger("State", this.state.getState().ordinal());
         compound.setInteger("CurrentCapacity", this.currentCapacity);
         compound.setInteger("CurrentCheckCooldown", this.currentCheckCooldown);
+        compound.setInteger("CurrentSprayCooldown", this.currentSprayCooldown);
+        compound.setInteger("CurrentOpenCooldown", this.currentOpenCooldown);
+        compound.setInteger("CurrentCloseCooldown", this.currentCloseCooldown);
         return super.writeToNBT(compound);
     }
 
@@ -62,6 +66,9 @@ public class CleanerTileEntity extends TileCore implements ITickable {
         this.currentCheckCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCheckCooldown", () -> DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN);
         this.currentCapacity = NBTHelper.getIntegerOrElse(compound, "CurrentCapacity", () -> DEFAULT_CLEANER_CAPACITY);
         this.state.setState(CleanerState.values()[NBTHelper.getIntegerOrElse(compound, "State", CleanerState.IDLE::ordinal)]);
+        this.currentSprayCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentSprayCooldown", () -> DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS);
+        this.currentOpenCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentOpenCooldown", () -> DEFAULT_CLEANER_OPEN_DURATION_TICKS);
+        this.currentCloseCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCloseCooldown", () -> DEFAULT_CLEANER_CLOSE_DURATION_TICKS);
         super.readFromNBT(compound);
     }
 
@@ -86,7 +93,26 @@ public class CleanerTileEntity extends TileCore implements ITickable {
         readFromNBT(pkt.getNbtCompound());
     }
 
-    private EnumFacing getGrateFacingDirection() {
+    public int getAnimationFrame() {
+        if (this.state.getState() == CleanerState.OPENING) {
+            int elapsedTicks = DEFAULT_CLEANER_OPEN_DURATION_TICKS - this.currentOpenCooldown;
+            int frame = elapsedTicks / (DEFAULT_CLEANER_OPEN_DURATION_TICKS / ANIMATION_FRAMES);
+            return Math.max(0, Math.min(ANIMATION_FRAMES - 1, frame));
+        }
+
+        if (this.state.getState() == CleanerState.CLOSING) {
+            int frame = this.currentCloseCooldown / (DEFAULT_CLEANER_OPEN_DURATION_TICKS / ANIMATION_FRAMES);
+            return Math.max(0, Math.min(ANIMATION_FRAMES - 1, frame));
+        }
+
+        if (this.state.getState() == CleanerState.DISPENSING) {
+            return ANIMATION_FRAMES - 1;
+        }
+
+        return -1;
+    }
+
+    public EnumFacing getGrateFacingDirection() {
         IBlockState state = this.world.getBlockState(this.pos);
         if (state.getBlock() instanceof CleanerBlock) return state.getValue(CleanerBlock.grateDirection);
         return EnumFacing.NORTH;
@@ -116,10 +142,10 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                     originY,
                     originZ,
                     0,
-                    dirVec.getX(),
-                    dirVec.getY(),
-                    dirVec.getZ(),
-                   Math.random()
+                    dirVec.getX() + (dirVec.getX() == 0 ? (Math.random() - 0.5) : 0),
+                    dirVec.getY() + (dirVec.getY() == 0 ? (Math.random() - 0.5) : 0),
+                    dirVec.getZ() + (dirVec.getZ() == 0 ? (Math.random() - 0.5) : 0),
+                    Math.random()
             );
         }
     }
@@ -127,6 +153,7 @@ public class CleanerTileEntity extends TileCore implements ITickable {
     private void switchState() {
         switch (this.state.getState()) {
             case IDLE:
+                this.state.setState(CleanerState.OPENING, this.world.getTotalWorldTime());
                 this.world.playSound(
                         null,
                         this.pos.getX() + 0.5,
@@ -137,9 +164,10 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                         0.4f,
                         1.0f
                 );
-                this.state.setState(CleanerState.OPENING, this.world.getTotalWorldTime());
+                this.callBlockUpdate();
                 break;
             case DISPENSING:
+                this.state.setState(CleanerState.CLOSING, this.world.getTotalWorldTime());
                 this.world.playSound(
                         null,
                         this.pos.getX() + 0.5,
@@ -150,14 +178,23 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                         0.4f,
                         1.0f
                 );
-                this.state.setState(CleanerState.CLOSING, this.world.getTotalWorldTime());
+                this.callBlockUpdate();
                 break;
             case OPENING:
                 this.state.setState(CleanerState.DISPENSING, this.world.getTotalWorldTime());
+                this.callBlockUpdate();
                 break;
             case CLOSING:
                 this.state.setState(CleanerState.IDLE, this.world.getTotalWorldTime());
+                this.callBlockUpdate();
                 break;
+        }
+    }
+
+    public void callBlockUpdate() {
+        if (this.world != null) {
+            IBlockState state = this.world.getBlockState(this.pos);
+            this.world.notifyBlockUpdate(this.pos, state, state, 3);
         }
     }
 
@@ -173,7 +210,14 @@ public class CleanerTileEntity extends TileCore implements ITickable {
 
     @Override
     public void update() {
-        if (this.world.isRemote) return;
+        if (this.world.isRemote) {
+            if (state.getState() == CleanerState.OPENING && this.currentOpenCooldown > 0) {
+                this.currentOpenCooldown--;
+            } else if (state.getState() == CleanerState.CLOSING && this.currentCloseCooldown > 0) {
+                this.currentCloseCooldown--;
+            }
+            return;
+        }
 
         boolean canRegainCapacity = this.world.getTotalWorldTime() % DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS == 0
                 && this.currentCapacity < DEFAULT_CLEANER_CAPACITY;
@@ -191,11 +235,9 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                 List<EntityPlayer> players = this.getPlayersInRange();
                 this.currentCheckCooldown = DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN;
                 if (players.isEmpty()) return;
-
                 if (!anyPlayerHasBadEffect(players)) return;
 
                 this.switchState();
-                this.callBlockUpdate();
                 break;
             case DISPENSING:
                 if (this.currentSprayCooldown > 0) {
@@ -207,13 +249,11 @@ public class CleanerTileEntity extends TileCore implements ITickable {
 
                 if (currentCapacity <= 0 || playersInRange.isEmpty()) {
                     this.switchState();
-                    this.callBlockUpdate();
                     return;
                 }
 
                 if (!anyPlayerHasBadEffect(playersInRange)) {
                     this.switchState();
-                    this.callBlockUpdate();
                     return;
                 }
 
@@ -242,9 +282,8 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                     return;
                 }
 
-                this.switchState();
-                this.callBlockUpdate();
                 this.currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
+                this.switchState();
                 break;
             case CLOSING:
                 if (this.currentCloseCooldown > 0) {
@@ -252,11 +291,11 @@ public class CleanerTileEntity extends TileCore implements ITickable {
                     return;
                 }
 
-                this.switchState();
-                this.callBlockUpdate();
                 this.currentCloseCooldown = DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
+                this.switchState();
                 break;
             default:
         }
     }
+
 }

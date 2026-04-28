@@ -23,7 +23,7 @@ public class RegistryHandler {
     public static void registerItemRenderers() {
         for (Item item : ModItems.getItemList()) {
             SRParasitesTraps.LOGGER.info("Registering Item Renderer for {}", item);
-            SRParasitesTraps.PROXY.registerItemRenderer(item, 0, "inventory");
+            SRParasitesTraps.PROXY.registerItemRenderers(item, 0, "inventory");
         }
     }
 

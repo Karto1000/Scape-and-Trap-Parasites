@@ -1,8 +1,22 @@
 package srparasites_traps.features.cleaner;
 
-public enum CleanerState {
+import net.minecraft.util.IStringSerializable;
+
+public enum CleanerState implements IStringSerializable {
     IDLE,
     DISPENSING,
     OPENING,
-    CLOSING
+    CLOSING;
+
+    @Override
+    public String getName() {
+        switch (this) {
+            case IDLE: return "idle";
+            case DISPENSING: return "dispensing";
+            case OPENING: return "opening";
+            case CLOSING: return "closing";
+        };
+
+        return null;
+    }
 }
