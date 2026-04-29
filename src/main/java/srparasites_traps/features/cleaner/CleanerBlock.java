@@ -18,6 +18,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.config.ForgeConfigHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -32,9 +33,8 @@ public class CleanerBlock extends Block {
     public CleanerBlock() {
         super(Material.IRON, Material.IRON.getMaterialMapColor());
 
-        this.setRegistryName("cleaner");
+        this.setRegistryName(SRParasitesTraps.MOD_ID, "cleaner");
         this.setTranslationKey(getTranslationKeyFor("cleaner"));
-        this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
         this.setHardness(50);
         this.setResistance(1200);
         this.setHarvestLevel("pickaxe", 2);
@@ -43,6 +43,8 @@ public class CleanerBlock extends Block {
                 .withProperty(grateDirection, EnumFacing.NORTH)
                 .withProperty(cleanerState, CleanerState.IDLE)
         );
+
+        if (ForgeConfigHandler.cleaner.ENABLE_CLEANER) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
 

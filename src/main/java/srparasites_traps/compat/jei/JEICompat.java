@@ -45,6 +45,12 @@ public class JEICompat implements IModPlugin {
             return;
         }
 
+        if (!ForgeConfigHandler.cleaner.ENABLE_CLEANER) {
+            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.CLEANER));
+            return;
+        }
+
         for (Item item : ModItems.getItemList()) {
             String infoKey = String.format("info.srparasites_traps.%s", item.getRegistryName().getPath());
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);

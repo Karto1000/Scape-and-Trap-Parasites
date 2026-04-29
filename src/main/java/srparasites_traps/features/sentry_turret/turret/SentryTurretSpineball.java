@@ -101,8 +101,11 @@ public class SentryTurretSpineball extends EntityFireball {
         }
 
         if (target != null) {
+            int hurtResistantTime = target.hurtResistantTime;
+            target.hurtResistantTime = 0;
             target.attackEntityFrom(damageSource, damage);
             target.addPotionEffect(new PotionEffect(MobEffects.POISON, this.poisonDuration, this.poisonAmplifier));
+            target.hurtResistantTime = hurtResistantTime;
         }
 
         this.setDead();

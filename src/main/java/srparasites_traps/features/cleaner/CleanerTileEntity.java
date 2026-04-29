@@ -15,6 +15,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.WorldServer;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.NBTHelper;
 import srparasites_traps.util.StateManager;
@@ -24,12 +25,14 @@ import java.util.List;
 
 // We can't inherit from TileCore since that doesn't allow the update method to be called on the client
 public class CleanerTileEntity extends TileEntity implements ITickable {
+    public final static int DEFAULT_CLEANER_CAPACITY = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_SPRAY_CAPACITY;
+    public final static int DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS;
+    public final static int DEFAULT_CLEANER_OPEN_DURATION_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_OPEN_DURATION_TICKS;
+    public final static int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
+    public final static int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS;
+    public final static int ANIMATION_FRAMES = 6;
+
     private final static int DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN = 10;
-    private final static int DEFAULT_CLEANER_CAPACITY = 2;
-    private final static int DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS = 20;
-    private final static int DEFAULT_CLEANER_OPEN_DURATION_TICKS = 20;
-    private final static int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = 20;
-    private final static int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = 200;
     private int currentCheckCooldown = 0;
     private int currentSprayCooldown = 0;
     private int currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
@@ -40,7 +43,6 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
             SRPPotions.COTH_E
     };
     private final StateManager<CleanerState> state = new StateManager<>(CleanerState.IDLE);
-    public static final int ANIMATION_FRAMES = 6;
 
     public CleanerTileEntity() {
         super();
