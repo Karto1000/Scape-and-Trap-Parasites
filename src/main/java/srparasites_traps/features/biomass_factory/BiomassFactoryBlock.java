@@ -24,11 +24,13 @@ import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class BiomassFactoryBlock extends Block {
+    public static final String REGISTRY_NAME = "biomass_factory";
+
     public BiomassFactoryBlock() {
         super(Material.SPONGE, MapColor.IRON);
 
-        this.setRegistryName(SRParasitesTraps.MOD_ID, "biomass_factory");
-        this.setTranslationKey(getTranslationKeyFor("biomass_factory"));
+        this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
+        this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
         this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
         setHardness(50);
         setResistance(1200);
@@ -38,7 +40,7 @@ public class BiomassFactoryBlock extends Block {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.biomass_factory"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }
 
     @Override

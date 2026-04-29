@@ -30,6 +30,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the cleaner")
     public static final CleanerConfig cleaner = new CleanerConfig();
 
+    @Config.Name("Obsidian Blocks")
+    @Config.Comment("Settings for the obsidian blocks")
+    public static final ObsidianBlocksConfig obsidianBlocks = new ObsidianBlocksConfig();
+
     @Config.Name("Common")
     @Config.Comment("Settings that are common to all mods")
     public static final CommonConfig common = new CommonConfig();
@@ -291,6 +295,13 @@ public class ForgeConfigHandler {
         @Config.Comment("The amount of ticks that it takes for the cleaner to regenerate one charge of its capacity")
         @Config.RangeInt(min = 0)
         public int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = 200;
+    }
+
+    public static class ObsidianBlocksConfig {
+        @Config.Name("Enable obsidian blocks")
+        @Config.Comment("If true, the obsidian blocks will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_OBSIDIAN_BLOCKS = true;
     }
 
     public static class CommonConfig {

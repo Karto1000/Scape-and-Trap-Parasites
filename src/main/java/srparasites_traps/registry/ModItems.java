@@ -1,9 +1,11 @@
 package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSlab;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.BasicItem;
 import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
@@ -19,6 +21,8 @@ public class ModItems {
     public static Item FLAME_COATED_SERRATED_SPIKES_ITEM = getItemBlock(ModBlocks.FLAME_COATED_SERRATED_SPIKES);
     public static Item BIOMASS_FACTORY_ITEM = getItemBlock(ModBlocks.BIOMASS_FACTORY);
     public static Item CLEANER_ITEM = getItemBlock(ModBlocks.CLEANER);
+    public static Item OBSIDIAN_LADDER_ITEM = getItemBlock(ModBlocks.OBSIDIAN_LADDER);
+    public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
@@ -28,6 +32,10 @@ public class ModItems {
     public static Item RECONSTRUCTED_SEIZER = new BasicItem("reconstructed_seizer").maxStackSize(1);
     public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
 
+    private static Item getItemSlab(Block block, BlockSlab single, BlockSlab doubleSlab) {
+        return new ItemSlab(block, single, doubleSlab).setRegistryName(Objects.requireNonNull(block.getRegistryName()));
+    }
+
     private static Item getItemBlock(Block block) {
         return new ItemBlock(block).setRegistryName(Objects.requireNonNull(block.getRegistryName()));
     }
@@ -36,7 +44,7 @@ public class ModItems {
         ArrayList<Item> items = new ArrayList<>();
 
         for (Field field : ModItems.class.getDeclaredFields()) {
-            if (field.getType() != Item.class) continue;
+            if (field.getType() != Item.class && field.getType() != ItemSlab.class) continue;
 
             try {
                 Item item = (Item) field.get(null);

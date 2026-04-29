@@ -13,8 +13,10 @@ import java.util.List;
 import static srparasites_traps.util.Translation.getTooltipFor;
 
 public class FlameCoatedSerratedSpikes extends SerratedSpikesBlock {
+    public static final String REGISTRY_NAME = "flame_coated_serrated_spikes";
+
     public FlameCoatedSerratedSpikes() {
-        super("flame_coated_serrated_spikes");
+        super(REGISTRY_NAME);
     }
 
     @Override
@@ -25,6 +27,6 @@ public class FlameCoatedSerratedSpikes extends SerratedSpikesBlock {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.flame_coated_serrated_spikes"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }
 }

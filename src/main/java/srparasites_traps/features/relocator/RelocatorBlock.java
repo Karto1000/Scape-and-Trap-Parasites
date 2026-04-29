@@ -26,11 +26,13 @@ import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class RelocatorBlock extends Block {
+    public static final String REGISTRY_NAME = "relocator";
+
     public RelocatorBlock() {
         super(Material.IRON, MapColor.IRON);
 
-        setRegistryName(SRParasitesTraps.MOD_ID, "relocator");
-        setTranslationKey(getTranslationKeyFor("relocator"));
+        setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
+        setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
         setHardness(50);
         setResistance(1200);
         setHarvestLevel("pickaxe", 2);
@@ -64,6 +66,6 @@ public class RelocatorBlock extends Block {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.relocator"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }
 }

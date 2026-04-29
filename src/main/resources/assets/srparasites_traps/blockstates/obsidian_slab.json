@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "variant=default": {
+      "model": "srparasites_traps:obsidian_slab"
+    },
+    "half=bottom,variant=default": {
+      "model": "srparasites_traps:obsidian_slab"
+    },
+    "half=top,variant=default": {
+      "model": "srparasites_traps:obsidian_slab_top"
+    }
+  }
+}

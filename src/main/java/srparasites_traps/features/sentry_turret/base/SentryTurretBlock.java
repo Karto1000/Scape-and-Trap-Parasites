@@ -27,11 +27,13 @@ import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class SentryTurretBlock extends Block {
+    public static final String REGISTRY_NAME = "sentry_turret";
+
     public SentryTurretBlock() {
         super(Material.IRON, MapColor.IRON);
 
-        setRegistryName(MOD_ID, "sentry_turret");
-        setTranslationKey(getTranslationKeyFor("sentry_turret"));
+        setRegistryName(MOD_ID, REGISTRY_NAME);
+        setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
         // Same as obsidian
         setHardness(50);
         setResistance(1200);

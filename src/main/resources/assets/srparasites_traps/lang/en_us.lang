@@ -25,6 +25,8 @@ tile.srparasites_traps.biomass_factory.name=§6Biomass Factory§f
 tile.srparasites_traps.serrated_spikes.name=Serrated Spikes
 tile.srparasites_traps.flame_coated_serrated_spikes.name=Flame-Coated Serrated Spikes
 tile.srparasites_traps.cleaner.name=§6Cleaner§f
+tile.srparasites_traps.obsidian_ladder.name=Obsidian Ladder
+tile.srparasites_traps.obsidian_slab.name=Obsidian Slab
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit

@@ -1,9 +1,12 @@
 package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.cleaner.CleanerBlock;
+import srparasites_traps.features.obsidian_blocks.ObsidianLadderBlock;
+import srparasites_traps.features.obsidian_blocks.ObsidianSlabBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.FlameCoatedSerratedSpikes;
@@ -19,12 +22,15 @@ public class ModBlocks {
     public static Block FLAME_COATED_SERRATED_SPIKES = new FlameCoatedSerratedSpikes();
     public static Block BIOMASS_FACTORY = new BiomassFactoryBlock();
     public static Block CLEANER = new CleanerBlock();
+    public static Block OBSIDIAN_LADDER = new ObsidianLadderBlock();
+    public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
+    public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
 
     public static ArrayList<Block> getBlockList() {
         ArrayList<Block> blocks = new ArrayList<>();
 
         for (Field field : ModBlocks.class.getDeclaredFields()) {
-            if (field.getType() != Block.class) continue;
+            if (field.getType() != Block.class && field.getType() != BlockSlab.class) continue;
 
             try {
                 Block block = (Block) field.get(null);

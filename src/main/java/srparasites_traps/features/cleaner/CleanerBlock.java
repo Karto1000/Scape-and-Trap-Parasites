@@ -29,12 +29,13 @@ import static srparasites_traps.util.Translation.getTranslationKeyFor;
 public class CleanerBlock extends Block {
     public static final PropertyDirection grateDirection = PropertyDirection.create("grate_direction");
     public static final PropertyEnum<CleanerState> cleanerState = PropertyEnum.create("state", CleanerState.class);
+    public static final String REGISTRY_NAME = "cleaner";
 
     public CleanerBlock() {
         super(Material.IRON, Material.IRON.getMaterialMapColor());
 
-        this.setRegistryName(SRParasitesTraps.MOD_ID, "cleaner");
-        this.setTranslationKey(getTranslationKeyFor("cleaner"));
+        this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
+        this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
         this.setHardness(50);
         this.setResistance(1200);
         this.setHarvestLevel("pickaxe", 2);
@@ -94,6 +95,6 @@ public class CleanerBlock extends Block {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.cleaner"));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }
 }
