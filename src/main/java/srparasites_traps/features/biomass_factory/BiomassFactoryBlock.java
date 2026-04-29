@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 
 import javax.annotation.Nullable;
@@ -31,11 +32,12 @@ public class BiomassFactoryBlock extends Block {
 
         this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
         this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
-        this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
-        setHardness(50);
-        setResistance(1200);
-        setHarvestLevel("pickaxe", 2);
-        setSoundType(SoundType.METAL);
+        this.setHardness(50);
+        this.setResistance(1200);
+        this.setHarvestLevel("pickaxe", 2);
+        this.setSoundType(SoundType.METAL);
+
+        if (ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

@@ -31,6 +31,7 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
         this.setTranslationKey(getTranslationKeyFor(registryName));
         this.setHardness(50);
         this.setResistance(2000);
+        this.setHarvestLevel("pickaxe", 3);
         this.useNeighborBrightness = !this.isDouble();
 
         IBlockState bs = this.blockState.getBaseState();

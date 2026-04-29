@@ -36,19 +36,22 @@ public class JEICompat implements IModPlugin {
         if (!ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES) {
             IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SERRATED_SPIKES));
-            return;
         }
 
         if (!ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) {
             IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BIOMASS_FACTORY));
-            return;
         }
 
         if (!ForgeConfigHandler.cleaner.ENABLE_CLEANER) {
             IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.CLEANER));
-            return;
+        }
+
+        if (!ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS) {
+            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_LADDER));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_SLAB));
         }
 
         for (Item item : ModItems.getItemList()) {
