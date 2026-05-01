@@ -2,6 +2,7 @@ package srparasites_traps.handlers;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,6 +40,13 @@ public class RegistryHandler {
         ArrayList<SoundEvent> sounds = ModSounds.getSoundList();
         SRParasitesTraps.LOGGER.info("Registering Sounds {}", sounds);
         event.getRegistry().registerAll(sounds.toArray(new SoundEvent[0]));
+    }
+
+    @SubscribeEvent
+    public static void registerPotions(RegistryEvent.Register<Potion> event) {
+        ArrayList<Potion> potions = ModPotions.getPotionList();
+        SRParasitesTraps.LOGGER.info("Registering Potions {}", potions);
+        event.getRegistry().registerAll(potions.toArray(new Potion[0]));
     }
 
     @SubscribeEvent

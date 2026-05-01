@@ -11,6 +11,8 @@ public class ModSounds {
     public static final SoundEvent CLEANER_SPRAY = createSoundEvent("cleaner_spray");
     public static final SoundEvent CLEANER_OPEN = createSoundEvent("cleaner_open");
     public static final SoundEvent CLEANER_CLOSE = createSoundEvent("cleaner_close");
+    public static final SoundEvent TESLA_COIL_FIRE = createSoundEvent("tesla_coil_fire");
+    public static final SoundEvent ELECTRIC_ARC = createSoundEvent("electric_arc");
 
     private static SoundEvent createSoundEvent(String name) {
         return new SoundEvent(new ResourceLocation(SRParasitesTraps.MOD_ID, name))

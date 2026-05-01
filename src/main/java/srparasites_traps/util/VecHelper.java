@@ -1,8 +1,8 @@
 package srparasites_traps.util;
 
-import com.sun.javafx.geom.Vec3f;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
@@ -14,8 +14,8 @@ public class VecHelper {
         return (long) width * height * depth;
     }
 
-    public static Vec3f blockPosToVec3f(BlockPos pos) {
-        return new Vec3f((float) pos.getX(), (float) pos.getY(), (float) pos.getZ());
+    public static Vec3d blockPosToVec3d(BlockPos pos) {
+        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static BlockPos getRandomPosition(Random random, AxisAlignedBB bb) {

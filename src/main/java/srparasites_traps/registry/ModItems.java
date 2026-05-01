@@ -23,6 +23,7 @@ public class ModItems {
     public static Item CLEANER_ITEM = getItemBlock(ModBlocks.CLEANER);
     public static Item OBSIDIAN_LADDER_ITEM = getItemBlock(ModBlocks.OBSIDIAN_LADDER);
     public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
+    public static Item TESLA_COIL_ITEM = getItemBlock(ModBlocks.TESLA_COIL);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);

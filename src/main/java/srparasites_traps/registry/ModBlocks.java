@@ -11,6 +11,7 @@ import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.FlameCoatedSerratedSpikes;
 import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
+import srparasites_traps.features.tesla_coil.TeslaCoilBlock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ModBlocks {
     public static Block BIOMASS_FACTORY = new BiomassFactoryBlock();
     public static Block CLEANER = new CleanerBlock();
     public static Block OBSIDIAN_LADDER = new ObsidianLadderBlock();
+    public static Block TESLA_COIL = new TeslaCoilBlock();
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
 

@@ -34,6 +34,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the obsidian blocks")
     public static final ObsidianBlocksConfig obsidianBlocks = new ObsidianBlocksConfig();
 
+    @Config.Name("Tesla Coil")
+    @Config.Comment("Settings for the tesla coil")
+    public static final TeslaCoilConfig teslaCoil = new TeslaCoilConfig();
+
     @Config.Name("Common")
     @Config.Comment("Settings that are common to all mods")
     public static final CommonConfig common = new CommonConfig();
@@ -302,6 +306,13 @@ public class ForgeConfigHandler {
         @Config.Comment("If true, the obsidian blocks will be enabled")
         @Config.RequiresMcRestart
         public boolean ENABLE_OBSIDIAN_BLOCKS = true;
+    }
+
+    public static class TeslaCoilConfig {
+        @Config.Name("Enable tesla coil")
+        @Config.Comment("If true, the tesla coil will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_TESLA_COIL = true;
     }
 
     public static class CommonConfig {

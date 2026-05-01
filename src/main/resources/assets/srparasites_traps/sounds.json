@@ -28,5 +28,25 @@
         "stream": false
       }
     ]
+  },
+  "tesla_coil_fire": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.tesla_coil_fire",
+    "sounds": [
+      {
+        "name": "srparasites_traps:tesla_coil_fire",
+        "stream": false
+      }
+    ]
+  },
+  "electric_arc": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.electric_arc",
+    "sounds": [
+      {
+        "name": "srparasites_traps:electric_arc",
+        "stream": false
+      }
+    ]
   }
 }
