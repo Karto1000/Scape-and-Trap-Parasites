@@ -46,6 +46,6 @@ public class TeslaCoilBlock extends Block {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.GRAY + getTooltipFor("item." + REGISTRY_NAME));
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }
 }
