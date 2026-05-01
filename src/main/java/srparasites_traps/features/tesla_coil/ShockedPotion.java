@@ -10,6 +10,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.registry.ModSounds;
 
 import java.util.List;
@@ -18,8 +19,10 @@ import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class ShockedPotion extends Potion {
     public static final String REGISTRY_NAME = "shocked";
-    public static final int SEARCH_RANGE_BLOCKS = 4;
-    public static final double DEFAULT_CHANCE_TO_APPLY = 0.5;
+    public final int range = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_RANGE;
+    public final double chanceToTransmit = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_CHANCE_TO_ARC;
+    public final double damage = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_DAMAGE;
+    public final int jumpLimit = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_JUMP_LIMIT;
 
     public ShockedPotion() {
         super(true, 0x90D5FF);
@@ -39,10 +42,13 @@ public class ShockedPotion extends Potion {
 
         List<EntityLivingBase> entitiesInRange = world.getEntitiesWithinAABB(
                 EntityLivingBase.class,
-                entityLivingBaseIn.getEntityBoundingBox().grow(SEARCH_RANGE_BLOCKS)
+                entityLivingBaseIn.getEntityBoundingBox().grow(range)
         );
 
+        int jumpCount = 0;
         for (EntityLivingBase entity : entitiesInRange) {
+            if (jumpCount >= jumpLimit) break;
+
             if (entity == entityLivingBaseIn) continue;
             if (!entity.isEntityAlive()) continue;
             if (entity.getActivePotionEffect(this) != null) continue;
@@ -58,7 +64,7 @@ public class ShockedPotion extends Potion {
 
             if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK) continue;
 
-            if (world.rand.nextDouble() < DEFAULT_CHANCE_TO_APPLY + (amplifier * 0.1)) {
+            if (world.rand.nextDouble() < (chanceToTransmit / 100) + (amplifier * 0.1)) {
                 entity.addPotionEffect(new PotionEffect(this, 5, amplifier - 1));
 
                 LightningParticle lightningParticle = new LightningParticle(
@@ -78,9 +84,10 @@ public class ShockedPotion extends Potion {
                         0.25F,
                         1.0F
                 );
+                jumpCount++;
             }
         }
 
-        entityLivingBaseIn.attackEntityFrom(DamageSource.GENERIC, amplifier * 2);
+        entityLivingBaseIn.attackEntityFrom(DamageSource.GENERIC, (float) (damage * amplifier));
     }
 }

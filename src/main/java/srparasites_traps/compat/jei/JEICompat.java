@@ -54,6 +54,11 @@ public class JEICompat implements IModPlugin {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_SLAB));
         }
 
+        if (!ForgeConfigHandler.teslaCoil.ENABLE_TESLA_COIL) {
+            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TESLA_COIL));
+        }
+
         for (Item item : ModItems.getItemList()) {
             String infoKey = String.format("info.srparasites_traps.%s", item.getRegistryName().getPath());
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);

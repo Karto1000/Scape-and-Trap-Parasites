@@ -309,10 +309,50 @@ public class ForgeConfigHandler {
     }
 
     public static class TeslaCoilConfig {
-        @Config.Name("Enable tesla coil")
-        @Config.Comment("If true, the tesla coil will be enabled")
+        @Config.Name("Enable Tesla coil")
+        @Config.Comment("If true, the Tesla coil will be enabled")
         @Config.RequiresMcRestart
         public boolean ENABLE_TESLA_COIL = true;
+
+        @Config.Name("Default Tesla coil max energy (RF)")
+        @Config.Comment("The maximum amount of energy that a Tesla coil can hold")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_TESLA_COIL_MAX_ENERGY = 10000;
+
+        @Config.Name("Default Tesla coil energy per shot (RF)")
+        @Config.Comment("The amount of energy consumed by a Tesla coil per shot")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_TESLA_COIL_ENERGY_PER_SHOT = 1000;
+
+        @Config.Name("Default Tesla coil range (Blocks)")
+        @Config.Comment("The range the Tesla coil can detect enemies")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_TESLA_COIL_RANGE = 5;
+
+        @Config.Name("Default Tesla coil shocked arc chance (%)")
+        @Config.Comment("The chance that an enemy hit by the Tesla coil will arc lightning to other nearby enemies")
+        @Config.RangeInt(min = 0, max = 100)
+        public int DEFAULT_SHOCKED_CHANCE_TO_ARC = 50;
+
+        @Config.Name("Default Tesla coil shocked arc range (Blocks)")
+        @Config.Comment("The range that the lightning arc can reach")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_SHOCKED_ARC_RANGE = 4;
+
+        @Config.Name("Default Tesla coil shocked arc damage")
+        @Config.Comment("The amount of damage dealt by a lightning arc, is multiplied by the amplifier of the shocked effect")
+        @Config.RangeDouble(min = 0)
+        public double DEFAULT_SHOCKED_ARC_DAMAGE = 3;
+
+        @Config.Name("Default Tesla coil shocked arc amplifier")
+        @Config.Comment("The amplifier of the shocked effect. The first enemy that is hit by the Tesla coil arc will have this amplifier. Each subsequent enemy that is hit in that chain will have an amplifier of this value - 1. The higher the amplifier, the more damage the lightning arc will deal and the further it will reach.")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_SHOCKED_ARC_AMPLIFIER = 3;
+
+        @Config.Name("Default Tesla coil shocked arc jump limit")
+        @Config.Comment("The maximum number of entities that can be hit by an electrified entity.")
+        @Config.RangeInt(min = 0)
+        public final int DEFAULT_SHOCKED_JUMP_LIMIT = 2;
     }
 
     public static class CommonConfig {
