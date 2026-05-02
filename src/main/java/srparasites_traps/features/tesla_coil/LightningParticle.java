@@ -22,7 +22,7 @@ public class LightningParticle extends Particle {
     private final Vec3d from;
     private final Vec3d to;
 
-    protected LightningParticle(World worldIn, Vec3d from, Vec3d to, int maxParticleAge) {
+    public LightningParticle(World worldIn, Vec3d from, Vec3d to, int maxParticleAge) {
         super(worldIn, from.x, from.y, from.z);
 
         this.from = from;

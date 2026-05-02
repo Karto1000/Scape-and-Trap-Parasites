@@ -1,7 +1,6 @@
 package srparasites_traps.features.tesla_coil;
 
 import cofh.core.block.TileCore;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.potion.PotionEffect;
@@ -13,8 +12,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.network.SRParasitesTrapsNetwork;
+import srparasites_traps.network.SpawnLightningParticlePacket;
 import srparasites_traps.registry.ModPotions;
 import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.VecHelper;
@@ -97,13 +99,11 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     private void fireAt(EntityLivingBase target) {
         Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
 
-        LightningParticle lightningParticle = new LightningParticle(
-                this.world,
-                blockCenter,
-                target.getPositionVector().add(0, target.getEyeHeight(), 0),
-                20
+        SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
+                new SpawnLightningParticlePacket(blockCenter, target.getPositionVector().add(0, target.getEyeHeight(), 0)),
+                new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), blockCenter.x, blockCenter.y, blockCenter.z, 32)
         );
-        Minecraft.getMinecraft().effectRenderer.addEffect(lightningParticle);
+
         target.addPotionEffect(new PotionEffect(ModPotions.SHOCKED_POTION, 5, shockedAmplifier));
         this.energyStorage.extractEnergy(energyPerShot, false);
         this.world.playSound(

@@ -4,7 +4,7 @@ import cofh.core.gui.container.ContainerCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
@@ -13,7 +13,7 @@ import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
 
 import javax.annotation.Nonnull;
 
-import static srparasites_traps.util.Translation.getStatusFor;
+import static srparasites_traps.util.Translation.getServerStatusFor;
 
 public class RelocatorContainer extends ContainerCore {
     private final RelocatorTileEntity tileEntity;
@@ -33,10 +33,10 @@ public class RelocatorContainer extends ContainerCore {
                 if (!valid) {
                     if (!player.world.isRemote) {
                         player.sendMessage(
-                                new TextComponentString(getStatusFor(
-                                        "relocation_marker.invalid_areas",
+                                new TextComponentTranslation(
+                                        getServerStatusFor("relocation_marker.invalid_areas"),
                                         ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE,
-                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE)
+                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE
                                 )
                         );
                     }

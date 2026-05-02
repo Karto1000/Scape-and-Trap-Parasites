@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import srparasites_traps.config.SRParasitesTrapsCreativeTab;
 import srparasites_traps.handlers.EntityHandler;
+import srparasites_traps.handlers.GuiHandler;
 import srparasites_traps.handlers.LootHandler;
 import srparasites_traps.handlers.RegistryHandler;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
@@ -34,6 +35,7 @@ public class SRParasitesTraps {
         RegistryHandler.init();
         LootHandler.init();
         EntityHandler.init();
+        GuiHandler.init();
         SRParasitesTrapsNetwork.init();
         SRParasitesTraps.PROXY.init();
     }

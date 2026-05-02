@@ -1,6 +1,5 @@
 package srparasites_traps.features.relocator;
 
-import com.mojang.realmsclient.util.Pair;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -24,6 +23,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
+import srparasites_traps.util.DebugHelper;
+import srparasites_traps.util.Pair;
 import srparasites_traps.util.VecHelper;
 
 import javax.annotation.Nonnull;
@@ -44,6 +45,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public int energyPerTick = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_ENERGY_PER_TICK;
     public int allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE;
     public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE;
+    private int checkDelayTicks = 20;
+    private int currentCheckDelayTicks = checkDelayTicks;
 
     public final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
@@ -244,14 +247,23 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     private Optional<BlockPos> getRandomDestinationPosition() {
         Optional<ItemStack> arm = getAssignedRelocationMarker();
-        if (!arm.isPresent() || arm.get().isEmpty()) return Optional.empty();
+        if (!arm.isPresent() || arm.get().isEmpty()) {
+            DebugHelper.dbp("Relocation marker is not assigned, cannot get destination position");
+            return Optional.empty();
+        }
         ItemStack assignedRelocationMarker = arm.get();
 
         NBTTagCompound tagCompound = assignedRelocationMarker.getTagCompound();
-        if (tagCompound == null) return Optional.empty();
+        if (tagCompound == null) {
+            DebugHelper.dbp("Relocation marker has no tag compound, cannot get destination position");
+            return Optional.empty();
+        }
 
         Optional<AxisAlignedBB> searchAABB = RelocationMarkerItem.getBoundDestinationArea(tagCompound);
-        if (!searchAABB.isPresent()) return Optional.empty();
+        if (!searchAABB.isPresent()) {
+            DebugHelper.dbp("Relocation marker destination area is not defined");
+            return Optional.empty();
+        }
         AxisAlignedBB aabb = searchAABB.get();
 
         Optional<BlockPos> result = Optional.empty();
@@ -264,8 +276,14 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             for (int j = 0; j <= deltaToBottom; j++) {
                 IBlockState blockState = this.world.getBlockState(pos.down(j));
 
-                if (blockState.getMaterial() == Material.AIR || blockState.getMaterial().isLiquid()) continue;
-                if (!isBlockHardnessAcceptable(blockState)) continue;
+                if (blockState.getMaterial() == Material.AIR || blockState.getMaterial().isLiquid()) {
+                    DebugHelper.dbp(String.format("Skipping blockstate: %s air or liquid block at position " + pos.down(j), blockState));
+                    continue;
+                };
+                if (!isBlockHardnessAcceptable(blockState)) {
+                    DebugHelper.dbp("Skipping block with unacceptable hardness at position " + pos.down(j));
+                    continue;
+                }
 
                 result = Optional.of(pos.down(j - 1));
                 break;
@@ -310,8 +328,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     @Override
     public void update() {
-        if (this.world.isRemote) return;
-
         if (this.state == RelocatorTileEntityState.RELOCATING) {
             Optional<RelocatorEntity> spawnedRelocator = getSpawnedRelocator();
             boolean isRelocatorValidForState = spawnedRelocator.isPresent() && spawnedRelocator.get().isEntityAlive();
@@ -334,8 +350,18 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             return;
         }
 
+        if (this.currentCheckDelayTicks > 0) {
+            this.currentCheckDelayTicks--;
+            return;
+        }
+
+        currentCheckDelayTicks = checkDelayTicks;
+
         Optional<ItemStack> arm = getAssignedRelocationMarker();
-        if (!arm.isPresent() || arm.get().isEmpty()) return;
+        if (!arm.isPresent() || arm.get().isEmpty()) {
+            DebugHelper.dbp("No relocation marker assigned, cannot relocate");
+            return;
+        }
         ItemStack assignedRelocationMarker = arm.get();
 
         if (this.energyStorage.getEnergyStored() < this.energyPerTick) return;

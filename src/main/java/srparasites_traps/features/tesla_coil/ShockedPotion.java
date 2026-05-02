@@ -1,6 +1,5 @@
 package srparasites_traps.features.tesla_coil;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -8,9 +7,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.network.SRParasitesTrapsNetwork;
+import srparasites_traps.network.SpawnLightningParticlePacket;
 import srparasites_traps.registry.ModSounds;
 
 import java.util.List;
@@ -67,13 +70,14 @@ public class ShockedPotion extends Potion {
             if (world.rand.nextDouble() < (chanceToTransmit / 100) + (amplifier * 0.1)) {
                 entity.addPotionEffect(new PotionEffect(this, 5, amplifier - 1));
 
-                LightningParticle lightningParticle = new LightningParticle(
-                        world,
-                        entityLivingBaseIn.getPositionVector().add(0, entityLivingBaseIn.getEyeHeight(), 0),
-                        entity.getPositionVector().add(0, entity.getEyeHeight(), 0),
-                        20
+                Vec3d origin = entityLivingBaseIn.getPositionVector().add(0, entityLivingBaseIn.getEyeHeight(), 0);
+                Vec3d target = entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
+
+                SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
+                        new SpawnLightningParticlePacket(origin, target),
+                        new NetworkRegistry.TargetPoint(world.provider.getDimension(), origin.x, origin.y, origin.z, 32)
                 );
-                Minecraft.getMinecraft().effectRenderer.addEffect(lightningParticle);
+
                 world.playSound(
                         null,
                         entityLivingBaseIn.getPositionVector().x,

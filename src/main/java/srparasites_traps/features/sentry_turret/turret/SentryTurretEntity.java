@@ -126,7 +126,9 @@ public class SentryTurretEntity extends EntityLiving {
         }
 
         this.renderYawOffset = this.rotationYawHead;
-        this.setVelocity(0, 0, 0);
+        this.motionX = 0;
+        this.motionY = 0;
+        this.motionZ = 0;
     }
 
     @Override

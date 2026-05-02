@@ -53,12 +53,14 @@ public class RenderHandler {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.disableTexture2D();
+        GlStateManager.disableLighting();
         GlStateManager.depthMask(false);
 
         RenderGlobal.renderFilledBox(box, r, g, b, 0.4F);
         RenderGlobal.drawSelectionBoundingBox(box, r, g, b, 0.8F);
 
         GlStateManager.depthMask(true);
+        GlStateManager.enableLighting();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
     }

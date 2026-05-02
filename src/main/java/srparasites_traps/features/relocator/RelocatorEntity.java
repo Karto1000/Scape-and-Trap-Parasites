@@ -232,7 +232,10 @@ public class RelocatorEntity extends EntityLiving {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        this.setVelocity(0, 0, 0);
+
+        this.motionX = 0;
+        this.motionY = 0;
+        this.motionZ = 0;
 
         RelocatorEntityState state = getEntityState();
         if (state == RelocatorEntityState.EMERGING) {
@@ -255,7 +258,9 @@ public class RelocatorEntity extends EntityLiving {
                 e.setRevengeTarget(this);
                 if (e instanceof EntityParasiteBase) ((EntityParasiteBase) e).setAttackTarget(this);
                 e.setPositionAndUpdate(spawnPosition.getX() + 0.5, spawnPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime, spawnPosition.getZ() + 0.5);
-                e.setVelocity(0, 0, 0);
+                e.motionX = 0;
+                e.motionY = 0;
+                e.motionZ = 0;
             });
 
             if (getCurrentEmergeTime() >= 1.00) {
@@ -275,7 +280,9 @@ public class RelocatorEntity extends EntityLiving {
             // Move the entity to the target position and a bit above so it doesn't clip through the block
             entityToRelocate.ifPresent(e -> {
                 e.setPositionAndUpdate(targetPosition.getX() + 0.5, targetPosition.getY() - (this.getEyeHeight() + 1) * currentEmergeTime + 0.25, targetPosition.getZ() + 0.5);
-                e.setVelocity(0, 0, 0);
+                e.motionX = 0;
+                e.motionY = 0;
+                e.motionZ = 0;
             });
 
             if (getCurrentEmergeTime() <= 0.00) {

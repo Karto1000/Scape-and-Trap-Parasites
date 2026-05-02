@@ -49,7 +49,11 @@ public class SentryTurretAttackTarget extends EntityAIBase {
     private void shootSpineball(Vec3d direction, SentryTurretTileEntity sentryTurret) {
         SentryTurretSpineball projectile = new SentryTurretSpineball(this.world, this.sentryTurret);
         projectile.setPosition(this.sentryTurret.posX + direction.x, this.sentryTurret.posY + this.sentryTurret.getEyeHeight(), this.sentryTurret.posZ + direction.z);
-        projectile.setVelocity(direction.x, direction.y, direction.z);
+
+        projectile.motionX = direction.x;
+        projectile.motionY = direction.y;
+        projectile.motionZ = direction.z;
+
         world.spawnEntity(projectile);
         this.sentryTurret.playSound(SRPSounds.EMANA_SHOOTING, 2.0F, 1.0F);
         sentryTurret.consumeBiomass(sentryTurret.biomassPerShot);

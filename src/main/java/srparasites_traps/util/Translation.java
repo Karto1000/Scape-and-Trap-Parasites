@@ -16,7 +16,7 @@ public class Translation {
         return I18n.format("tooltip." + SRParasitesTraps.MOD_ID + "." + id, args);
     }
 
-    public static String getStatusFor(String id, Object... args) {
-        return I18n.format("status." + SRParasitesTraps.MOD_ID + "." + id, args);
+    public static String getServerStatusFor(String id) {
+        return "status." + SRParasitesTraps.MOD_ID + "." + id;
     }
 }

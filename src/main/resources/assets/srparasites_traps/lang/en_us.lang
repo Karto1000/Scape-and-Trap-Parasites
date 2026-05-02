@@ -16,7 +16,7 @@
 # §e -> Yellow
 # §f -> White
 
-itemGroup.tab.srparasites_traps.name=Scape and Trap Parasites
+itemGroup.scape_and_trap_parasites=Scape and Trap Parasites
 
 # Tiles
 tile.srparasites_traps.sentry_turret.name=§6Sentry Turret§f
@@ -60,10 +60,10 @@ tooltip.srparasites_traps.item.tesla_coil=A high-voltage apparatus delivering sh
 tooltip.srparasites_traps.gui.sentry_turret.toggle=Activate / Deactivate the sentry turret.
 
 # Status Messages
-status.srparasites_traps.relocation_marker.search_area_too_big=§cSearch area exceeds limit of %d blocks.§f
-status.srparasites_traps.relocation_marker.destination_area_too_big=§cDestination area exceeds limit of %d blocks.§f
-status.srparasites_traps.relocation_marker.invalid_areas=§cUnbound search or destination area or search area distance too big (> %d Blocks) or destination area distance too big (> %d Blocks).§f
-status.srparasites_traps.relocation_marker.set_position=Successfully set position to (%d, %d, %d)
+status.srparasites_traps.relocation_marker.search_area_too_big=§cSearch area exceeds limit of %s blocks.§f
+status.srparasites_traps.relocation_marker.destination_area_too_big=§cDestination area exceeds limit of %s blocks.§f
+status.srparasites_traps.relocation_marker.invalid_areas=§cUnbound search or destination area or search area distance too big (> %s Blocks) or destination area distance too big (> %s Blocks).§f
+status.srparasites_traps.relocation_marker.set_position=Successfully set position to (%s, %s, %s)
 status.srparasites_traps.relocation_marker.remove_positions=Successfully removed bound positions
 
 # Subtitles

@@ -1,6 +1,5 @@
 package srparasites_traps.features.relocation_marker;
 
-import com.mojang.realmsclient.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,6 +22,7 @@ import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
+import srparasites_traps.util.Pair;
 import srparasites_traps.util.VecHelper;
 
 import javax.annotation.Nullable;
@@ -99,13 +99,13 @@ public class RelocationMarkerItem extends Item {
             if (nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_1) && nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_2)) {
                 nbt.removeTag(TAG_BOUND_SEARCH_AREA_POSITION_1);
                 nbt.removeTag(TAG_BOUND_SEARCH_AREA_POSITION_2);
-                player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".remove_positions", pos.getX(), pos.getY(), pos.getZ())), true);
+                player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".remove_positions")), true);
                 return EnumActionResult.SUCCESS;
             }
 
             if (!nbt.hasKey(TAG_BOUND_SEARCH_AREA_POSITION_1)) {
                 nbt.setLong(TAG_BOUND_SEARCH_AREA_POSITION_1, pos.toLong());
-                player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".set_position", pos.getX(), pos.getY(), pos.getZ())), true);
+                player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".set_position"), pos.getX(), pos.getY(), pos.getZ()), true);
                 return EnumActionResult.SUCCESS;
             }
 
@@ -113,11 +113,11 @@ public class RelocationMarkerItem extends Item {
             long volume = VecHelper.area(pos1, pos);
 
             if (volume > ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME) {
-                player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".search_area_too_big", ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME)), true);
+                player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".search_area_too_big"), ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME), true);
                 return EnumActionResult.FAIL;
             }
 
-            player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".set_position", pos.getX(), pos.getY(), pos.getZ())), true);
+            player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".set_position"), pos.getX(), pos.getY(), pos.getZ()), true);
             nbt.setLong(TAG_BOUND_SEARCH_AREA_POSITION_2, pos.toLong());
             return EnumActionResult.SUCCESS;
         }
@@ -125,13 +125,13 @@ public class RelocationMarkerItem extends Item {
         if (nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_1) && nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_2)) {
             nbt.removeTag(TAG_BOUND_DESTINATION_AREA_POSITION_1);
             nbt.removeTag(TAG_BOUND_DESTINATION_AREA_POSITION_2);
-            player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".remove_positions", pos.getX(), pos.getY(), pos.getZ())), true);
+            player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".remove_positions")), true);
             return EnumActionResult.SUCCESS;
         }
 
         if (!nbt.hasKey(TAG_BOUND_DESTINATION_AREA_POSITION_1)) {
             nbt.setLong(TAG_BOUND_DESTINATION_AREA_POSITION_1, pos.toLong());
-            player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".set_position", pos.getX(), pos.getY(), pos.getZ())), true);
+            player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".set_position"), pos.getX(), pos.getY(), pos.getZ()), true);
             return EnumActionResult.SUCCESS;
         }
 
@@ -139,11 +139,11 @@ public class RelocationMarkerItem extends Item {
         long volume = VecHelper.area(pos1, pos);
 
         if (volume > ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME) {
-            player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".destination_area_too_big", ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME)), true);
+            player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".destination_area_too_big"), ForgeConfigHandler.relocator.DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME), true);
             return EnumActionResult.FAIL;
         }
 
-        player.sendStatusMessage(new TextComponentString(getStatusFor(REGISTRY_NAME + ".set_position", pos.getX(), pos.getY(), pos.getZ())), true);
+        player.sendStatusMessage(new TextComponentTranslation(getServerStatusFor(REGISTRY_NAME + ".set_position"), pos.getX(), pos.getY(), pos.getZ()), true);
         nbt.setLong(TAG_BOUND_DESTINATION_AREA_POSITION_2, pos.toLong());
         return EnumActionResult.SUCCESS;
     }
