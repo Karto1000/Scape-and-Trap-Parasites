@@ -27,7 +27,7 @@ import java.util.Objects;
 public class ClientProxy extends CommonProxy {
 
     @Override
-    public void init() {
+    public void preInit() {
         registerEntityRenderers();
         registerTileEntitySpecialRenderers();
         RenderHandler.init();
@@ -37,11 +37,10 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(CleanerTileEntity.class, new CleanerTESR());
     }
 
-    public void registerItemRenderers(Item item, int meta, String id) {
+    public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
     }
 
-    @Override
     public void handleLightningParticlePacket(SpawnLightningParticlePacket packet) {
         Minecraft.getMinecraft().addScheduledTask(() -> {
             World world = Minecraft.getMinecraft().world;

@@ -324,6 +324,10 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 0)
         public int DEFAULT_TESLA_COIL_RANGE = 5;
 
+        @Config.Name("Default Tesla coil fire delay (Ticks)")
+        @Config.Comment("The time between each shot")
+        public int DEFAULT_TESLA_COIL_FIRE_DELAY = 60;
+
         @Config.Name("Default Tesla coil shocked arc chance (%)")
         @Config.Comment("The chance that an enemy hit by the Tesla coil will arc lightning to other nearby enemies")
         @Config.RangeInt(min = 0, max = 100)

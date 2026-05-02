@@ -48,5 +48,15 @@
         "stream": false
       }
     ]
+  },
+  "tesla_coil_charge": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.tesla_coil_charge",
+    "sounds": [
+      {
+        "name": "srparasites_traps:tesla_coil_charge",
+        "stream": false
+      }
+    ]
   }
 }

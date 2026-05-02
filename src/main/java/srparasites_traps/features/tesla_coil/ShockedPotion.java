@@ -92,6 +92,9 @@ public class ShockedPotion extends Potion {
             }
         }
 
+        int hurtResistance = entityLivingBaseIn.hurtResistantTime;
+        entityLivingBaseIn.hurtResistantTime = 0;
         entityLivingBaseIn.attackEntityFrom(DamageSource.GENERIC, (float) (damage * amplifier));
+        entityLivingBaseIn.hurtResistantTime = hurtResistance;
     }
 }

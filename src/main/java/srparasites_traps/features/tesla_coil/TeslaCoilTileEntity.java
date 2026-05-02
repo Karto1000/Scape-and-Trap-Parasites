@@ -3,6 +3,7 @@ package srparasites_traps.features.tesla_coil;
 import cofh.core.block.TileCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -27,13 +28,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class TeslaCoilTileEntity extends TileCore implements ITickable {
-    private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
-    private EntityLivingBase target;
-
     public int maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_MAX_ENERGY;
     public int energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
     public int range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
     public int shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
+
+    private EntityLivingBase target;
+    private TeslaCoilState state = TeslaCoilState.IDLE;
+    private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY);
+    private final int chargingDelay = 5;
+    private int currentChargingDelay = 0;
 
     public final DualEnergyStorage energyStorage;
 
@@ -90,6 +94,18 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
         return super.hasCapability(capability, facing);
     }
 
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        this.energyStorage.readFromNBT(compound.getCompoundTag("EnergyStorage"));
+        super.readFromNBT(compound);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setTag("EnergyStorage", this.energyStorage.writeToNBT(new NBTTagCompound()));
+        return super.writeToNBT(compound);
+    }
+
     private void fireAt(EntityLivingBase target) {
         Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
 
@@ -100,16 +116,6 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
 
         target.addPotionEffect(new PotionEffect(ModPotions.SHOCKED_POTION, 5, shockedAmplifier));
         this.energyStorage.extractEnergy(energyPerShot, false);
-        this.world.playSound(
-                null,
-                blockCenter.x,
-                blockCenter.y,
-                blockCenter.z,
-                ModSounds.TESLA_COIL_FIRE,
-                SoundCategory.BLOCKS,
-                0.25F,
-                1F
-        );
     }
 
     private Vec3d getRaycastStartPos(EntityLivingBase entity) {
@@ -137,21 +143,72 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
         return rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK;
     }
 
+    private void switchState() {
+        Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
+
+        switch (this.state) {
+            case IDLE:
+                this.world.playSound(
+                        null,
+                        blockCenter.x,
+                        blockCenter.y,
+                        blockCenter.z,
+                        ModSounds.TESLA_COIL_CHARGE,
+                        SoundCategory.BLOCKS,
+                        0.5F,
+                        1F
+                );
+                this.state = TeslaCoilState.CHARGING;
+                break;
+            case CHARGING:
+                this.state = TeslaCoilState.FIRING;
+                this.world.playSound(
+                        null,
+                        blockCenter.x,
+                        blockCenter.y,
+                        blockCenter.z,
+                        ModSounds.TESLA_COIL_FIRE,
+                        SoundCategory.BLOCKS,
+                        0.25F,
+                        1F
+                );
+                break;
+            case FIRING:
+                this.state = TeslaCoilState.IDLE;
+                break;
+            default:
+        }
+    }
+
     @Override
     public void update() {
         if (this.energyStorage.getEnergyStored() < energyPerShot) return;
-        if (updateLimiter.tickDown()) return;
 
-        if (this.needsNewTarget()) {
-            this.target = null;
+        switch (this.state) {
+            case IDLE:
+                if (this.shootLimiter.tickDown()) return;
 
-            Optional<EntityLivingBase> possibleTarget = getPossibleTarget();
-            if (!possibleTarget.isPresent()) return;
-            this.target = possibleTarget.get();
+                if (this.needsNewTarget()) {
+                    this.target = null;
+
+                    Optional<EntityLivingBase> possibleTarget = getPossibleTarget();
+                    if (!possibleTarget.isPresent()) return;
+                    this.target = possibleTarget.get();
+                }
+
+                this.switchState();
+                shootLimiter.reset();
+                break;
+            case CHARGING:
+                this.currentChargingDelay--;
+                if (this.currentChargingDelay > 0) return;
+                this.currentChargingDelay = chargingDelay;
+                this.switchState();
+                break;
+            case FIRING:
+                this.fireAt(this.target);
+                this.switchState();
+                break;
         }
-
-        this.fireAt(this.target);
-
-        updateLimiter.reset();
     }
 }

@@ -111,7 +111,7 @@ public class LightningParticle extends Particle {
                 0.F,
                 1.F,
                  1.F / this.particleAge,
-                4.0f
+                8.0f
         );
 
         tessellator.draw();
@@ -123,7 +123,7 @@ public class LightningParticle extends Particle {
                 1.F,
                 1.F,
                 1.F / this.particleAge,
-                2.0f
+                4.0f
         );
 
         tessellator.draw();
