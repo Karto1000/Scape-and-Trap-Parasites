@@ -45,6 +45,16 @@ public class TeslaCoilBlock extends Block {
     }
 
     @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }

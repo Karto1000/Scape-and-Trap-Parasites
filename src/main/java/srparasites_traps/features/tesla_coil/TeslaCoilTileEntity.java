@@ -107,11 +107,11 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     }
 
     private void fireAt(EntityLivingBase target) {
-        Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
+        Vec3d firePos = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.9, 0.5);
 
         SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
-                new SpawnLightningParticlePacket(blockCenter, target.getPositionVector().add(0, target.getEyeHeight(), 0)),
-                new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), blockCenter.x, blockCenter.y, blockCenter.z, 32)
+                new SpawnLightningParticlePacket(firePos, target.getPositionVector().add(0, target.getEyeHeight(), 0)),
+                new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), firePos.x, firePos.y, firePos.z, 32)
         );
 
         target.addPotionEffect(new PotionEffect(ModPotions.SHOCKED_POTION, 5, shockedAmplifier));
