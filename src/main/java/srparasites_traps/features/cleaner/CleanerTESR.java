@@ -36,10 +36,12 @@ public class CleanerTESR extends TileEntitySpecialRenderer<CleanerTileEntity> {
                 GlStateManager.rotate(90, 1, 0, 0);
                 break;
             case WEST:
-                GlStateManager.rotate(-90, 0, 0, 1);
+                GlStateManager.rotate(90, 0, 0, 1);
+                GlStateManager.rotate(90, 0, 1, 0);
                 break;
             case EAST:
-                GlStateManager.rotate(90, 0, 0, 1);
+                GlStateManager.rotate(-90, 0, 0, 1);
+                GlStateManager.rotate(90, 0, 1, 0);
                 break;
             case UP:
             default:
@@ -58,7 +60,6 @@ public class CleanerTESR extends TileEntitySpecialRenderer<CleanerTileEntity> {
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightX, lightY);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableLighting();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -81,7 +82,6 @@ public class CleanerTESR extends TileEntitySpecialRenderer<CleanerTileEntity> {
         tessellator.draw();
 
         GlStateManager.disableBlend();
-        GlStateManager.enableLighting();
         GlStateManager.popMatrix();
     }
 }

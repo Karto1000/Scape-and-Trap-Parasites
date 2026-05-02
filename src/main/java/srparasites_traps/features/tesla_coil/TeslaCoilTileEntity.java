@@ -19,6 +19,7 @@ import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.network.SpawnLightningParticlePacket;
 import srparasites_traps.registry.ModPotions;
 import srparasites_traps.registry.ModSounds;
+import srparasites_traps.util.UpdateLimiter;
 import srparasites_traps.util.VecHelper;
 
 import javax.annotation.Nullable;
@@ -26,8 +27,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class TeslaCoilTileEntity extends TileCore implements ITickable {
-    private static final int CHECK_DELAY_TICKS = 10;
-    private int currentCheckDelayTicks = CHECK_DELAY_TICKS;
+    private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
+    private EntityLivingBase target;
 
     public int maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_MAX_ENERGY;
     public int energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
@@ -41,14 +42,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     }
 
     private Optional<EntityLivingBase> getPossibleTarget() {
-        AxisAlignedBB aabb = new AxisAlignedBB(
-                this.pos.getX(),
-                this.pos.getY(),
-                this.pos.getZ(),
-                1,
-                1,
-                1
-        ).grow(range);
+        AxisAlignedBB aabb = new AxisAlignedBB(this.pos).grow(range);
         List<EntityLivingBase> entityMobs = this.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 
         for (EntityLivingBase entity : entityMobs) {
@@ -118,21 +112,46 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
         );
     }
 
+    private Vec3d getRaycastStartPos(EntityLivingBase entity) {
+        Vec3d targetPos = entity.getPositionVector().add(0, entity.height / 2.0, 0);
+        Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
+
+        Vec3d directionToTarget = targetPos.subtract(blockCenter).normalize();
+        return blockCenter.add(directionToTarget);
+    }
+
+    private boolean needsNewTarget() {
+        if (this.target == null) return true;
+        if (!this.target.isEntityAlive()) return true;
+        if (this.target.getDistanceSq(this.pos) > (range * range)) return true;
+
+        Vec3d safeStartPos = this.getRaycastStartPos(this.target);
+        RayTraceResult rayTraceResult = this.world.rayTraceBlocks(
+                safeStartPos,
+                this.target.getPositionVector(),
+                false,
+                true,
+                false
+        );
+
+        return rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK;
+    }
+
     @Override
     public void update() {
-        if (currentCheckDelayTicks > 0) {
-            currentCheckDelayTicks--;
-            return;
+        if (this.energyStorage.getEnergyStored() < energyPerShot) return;
+        if (updateLimiter.tickDown()) return;
+
+        if (this.needsNewTarget()) {
+            this.target = null;
+
+            Optional<EntityLivingBase> possibleTarget = getPossibleTarget();
+            if (!possibleTarget.isPresent()) return;
+            this.target = possibleTarget.get();
         }
 
-        if (this.energyStorage.getEnergyStored() < energyPerShot) return;
+        this.fireAt(this.target);
 
-        Optional<EntityLivingBase> possibleTarget = getPossibleTarget();
-        if (!possibleTarget.isPresent()) return;
-        EntityLivingBase entity = possibleTarget.get();
-
-        this.fireAt(entity);
-
-        currentCheckDelayTicks = CHECK_DELAY_TICKS;
+        updateLimiter.reset();
     }
 }

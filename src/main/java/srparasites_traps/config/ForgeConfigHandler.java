@@ -130,11 +130,6 @@ public class ForgeConfigHandler {
         @Config.RequiresMcRestart
         public boolean ENABLE_RELOCATOR = true;
 
-        @Config.Name("Default relocator relocation delay (Ticks)")
-        @Config.Comment("The time in ticks between each possible relocation by a relocator")
-        @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_RELOCATION_DELAY = 100;
-
         @Config.Name("Default relocation marker search volume (Blocks)")
         @Config.Comment("The search area (x * y * z) that the relocation marker can be set to")
         @Config.RangeInt(min = 0)

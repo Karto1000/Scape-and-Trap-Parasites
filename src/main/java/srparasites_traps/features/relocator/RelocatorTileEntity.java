@@ -25,6 +25,7 @@ import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
 import srparasites_traps.util.DebugHelper;
 import srparasites_traps.util.Pair;
+import srparasites_traps.util.UpdateLimiter;
 import srparasites_traps.util.VecHelper;
 
 import javax.annotation.Nonnull;
@@ -36,7 +37,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class RelocatorTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
-    public int relocationDelay = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_RELOCATION_DELAY;
     public int randomBlockSelectionRetries = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_BLOCK_SELECTION_RETRIES;
     public int maxBlockHardness = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_BLOCK_HARDNESS;
     public int maxRelocatorsInReserve = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE;
@@ -45,8 +45,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public int energyPerTick = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_ENERGY_PER_TICK;
     public int allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE;
     public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE;
-    private int checkDelayTicks = 20;
-    private int currentCheckDelayTicks = checkDelayTicks;
+    private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
 
     public final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
@@ -109,10 +108,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     public int getCurrentRelocatorCreateDelay() {
         return this.currentRelocatorCreateDelay;
-    }
-
-    public void setCurrentRelocationDelay(int delay) {
-        this.currentRelocationDelay = delay;
     }
 
     public Optional<ItemStack> getAssignedRelocationMarker() {
@@ -279,7 +274,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
                 if (blockState.getMaterial() == Material.AIR || blockState.getMaterial().isLiquid()) {
                     DebugHelper.dbp(String.format("Skipping blockstate: %s air or liquid block at position " + pos.down(j), blockState));
                     continue;
-                };
+                }
+                ;
                 if (!isBlockHardnessAcceptable(blockState)) {
                     DebugHelper.dbp("Skipping block with unacceptable hardness at position " + pos.down(j));
                     continue;
@@ -334,6 +330,9 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             if (!isRelocatorValidForState) this.setState(RelocatorTileEntityState.IDLE);
         }
 
+        if (this.energyStorage.getEnergyStored() < this.energyPerTick) return;
+        else this.energyStorage.extractEnergy(this.energyPerTick, false);
+
         // Slowly increase the number of relocators in reserve
         if (this.currentRelocatorCount < this.maxRelocatorsInReserve && this.biomassStorage.getFluidAmount() >= this.biomassPerRelocatorSpawn) {
             if (this.currentRelocatorCreateDelay > 0) {
@@ -345,17 +344,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             }
         }
 
-        if (this.currentRelocationDelay > 0) {
-            this.currentRelocationDelay--;
-            return;
-        }
-
-        if (this.currentCheckDelayTicks > 0) {
-            this.currentCheckDelayTicks--;
-            return;
-        }
-
-        currentCheckDelayTicks = checkDelayTicks;
+        if (updateLimiter.tickDown()) return;
+        updateLimiter.reset();
 
         Optional<ItemStack> arm = getAssignedRelocationMarker();
         if (!arm.isPresent() || arm.get().isEmpty()) {
@@ -363,9 +353,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             return;
         }
         ItemStack assignedRelocationMarker = arm.get();
-
-        if (this.energyStorage.getEnergyStored() < this.energyPerTick) return;
-        else this.energyStorage.extractEnergy(this.energyPerTick, false);
 
         if (this.state != RelocatorTileEntityState.IDLE) return;
         if (this.currentRelocatorCount <= 0) return;
@@ -389,6 +376,5 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         this.setState(RelocatorTileEntityState.RELOCATING);
 
         this.currentRelocatorCount--;
-        this.currentRelocationDelay = this.relocationDelay;
     }
 }

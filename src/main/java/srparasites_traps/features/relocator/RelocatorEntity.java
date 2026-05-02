@@ -149,7 +149,8 @@ public class RelocatorEntity extends EntityLiving {
         compound.setInteger("State", getEntityState().ordinal());
         compound.setLong("TargetPosition", targetPosition.toLong());
         compound.setLong("TileEntityPosition", tileEntityPosition.toLong());
-        compound.setUniqueId("EntityToRelocate", entityToRelocateUUID);
+
+        if (entityToRelocateUUID != null) compound.setUniqueId("EntityToRelocate", entityToRelocateUUID);
 
         return compound;
     }

@@ -4,12 +4,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.world.World;
+import srparasites_traps.util.UpdateLimiter;
 
 import java.util.List;
 
 public class SentryTurretFindHostileMonster extends EntityAIBase {
     private final SentryTurretEntity sentry;
     private final World world;
+    private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
 
     public SentryTurretFindHostileMonster(SentryTurretEntity sentry, World world, double range) {
         this.sentry = sentry;
@@ -23,6 +25,13 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
 
     @Override
     public void startExecuting() {
+        updateLimiter.allowUpdate();
+    }
+
+    @Override
+    public void updateTask() {
+        if (updateLimiter.tickDown()) return;
+
         List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.sentry.getEntityBoundingBox().grow(this.sentry.attackRangeBlocks));
 
         for (EntityLivingBase target : list) {
@@ -32,10 +41,12 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
                 break;
             }
         }
+
+        updateLimiter.reset();
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        return false;
+        return this.shouldExecute();
     }
 }
