@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
+import srparasites_traps.network.SpawnElectricityParticlePacket;
 import srparasites_traps.network.SpawnLightningParticlePacket;
 import srparasites_traps.registry.ModPotions;
 import srparasites_traps.registry.ModSounds;
@@ -36,7 +37,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     private EntityLivingBase target;
     private TeslaCoilState state = TeslaCoilState.IDLE;
     private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY);
-    private final int chargingDelay = 5;
+    private int chargingDelay = 5;
     private int currentChargingDelay = 0;
 
     public final DualEnergyStorage energyStorage;
@@ -78,7 +79,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == CapabilityEnergy.ENERGY) {
+        if (capability == CapabilityEnergy.ENERGY && facing == EnumFacing.DOWN) {
             return CapabilityEnergy.ENERGY.cast(this.energyStorage);
         }
 
@@ -87,7 +88,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
 
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        if (capability == CapabilityEnergy.ENERGY) {
+        if (capability == CapabilityEnergy.ENERGY && facing == EnumFacing.DOWN) {
             return true;
         }
 
@@ -97,12 +98,14 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         this.energyStorage.readFromNBT(compound.getCompoundTag("EnergyStorage"));
+        this.currentChargingDelay = compound.getInteger("CurrentChargingDelay");
         super.readFromNBT(compound);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("EnergyStorage", this.energyStorage.writeToNBT(new NBTTagCompound()));
+        compound.setInteger("CurrentChargingDelay", this.currentChargingDelay);
         return super.writeToNBT(compound);
     }
 
@@ -201,6 +204,20 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
                 break;
             case CHARGING:
                 this.currentChargingDelay--;
+
+                Vec3d coilPosition = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.9, 0.5);
+                Vec3d offset = new Vec3d(
+                        Math.sin(this.currentChargingDelay * this.world.rand.nextGaussian()) * 0.5,
+                        0,
+                        Math.cos(this.currentChargingDelay * this.world.rand.nextGaussian()) * 0.5
+                );
+                Vec3d spawnPos = coilPosition.add(offset);
+
+                SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
+                        new SpawnElectricityParticlePacket(spawnPos),
+                        new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), spawnPos.x, spawnPos.y, spawnPos.z, 32)
+                );
+
                 if (this.currentChargingDelay > 0) return;
                 this.currentChargingDelay = chargingDelay;
                 this.switchState();

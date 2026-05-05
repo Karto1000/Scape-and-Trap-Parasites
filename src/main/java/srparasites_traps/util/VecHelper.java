@@ -29,4 +29,8 @@ public class VecHelper {
     public static String formatAsXYZ(BlockPos pos) {
         return String.format("(%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ());
     }
+
+    public static Vec3d random(Random random) {
+        return new Vec3d(random.nextDouble(), random.nextDouble(), random.nextDouble());
+    }
 }

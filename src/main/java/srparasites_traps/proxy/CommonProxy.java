@@ -6,6 +6,7 @@ import srparasites_traps.handlers.GuiHandler;
 import srparasites_traps.handlers.LootHandler;
 import srparasites_traps.handlers.RegistryHandler;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
+import srparasites_traps.network.SpawnElectricityParticlePacket;
 import srparasites_traps.network.SpawnLightningParticlePacket;
 
 public class CommonProxy {
@@ -22,6 +23,8 @@ public class CommonProxy {
     }
 
     public void handleLightningParticlePacket(SpawnLightningParticlePacket packet) {};
+
+    public void handleElectricityParticlePacket(SpawnElectricityParticlePacket packet) {};
 
     public void registerItemRenderer(Item item, int meta, String id) {};
 }

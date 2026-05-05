@@ -17,15 +17,16 @@ import srparasites_traps.features.relocator.RelocatorEntityRenderer;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretRenderer;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretSpineball;
-import srparasites_traps.features.tesla_coil.LightningParticle;
+import srparasites_traps.features.tesla_coil.ElectricityParticle;
+import srparasites_traps.features.tesla_coil.LightningArcParticle;
 import srparasites_traps.handlers.RenderHandler;
+import srparasites_traps.network.SpawnElectricityParticlePacket;
 import srparasites_traps.network.SpawnLightningParticlePacket;
 import srparasites_traps.util.Constants;
 
 import java.util.Objects;
 
 public class ClientProxy extends CommonProxy {
-
     @Override
     public void preInit() {
         registerEntityRenderers();
@@ -44,11 +45,23 @@ public class ClientProxy extends CommonProxy {
     public void handleLightningParticlePacket(SpawnLightningParticlePacket packet) {
         Minecraft.getMinecraft().addScheduledTask(() -> {
             World world = Minecraft.getMinecraft().world;
-            LightningParticle p = new LightningParticle(
+            LightningArcParticle p = new LightningArcParticle(
                     world,
                     new Vec3d(packet.fromX, packet.fromY, packet.fromZ),
                     new Vec3d(packet.toX, packet.toY, packet.toZ),
                     20
+            );
+            Minecraft.getMinecraft().effectRenderer.addEffect(p);
+        });
+    }
+
+    @Override
+    public void handleElectricityParticlePacket(SpawnElectricityParticlePacket packet) {
+        Minecraft.getMinecraft().addScheduledTask(() -> {
+            World world = Minecraft.getMinecraft().world;
+            ElectricityParticle p = new ElectricityParticle(
+                    world,
+                    new Vec3d(packet.x, packet.y, packet.z)
             );
             Minecraft.getMinecraft().effectRenderer.addEffect(p);
         });
