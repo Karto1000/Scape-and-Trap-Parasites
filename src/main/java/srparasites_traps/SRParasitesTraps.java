@@ -1,5 +1,6 @@
 package srparasites_traps;
 
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -29,6 +30,7 @@ public class SRParasitesTraps {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         SRParasitesTraps.PROXY.preInit();
+        OBJLoader.INSTANCE.addDomain(MOD_ID);
     }
 
     @Mod.EventHandler

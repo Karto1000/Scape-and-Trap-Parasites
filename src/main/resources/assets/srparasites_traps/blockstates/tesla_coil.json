@@ -1,7 +1,19 @@
 {
+  "forge_marker": 1,
   "variants": {
     "normal": {
-      "model": "srparasites_traps:tesla_coil"
+      "model": "srparasites_traps:tesla_coil.obj",
+      "ambientocclusion": true,
+      "transform": {
+        "translation": [0.5, 0, 0.5]
+      }
+    },
+    "inventory": {
+      "model": "srparasites_traps:tesla_coil.obj",
+      "ambientocclusion": true,
+      "transform": {
+        "translation": [0.5, 0, 0.5]
+      }
     }
   }
 }

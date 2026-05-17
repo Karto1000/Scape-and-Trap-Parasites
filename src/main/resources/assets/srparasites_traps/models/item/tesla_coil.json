@@ -1,5 +1,5 @@
 {
-  "parent": "srparasites_traps:block/tesla_coil",
+  "parent": "srparasites_traps:block/tesla_coil.obj",
   "display": {
     "gui": {
       "rotation": [
