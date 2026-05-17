@@ -22,6 +22,7 @@ public class ModItems {
     public static Item BIOMASS_FACTORY_ITEM = getItemBlock(ModBlocks.BIOMASS_FACTORY);
     public static Item CLEANER_ITEM = getItemBlock(ModBlocks.CLEANER);
     public static Item OBSIDIAN_LADDER_ITEM = getItemBlock(ModBlocks.OBSIDIAN_LADDER);
+    public static Item PROXIMITY_SENSOR_ITEM = getItemBlock(ModBlocks.PROXIMITY_SENSOR);
     public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
     public static Item TESLA_COIL_ITEM = getItemBlock(ModBlocks.TESLA_COIL);
     public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();

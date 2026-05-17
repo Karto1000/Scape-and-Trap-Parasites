@@ -65,6 +65,16 @@ public class RelocatorBlock extends Block {
     }
 
     @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof RelocatorTileEntity) {
+            ((RelocatorTileEntity) tileEntity).dropInventory();
+        }
+
+        super.breakBlock(worldIn, pos, state);
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }

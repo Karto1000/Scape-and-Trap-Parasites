@@ -7,6 +7,7 @@ import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.cleaner.CleanerBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianLadderBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianSlabBlock;
+import srparasites_traps.features.proximity_sensor.ProximitySensorBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.FlameCoatedSerratedSpikes;
@@ -25,6 +26,7 @@ public class ModBlocks {
     public static Block CLEANER = new CleanerBlock();
     public static Block OBSIDIAN_LADDER = new ObsidianLadderBlock();
     public static Block TESLA_COIL = new TeslaCoilBlock();
+    public static Block PROXIMITY_SENSOR = new ProximitySensorBlock();
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
 

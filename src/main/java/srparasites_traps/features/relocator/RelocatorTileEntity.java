@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -74,6 +75,16 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
             return stack.getItem() instanceof RelocationMarkerItem;
         }
     };
+
+    public void dropInventory() {
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            ItemStack stack = inventory.getStackInSlot(slot);
+            if (!stack.isEmpty()) {
+                this.world.spawnEntity(new EntityItem(this.world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
+                inventory.setStackInSlot(slot, ItemStack.EMPTY);
+            }
+        }
+    }
 
     private RelocatorTileEntityState state = RelocatorTileEntityState.IDLE;
     private RelocatorEntity spawnedRelocator;

@@ -37,7 +37,8 @@ public class BiomassFactoryBlock extends Block {
         this.setHarvestLevel("pickaxe", 2);
         this.setSoundType(SoundType.METAL);
 
-        if (ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY)
+            this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override
@@ -54,6 +55,15 @@ public class BiomassFactoryBlock extends Block {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new BiomassFactoryTileEntity();
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof BiomassFactoryTileEntity) {
+            ((BiomassFactoryTileEntity) tileEntity).dropInventory();
+        }
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override

@@ -4,10 +4,10 @@ public class UpdateLimiter {
     public final int tickDuration;
     public int currentTickDelay;
 
-    public UpdateLimiter(int tickDuration) {
-        this.tickDuration = tickDuration;
+    public UpdateLimiter(int updateDelayTicks) {
+        this.tickDuration = updateDelayTicks;
         // Initialize with a random delay within the specified range so that updates of blocks placed on the same tick don't all happen at once.
-        this.currentTickDelay = (int) (Math.random() * tickDuration);
+        this.currentTickDelay = (int) (Math.random() * updateDelayTicks);
     }
 
     public boolean tickDown() {

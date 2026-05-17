@@ -23,40 +23,39 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void register(IModRegistry registry) {
+        IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
+
         if (!ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.sentry_turret));
         }
 
         if (!ForgeConfigHandler.relocator.ENABLE_RELOCATOR) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.RELOCATOR));
         }
 
         if (!ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SERRATED_SPIKES));
         }
 
         if (!ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BIOMASS_FACTORY));
         }
 
         if (!ForgeConfigHandler.cleaner.ENABLE_CLEANER) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.CLEANER));
         }
 
         if (!ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_LADDER));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_SLAB));
         }
 
         if (!ForgeConfigHandler.teslaCoil.ENABLE_TESLA_COIL) {
-            IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TESLA_COIL));
+        }
+
+        if (!ForgeConfigHandler.proximitySensor.ENABLE_PROXIMITY_SENSOR) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PROXIMITY_SENSOR));
         }
 
         for (Item item : ModItems.getItemList()) {

@@ -38,6 +38,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the tesla coil")
     public static final TeslaCoilConfig teslaCoil = new TeslaCoilConfig();
 
+    @Config.Name("Proximity Sensor")
+    @Config.Comment("Settings for the proximity sensor")
+    public static final ProximitySensorConfig proximitySensor = new ProximitySensorConfig();
+
     @Config.Name("Common")
     @Config.Comment("Settings that are common to all mods")
     public static final CommonConfig common = new CommonConfig();
@@ -352,6 +356,13 @@ public class ForgeConfigHandler {
         @Config.Comment("The maximum number of entities that can be hit by an electrified entity.")
         @Config.RangeInt(min = 0)
         public final int DEFAULT_SHOCKED_JUMP_LIMIT = 2;
+    }
+
+    public static class ProximitySensorConfig {
+        @Config.Name("Enable proximity sensor")
+        @Config.Comment("If true, the proximity sensor will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_PROXIMITY_SENSOR = true;
     }
 
     public static class CommonConfig {

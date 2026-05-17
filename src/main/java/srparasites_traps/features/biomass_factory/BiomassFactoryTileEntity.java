@@ -3,6 +3,7 @@ package srparasites_traps.features.biomass_factory;
 import cofh.core.block.TileCore;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.Item;
@@ -41,6 +42,16 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
             return allowedItems.get(item) != null;
         }
     };
+
+    public void dropInventory() {
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            ItemStack stack = inventory.getStackInSlot(slot);
+            if (!stack.isEmpty()) {
+                world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
+                inventory.setStackInSlot(slot, ItemStack.EMPTY);
+            }
+        }
+    }
 
     private Optional<Integer> getRecycleValueOf(Item item) {
         Integer value = allowedItems.get(item);

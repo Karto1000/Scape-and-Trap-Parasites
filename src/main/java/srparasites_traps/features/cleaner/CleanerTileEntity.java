@@ -42,7 +42,42 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
             SRPPotions.VIRA_E,
             SRPPotions.COTH_E
     };
-    private final StateManager<CleanerState> state = new StateManager<>(CleanerState.IDLE);
+    private void onSwitchState(CleanerState lastState, CleanerState newState) {
+        switch (lastState) {
+            case IDLE:
+                this.world.playSound(
+                        null,
+                        this.pos.getX() + 0.5,
+                        this.pos.getY() + 0.5,
+                        this.pos.getZ() + 0.5,
+                        ModSounds.CLEANER_OPEN,
+                        SoundCategory.BLOCKS,
+                        0.4f,
+                        1.0f
+                );
+                this.callBlockUpdate();
+                break;
+            case DISPENSING:
+                this.world.playSound(
+                        null,
+                        this.pos.getX() + 0.5,
+                        this.pos.getY() + 0.5,
+                        this.pos.getZ() + 0.5,
+                        ModSounds.CLEANER_CLOSE,
+                        SoundCategory.BLOCKS,
+                        0.4f,
+                        1.0f
+                );
+                this.callBlockUpdate();
+                break;
+            case OPENING:
+            case CLOSING:
+                this.callBlockUpdate();
+                break;
+        }
+    }
+
+    private final StateManager<CleanerState> state = new StateManager<>(CleanerState.IDLE, this::onSwitchState);
 
     public CleanerTileEntity() {
         super();
@@ -152,47 +187,6 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
         }
     }
 
-    private void switchState() {
-        switch (this.state.getState()) {
-            case IDLE:
-                this.state.setState(CleanerState.OPENING, this.world.getTotalWorldTime());
-                this.world.playSound(
-                        null,
-                        this.pos.getX() + 0.5,
-                        this.pos.getY() + 0.5,
-                        this.pos.getZ() + 0.5,
-                        ModSounds.CLEANER_OPEN,
-                        SoundCategory.BLOCKS,
-                        0.4f,
-                        1.0f
-                );
-                this.callBlockUpdate();
-                break;
-            case DISPENSING:
-                this.state.setState(CleanerState.CLOSING, this.world.getTotalWorldTime());
-                this.world.playSound(
-                        null,
-                        this.pos.getX() + 0.5,
-                        this.pos.getY() + 0.5,
-                        this.pos.getZ() + 0.5,
-                        ModSounds.CLEANER_CLOSE,
-                        SoundCategory.BLOCKS,
-                        0.4f,
-                        1.0f
-                );
-                this.callBlockUpdate();
-                break;
-            case OPENING:
-                this.state.setState(CleanerState.DISPENSING, this.world.getTotalWorldTime());
-                this.callBlockUpdate();
-                break;
-            case CLOSING:
-                this.state.setState(CleanerState.IDLE, this.world.getTotalWorldTime());
-                this.callBlockUpdate();
-                break;
-        }
-    }
-
     public void callBlockUpdate() {
         if (this.world != null) {
             IBlockState state = this.world.getBlockState(this.pos);
@@ -239,7 +233,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                 if (players.isEmpty()) return;
                 if (!anyPlayerHasBadEffect(players)) return;
 
-                this.switchState();
+                this.state.switchState(this.world.getTotalWorldTime());
                 break;
             case DISPENSING:
                 if (this.currentSprayCooldown > 0) {
@@ -250,12 +244,12 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                 List<EntityPlayer> playersInRange = this.getPlayersInRange();
 
                 if (currentCapacity <= 0 || playersInRange.isEmpty()) {
-                    this.switchState();
+                    this.state.switchState(this.world.getTotalWorldTime());
                     return;
                 }
 
                 if (!anyPlayerHasBadEffect(playersInRange)) {
-                    this.switchState();
+                    this.state.switchState(this.world.getTotalWorldTime());
                     return;
                 }
 
@@ -285,7 +279,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                 }
 
                 this.currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
-                this.switchState();
+                this.state.switchState(this.world.getTotalWorldTime());
                 break;
             case CLOSING:
                 if (this.currentCloseCooldown > 0) {
@@ -294,7 +288,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                 }
 
                 this.currentCloseCooldown = DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
-                this.switchState();
+                this.state.switchState(this.world.getTotalWorldTime());
                 break;
             default:
         }

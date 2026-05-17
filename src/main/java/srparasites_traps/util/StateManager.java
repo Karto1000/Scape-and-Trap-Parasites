@@ -1,11 +1,19 @@
 package srparasites_traps.util;
 
-public class StateManager<T extends Enum<T>> {
+import java.util.function.BiConsumer;
+
+public class StateManager<T extends Enum<T> & StateTransition<T>> {
     private T state;
     private long ticksWhenChange;
+    private BiConsumer<T, T> onStateChange = (lastState, newState) -> {};
 
     public StateManager(T state) {
         this.state = state;
+    }
+
+    public StateManager(T state, BiConsumer<T, T> onStateChange) {
+        this.state = state;
+        this.onStateChange = onStateChange;
     }
 
     public T getState() {
@@ -13,12 +21,25 @@ public class StateManager<T extends Enum<T>> {
     }
 
     public void setState(T state, long ticks) {
-        this.state = state;
+        if (this.state == state) return;
+
+        T oldState = this.state;
         this.ticksWhenChange = ticks;
+        this.state = state;
+        this.onStateChange.accept(oldState, state);
     }
 
     public void setState(T state) {
+        if (this.state == state) return;
+
+        T oldState = this.state;
         this.state = state;
+        this.onStateChange.accept(oldState, state);
+    }
+
+    public void switchState(long ticks) {
+        T newState = this.state.switchState();
+        this.setState(newState, ticks);
     }
 
     public long getTicksSinceChange(long currentTicks) {
