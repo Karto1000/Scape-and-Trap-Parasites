@@ -43,7 +43,7 @@ public class ForgeConfigHandler {
     public static final ProximitySensorConfig proximitySensor = new ProximitySensorConfig();
 
     @Config.Name("Common")
-    @Config.Comment("Settings that are common to all mods")
+    @Config.Comment("Common settings for the mod")
     public static final CommonConfig common = new CommonConfig();
 
     public static class SentryTurretConfig {
@@ -326,11 +326,17 @@ public class ForgeConfigHandler {
         @Config.Name("Default Tesla coil range (Blocks)")
         @Config.Comment("The range the Tesla coil can detect enemies")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_TESLA_COIL_RANGE = 5;
+        public int DEFAULT_TESLA_COIL_RANGE = 10;
 
         @Config.Name("Default Tesla coil fire delay (Ticks)")
         @Config.Comment("The time between each shot")
+        @Config.RangeInt(min = 0)
         public int DEFAULT_TESLA_COIL_FIRE_DELAY = 60;
+
+        @Config.Name("Default Tesla coil charging delay (Ticks)")
+        @Config.Comment("The time in ticks the Tesla coil has to charge up before shooting after finding an enemy")
+        @Config.RangeInt(min = 0)
+        public final int DEFAULT_CHARGING_DELAY = 5;
 
         @Config.Name("Default Tesla coil shocked arc chance (%)")
         @Config.Comment("The chance that an enemy hit by the Tesla coil will arc lightning to other nearby enemies")

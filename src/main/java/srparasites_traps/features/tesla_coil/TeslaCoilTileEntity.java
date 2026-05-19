@@ -33,12 +33,17 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     public int energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
     public int range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
     public int shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
+    public int chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
 
     private EntityLivingBase target;
     private TeslaCoilState state = TeslaCoilState.IDLE;
     private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY);
-    private int chargingDelay = 5;
     private int currentChargingDelay = 0;
+    private final static Vec3d fireOffset = new Vec3d(0.5, 1.8, 0.5);
+
+    private Vec3d getBlockCenter() {
+        return VecHelper.blockPosToVec3d(this.pos).add(fireOffset);
+    }
 
     public final DualEnergyStorage energyStorage;
 
@@ -55,7 +60,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
             if (!entity.isEntityAlive()) continue;
 
             Vec3d targetPos = entity.getPositionVector().add(0, entity.height / 2.0, 0);
-            Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
+            Vec3d blockCenter = this.getBlockCenter();
 
             Vec3d directionToTarget = targetPos.subtract(blockCenter).normalize();
             Vec3d safeStartPos = blockCenter.add(directionToTarget);
@@ -110,7 +115,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     }
 
     private void fireAt(EntityLivingBase target) {
-        Vec3d firePos = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.9, 0.5);
+        Vec3d firePos = this.getBlockCenter();
 
         SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
                 new SpawnLightningParticlePacket(firePos, target.getPositionVector().add(0, target.getEyeHeight(), 0)),
@@ -123,7 +128,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
 
     private Vec3d getRaycastStartPos(EntityLivingBase entity) {
         Vec3d targetPos = entity.getPositionVector().add(0, entity.height / 2.0, 0);
-        Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
+        Vec3d blockCenter = this.getBlockCenter();
 
         Vec3d directionToTarget = targetPos.subtract(blockCenter).normalize();
         return blockCenter.add(directionToTarget);
@@ -147,7 +152,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
     }
 
     private void switchState() {
-        Vec3d blockCenter = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.5, 0.5);
+        Vec3d blockCenter = this.getBlockCenter();
 
         switch (this.state) {
             case IDLE:
@@ -203,13 +208,19 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
                 shootLimiter.reset();
                 break;
             case CHARGING:
+                if (this.currentChargingDelay <= 0) {
+                    this.currentChargingDelay = chargingDelay;
+                    this.switchState();
+                    return;
+                };
+
                 this.currentChargingDelay--;
 
-                Vec3d coilPosition = VecHelper.blockPosToVec3d(this.pos).add(0.5, 0.9, 0.5);
+                Vec3d coilPosition = this.getBlockCenter();
                 Vec3d offset = new Vec3d(
-                        Math.sin(this.currentChargingDelay * this.world.rand.nextGaussian()) * 0.5,
+                        Math.sin(this.currentChargingDelay * this.world.rand.nextGaussian()) * 0.8,
                         0,
-                        Math.cos(this.currentChargingDelay * this.world.rand.nextGaussian()) * 0.5
+                        Math.cos(this.currentChargingDelay * this.world.rand.nextGaussian()) * 0.8
                 );
                 Vec3d spawnPos = coilPosition.add(offset);
 
@@ -218,9 +229,6 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable {
                         new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), spawnPos.x, spawnPos.y, spawnPos.z, 32)
                 );
 
-                if (this.currentChargingDelay > 0) return;
-                this.currentChargingDelay = chargingDelay;
-                this.switchState();
                 break;
             case FIRING:
                 this.fireAt(this.target);
