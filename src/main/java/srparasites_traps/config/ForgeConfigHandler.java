@@ -107,16 +107,6 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 0)
         public int DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT = 1000;
 
-        @Config.Name("Default sentry turret biomass for spawn (mB)")
-        @Config.Comment("The amount of biomass that a sentry turret uses to spawn")
-        @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_BIOMASS_FOR_SPAWN = 500;
-
-        @Config.Name("Default sentry turret energy per tick (RF)")
-        @Config.Comment("The amount of energy that a sentry turret uses per tick")
-        @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ENERGY_PER_TICK = 50;
-
         @Config.Name("Default sentry turret respawn time after dying (Seconds)")
         @Config.Comment("The time that the sentry takes before being able to be deployed again")
         @Config.RangeInt(min = 0)

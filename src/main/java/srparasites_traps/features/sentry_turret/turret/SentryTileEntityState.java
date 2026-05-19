@@ -1,7 +1,15 @@
 package srparasites_traps.features.sentry_turret.turret;
 
-public enum SentryTileEntityState {
+import srparasites_traps.util.StateTransition;
+
+public enum SentryTileEntityState implements StateTransition<SentryTileEntityState> {
     INACTIVE,
-    DEAD,
-    ACTIVE
+    ACTIVE,
+    DEAD;
+
+    @Override
+    public SentryTileEntityState switchState() {
+        if (this == DEAD || this == INACTIVE) return ACTIVE;
+        return INACTIVE;
+    }
 }

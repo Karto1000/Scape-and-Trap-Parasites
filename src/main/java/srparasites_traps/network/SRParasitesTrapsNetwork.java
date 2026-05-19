@@ -10,8 +10,7 @@ public class SRParasitesTrapsNetwork {
 
     public static void init() {
         CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(SRParasitesTraps.MOD_ID);
-        CHANNEL.registerMessage(ToggleSentryPacket.Handler.class, ToggleSentryPacket.class, 0, Side.SERVER);
-        CHANNEL.registerMessage(SpawnLightningParticlePacket.Handler.class, SpawnLightningParticlePacket.class, 1, Side.CLIENT);
-        CHANNEL.registerMessage(SpawnElectricityParticlePacket.Handler.class, SpawnElectricityParticlePacket.class, 2, Side.CLIENT);
+        CHANNEL.registerMessage(SpawnLightningParticlePacket.Handler.class, SpawnLightningParticlePacket.class, 0, Side.CLIENT);
+        CHANNEL.registerMessage(SpawnElectricityParticlePacket.Handler.class, SpawnElectricityParticlePacket.class, 1, Side.CLIENT);
     }
 }

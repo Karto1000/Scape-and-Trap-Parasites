@@ -99,6 +99,11 @@ public class SentryTurretEntity extends EntityLiving {
     }
 
     @Override
+    public boolean isPushedByWater() {
+        return false;
+    }
+
+    @Override
     protected void onDeathUpdate() {
         super.onDeathUpdate();
         if (this.world.isRemote) return;
@@ -108,7 +113,6 @@ public class SentryTurretEntity extends EntityLiving {
         SentryTurretTileEntity sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
 
         sentryTurretTileEntity.setState(SentryTileEntityState.DEAD);
-        sentryTurretTileEntity.clearAssignedSentryTurret();
     }
 
     @Override

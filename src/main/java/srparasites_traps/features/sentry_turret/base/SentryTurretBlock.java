@@ -1,5 +1,6 @@
 package srparasites_traps.features.sentry_turret.base;
 
+import cofh.api.tileentity.IRedstoneControl;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -58,8 +59,7 @@ public class SentryTurretBlock extends Block {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof SentryTurretTileEntity)
-                ((SentryTurretTileEntity) tileEntity).removeTurret();
+            if (tileEntity instanceof SentryTurretTileEntity) ((SentryTurretTileEntity) tileEntity).despawnTurret();
         }
 
         super.breakBlock(worldIn, pos, state);
@@ -76,6 +76,24 @@ public class SentryTurretBlock extends Block {
 
         playerIn.openGui(SRParasitesTraps.instance, Constants.SENTRY_TURRET_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (worldIn.isRemote) return;
+
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof SentryTurretTileEntity) {
+            SentryTurretTileEntity stte = (SentryTurretTileEntity) tileEntity;
+            if (stte.getControl() == IRedstoneControl.ControlMode.DISABLED) return;
+            int power = worldIn.getRedstonePowerFromNeighbors(pos);
+
+            if (stte.getControl() == IRedstoneControl.ControlMode.LOW) {
+                stte.setPowered(power <= 15 && power > 0);
+            } else if (stte.getControl() == IRedstoneControl.ControlMode.HIGH) {
+                stte.setPowered(power >= 15);
+            }
+        }
     }
 
     @Override

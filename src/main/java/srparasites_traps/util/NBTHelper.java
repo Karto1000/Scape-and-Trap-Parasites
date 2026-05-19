@@ -49,15 +49,6 @@ public class NBTHelper {
         );
     }
 
-    public static UUID getUniqueIdOrElse(NBTTagCompound nbt, String key, Supplier<UUID> orElse) {
-        return getOrElse(
-                nbt,
-                key,
-                () -> nbt.getUniqueId(key),
-                orElse
-        );
-    }
-
     public static BlockPos getBlockPosOrElse(NBTTagCompound nbt, String key, Supplier<BlockPos> orElse) {
         return getOrElse(
                 nbt,

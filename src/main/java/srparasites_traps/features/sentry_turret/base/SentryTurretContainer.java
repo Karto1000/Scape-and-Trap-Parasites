@@ -1,5 +1,6 @@
 package srparasites_traps.features.sentry_turret.base;
 
+import cofh.api.tileentity.IRedstoneControl;
 import cofh.core.gui.container.ContainerCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,6 +14,15 @@ public class SentryTurretContainer extends ContainerCore {
     public SentryTurretContainer(InventoryPlayer playerInv, SentryTurretTileEntity tileEntity) {
         this.tileEntity = tileEntity;
         bindPlayerInventory(playerInv);
+    }
+
+    // Not actually anything to do with enchanting, but its being used for setting the control mode on the server
+    @Override
+    public boolean enchantItem(EntityPlayer playerIn, int id) {
+        if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
+        IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
+        tileEntity.setControl(controlMode);
+        return super.enchantItem(playerIn, id);
     }
 
     @Override
