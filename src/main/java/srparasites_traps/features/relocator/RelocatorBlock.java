@@ -65,6 +65,16 @@ public class RelocatorBlock extends Block {
         return true;
     }
 
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        if (worldIn.isRemote) return;
+
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+
+        if (tileEntity instanceof RelocatorTileEntity) {
+            RedstoneControlHelper.setPowered((RelocatorTileEntity) tileEntity, worldIn, pos);
+        }
+    }
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {

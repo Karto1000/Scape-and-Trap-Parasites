@@ -26,10 +26,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
-import srparasites_traps.util.DebugHelper;
-import srparasites_traps.util.Pair;
-import srparasites_traps.util.UpdateLimiter;
-import srparasites_traps.util.VecHelper;
+import srparasites_traps.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -184,21 +181,13 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
-        if (compound.hasKey("State")) {
-            this.state = RelocatorTileEntityState.values()[compound.getInteger("State")];
-        }
-        if (compound.hasKey("CurrentRelocatorCount")) {
-            this.currentRelocatorCount = compound.getInteger("CurrentRelocatorCount");
-        }
-        if (compound.hasKey("CurrentRelocatorCreateDelay")) {
-            this.currentRelocatorCreateDelay = compound.getInteger("CurrentRelocatorCreateDelay");
-        }
-        if (compound.hasKey("CurrentRelocationDelay")) {
-            this.currentRelocationDelay = compound.getInteger("CurrentRelocationDelay");
-        }
-        if (compound.hasKey("inventory")) {
-            this.inventory.deserializeNBT(compound.getCompoundTag("inventory"));
-        }
+        this.state = RelocatorTileEntityState.values()[NBTHelper.getIntegerOrElse(compound, "State", RelocatorTileEntityState.IDLE::ordinal)];
+        this.currentRelocatorCount = NBTHelper.getIntegerOrElse(compound, "CurrentRelocatorCount", () -> this.maxRelocatorsInReserve);
+        this.currentRelocatorCreateDelay = NBTHelper.getIntegerOrElse(compound, "CurrentRelocatorCreateDelay", () -> this.relocatorCreateDelay);
+        this.currentRelocationDelay = NBTHelper.getIntegerOrElse(compound, "CurrentRelocationDelay", () -> 0);
+        this.controlMode = ControlMode.values()[NBTHelper.getIntegerOrElse(compound, "ControlMode", ControlMode.DISABLED::ordinal)];
+        this.powered = NBTHelper.getBooleanOrElse(compound, "Powered", () -> false);
+        if (compound.hasKey("inventory")) this.inventory.deserializeNBT(compound.getCompoundTag("inventory"));
     }
 
     @Override
@@ -210,6 +199,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         compound.setInteger("CurrentRelocatorCreateDelay", this.currentRelocatorCreateDelay);
         compound.setInteger("CurrentRelocationDelay", this.currentRelocationDelay);
         compound.setTag("inventory", this.inventory.serializeNBT());
+        compound.setInteger("ControlMode", this.controlMode.ordinal());
+        compound.setBoolean("Powered", this.powered);
 
         return compound;
     }
@@ -237,6 +228,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, this.currentRelocatorCount);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 2, this.currentRelocatorCreateDelay);
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 3, this.controlMode.ordinal());
     }
 
     @Override
@@ -245,10 +237,16 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         switch (id) {
             case AVAILABLE_WINDOW_VAR:
                 this.setState(RelocatorTileEntityState.values()[data]);
+                break;
             case AVAILABLE_WINDOW_VAR + 1:
                 this.currentRelocatorCount = data;
+                break;
             case AVAILABLE_WINDOW_VAR + 2:
                 this.currentRelocatorCreateDelay = data;
+                break;
+            case AVAILABLE_WINDOW_VAR + 3:
+                this.controlMode = ControlMode.values()[data];
+                break;
         }
     }
 
