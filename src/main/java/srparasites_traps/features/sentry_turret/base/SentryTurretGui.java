@@ -25,7 +25,7 @@ public class SentryTurretGui extends GuiContainerCore {
     private final SentryTurretTileEntity tileEntity;
 
     public SentryTurretGui(EntityPlayer player, SentryTurretTileEntity tileEntity) {
-        super(new SentryTurretContainer(player.inventory, tileEntity), TEXTURE);
+        super(new SentryTurretContainer(player, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }
 

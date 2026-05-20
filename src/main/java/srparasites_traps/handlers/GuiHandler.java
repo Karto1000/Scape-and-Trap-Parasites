@@ -15,6 +15,9 @@ import srparasites_traps.features.relocator.RelocatorTileEntity;
 import srparasites_traps.features.sentry_turret.base.SentryTurretContainer;
 import srparasites_traps.features.sentry_turret.base.SentryTurretGui;
 import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
+import srparasites_traps.features.tesla_coil.TeslaCoilContainer;
+import srparasites_traps.features.tesla_coil.TeslaCoilGui;
+import srparasites_traps.features.tesla_coil.TeslaCoilTileEntity;
 import srparasites_traps.util.Constants;
 
 import javax.annotation.Nullable;
@@ -35,7 +38,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
-            return new SentryTurretContainer(player.inventory, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new SentryTurretContainer(player, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {
@@ -44,6 +47,10 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == Constants.BIOMASS_FACTORY_GUI_ID) {
             return new BiomassFactoryContainer(player, (BiomassFactoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.TESLA_COIL_GUI_ID) {
+            return new TeslaCoilContainer(player, (TeslaCoilTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;
@@ -75,6 +82,10 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == Constants.BIOMASS_FACTORY_GUI_ID) {
             return new BiomassFactoryGui(player, (BiomassFactoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.TESLA_COIL_GUI_ID) {
+            return new TeslaCoilGui(player, (TeslaCoilTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;

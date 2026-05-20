@@ -15,10 +15,10 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 
 public class LightningArcParticle extends Particle {
-    private final int maxStageVectors = 10;
+    private final int maxStageVectors;
     private final ArrayList<Vec3d> stageVectors = new ArrayList<>();
 
-    private int maxParticleAge;
+    private final int maxParticleAge;
     private final Vec3d from;
     private final Vec3d to;
 
@@ -28,6 +28,7 @@ public class LightningArcParticle extends Particle {
         this.from = from;
         this.to = to;
         this.maxParticleAge = maxParticleAge;
+        this.maxStageVectors = (int) (to.subtract(from).length() * 2);
 
         makeStageVectors();
     }

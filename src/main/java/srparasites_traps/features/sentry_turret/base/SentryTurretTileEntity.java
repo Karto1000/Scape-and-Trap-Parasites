@@ -1,7 +1,5 @@
 package srparasites_traps.features.sentry_turret.base;
 
-import cofh.api.tileentity.IRedstoneControl;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -21,7 +19,7 @@ import srparasites_traps.util.StateManager;
 import java.util.Optional;
 import java.util.UUID;
 
-public class SentryTurretTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider, IRedstoneControl {
+public class SentryTurretTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
     public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
     public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
     public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
@@ -30,8 +28,6 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     private UUID assignedSentryTurretUUID;
 
     private double currentRespawnTime = 0.;
-    private ControlMode controlMode = ControlMode.DISABLED;
-    private boolean powered = false;
     private final StateManager<SentryTileEntityState> state = new StateManager<>(SentryTileEntityState.DEAD, (oldState, newState) -> DebugHelper.dbp("State changed from " + oldState + " to " + newState));
     private final static int SENTRY_TURRET_ENTITY_HEIGHT_BLOCKS = 4;
 
@@ -146,9 +142,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         super.writeToNBT(compound);
 
         compound.setDouble("CurrentRespawnTime", this.currentRespawnTime);
-        compound.setInteger("ControlMode", this.controlMode.ordinal());
         compound.setInteger("State", this.state.getState().ordinal());
-        compound.setBoolean("Powered", this.powered);
 
         if (this.assignedSentryTurretUUID != null)
             compound.setUniqueId("AssignedSentryTurret", this.assignedSentryTurretUUID);
@@ -162,9 +156,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         super.readFromNBT(compound);
 
         this.currentRespawnTime = NBTHelper.getDoubleOrElse(compound, "CurrentRespawnTime", () -> 0.0);
-        this.controlMode = ControlMode.values()[NBTHelper.getIntegerOrElse(compound, "ControlMode", ControlMode.DISABLED::ordinal)];
         this.state.setState(SentryTileEntityState.values()[NBTHelper.getIntegerOrElse(compound, "State", SentryTileEntityState.DEAD::ordinal)]);
-        this.powered = NBTHelper.getBooleanOrElse(compound, "Powered", () -> false);
         if (compound.hasUniqueId("AssignedSentryTurret"))
             this.assignedSentryTurretUUID = compound.getUniqueId("AssignedSentryTurret");
         DebugHelper.dbp("Read assigned sentry turret uuid: " + this.assignedSentryTurretUUID);
@@ -214,7 +206,6 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, (int) this.currentRespawnTime);
-        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 2, this.controlMode.ordinal());
     }
 
     @Override
@@ -255,35 +246,5 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
     public double getCurrentRespawnTime() {
         return this.currentRespawnTime;
-    }
-
-    @Override
-    public boolean setControl(ControlMode controlMode) {
-        this.controlMode = controlMode;
-
-        if (this.world.isRemote) {
-            Minecraft mc = Minecraft.getMinecraft();
-            if (mc.player.openContainer == null) return false;
-            mc.playerController.sendEnchantPacket(mc.player.openContainer.windowId, controlMode.ordinal());
-        } else {
-            this.markDirty();
-        }
-
-        return true;
-    }
-
-    @Override
-    public ControlMode getControl() {
-        return controlMode;
-    }
-
-    @Override
-    public void setPowered(boolean b) {
-        this.powered = b;
-    }
-
-    @Override
-    public boolean isPowered() {
-        return powered;
     }
 }

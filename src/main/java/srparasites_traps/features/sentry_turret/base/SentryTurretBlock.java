@@ -79,12 +79,23 @@ public class SentryTurretBlock extends Block {
     }
 
     @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        if (worldIn.isRemote) return;
+
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+
+        if (tileEntity instanceof SentryTurretTileEntity) {
+            RedstoneControlHelper.updatePower((SentryTurretTileEntity) tileEntity, worldIn, pos);
+        }
+    }
+
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (worldIn.isRemote) return;
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof SentryTurretTileEntity) {
-            RedstoneControlHelper.setPowered((SentryTurretTileEntity) tileEntity, worldIn, pos);
+            RedstoneControlHelper.updatePower((SentryTurretTileEntity) tileEntity, worldIn, pos);
         }
     }
 

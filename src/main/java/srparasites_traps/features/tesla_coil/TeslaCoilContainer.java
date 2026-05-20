@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.base;
+package srparasites_traps.features.tesla_coil;
 
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.core.gui.container.ContainerCore;
@@ -7,15 +7,14 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class SentryTurretContainer extends ContainerCore {
-    private final SentryTurretTileEntity tileEntity;
+public class TeslaCoilContainer extends ContainerCore {
+    private final TeslaCoilTileEntity tileEntity;
 
-    public SentryTurretContainer(EntityPlayer player, SentryTurretTileEntity tileEntity) {
+    public TeslaCoilContainer(EntityPlayer player, TeslaCoilTileEntity tileEntity) {
         this.tileEntity = tileEntity;
         bindPlayerInventory(player.inventory);
     }
 
-    // Not actually anything to do with enchanting, but its being used for setting the control mode on the server
     @Override
     public boolean enchantItem(EntityPlayer playerIn, int id) {
         if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
@@ -40,17 +39,17 @@ public class SentryTurretContainer extends ContainerCore {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return true;
-    }
-
-    @Override
     protected int getPlayerInventoryVerticalOffset() {
         return 84;
     }
 
     @Override
     protected int getSizeInventory() {
-        return 2;
+        return 0;
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer playerIn) {
+        return true;
     }
 }

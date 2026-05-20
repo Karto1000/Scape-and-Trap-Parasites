@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class RedstoneControlHelper {
-    public static <T extends IRedstoneControl> void setPowered(T tileEntity, World world, BlockPos pos) {
+    public static <T extends IRedstoneControl> void updatePower(T tileEntity, World world, BlockPos pos) {
         if (tileEntity.getControl() == IRedstoneControl.ControlMode.DISABLED) return;
         int power = world.getRedstonePowerFromNeighbors(pos);
 

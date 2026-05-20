@@ -72,7 +72,7 @@ public class RelocatorBlock extends Block {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
 
         if (tileEntity instanceof RelocatorTileEntity) {
-            RedstoneControlHelper.setPowered((RelocatorTileEntity) tileEntity, worldIn, pos);
+            RedstoneControlHelper.updatePower((RelocatorTileEntity) tileEntity, worldIn, pos);
         }
     }
 
@@ -83,7 +83,7 @@ public class RelocatorBlock extends Block {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
 
         if (tileEntity instanceof RelocatorTileEntity) {
-            RedstoneControlHelper.setPowered((RelocatorTileEntity) tileEntity, worldIn, pos);
+            RedstoneControlHelper.updatePower((RelocatorTileEntity) tileEntity, worldIn, pos);
         }
     }
 

@@ -1,9 +1,7 @@
 package srparasites_traps.features.relocator;
 
-import cofh.api.tileentity.IRedstoneControl;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -36,7 +34,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RelocatorTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider, IRedstoneControl {
+public class RelocatorTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
     public int randomBlockSelectionRetries = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_BLOCK_SELECTION_RETRIES;
     public int maxBlockHardness = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_BLOCK_HARDNESS;
     public int maxRelocatorsInReserve = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE;
@@ -47,8 +45,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE;
 
     private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
-    private ControlMode controlMode = ControlMode.DISABLED;
-    private boolean powered = false;
 
     public final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
@@ -228,7 +224,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, this.currentRelocatorCount);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 2, this.currentRelocatorCreateDelay);
-        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 3, this.controlMode.ordinal());
     }
 
     @Override
@@ -243,9 +238,6 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
                 break;
             case AVAILABLE_WINDOW_VAR + 2:
                 this.currentRelocatorCreateDelay = data;
-                break;
-            case AVAILABLE_WINDOW_VAR + 3:
-                this.controlMode = ControlMode.values()[data];
                 break;
         }
     }
@@ -391,35 +383,5 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         this.setState(RelocatorTileEntityState.RELOCATING);
 
         this.currentRelocatorCount--;
-    }
-
-    @Override
-    public boolean setControl(ControlMode controlMode) {
-        this.controlMode = controlMode;
-
-        if (this.world.isRemote) {
-            Minecraft mc = Minecraft.getMinecraft();
-            if (mc.player.openContainer == null) return false;
-            mc.playerController.sendEnchantPacket(mc.player.openContainer.windowId, controlMode.ordinal());
-        } else {
-            this.markDirty();
-        }
-
-        return true;
-    }
-
-    @Override
-    public ControlMode getControl() {
-        return this.controlMode;
-    }
-
-    @Override
-    public void setPowered(boolean b) {
-        this.powered = b;
-    }
-
-    @Override
-    public boolean isPowered() {
-        return this.powered;
     }
 }
