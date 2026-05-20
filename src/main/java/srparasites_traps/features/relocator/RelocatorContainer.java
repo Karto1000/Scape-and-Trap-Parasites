@@ -1,5 +1,6 @@
 package srparasites_traps.features.relocator;
 
+import cofh.api.tileentity.IRedstoneControl;
 import cofh.core.gui.container.ContainerCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -46,6 +47,14 @@ public class RelocatorContainer extends ContainerCore {
             }
         });
         bindPlayerInventory(player.inventory);
+    }
+
+    @Override
+    public boolean enchantItem(EntityPlayer playerIn, int id) {
+        if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
+        IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
+        tileEntity.setControl(controlMode);
+        return super.enchantItem(playerIn, id);
     }
 
     @Override

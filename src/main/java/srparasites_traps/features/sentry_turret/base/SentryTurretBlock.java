@@ -1,6 +1,5 @@
 package srparasites_traps.features.sentry_turret.base;
 
-import cofh.api.tileentity.IRedstoneControl;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -19,6 +18,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
+import srparasites_traps.util.RedstoneControlHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -84,15 +84,7 @@ public class SentryTurretBlock extends Block {
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof SentryTurretTileEntity) {
-            SentryTurretTileEntity stte = (SentryTurretTileEntity) tileEntity;
-            if (stte.getControl() == IRedstoneControl.ControlMode.DISABLED) return;
-            int power = worldIn.getRedstonePowerFromNeighbors(pos);
-
-            if (stte.getControl() == IRedstoneControl.ControlMode.LOW) {
-                stte.setPowered(power <= 15 && power > 0);
-            } else if (stte.getControl() == IRedstoneControl.ControlMode.HIGH) {
-                stte.setPowered(power >= 15);
-            }
+            RedstoneControlHelper.setPowered((SentryTurretTileEntity) tileEntity, worldIn, pos);
         }
     }
 

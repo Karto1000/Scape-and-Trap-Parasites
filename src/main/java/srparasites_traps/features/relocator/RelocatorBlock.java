@@ -18,6 +18,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
+import srparasites_traps.util.RedstoneControlHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -62,6 +63,18 @@ public class RelocatorBlock extends Block {
 
         playerIn.openGui(SRParasitesTraps.instance, Constants.RELOCATOR_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
+    }
+
+
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (worldIn.isRemote) return;
+
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+
+        if (tileEntity instanceof RelocatorTileEntity) {
+            RedstoneControlHelper.setPowered((RelocatorTileEntity) tileEntity, worldIn, pos);
+        }
     }
 
     @Override
