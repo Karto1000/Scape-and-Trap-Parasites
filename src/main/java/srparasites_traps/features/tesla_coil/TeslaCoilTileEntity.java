@@ -40,6 +40,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     public int range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
     public int shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
     public int chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
+    public final DualEnergyStorage energyStorage;
 
     private EntityLivingBase target;
     private TeslaCoilState state = TeslaCoilState.IDLE;
@@ -49,14 +50,12 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     private ControlMode controlMode = ControlMode.DISABLED;
     private boolean powered = false;
 
-    private Vec3d getBlockCenter() {
-        return VecHelper.blockPosToVec3d(this.pos).add(fireOffset);
-    }
-
-    public final DualEnergyStorage energyStorage;
-
     public TeslaCoilTileEntity() {
         this.energyStorage = new DualEnergyStorage(maxEnergy);
+    }
+
+    private Vec3d getBlockCenter() {
+        return VecHelper.blockPosToVec3d(this.pos).add(fireOffset);
     }
 
     private Optional<EntityLivingBase> getPossibleTarget() {
