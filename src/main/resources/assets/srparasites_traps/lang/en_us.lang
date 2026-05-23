@@ -33,7 +33,7 @@ tile.srparasites_traps.proximity_sensor.name=§6Proximity Sensor§f
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit
 item.srparasites_traps.parasitic_matter.name=§bParasitic Matter§f
-item.srparasites_traps.relocation_marker.name=Relocation Marker
+item.srparasites_traps.area_marker.name=Area Marker
 item.srparasites_traps.dispatcher_brainstem.name=§cDispatcher Brainstem§f
 item.srparasites_traps.dispatcher_cerebrum.name=§cDispatcher Cerebrum§f
 item.srparasites_traps.reconstructed_sentry.name=Reconstructed Sentry
@@ -45,9 +45,8 @@ tooltip.srparasites_traps.item.two_way_communication_unit=§7A chip designed to 
 tooltip.srparasites_traps.item.parasitic_matter=Matter that is formed into various parasites by §cDispatchers§f.
 tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §abiomass§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires a §aRelocation Marker§f to define coordinates aswell as §abiomass§f and §4energy§f to function.
-tooltip.srparasites_traps.item.relocation_marker.base=Can be placed inside a relocator to define the area it searches for enemies and where it will place them.\n--------------------------\nShift + Right-Click with item in hand to define §carea to search§f for enemies.\nRight-Click with item in hand to define §adestination area§f to put enemies.\n--------------------------\nBoth have to be defined before it can be put inside a relocator and both areas have to have their start and end positions within a certain range to said relocator (Search Area: <%d Blocks, Destination Area: <%d Blocks).
-tooltip.srparasites_traps.item.relocation_marker.search_defined=§cSearch area (x: %d to %d, y: %d to %d, z: %d to %d)§f
-tooltip.srparasites_traps.item.relocation_marker.destination_defined=§aDestination area (x: %d to %d, y: %d to %d, z: %d to %d)§f
+tooltip.srparasites_traps.item.area_marker.base=Can be placed inside certain traps to change their area of effect.\n--------------------------\nRight-Click with item in hand to define the §carea§f.\n--------------------------
+tooltip.srparasites_traps.item.area_marker.area_defined=§cArea (x: %d to %d, y: %d to %d, z: %d to %d)§f
 tooltip.srparasites_traps.item.dispatcher_brainstem=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.dispatcher_cerebrum=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.serrated_spikes=A trap with sharp angled spikes jutting out of it. Does more damage the faster someone moves over it and causes §cBleeding§f.
@@ -62,11 +61,10 @@ tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites and
 tooltip.srparasites_traps.gui.sentry_turret.toggle=Activate / Deactivate the sentry turret.
 
 # Status Messages
-status.srparasites_traps.relocation_marker.search_area_too_big=§cSearch area exceeds limit of %s blocks.§f
-status.srparasites_traps.relocation_marker.destination_area_too_big=§cDestination area exceeds limit of %s blocks.§f
-status.srparasites_traps.relocation_marker.invalid_areas=§cUnbound search or destination area or search area distance too big (> %s Blocks) or destination area distance too big (> %s Blocks).§f
-status.srparasites_traps.relocation_marker.set_position=Successfully set position to (%s, %s, %s)
-status.srparasites_traps.relocation_marker.remove_positions=Successfully removed bound positions
+status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f
+status.srparasites_traps.area_marker.invalid_areas=§cUnbound area or area distance too big (> %s Blocks).§f
+status.srparasites_traps.area_marker.set_position=Set position to (%s, %s, %s)
+status.srparasites_traps.area_marker.remove_positions=Removed bound positions
 
 # Subtitles
 subtitle.srparasites_traps.cleaner_spray=Cleaner sprays
@@ -78,3 +76,7 @@ subtitle.srparasites_traps.electric_arc=Electricity arcs
 
 # Potions
 potion.srparasites_traps.shocked=Shocked
+
+# Slot descriptions
+slot.srparasites_traps.relocator_search=Put in an area marker which will define the area to search for enemies to relocate.
+slot.srparasites_traps.relocator_destination=Put in an area marker to tell the relocator all valid positions where a grabbed enemy can be relocated to.

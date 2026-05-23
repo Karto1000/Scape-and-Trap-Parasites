@@ -19,4 +19,8 @@ public class Translation {
     public static String getServerStatusFor(String id) {
         return "status." + SRParasitesTraps.MOD_ID + "." + id;
     }
+
+    public static String getSlotDescriptionFor(String id) {
+        return "slot." + SRParasitesTraps.MOD_ID + "." + id;
+    }
 }

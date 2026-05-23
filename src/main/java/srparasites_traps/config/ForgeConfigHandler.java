@@ -124,15 +124,10 @@ public class ForgeConfigHandler {
         @Config.RequiresMcRestart
         public boolean ENABLE_RELOCATOR = true;
 
-        @Config.Name("Default relocation marker search volume (Blocks)")
-        @Config.Comment("The search area (x * y * z) that the relocation marker can be set to")
+        @Config.Name("Default relocation marker volume (Blocks)")
+        @Config.Comment("The maximum area (x * y * z) that the relocation marker can be set to")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATION_MARKER_MAX_SEARCH_VOLUME = 200;
-
-        @Config.Name("Default relocation marker destination volume (Blocks)")
-        @Config.Comment("The destination area (x * y * z) that the relocation marker can be set to")
-        @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATION_MARKER_MAX_DESTINATION_VOLUME = 200;
+        public int DEFAULT_AREA_MARKER_MAX_VOLUME = 200;
 
         @Config.Name("Default relocator entity emerge time (Seconds)")
         @Config.Comment("The time that relocator entity takes to emerge from the ground")
@@ -184,15 +179,10 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 0)
         public int DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN = 100;
 
-        @Config.Name("Default relocator max search area distance (Blocks)")
-        @Config.Comment("The max distance the search area can be away from the source block")
+        @Config.Name("Default relocator max area distance (Blocks)")
+        @Config.Comment("The max distance the area can be away from the source block")
         @Config.RangeInt(min = 0)
-        public final int DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE = 20;
-
-        @Config.Name("Default relocator max destination area distance (Blocks)")
-        @Config.Comment("The max distance the destination area can be away from the source block")
-        @Config.RangeInt(min = 0)
-        public final int DEFAULT_RELOCATOR_MAX_DESTINATION_AREA_DISTANCE = 20;
+        public final int DEFAULT_RELOCATOR_MAX_AREA_DISTANCE = 20;
     }
 
     public static class SerratedSpikesConfig {

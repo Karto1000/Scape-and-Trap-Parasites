@@ -4,17 +4,17 @@ import cofh.core.gui.GuiContainerCore;
 import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
 import cofh.core.gui.element.tab.TabRedstoneControl;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.util.Constants;
+import srparasites_traps.util.Translation;
 
-import static srparasites_traps.util.Constants.*;
+import java.util.Collections;
 
 public class RelocatorGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/relocator.png");
-    private final static int TANK_X_POSITION_PX = 8;
+    private final static int TANK_X_POSITION_PX = 130;
     private final static int TANK_Y_POSITION_PX = 16;
     private final static int TANK_WIDTH_PX = 16;
     private final static int TANK_HEIGHT_PX = 53;
@@ -22,7 +22,6 @@ public class RelocatorGui extends GuiContainerCore {
     private final static int ENERGY_Y_POSITION_PX = TANK_Y_POSITION_PX - 1;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
-    private final static double textScale = 0.75;
     private final RelocatorTileEntity tileEntity;
 
     public RelocatorGui(EntityPlayer player, RelocatorTileEntity tileEntity) {
@@ -40,31 +39,26 @@ public class RelocatorGui extends GuiContainerCore {
     }
 
     @Override
-    protected void drawElements(float partialTick, boolean foreground) {
-        super.drawElements(partialTick, foreground);
-        GlStateManager.pushMatrix();
-        GlStateManager.scale(textScale, textScale, textScale);
-        this.fontRenderer.drawSplitString(
-                String.format("> %s Relocators available", tileEntity.getCurrentRelocatorCount()),
-                (int) (CONSOLE_X_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX,
-                (int) (CONSOLE_Y_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX,
-                164,
-                0xFFFFFF
-        );
-        this.fontRenderer.drawSplitString(
-                String.format("> %ss until new Relocator", tileEntity.getCurrentRelocatorCreateDelay() / Constants.TPS_LIMIT),
-                (int) (CONSOLE_X_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX,
-                (int) (CONSOLE_Y_POSITION_PX / textScale) + CONSOLE_TEXT_PADDING_PX + 16,
-                164,
-                0xFFFFFF
-        );
-        GlStateManager.popMatrix();
-    }
-
-    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+
+        if (isMouseOverSlot(this.inventorySlots.getSlot(0), mouseX, mouseY)) {
+            this.drawHoveringText(
+                    Collections.singletonList(I18n.format(Translation.getSlotDescriptionFor("relocator_search"))),
+                    mouseX,
+                    mouseY
+            );
+        }
+
+        if (isMouseOverSlot(this.inventorySlots.getSlot(1), mouseX, mouseY)) {
+            this.drawHoveringText(
+                    Collections.singletonList(I18n.format(Translation.getSlotDescriptionFor("relocator_destination"))),
+                    mouseX,
+                    mouseY
+            );
+        }
+
         this.renderHoveredToolTip(mouseX, mouseY);
     }
 }

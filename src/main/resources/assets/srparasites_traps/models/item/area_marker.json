@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "srparasites_traps:item/relocation_marker"
+    "layer0": "srparasites_traps:item/area_marker"
   },
   "display": {
     "firstperson_righthand": {

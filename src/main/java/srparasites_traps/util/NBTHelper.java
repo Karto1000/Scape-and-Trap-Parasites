@@ -75,7 +75,11 @@ public class NBTHelper {
     }
 
     public static UUID getUniqueIdOrDie(EntityLiving entityLiving, NBTTagCompound nbt, String key) {
-        return getOrDie(entityLiving, nbt, key, () -> nbt.getUniqueId(key));
+        if (nbt.hasUniqueId(key)) return nbt.getUniqueId(key);
+        else {
+            entityLiving.setDead();
+            return null;
+        }
     }
 
     public static Boolean getBooleanOrDie(EntityLiving entityLiving, NBTTagCompound nbt, String key) {

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
 import srparasites_traps.config.ForgeConfigHandler;
-import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
+import srparasites_traps.features.area_marker.AreaMarkerItem;
 
 import javax.annotation.Nonnull;
 
@@ -18,16 +18,18 @@ import static srparasites_traps.util.Translation.getServerStatusFor;
 
 public class RelocatorContainer extends ContainerCore {
     private final RelocatorTileEntity tileEntity;
-    private final static int SLOT_X_POSITION_PX = 49;
-    private final static int SLOT_Y_POSITION_PX = 16;
+    private final static int SLOT_SEARCH_X_POSITION_PX = 8;
+    private final static int SLOT_SEARCH_Y_POSITION_PX = 8;
+    private final static int SLOT_DESTINATION_X_POSITION_PX = 8;
+    private final static int SLOT_DESTINATION_Y_POSITION_PX = 29;
 
     public RelocatorContainer(EntityPlayer player, RelocatorTileEntity tileEntity) {
         this.tileEntity = tileEntity;
-        addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 0, SLOT_X_POSITION_PX, SLOT_Y_POSITION_PX) {
+        addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 0, SLOT_SEARCH_X_POSITION_PX, SLOT_SEARCH_Y_POSITION_PX) {
             @Override
             public boolean isItemValid(@Nonnull ItemStack stack) {
                 if (stack.isEmpty()) return false;
-                if (!(stack.getItem() instanceof RelocationMarkerItem)) return false;
+                if (!(stack.getItem() instanceof AreaMarkerItem)) return false;
 
                 boolean valid = super.isItemValid(stack);
 
@@ -35,9 +37,8 @@ public class RelocatorContainer extends ContainerCore {
                     if (!player.world.isRemote) {
                         player.sendMessage(
                                 new TextComponentTranslation(
-                                        getServerStatusFor("relocation_marker.invalid_areas"),
-                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE,
-                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_SEARCH_AREA_DISTANCE
+                                        getServerStatusFor("area_marker.invalid_areas"),
+                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_AREA_DISTANCE
                                 )
                         );
                     }
@@ -46,6 +47,30 @@ public class RelocatorContainer extends ContainerCore {
                 return valid;
             }
         });
+
+        addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 1, SLOT_DESTINATION_X_POSITION_PX, SLOT_DESTINATION_Y_POSITION_PX) {
+            @Override
+            public boolean isItemValid(@Nonnull ItemStack stack) {
+                if (stack.isEmpty()) return false;
+                if (!(stack.getItem() instanceof AreaMarkerItem)) return false;
+
+                boolean valid = super.isItemValid(stack);
+
+                if (!valid) {
+                    if (!player.world.isRemote) {
+                        player.sendMessage(
+                                new TextComponentTranslation(
+                                        getServerStatusFor("area_marker.invalid_areas"),
+                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_AREA_DISTANCE
+                                )
+                        );
+                    }
+                }
+
+                return valid;
+            }
+        });
+
         bindPlayerInventory(player.inventory);
     }
 
@@ -84,6 +109,6 @@ public class RelocatorContainer extends ContainerCore {
 
     @Override
     protected int getSizeInventory() {
-        return 1;
+        return 2;
     }
 }

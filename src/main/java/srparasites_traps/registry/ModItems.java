@@ -8,7 +8,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSlab;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.BasicItem;
-import srparasites_traps.features.relocation_marker.RelocationMarkerItem;
+import srparasites_traps.features.area_marker.AreaMarkerItem;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class ModItems {
     public static Item PROXIMITY_SENSOR_ITEM = getItemBlock(ModBlocks.PROXIMITY_SENSOR);
     public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
     public static Item TESLA_COIL_ITEM = getItemBlock(ModBlocks.TESLA_COIL);
-    public static Item RELOCATION_MARKER_ITEM = new RelocationMarkerItem();
+    public static Item AREA_MARKER_ITEM = new AreaMarkerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
     public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);

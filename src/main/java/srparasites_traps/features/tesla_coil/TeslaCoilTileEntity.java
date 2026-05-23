@@ -58,7 +58,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         return VecHelper.blockPosToVec3d(this.pos).add(fireOffset);
     }
 
-    private Optional<EntityLivingBase> getPossibleTarget() {
+    private Optional<EntityLivingBase> findPossibleTarget() {
         AxisAlignedBB aabb = new AxisAlignedBB(this.pos).grow(range);
         List<EntityLivingBase> entityMobs = this.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 
@@ -105,7 +105,6 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     public void readFromNBT(NBTTagCompound compound) {
         this.energyStorage.readFromNBT(compound.getCompoundTag("EnergyStorage"));
         this.currentChargingDelay = NBTHelper.getIntegerOrElse(compound, "CurrentChargingDelay", () -> this.chargingDelay);
-        this.state = TeslaCoilState.values()[NBTHelper.getIntegerOrElse(compound, "State", TeslaCoilState.IDLE::ordinal)];
         this.powered = NBTHelper.getBooleanOrElse(compound, "Powered", () -> false);
         this.controlMode = ControlMode.values()[NBTHelper.getIntegerOrElse(compound, "ControlMode", ControlMode.DISABLED::ordinal)];
 
@@ -116,7 +115,6 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("EnergyStorage", this.energyStorage.writeToNBT(new NBTTagCompound()));
         compound.setInteger("CurrentChargingDelay", this.currentChargingDelay);
-        compound.setInteger("State", this.state.ordinal());
         compound.setBoolean("Powered", this.powered);
         compound.setInteger("ControlMode", this.controlMode.ordinal());
 
@@ -125,7 +123,6 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     private void fireAt(EntityLivingBase target) {
         Vec3d firePos = this.getBlockCenter();
-
         SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(new SpawnLightningParticlePacket(firePos, target.getPositionVector().add(0, target.getEyeHeight(), 0)), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), firePos.x, firePos.y, firePos.z, 32));
 
         target.addPotionEffect(new PotionEffect(ModPotions.SHOCKED_POTION, 5, shockedAmplifier));
@@ -203,7 +200,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
                 if (this.needsNewTarget()) {
                     this.target = null;
 
-                    Optional<EntityLivingBase> possibleTarget = getPossibleTarget();
+                    Optional<EntityLivingBase> possibleTarget = findPossibleTarget();
                     if (!possibleTarget.isPresent()) return;
                     this.target = possibleTarget.get();
                 }
