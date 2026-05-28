@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:serrated_spikes_enabled"
+    }
+  ],
+  "pattern": [
+    "sss",
+    "sbs",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "srparasites_traps:serrated_spikes"
+    },
+    "b": {
+      "item": "forge:bucketfilled",
+      "type": "minecraft:item_nbt",
+      "nbt": {
+        "FluidName": "deadblood",
+        "Amount": 1000
+      }
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:viral_serrated_spikes",
+    "count": 8
+  }
+}

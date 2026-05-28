@@ -35,6 +35,8 @@ public class JEICompat implements IModPlugin {
 
         if (!ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SERRATED_SPIKES));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BURNING_SERRATED_SPIKES));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.VIRAL_SERRATED_SPIKES));
         }
 
         if (!ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) {

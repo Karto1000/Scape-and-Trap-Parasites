@@ -2,9 +2,9 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "blocks/iron_block",
+		"1": "srparasites_traps:block/iron_block",
 		"2": "srparasites_traps:block/serrated_spikes",
-		"particle": "blocks/iron_block"
+		"particle": "bb_models/iron_block"
 	},
 	"elements": [
 		{
