@@ -1,30 +1,30 @@
 {
-  "cleaner_spray": {
+  "decontaminator_spray": {
     "category": "block",
-    "subtitle": "subtitle.srparasites_traps.cleaner_spray",
+    "subtitle": "subtitle.srparasites_traps.decontaminator_spray",
     "sounds": [
       {
-        "name": "srparasites_traps:cleaner_spray",
+        "name": "srparasites_traps:decontaminator_spray",
         "stream": false
       }
     ]
   },
-  "cleaner_open": {
+  "decontaminator_open": {
     "category": "block",
-    "subtitle": "subtitle.srparasites_traps.cleaner_open",
+    "subtitle": "subtitle.srparasites_traps.decontaminator_open",
     "sounds": [
       {
-        "name": "srparasites_traps:cleaner_open",
+        "name": "srparasites_traps:decontaminator_open",
         "stream": false
       }
     ]
   },
-  "cleaner_close": {
+  "decontaminator_close": {
     "category": "block",
-    "subtitle": "subtitle.srparasites_traps.cleaner_close",
+    "subtitle": "subtitle.srparasites_traps.decontaminator_close",
     "sounds": [
       {
-        "name": "srparasites_traps:cleaner_close",
+        "name": "srparasites_traps:decontaminator_close",
         "stream": false
       }
     ]

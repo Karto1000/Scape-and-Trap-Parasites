@@ -1,9 +1,9 @@
-package srparasites_traps.features.cleaner;
+package srparasites_traps.features.decontaminator;
 
 import net.minecraft.util.IStringSerializable;
 import srparasites_traps.util.StateTransition;
 
-public enum CleanerState implements IStringSerializable, StateTransition<CleanerState> {
+public enum DecontaminatorState implements IStringSerializable, StateTransition<DecontaminatorState> {
     IDLE,
     DISPENSING,
     OPENING,
@@ -27,7 +27,7 @@ public enum CleanerState implements IStringSerializable, StateTransition<Cleaner
     }
 
     @Override
-    public CleanerState switchState() {
+    public DecontaminatorState switchState() {
         switch (this) {
             case IDLE:
                 return OPENING;

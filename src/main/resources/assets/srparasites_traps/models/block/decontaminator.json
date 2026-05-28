@@ -3,12 +3,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "srparasites_traps:block/cleaner",
-		"particle": "srparasites_traps:block/cleaner"
+		"0": "srparasites_traps:block/decontaminator",
+		"particle": "srparasites_traps:block/decontaminator"
 	},
 	"elements": [
 		{
-			"name": "cleaner",
+			"name": "decontaminator",
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {

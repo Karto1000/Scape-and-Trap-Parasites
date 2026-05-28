@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "direction=north": {
+      "model": "srparasites_traps:burning_serrated_spikes"
+    },
+    "direction=east": {
+      "model": "srparasites_traps:burning_serrated_spikes",
+      "y": 90
+    },
+    "direction=south": {
+      "model": "srparasites_traps:burning_serrated_spikes",
+      "y": 180
+    },
+    "direction=west": {
+      "model": "srparasites_traps:burning_serrated_spikes",
+      "y": 270
+    }
+  }
+}

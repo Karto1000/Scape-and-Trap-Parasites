@@ -6,9 +6,9 @@ import net.minecraftforge.common.crafting.JsonContext;
 
 import java.util.function.BooleanSupplier;
 
-public class CleanerConditionFactory implements IConditionFactory {
+public class DecontaminatorConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.cleaner.ENABLE_CLEANER;
+        return () -> ForgeConfigHandler.decontaminator.ENABLE_DECONTAMINATOR;
     }
 }

@@ -8,9 +8,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ModSounds {
-    public static final SoundEvent CLEANER_SPRAY = createSoundEvent("cleaner_spray");
-    public static final SoundEvent CLEANER_OPEN = createSoundEvent("cleaner_open");
-    public static final SoundEvent CLEANER_CLOSE = createSoundEvent("cleaner_close");
+    public static final SoundEvent DECONTAMINATOR_SPRAY = createSoundEvent("decontaminator_spray");
+    public static final SoundEvent DECONTAMINATOR_OPEN = createSoundEvent("decontaminator_open");
+    public static final SoundEvent DECONTAMINATOR_CLOSE = createSoundEvent("decontaminator_close");
     public static final SoundEvent TESLA_COIL_FIRE = createSoundEvent("tesla_coil_fire");
     public static final SoundEvent ELECTRIC_ARC = createSoundEvent("electric_arc");
     public static final SoundEvent TESLA_COIL_CHARGE = createSoundEvent("tesla_coil_charge");

@@ -1,8 +1,11 @@
 package srparasites_traps.features.serrated_spikes;
 
+import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
@@ -12,17 +15,26 @@ import java.util.List;
 
 import static srparasites_traps.util.Translation.getTooltipFor;
 
-public class FlameCoatedSerratedSpikes extends SerratedSpikesBlock {
-    public static final String REGISTRY_NAME = "flame_coated_serrated_spikes";
+public class ViralSerratedSpikes extends SerratedSpikesBlock {
+    public static final String REGISTRY_NAME = "viral_serrated_spikes";
 
-    public FlameCoatedSerratedSpikes() {
+    public ViralSerratedSpikes() {
         super(REGISTRY_NAME);
     }
 
     @Override
     protected void damageEntity(Entity entity, float damage) {
         super.damageEntity(entity, damage);
-        entity.setFire(ForgeConfigHandler.serratedSpikes.DEFAULT_FLAME_COATED_SERRATED_SPIKES_FLAME_DURATION);
+
+        if (entity instanceof EntityLivingBase) {
+            ((EntityLivingBase) entity).addPotionEffect(
+                    new PotionEffect(
+                            SRPPotions.VIRA_E,
+                            ForgeConfigHandler.serratedSpikes.DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_DURATION,
+                            ForgeConfigHandler.serratedSpikes.DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_AMPLIFIER
+                    )
+            );
+        }
     }
 
     @Override

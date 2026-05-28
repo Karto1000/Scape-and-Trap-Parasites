@@ -1,4 +1,4 @@
-package srparasites_traps.features.cleaner;
+package srparasites_traps.features.decontaminator;
 
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.block.state.IBlockState;
@@ -24,25 +24,25 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 // We can't inherit from TileCore since that doesn't allow the update method to be called on the client
-public class CleanerTileEntity extends TileEntity implements ITickable {
-    public final static int DEFAULT_CLEANER_CAPACITY = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_SPRAY_CAPACITY;
-    public final static int DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS;
-    public final static int DEFAULT_CLEANER_OPEN_DURATION_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_OPEN_DURATION_TICKS;
-    public final static int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
-    public final static int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = ForgeConfigHandler.cleaner.DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS;
+public class DecontaminatorTileEntity extends TileEntity implements ITickable {
+    public final static int DEFAULT_DECONTAMINATOR_CAPACITY = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_SPRAY_CAPACITY;
+    public final static int DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS;
     public final static int ANIMATION_FRAMES = 6;
 
-    private final static int DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN = 10;
+    private final static int DEFAULT_DECONTAMINATOR_CHECK_TICKS_COOLDOWN = 10;
     private int currentCheckCooldown = 0;
     private int currentSprayCooldown = 0;
-    private int currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
-    private int currentCloseCooldown = DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
-    private int currentCapacity = DEFAULT_CLEANER_CAPACITY;
+    private int currentOpenCooldown = DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS;
+    private int currentCloseCooldown = DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS;
+    private int currentCapacity = DEFAULT_DECONTAMINATOR_CAPACITY;
     private final static Potion[] removableEffects = new Potion[]{
             SRPPotions.VIRA_E,
             SRPPotions.COTH_E
     };
-    private void onSwitchState(CleanerState lastState, CleanerState newState) {
+    private void onSwitchState(DecontaminatorState lastState, DecontaminatorState newState) {
         switch (lastState) {
             case IDLE:
                 this.world.playSound(
@@ -50,7 +50,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                         this.pos.getX() + 0.5,
                         this.pos.getY() + 0.5,
                         this.pos.getZ() + 0.5,
-                        ModSounds.CLEANER_OPEN,
+                        ModSounds.DECONTAMINATOR_OPEN,
                         SoundCategory.BLOCKS,
                         0.4f,
                         1.0f
@@ -63,7 +63,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                         this.pos.getX() + 0.5,
                         this.pos.getY() + 0.5,
                         this.pos.getZ() + 0.5,
-                        ModSounds.CLEANER_CLOSE,
+                        ModSounds.DECONTAMINATOR_CLOSE,
                         SoundCategory.BLOCKS,
                         0.4f,
                         1.0f
@@ -77,13 +77,13 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
         }
     }
 
-    private final StateManager<CleanerState> state = new StateManager<>(CleanerState.IDLE, this::onSwitchState);
+    private final StateManager<DecontaminatorState> state = new StateManager<>(DecontaminatorState.IDLE, this::onSwitchState);
 
-    public CleanerTileEntity() {
+    public DecontaminatorTileEntity() {
         super();
     }
 
-    public CleanerState getState() {
+    public DecontaminatorState getState() {
         return state.getState();
     }
 
@@ -100,12 +100,12 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        this.currentCheckCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCheckCooldown", () -> DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN);
-        this.currentCapacity = NBTHelper.getIntegerOrElse(compound, "CurrentCapacity", () -> DEFAULT_CLEANER_CAPACITY);
-        this.state.setState(CleanerState.values()[NBTHelper.getIntegerOrElse(compound, "State", CleanerState.IDLE::ordinal)]);
-        this.currentSprayCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentSprayCooldown", () -> DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS);
-        this.currentOpenCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentOpenCooldown", () -> DEFAULT_CLEANER_OPEN_DURATION_TICKS);
-        this.currentCloseCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCloseCooldown", () -> DEFAULT_CLEANER_CLOSE_DURATION_TICKS);
+        this.currentCheckCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCheckCooldown", () -> DEFAULT_DECONTAMINATOR_CHECK_TICKS_COOLDOWN);
+        this.currentCapacity = NBTHelper.getIntegerOrElse(compound, "CurrentCapacity", () -> DEFAULT_DECONTAMINATOR_CAPACITY);
+        this.state.setState(DecontaminatorState.values()[NBTHelper.getIntegerOrElse(compound, "State", DecontaminatorState.IDLE::ordinal)]);
+        this.currentSprayCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentSprayCooldown", () -> DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS);
+        this.currentOpenCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentOpenCooldown", () -> DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS);
+        this.currentCloseCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCloseCooldown", () -> DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS);
         super.readFromNBT(compound);
     }
 
@@ -131,18 +131,18 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
     }
 
     public int getAnimationFrame() {
-        if (this.state.getState() == CleanerState.OPENING) {
-            int elapsedTicks = DEFAULT_CLEANER_OPEN_DURATION_TICKS - this.currentOpenCooldown;
-            int frame = elapsedTicks / (DEFAULT_CLEANER_OPEN_DURATION_TICKS / ANIMATION_FRAMES);
+        if (this.state.getState() == DecontaminatorState.OPENING) {
+            int elapsedTicks = DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS - this.currentOpenCooldown;
+            int frame = elapsedTicks / (DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS / ANIMATION_FRAMES);
             return Math.max(0, Math.min(ANIMATION_FRAMES - 1, frame));
         }
 
-        if (this.state.getState() == CleanerState.CLOSING) {
-            int frame = this.currentCloseCooldown / (DEFAULT_CLEANER_OPEN_DURATION_TICKS / ANIMATION_FRAMES);
+        if (this.state.getState() == DecontaminatorState.CLOSING) {
+            int frame = this.currentCloseCooldown / (DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS / ANIMATION_FRAMES);
             return Math.max(0, Math.min(ANIMATION_FRAMES - 1, frame));
         }
 
-        if (this.state.getState() == CleanerState.DISPENSING) {
+        if (this.state.getState() == DecontaminatorState.DISPENSING) {
             return ANIMATION_FRAMES - 1;
         }
 
@@ -151,7 +151,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
 
     public EnumFacing getGrateFacingDirection() {
         IBlockState state = this.world.getBlockState(this.pos);
-        if (state.getBlock() instanceof CleanerBlock) return state.getValue(CleanerBlock.grateDirection);
+        if (state.getBlock() instanceof DecontaminatorBlock) return state.getValue(DecontaminatorBlock.grateDirection);
         return EnumFacing.NORTH;
     }
 
@@ -207,16 +207,16 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
     @Override
     public void update() {
         if (this.world.isRemote) {
-            if (state.getState() == CleanerState.OPENING && this.currentOpenCooldown > 0) {
+            if (state.getState() == DecontaminatorState.OPENING && this.currentOpenCooldown > 0) {
                 this.currentOpenCooldown--;
-            } else if (state.getState() == CleanerState.CLOSING && this.currentCloseCooldown > 0) {
+            } else if (state.getState() == DecontaminatorState.CLOSING && this.currentCloseCooldown > 0) {
                 this.currentCloseCooldown--;
             }
             return;
         }
 
-        boolean canRegainCapacity = this.world.getTotalWorldTime() % DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS == 0
-                && this.currentCapacity < DEFAULT_CLEANER_CAPACITY;
+        boolean canRegainCapacity = this.world.getTotalWorldTime() % DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS == 0
+                && this.currentCapacity < DEFAULT_DECONTAMINATOR_CAPACITY;
         if (canRegainCapacity) this.currentCapacity++;
 
         switch (state.getState()) {
@@ -229,7 +229,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                 if (this.currentCapacity <= 0) return;
 
                 List<EntityPlayer> players = this.getPlayersInRange();
-                this.currentCheckCooldown = DEFAULT_CLEANER_CHECK_TICKS_COOLDOWN;
+                this.currentCheckCooldown = DEFAULT_DECONTAMINATOR_CHECK_TICKS_COOLDOWN;
                 if (players.isEmpty()) return;
                 if (!anyPlayerHasBadEffect(players)) return;
 
@@ -263,14 +263,14 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                         this.pos.getX() + 0.5,
                         this.pos.getY() + 0.5,
                         this.pos.getZ() + 0.5,
-                        ModSounds.CLEANER_SPRAY,
+                        ModSounds.DECONTAMINATOR_SPRAY,
                         SoundCategory.BLOCKS,
                         0.4f,
                         1.0f
                 );
 
                 currentCapacity--;
-                currentSprayCooldown = DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS;
+                currentSprayCooldown = DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS;
                 break;
             case OPENING:
                 if (this.currentOpenCooldown > 0) {
@@ -278,7 +278,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                     return;
                 }
 
-                this.currentOpenCooldown = DEFAULT_CLEANER_OPEN_DURATION_TICKS;
+                this.currentOpenCooldown = DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS;
                 this.state.switchState(this.world.getTotalWorldTime());
                 break;
             case CLOSING:
@@ -287,7 +287,7 @@ public class CleanerTileEntity extends TileEntity implements ITickable {
                     return;
                 }
 
-                this.currentCloseCooldown = DEFAULT_CLEANER_CLOSE_DURATION_TICKS;
+                this.currentCloseCooldown = DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS;
                 this.state.switchState(this.world.getTotalWorldTime());
                 break;
             default:

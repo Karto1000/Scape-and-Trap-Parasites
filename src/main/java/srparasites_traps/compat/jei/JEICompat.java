@@ -26,7 +26,7 @@ public class JEICompat implements IModPlugin {
         IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
 
         if (!ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) {
-            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.sentry_turret));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SENTRY_TURRET));
         }
 
         if (!ForgeConfigHandler.relocator.ENABLE_RELOCATOR) {
@@ -41,8 +41,8 @@ public class JEICompat implements IModPlugin {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BIOMASS_FACTORY));
         }
 
-        if (!ForgeConfigHandler.cleaner.ENABLE_CLEANER) {
-            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.CLEANER));
+        if (!ForgeConfigHandler.decontaminator.ENABLE_DECONTAMINATOR) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.DECONTAMINATOR));
         }
 
         if (!ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS) {

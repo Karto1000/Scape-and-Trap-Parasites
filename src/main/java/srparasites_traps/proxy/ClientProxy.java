@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import srparasites_traps.features.cleaner.CleanerTESR;
-import srparasites_traps.features.cleaner.CleanerTileEntity;
+import srparasites_traps.features.decontaminator.DecontaminatorTESR;
+import srparasites_traps.features.decontaminator.DecontaminatorTileEntity;
 import srparasites_traps.features.relocator.RelocatorEntity;
 import srparasites_traps.features.relocator.RelocatorEntityRenderer;
 import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
@@ -35,7 +35,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     public void registerTileEntitySpecialRenderers() {
-        ClientRegistry.bindTileEntitySpecialRenderer(CleanerTileEntity.class, new CleanerTESR());
+        ClientRegistry.bindTileEntitySpecialRenderer(DecontaminatorTileEntity.class, new DecontaminatorTESR());
     }
 
     public void registerItemRenderer(Item item, int meta, String id) {

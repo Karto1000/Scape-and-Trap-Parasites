@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"1": "minecraft:blocks/coal_block",
-		"2": "srparasites_traps:block/flame_coated_serrated_spikes",
+		"2": "srparasites_traps:block/burning_serrated_spikes",
 		"particle": "minecraft:blocks/coal_block"
 	},
 	"elements": [

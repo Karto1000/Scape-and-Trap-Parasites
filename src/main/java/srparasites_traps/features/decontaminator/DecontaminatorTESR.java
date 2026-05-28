@@ -1,4 +1,4 @@
-package srparasites_traps.features.cleaner;
+package srparasites_traps.features.decontaminator;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,11 +11,11 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import srparasites_traps.SRParasitesTraps;
 
-public class CleanerTESR extends TileEntitySpecialRenderer<CleanerTileEntity> {
-    private static final ResourceLocation ANIMATION_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/block/cleaner_opening.png");
+public class DecontaminatorTESR extends TileEntitySpecialRenderer<DecontaminatorTileEntity> {
+    private static final ResourceLocation ANIMATION_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/block/decontaminator_opening.png");
 
     @Override
-    public void render(CleanerTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(DecontaminatorTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         int frame = te.getAnimationFrame();
         if (frame < 0) return;
 
@@ -64,7 +64,7 @@ public class CleanerTESR extends TileEntitySpecialRenderer<CleanerTileEntity> {
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         // UV Math
-        double frameHeight = 1.0 / CleanerTileEntity.ANIMATION_FRAMES;
+        double frameHeight = 1.0 / DecontaminatorTileEntity.ANIMATION_FRAMES;
         double minV = frame * frameHeight;
         double maxV = minV + frameHeight;
         double minU = 0.0;

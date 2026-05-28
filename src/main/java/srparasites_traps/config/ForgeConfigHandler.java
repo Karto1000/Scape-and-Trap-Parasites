@@ -26,9 +26,9 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the biomass factory")
     public static final BiomassFactoryConfig biomassFactory = new BiomassFactoryConfig();
 
-    @Config.Name("Cleaner")
-    @Config.Comment("Settings for the cleaner")
-    public static final CleanerConfig cleaner = new CleanerConfig();
+    @Config.Name("Decontaminator")
+    @Config.Comment("Settings for the decontaminator")
+    public static final DecontaminatorConfig decontaminator = new DecontaminatorConfig();
 
     @Config.Name("Obsidian Blocks")
     @Config.Comment("Settings for the obsidian blocks")
@@ -225,10 +225,20 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 0)
         public int DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION = 40;
 
-        @Config.Name("Default flame coated serrated spikes flame duration (Seconds)")
+        @Config.Name("Default burning serrated spikes flame duration (Seconds)")
         @Config.Comment("The duration in seconds that the entity will be on fire")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_FLAME_COATED_SERRATED_SPIKES_FLAME_DURATION = 2;
+        public int DEFAULT_BURNING_SERRATED_SPIKES_FLAME_DURATION = 2;
+
+        @Config.Name("Default serrated spikes viral duration (Ticks)")
+        @Config.Comment("The duration in ticks that the entity will have the viral effect")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_DURATION = 80;
+
+        @Config.Name("Default serrated spikes viral amplifier")
+        @Config.Comment("The amplifier level of the viral effect")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_AMPLIFIER = 0;
     }
 
     public static class BiomassFactoryConfig {
@@ -248,36 +258,36 @@ public class ForgeConfigHandler {
         public int DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY = 5;
     }
 
-    public static class CleanerConfig {
-        @Config.Name("Enable cleaner")
-        @Config.Comment("If true, the cleaner will be enabled")
+    public static class DecontaminatorConfig {
+        @Config.Name("Enable decontaminator")
+        @Config.Comment("If true, the decontaminator will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_CLEANER = true;
+        public boolean ENABLE_DECONTAMINATOR = true;
 
-        @Config.Name("Default cleaner max spray capacity")
-        @Config.Comment("The amount of spray charges the cleaner can hold")
+        @Config.Name("Default decontaminator max spray capacity")
+        @Config.Comment("The amount of spray charges the decontaminator can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_CLEANER_SPRAY_CAPACITY = 2;
+        public int DEFAULT_DECONTAMINATOR_SPRAY_CAPACITY = 2;
 
-        @Config.Name("Default cleaner spray charge duration (Ticks)")
-        @Config.Comment("The amount of ticks that a cleaner waits before spraying again")
+        @Config.Name("Default decontaminator spray charge duration (Ticks)")
+        @Config.Comment("The amount of ticks that a decontaminator waits before spraying again")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_CLEANER_SPRAY_COOLDOWN_TICKS = 20;
+        public int DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS = 20;
 
-        @Config.Name("Default cleaner open duration (Ticks)")
-        @Config.Comment("The amount of ticks that a cleaner takes to open")
+        @Config.Name("Default decontaminator open duration (Ticks)")
+        @Config.Comment("The amount of ticks that a decontaminator takes to open")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_CLEANER_OPEN_DURATION_TICKS = 20;
+        public int DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS = 20;
 
-        @Config.Name("Default cleaner close duration (Ticks)")
-        @Config.Comment("The amount of ticks that a cleaner takes to close")
+        @Config.Name("Default decontaminator close duration (Ticks)")
+        @Config.Comment("The amount of ticks that a decontaminator takes to close")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_CLEANER_CLOSE_DURATION_TICKS = 20;
+        public int DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS = 20;
 
-        @Config.Name("Default cleaner capacity regeneration time (Ticks)")
-        @Config.Comment("The amount of ticks that it takes for the cleaner to regenerate one charge of its capacity")
+        @Config.Name("Default decontaminator capacity regeneration time (Ticks)")
+        @Config.Comment("The amount of ticks that it takes for the decontaminator to regenerate one charge of its capacity")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_CLEANER_CAPACITY_REGEN_TIME_TICKS = 200;
+        public int DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS = 200;
     }
 
     public static class ObsidianBlocksConfig {

@@ -4,7 +4,7 @@
     "relocator_enabled": "srparasites_traps.config.RelocatorConditionFactory",
     "serrated_spikes_enabled": "srparasites_traps.config.SerratedSpikesConditionFactory",
     "biomass_factory_enabled": "srparasites_traps.config.BiomassFactoryConditionFactory",
-    "cleaner_enabled": "srparasites_traps.config.CleanerConditionFactory",
+    "decontaminator_enabled": "srparasites_traps.config.DecontaminatorConditionFactory",
     "obsidian_blocks_enabled": "srparasites_traps.config.ObsidianBlocksConditionFactory"
   }
 }

@@ -4,26 +4,28 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
-import srparasites_traps.features.cleaner.CleanerBlock;
+import srparasites_traps.features.decontaminator.DecontaminatorBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianLadderBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianSlabBlock;
 import srparasites_traps.features.proximity_sensor.ProximitySensorBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
-import srparasites_traps.features.serrated_spikes.FlameCoatedSerratedSpikes;
+import srparasites_traps.features.serrated_spikes.BurningSerratedSpikes;
 import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
+import srparasites_traps.features.serrated_spikes.ViralSerratedSpikes;
 import srparasites_traps.features.tesla_coil.TeslaCoilBlock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ModBlocks {
-    public static Block sentry_turret = new SentryTurretBlock();
+    public static Block SENTRY_TURRET = new SentryTurretBlock();
     public static Block RELOCATOR = new RelocatorBlock();
     public static Block SERRATED_SPIKES = new SerratedSpikesBlock("serrated_spikes");
-    public static Block FLAME_COATED_SERRATED_SPIKES = new FlameCoatedSerratedSpikes();
+    public static Block BURNING_SERRATED_SPIKES = new BurningSerratedSpikes();
+    public static Block VIRAL_SERRATED_SPIKES = new ViralSerratedSpikes();
     public static Block BIOMASS_FACTORY = new BiomassFactoryBlock();
-    public static Block CLEANER = new CleanerBlock();
+    public static Block DECONTAMINATOR = new DecontaminatorBlock();
     public static Block OBSIDIAN_LADDER = new ObsidianLadderBlock();
     public static Block TESLA_COIL = new TeslaCoilBlock();
     public static Block PROXIMITY_SENSOR = new ProximitySensorBlock();
