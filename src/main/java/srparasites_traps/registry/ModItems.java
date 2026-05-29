@@ -9,6 +9,7 @@ import net.minecraft.item.ItemSlab;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.BasicItem;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
+import srparasites_traps.features.hardness_analyser.HardnessAnalyzerItem;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ModItems {
     public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
     public static Item TESLA_COIL_ITEM = getItemBlock(ModBlocks.TESLA_COIL);
     public static Item AREA_MARKER_ITEM = new AreaMarkerItem();
+    public static HardnessAnalyzerItem HARDNESS_ANALYZER_ITEM = new HardnessAnalyzerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
     public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);
@@ -47,7 +49,7 @@ public class ModItems {
         ArrayList<Item> items = new ArrayList<>();
 
         for (Field field : ModItems.class.getDeclaredFields()) {
-            if (field.getType() != Item.class && field.getType() != ItemSlab.class) continue;
+            if (!Item.class.isAssignableFrom(field.getType())) continue;
 
             try {
                 Item item = (Item) field.get(null);

@@ -42,6 +42,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the proximity sensor")
     public static final ProximitySensorConfig proximitySensor = new ProximitySensorConfig();
 
+    @Config.Name("Hardness Analyzer")
+    @Config.Comment("Settings for the hardness analyzer")
+    public static final HardnessAnalyzerConfig hardnessAnalyzer = new HardnessAnalyzerConfig();
+
     @Config.Name("Common")
     @Config.Comment("Common settings for the mod")
     public static final CommonConfig common = new CommonConfig();
@@ -359,6 +363,13 @@ public class ForgeConfigHandler {
         @Config.Comment("If true, the proximity sensor will be enabled")
         @Config.RequiresMcRestart
         public boolean ENABLE_PROXIMITY_SENSOR = true;
+    }
+
+    public static class HardnessAnalyzerConfig {
+        @Config.Name("Enable hardness analyzer")
+        @Config.Comment("If true, the hardness analyzer will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_HARDNESS_ANALYZER = true;
     }
 
     public static class CommonConfig {

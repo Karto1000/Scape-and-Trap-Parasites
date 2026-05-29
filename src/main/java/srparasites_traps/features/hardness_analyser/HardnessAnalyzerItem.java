@@ -1,0 +1,149 @@
+package srparasites_traps.features.hardness_analyser;
+
+import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.util.EntityHelper;
+import srparasites_traps.util.Pair;
+
+import java.util.*;
+
+import static srparasites_traps.util.Translation.getTranslationKeyFor;
+
+public class HardnessAnalyzerItem extends Item {
+    public static final String REGISTRY_NAME = "hardness_analyzer";
+    private static final Map<String, List<GriefingParasite>> griefingParasites = new HashMap<>();
+
+    public static class GriefingParasite {
+        ResourceLocation id;
+        float hardness;
+
+        public GriefingParasite(ResourceLocation id, float blockH) {
+            this.id = id;
+            this.hardness = blockH;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%s: %f", id, hardness);
+        }
+    }
+
+    public static Map<String, List<GriefingParasite>> getGriefingParasites() {
+        if (!griefingParasites.isEmpty()) return griefingParasites;
+
+        for (String grief : SRPConfig.parasiteGriefing) {
+            String[] split = grief.split(";");
+            if (split.length < 2) continue;
+
+            String entityRegistryName = split[0];
+            if (entityRegistryName.isEmpty()) continue;
+
+            String entityHardness = split[1];
+            if (entityHardness.isEmpty()) continue;
+
+            Class<? extends Entity> entityClass = EntityList.getClass(new ResourceLocation(entityRegistryName));
+            if (entityClass == null) continue;
+
+            Optional<String> parasiteType = EntityHelper.getEntityParasiteType(entityClass);
+            if (!parasiteType.isPresent()) continue;
+
+            if (!griefingParasites.containsKey(parasiteType.get()))
+                griefingParasites.put(parasiteType.get(), new ArrayList<>());
+            List<GriefingParasite> entityList = griefingParasites.get(parasiteType.get());
+
+            entityList.add(new GriefingParasite(new ResourceLocation(entityRegistryName), (float) Double.parseDouble(entityHardness)));
+        }
+
+        return griefingParasites;
+    }
+
+    public HardnessAnalyzerItem() {
+        super();
+
+        this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
+        this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
+        this.setMaxStackSize(1);
+
+        if (ForgeConfigHandler.hardnessAnalyzer.ENABLE_HARDNESS_ANALYZER)
+            this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+    }
+
+    public static Optional<Pair<Float, String>> getHardnessAndName(ItemStack stack) {
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) return Optional.empty();
+
+        float hardness = tag.getFloat("hardness");
+        String name = tag.getString("name");
+        if (name.isEmpty()) return Optional.empty();
+
+        return Optional.of(Pair.of(hardness, name));
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static Map<String, Pair<Integer, Integer>> getVulnerableCount(ItemStack stack) {
+        Optional<Pair<Float, String>> hardnessAndName = getHardnessAndName(stack);
+        if (!hardnessAndName.isPresent()) return Collections.emptyMap();
+        float blockHardness = hardnessAndName.get().first();
+
+        Map<String, Pair<Integer, Integer>> vulnerableCount = new HashMap<>();
+        getGriefingParasites().forEach((key, value) -> {
+            vulnerableCount.put(key, Pair.of(0, value.size()));
+
+            for (GriefingParasite parasite : value) {
+                if (blockHardness > parasite.hardness || blockHardness == -1.) continue;
+                vulnerableCount.put(key, Pair.of(vulnerableCount.get(key).first() + 1, value.size()));
+            }
+        });
+
+        return vulnerableCount;
+    }
+
+    private void resetHardnessAndName(ItemStack stack) {
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) return;
+        tag.removeTag("hardness");
+        tag.removeTag("name");
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+
+        if (!isSelected) return;
+        if (!worldIn.isRemote) return;
+        if (!(entityIn instanceof EntityPlayer)) return;
+
+        RayTraceResult result = Minecraft.getMinecraft().objectMouseOver;
+        if (result == null || result.typeOfHit != RayTraceResult.Type.BLOCK) {
+            resetHardnessAndName(stack);
+            return;
+        }
+
+        BlockPos pos = result.getBlockPos();
+        IBlockState state = worldIn.getBlockState(pos);
+
+        float hardness = state.getBlockHardness(worldIn, pos);
+        String name = state.getBlock().getLocalizedName();
+
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) tag = new NBTTagCompound();
+        tag.setFloat("hardness", hardness);
+        tag.setString("name", name);
+        stack.setTagCompound(tag);
+    }
+}
