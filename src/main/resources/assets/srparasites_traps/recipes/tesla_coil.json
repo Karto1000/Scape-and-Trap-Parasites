@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:tesla_coil_enabled"
+    }
+  ],
+  "pattern": [
+    "cbc",
+    " i ",
+    " s "
+  ],
+  "key": {
+    "c": {
+      "item": "srparasites_traps:coil"
+    },
+    "b": {
+      "item": "minecraft:iron_block"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "s": {
+      "item": "srparasites:semiorganic_block"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:tesla_coil",
+    "count": 1
+  }
+}

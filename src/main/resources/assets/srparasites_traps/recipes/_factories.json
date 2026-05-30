@@ -6,6 +6,8 @@
     "biomass_factory_enabled": "srparasites_traps.config.BiomassFactoryConditionFactory",
     "decontaminator_enabled": "srparasites_traps.config.DecontaminatorConditionFactory",
     "obsidian_blocks_enabled": "srparasites_traps.config.ObsidianBlocksConditionFactory",
-    "hardness_analyzer_enabled": "srparasites_traps.config.HardnessAnalyzerConditionFactory"
+    "hardness_analyzer_enabled": "srparasites_traps.config.HardnessAnalyzerConditionFactory",
+    "tesla_coil_enabled": "srparasites_traps.config.TeslaCoilConditionFactory",
+    "proximity_sensor_enabled": "srparasites_traps.config.ProximitySensorConditionFactory"
   }
 }

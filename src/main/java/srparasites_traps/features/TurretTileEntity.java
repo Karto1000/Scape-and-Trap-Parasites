@@ -11,7 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import srparasites_traps.capability.BiomassTank;
+import srparasites_traps.capability.DeadBloodTank;
 import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.util.NBTHelper;
 import srparasites_traps.util.RedstoneControlHelper;
@@ -19,14 +19,14 @@ import srparasites_traps.util.RedstoneControlHelper;
 import javax.annotation.Nullable;
 
 public abstract class TurretTileEntity extends TileCore implements ICapabilityProvider, IRedstoneControl {
-    public final BiomassTank biomassStorage;
+    public final DeadBloodTank biomassStorage;
     public final DualEnergyStorage energyStorage;
     public ControlMode controlMode = ControlMode.DISABLED;
     public boolean powered = false;
     protected final static int AVAILABLE_WINDOW_VAR = 3;
 
     public TurretTileEntity(int maxBiomass, int maxEnergy) {
-        this.biomassStorage = new BiomassTank(maxBiomass);
+        this.biomassStorage = new DeadBloodTank(maxBiomass);
         this.biomassStorage.setTileEntity(this);
         this.energyStorage = new DualEnergyStorage(maxEnergy);
     }
@@ -87,7 +87,7 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
         switch (id) {
             case 0:
                 if (data == 0) this.biomassStorage.setFluid(null);
-                else this.biomassStorage.setBiomass(data);
+                else this.biomassStorage.set(data);
                 break;
             case 1:
                 this.energyStorage.setEnergy(data);

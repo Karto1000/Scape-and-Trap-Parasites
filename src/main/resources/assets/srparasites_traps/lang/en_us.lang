@@ -40,13 +40,16 @@ item.srparasites_traps.dispatcher_cerebrum.name=§cDispatcher Cerebrum§f
 item.srparasites_traps.reconstructed_sentry.name=Reconstructed Sentry
 item.srparasites_traps.reconstructed_seizer.name=Reconstructed Seizer
 item.srparasites_traps.beckon_heart.name=§aBeckon Heart§f
+item.srparasites_traps.hardness_analyzer.name=Hardness Analyzer
+item.srparasites_traps.antenna.name=Antenna
+item.srparasites_traps.coil.name=Coil
 
 # Tooltips
 tooltip.srparasites_traps.item.two_way_communication_unit=§7A chip designed to enable two-way communication between mechanical machines and §cparasitic entities.
 tooltip.srparasites_traps.item.parasitic_matter=Matter that is formed into various parasites by §cDispatchers§f.
-tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §abiomass§f and §4energy§f to function.
-tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires an §aArea Marker§f to define coordinates aswell as §abiomass§f and §4energy§f to function.
-tooltip.srparasites_traps.item.area_marker.base=Can be placed inside certain traps to change their area of effect.\n--------------------------\nRight-Click with item in hand to define the §carea§f.\n--------------------------
+tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §aDead Blood§f and §4energy§f to function.
+tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires an §aArea Marker§f to define coordinates aswell as §aDead Blood§f and §4energy§f to function.
+tooltip.srparasites_traps.item.area_marker.base=Can be placed inside certain traps to change their area of effect. Right-Click with item in hand to define the §carea§f.
 tooltip.srparasites_traps.item.area_marker.area_defined=§cArea (x: %d to %d, y: %d to %d, z: %d to %d)§f
 tooltip.srparasites_traps.item.dispatcher_brainstem=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.dispatcher_cerebrum=An important part of a §cDispatchers§f brain that somehow still remains intact.
@@ -55,11 +58,13 @@ tooltip.srparasites_traps.item.burning_serrated_spikes=A trap with sharp angled 
 tooltip.srparasites_traps.item.viral_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a §agreen slime-like substance§f. Does more damage the faster someone moves over it, causes §cBleeding§f and applies §aViral§f for a short amount of time.
 tooltip.srparasites_traps.item.reconstructed_sentry=§7A crude reconstruction of a §cSentry§f.
 tooltip.srparasites_traps.item.reconstructed_seizer=§7A haphazard reconstruction of a §cSeizer§f.
-tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §aBeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create biomass.
+tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §aBeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create §aDead Blood§f.
 tooltip.srparasites_traps.item.beckon_heart=An important part of a §aBeckon§f that somehow still remains intact.
 tooltip.srparasites_traps.item.decontaminator=A machine that rids any nearby player of the §aViral§f and §4Call of the Hive§f effect.
 tooltip.srparasites_traps.item.tesla_coil=A high-voltage apparatus delivering shocks to any unfortunate being (including you) that manages to get close enough. Great for dealing with §cbig hordes§f.
 tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites and sends out a redstone signal if one is found.
+tooltip.srparasites_traps.item.hardness_analyzer=Tells you the hardness of blocks and which tier of parasites can break them.
+tooltip.srparasites_traps.item.coil=A mixture of iron and diamonds combined to maximize the electricity throughput §8(Don't question the color change)§f.
 
 # Status Messages
 status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f

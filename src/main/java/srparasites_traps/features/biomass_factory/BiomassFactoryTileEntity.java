@@ -17,7 +17,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import srparasites_traps.capability.BiomassTank;
+import srparasites_traps.capability.DeadBloodTank;
 import srparasites_traps.config.ForgeConfigHandler;
 
 import javax.annotation.Nonnull;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BiomassFactoryTileEntity extends TileCore implements ICapabilityProvider, ITickable {
-    public BiomassTank biomassStorage;
+    public DeadBloodTank biomassStorage;
     public final static int DEFAULT_BIOMASS_VALUE_MB = 10;
     public int consumeDelayTicks = ForgeConfigHandler.biomassFactory.DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY;
 
@@ -59,7 +59,7 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
     }
 
     public BiomassFactoryTileEntity() {
-        this.biomassStorage = new BiomassTank(ForgeConfigHandler.biomassFactory.DEFAULT_BIOMASS_FACTORY_MAX_BIOMASS);
+        this.biomassStorage = new DeadBloodTank(ForgeConfigHandler.biomassFactory.DEFAULT_BIOMASS_FACTORY_MAX_BIOMASS);
         this.biomassStorage.setTileEntity(this);
 
         // Add all infested blocks to the allowed items list
@@ -106,7 +106,7 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
             ItemStack stack = inventory.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             Integer value = getRecycleValueOf(stack.getItem()).orElse(DEFAULT_BIOMASS_VALUE_MB);
-            this.biomassStorage.fillBiomass(value);
+            this.biomassStorage.fill(value);
             inventory.extractItem(i, 1, false);
             currentConsumeCooldown = consumeDelayTicks;
             break;
@@ -125,7 +125,7 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         switch (id) {
             case 0:
                 if (data == 0) this.biomassStorage.setFluid(null);
-                else this.biomassStorage.setBiomass(data);
+                else this.biomassStorage.set(data);
                 break;
         }
     }

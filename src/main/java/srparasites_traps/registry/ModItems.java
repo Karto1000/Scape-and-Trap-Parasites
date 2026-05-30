@@ -36,6 +36,8 @@ public class ModItems {
     public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
     public static Item RECONSTRUCTED_SEIZER = new BasicItem("reconstructed_seizer").maxStackSize(1);
     public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
+    public static Item ANTENNA = new BasicItem("antenna");
+    public static Item COIL = new BasicItem("coil");
 
     private static Item getItemSlab(Block block, BlockSlab single, BlockSlab doubleSlab) {
         return new ItemSlab(block, single, doubleSlab).setRegistryName(Objects.requireNonNull(block.getRegistryName()));

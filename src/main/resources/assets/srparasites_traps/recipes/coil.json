@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:tesla_coil_enabled"
+    }
+  ],
+  "pattern": [
+    "di",
+    "di"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:coil",
+    "count": 1
+  }
+}

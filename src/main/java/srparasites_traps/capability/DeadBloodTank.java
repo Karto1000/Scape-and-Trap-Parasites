@@ -5,27 +5,27 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import srparasites_traps.util.Constants;
 
-public class BiomassTank extends FluidTank {
-    public BiomassTank(int capacity) {
+public class DeadBloodTank extends FluidTank {
+    public DeadBloodTank(int capacity) {
         super(capacity);
     }
 
     public Fluid getAcceptedFluid() {
-        return Constants.BIOMASS_FLUID;
+        return Constants.TURRET_FUEL;
     }
 
     @Override
     public boolean canFillFluidType(FluidStack fluid) {
         if (fluid == null) return false;
         if (fluid.getFluid() == null) return false;
-        return fluid.getFluid().equals(Constants.BIOMASS_FLUID);
+        return fluid.getFluid().equals(Constants.TURRET_FUEL);
     }
 
-    public void fillBiomass(int amount) {
+    public void fill(int amount) {
         this.fill(new FluidStack(this.getAcceptedFluid(), amount), true);
     }
 
-    public void setBiomass(int amount) {
+    public void set(int amount) {
         FluidStack currentFluid = this.getFluid();
 
         if (currentFluid != null) {

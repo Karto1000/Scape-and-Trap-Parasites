@@ -54,6 +54,7 @@ public class JEICompat implements IModPlugin {
 
         if (!ForgeConfigHandler.teslaCoil.ENABLE_TESLA_COIL) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TESLA_COIL));
+            blacklist.addIngredientToBlacklist(ModItems.COIL);
         }
 
         if (!ForgeConfigHandler.proximitySensor.ENABLE_PROXIMITY_SENSOR) {

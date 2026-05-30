@@ -3,6 +3,7 @@ package srparasites_traps.features.hardness_analyser;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,8 +22,10 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.EntityHelper;
 import srparasites_traps.util.Pair;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
+import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class HardnessAnalyzerItem extends Item {
@@ -145,5 +149,10 @@ public class HardnessAnalyzerItem extends Item {
         tag.setFloat("hardness", hardness);
         tag.setString("name", name);
         stack.setTagCompound(tag);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }
 }

@@ -4,7 +4,7 @@
 	"textures": {
 		"1": "srparasites_traps:block/iron_block",
 		"2": "srparasites_traps:block/serrated_spikes",
-		"particle": "bb_models/iron_block"
+		"particle": "srparasites_traps:block/iron_block"
 	},
 	"elements": [
 		{

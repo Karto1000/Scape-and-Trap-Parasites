@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:hardness_analyzer_enabled"
+    }
+  ],
+  "pattern": [
+    " a ",
+    "trt",
+    " i "
+  ],
+  "key": {
+    "a": {
+      "item": "srparasites_traps:antenna"
+    },
+    "r": {
+      "item": "minecraft:redstone_block"
+    },
+    "t": {
+      "item": "srparasites:tissue_spike"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:hardness_analyzer",
+    "count": 1
+  }
+}

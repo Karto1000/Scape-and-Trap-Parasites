@@ -1,5 +1,6 @@
 package srparasites_traps.features;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -41,6 +42,7 @@ public class BasicItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        if (!I18n.hasKey("tooltip." + SRParasitesTraps.MOD_ID + ".item." + this.registryName)) return;
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + this.registryName));
     }
 }
