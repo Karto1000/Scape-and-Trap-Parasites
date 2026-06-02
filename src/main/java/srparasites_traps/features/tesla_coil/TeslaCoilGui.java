@@ -10,8 +10,8 @@ import srparasites_traps.SRParasitesTraps;
 public class TeslaCoilGui extends GuiContainerCore {
     private final TeslaCoilTileEntity tileEntity;
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/tesla_coil_gui.png");
-    private final static int ENERGY_X_POSITION_PX = 80;
-    private final static int ENERGY_Y_POSITION_PX = 16;
+    private final static int ENERGY_X_POSITION_PX = 155;
+    private final static int ENERGY_Y_POSITION_PX = 20;
 
     public TeslaCoilGui(EntityPlayer player, TeslaCoilTileEntity tileEntity) {
         super(new TeslaCoilContainer(player, tileEntity), TEXTURE);
@@ -23,6 +23,6 @@ public class TeslaCoilGui extends GuiContainerCore {
         super.initGui();
 
         this.addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage()));
-        this.addTab(new TabRedstoneControl(this, this.tileEntity));
+        this.addTab(new TabRedstoneControl(this, this.tileEntity)).setOffsets(0, 16);
     }
 }

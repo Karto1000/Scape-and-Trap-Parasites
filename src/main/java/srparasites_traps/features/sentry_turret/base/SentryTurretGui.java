@@ -13,12 +13,12 @@ import srparasites_traps.util.Constants;
 
 public class SentryTurretGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/sentry_turret.png");
-    private final static int TANK_X_POSITION_PX = 8;
-    private final static int TANK_Y_POSITION_PX = 16;
+    private final static int TANK_X_POSITION_PX = 153;
+    private final static int TANK_Y_POSITION_PX = 8;
     private final static int TANK_WIDTH_PX = 16;
     private final static int TANK_HEIGHT_PX = 53;
-    private final static int ENERGY_X_POSITION_PX = TANK_X_POSITION_PX + TANK_WIDTH_PX + 3;
-    private final static int ENERGY_Y_POSITION_PX = TANK_Y_POSITION_PX - 1;
+    private final static int ENERGY_X_POSITION_PX = 118;
+    private final static int ENERGY_Y_POSITION_PX = 7;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
     private final static double textScale = 0.75;
