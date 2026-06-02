@@ -14,7 +14,9 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import srparasites_traps.capability.DeadBloodTank;
@@ -34,7 +36,7 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
     private int currentConsumeCooldown = 0;
     private final Map<Item, Integer> allowedItems = new HashMap<>();
 
-    public final ItemStackHandler inventory = new ItemStackHandler(21) {
+    public final ItemStackHandler inputInventory = new ItemStackHandler(21) {
         @Override
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
             if (stack.isEmpty()) return false;
@@ -43,13 +45,40 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         }
     };
 
+    public final ItemStackHandler fluidFillInventory = new ItemStackHandler(1) {
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            IFluidHandlerItem handler = FluidUtil.getFluidHandler(stack);
+            return handler != null;
+        }
+    };
+
+    public final ItemStackHandler fluidOutputInventory = new ItemStackHandler(1) {
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            return false;
+        }
+    };
+
     public void dropInventory() {
-        for (int slot = 0; slot < inventory.getSlots(); slot++) {
-            ItemStack stack = inventory.getStackInSlot(slot);
+        for (int slot = 0; slot < inputInventory.getSlots(); slot++) {
+            ItemStack stack = inputInventory.getStackInSlot(slot);
             if (!stack.isEmpty()) {
                 world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
-                inventory.setStackInSlot(slot, ItemStack.EMPTY);
+                inputInventory.setStackInSlot(slot, ItemStack.EMPTY);
             }
+        }
+
+        ItemStack fluidInputStack = fluidFillInventory.getStackInSlot(0);
+        if (!fluidInputStack.isEmpty()) {
+            world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, fluidInputStack));
+            fluidFillInventory.setStackInSlot(0, ItemStack.EMPTY);
+        }
+
+        ItemStack fluidOutputStack = fluidOutputInventory.getStackInSlot(0);
+        if (!fluidOutputStack.isEmpty()) {
+            world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, fluidOutputStack));
+            fluidOutputInventory.setStackInSlot(0, ItemStack.EMPTY);
         }
     }
 
@@ -81,7 +110,9 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("BiomassStorage", this.biomassStorage.writeToNBT(new NBTTagCompound()));
-        compound.setTag("inventory", this.inventory.serializeNBT());
+        compound.setTag("inventory", this.inputInventory.serializeNBT());
+        compound.setTag("fluidFillInventory", this.fluidFillInventory.serializeNBT());
+        compound.setTag("fluidOutputInventory", this.fluidOutputInventory.serializeNBT());
         return super.writeToNBT(compound);
     }
 
@@ -90,11 +121,29 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         super.readFromNBT(compound);
         if (compound.hasKey("BiomassStorage"))
             this.biomassStorage.readFromNBT(compound.getCompoundTag("BiomassStorage"));
-        if (compound.hasKey("inventory")) this.inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+        if (compound.hasKey("inventory")) this.inputInventory.deserializeNBT(compound.getCompoundTag("inventory"));
+        if (compound.hasKey("fluidFillInventory"))
+            this.fluidFillInventory.deserializeNBT(compound.getCompoundTag("fluidFillInventory"));
+        if (compound.hasKey("fluidOutputInventory"))
+            this.fluidOutputInventory.deserializeNBT(compound.getCompoundTag("fluidOutputInventory"));
     }
 
     @Override
     public void update() {
+        ItemStack fluidInputStack = fluidFillInventory.getStackInSlot(0);
+        ItemStack fluidOutputStack = fluidOutputInventory.getStackInSlot(0);
+        if (!fluidInputStack.isEmpty() && fluidOutputStack.isEmpty()) {
+            IFluidHandlerItem handler = FluidUtil.getFluidHandler(fluidInputStack);
+            if (handler == null) return;
+
+            int amount = handler.fill(this.biomassStorage.getFluid(), true);
+            this.biomassStorage.drain(amount, true);
+
+            ItemStack newItem = handler.getContainer();
+            fluidFillInventory.setStackInSlot(0, ItemStack.EMPTY);
+            fluidOutputInventory.setStackInSlot(0, newItem);
+        }
+
         if (currentConsumeCooldown > 0) {
             currentConsumeCooldown--;
             return;
@@ -102,12 +151,13 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
 
         if (this.biomassStorage.isFull()) return;
 
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            ItemStack stack = inventory.getStackInSlot(i);
+        for (int i = 0; i < inputInventory.getSlots(); i++) {
+            ItemStack stack = inputInventory.getStackInSlot(i);
             if (stack.isEmpty()) continue;
             Integer value = getRecycleValueOf(stack.getItem()).orElse(DEFAULT_BIOMASS_VALUE_MB);
             this.biomassStorage.fill(value);
-            inventory.extractItem(i, 1, false);
+            inputInventory.extractItem(i, 1, false);
+            this.markDirty();
             currentConsumeCooldown = consumeDelayTicks;
             break;
         }
@@ -138,7 +188,7 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         }
 
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inventory);
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inputInventory);
         }
 
         return super.getCapability(capability, facing);

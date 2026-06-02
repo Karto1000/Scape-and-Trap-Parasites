@@ -15,6 +15,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
@@ -84,6 +86,17 @@ public class BiomassFactoryBlock extends Block {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (!(tileEntity instanceof BiomassFactoryTileEntity)) return false;
+        BiomassFactoryTileEntity bft = (BiomassFactoryTileEntity) tileEntity;
+
+        ItemStack heldItem = playerIn.getHeldItem(hand);
+        IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(heldItem);
+        if (fluidHandler != null) {
+            FluidUtil.interactWithFluidHandler(playerIn, hand, bft.biomassStorage);
+            return true;
+        }
+
         if (worldIn.isRemote) return true;
 
         playerIn.openGui(SRParasitesTraps.instance, Constants.BIOMASS_FACTORY_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());

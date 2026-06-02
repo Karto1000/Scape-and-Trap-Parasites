@@ -259,7 +259,7 @@ public class ForgeConfigHandler {
         @Config.Name("Default biomass factory item consume time (Ticks)")
         @Config.Comment("The amount of ticks between each item consumption")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY = 5;
+        public int DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY = 2;
     }
 
     public static class DecontaminatorConfig {

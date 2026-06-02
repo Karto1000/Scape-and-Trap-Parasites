@@ -11,10 +11,15 @@ import srparasites_traps.util.Constants;
 public class BiomassFactoryContainer extends ContainerCore {
     private final BiomassFactoryTileEntity tileEntity;
     private final EntityPlayer player;
-    private final static int INVENTORY_WIDTH = 7;
+    private final static int INVENTORY_WIDTH = 2;
     private final static int INVENTORY_HEIGHT = 3;
-    private final static int FIRST_SLOT_X_POSITION = 37;
-    private final static int FIRST_SLOT_Y_POSITION_PX = 16;
+    private final static int FIRST_SLOT_X_POSITION = 136;
+    private final static int FIRST_SLOT_Y_POSITION_PX = 8;
+
+    public static final int INPUT_SLOT_START = 0;
+    public static final int INPUT_SLOT_COUNT = INVENTORY_WIDTH * INVENTORY_HEIGHT;
+    public static final int FLUID_FILL_SLOT = INPUT_SLOT_START + INPUT_SLOT_COUNT;
+    public static final int FLUID_OUTPUT_SLOT = FLUID_FILL_SLOT + 1;
 
     public BiomassFactoryContainer(EntityPlayer player, BiomassFactoryTileEntity tileEntity) {
         super();
@@ -25,13 +30,16 @@ public class BiomassFactoryContainer extends ContainerCore {
         for (int y = 0; y < INVENTORY_HEIGHT; y++) {
             for (int x = 0; x < INVENTORY_WIDTH; x++) {
                 addSlotToContainer(new SlotItemHandler(
-                        this.tileEntity.inventory,
+                        this.tileEntity.inputInventory,
                         x + y * INVENTORY_WIDTH,
                         FIRST_SLOT_X_POSITION + x * Constants.INVENTORY_SLOT_WIDTH_PX,
                         FIRST_SLOT_Y_POSITION_PX + y * Constants.INVENTORY_SLOT_HEIGHT_PX
                 ));
             }
         }
+
+        addSlotToContainer(new SlotItemHandler(this.tileEntity.fluidFillInventory, 0, 63, 8));
+        addSlotToContainer(new SlotItemHandler(this.tileEntity.fluidOutputInventory, 0, 63, 45));
 
         bindPlayerInventory(player.inventory);
     }
@@ -63,6 +71,6 @@ public class BiomassFactoryContainer extends ContainerCore {
 
     @Override
     protected int getSizeInventory() {
-        return this.tileEntity.inventory.getSlots();
+        return this.tileEntity.inputInventory.getSlots();
     }
 }
