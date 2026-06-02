@@ -14,12 +14,12 @@ import java.util.Collections;
 
 public class RelocatorGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/relocator.png");
-    private final static int TANK_X_POSITION_PX = 130;
-    private final static int TANK_Y_POSITION_PX = 16;
+    private final static int TANK_X_POSITION_PX = 153;
+    private final static int TANK_Y_POSITION_PX = 8;
     private final static int TANK_WIDTH_PX = 16;
     private final static int TANK_HEIGHT_PX = 53;
-    private final static int ENERGY_X_POSITION_PX = TANK_X_POSITION_PX + TANK_WIDTH_PX + 3;
-    private final static int ENERGY_Y_POSITION_PX = TANK_Y_POSITION_PX - 1;
+    private final static int ENERGY_X_POSITION_PX = 118;
+    private final static int ENERGY_Y_POSITION_PX = 7;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
     private final RelocatorTileEntity tileEntity;

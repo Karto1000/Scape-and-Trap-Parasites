@@ -18,10 +18,10 @@ import static srparasites_traps.util.Translation.getServerStatusFor;
 
 public class RelocatorContainer extends ContainerCore {
     private final RelocatorTileEntity tileEntity;
-    private final static int SLOT_SEARCH_X_POSITION_PX = 8;
+    private final static int SLOT_SEARCH_X_POSITION_PX = 88;
     private final static int SLOT_SEARCH_Y_POSITION_PX = 8;
-    private final static int SLOT_DESTINATION_X_POSITION_PX = 8;
-    private final static int SLOT_DESTINATION_Y_POSITION_PX = 29;
+    private final static int SLOT_DESTINATION_X_POSITION_PX = 88;
+    private final static int SLOT_DESTINATION_Y_POSITION_PX = 45;
 
     public RelocatorContainer(EntityPlayer player, RelocatorTileEntity tileEntity) {
         this.tileEntity = tileEntity;
