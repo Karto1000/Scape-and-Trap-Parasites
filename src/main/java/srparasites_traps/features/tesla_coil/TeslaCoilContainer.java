@@ -2,16 +2,29 @@ package srparasites_traps.features.tesla_coil;
 
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.core.gui.container.ContainerCore;
+import cofh.core.gui.container.IAugmentableContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.augments.AugmentInventory;
+import srparasites_traps.features.augments.AugmentSlot;
 
-public class TeslaCoilContainer extends ContainerCore {
+public class TeslaCoilContainer extends ContainerCore implements IAugmentableContainer {
     private final TeslaCoilTileEntity tileEntity;
+    private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.TESLA_COIL_AUGMENT_SLOTS];
 
     public TeslaCoilContainer(EntityPlayer player, TeslaCoilTileEntity tileEntity) {
         this.tileEntity = tileEntity;
+
+        AugmentInventory<TeslaCoilTileEntity> augmentInventory = new AugmentInventory<>(tileEntity);
+        for (int i = 0; i < this.augmentSlots.length; i++) {
+            this.augmentSlots[i] = new AugmentSlot<>(augmentInventory, i, 0, 0, this.tileEntity);
+            this.addSlotToContainer(this.augmentSlots[i]);
+        }
+
         bindPlayerInventory(player.inventory);
     }
 
@@ -51,5 +64,15 @@ public class TeslaCoilContainer extends ContainerCore {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return true;
+    }
+
+    @Override
+    public void setAugmentLock(boolean b) {
+
+    }
+
+    @Override
+    public Slot[] getAugmentSlots() {
+        return this.augmentSlots;
     }
 }

@@ -43,8 +43,8 @@ public class LightningArcParticle extends Particle {
         Vec3d stageVector = delta.scale((double) 1 / this.maxStageVectors);
 
         for (int i = 0; i < maxStageVectors; i += 2){
-            float rotatePitch = (float) (this.rand.nextFloat() * Math.PI * 0.5);
-            float rotateYaw = (float) (this.rand.nextFloat() * Math.PI * 0.5);
+            float rotatePitch = (float) (this.rand.nextFloat() * Math.PI * 0.8);
+            float rotateYaw = (float) (this.rand.nextFloat() * Math.PI * 0.8);
 
             Vec3d rotated = stageVector.rotatePitch(rotatePitch)
                     .rotateYaw(rotateYaw);

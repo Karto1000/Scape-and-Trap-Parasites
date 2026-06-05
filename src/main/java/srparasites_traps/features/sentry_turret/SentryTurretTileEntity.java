@@ -285,7 +285,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     public boolean isValidAugment(ItemStack itemStack) {
         if (itemStack.isEmpty()) return false;
         if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
-        else if (itemStack.getItem() instanceof DamageAugment) return true;
+        if (itemStack.getItem() instanceof DamageAugment) return true;
         return itemStack.getItem() instanceof RangeAugment;
     }
 

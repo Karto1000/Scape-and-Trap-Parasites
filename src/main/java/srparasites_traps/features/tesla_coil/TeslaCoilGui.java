@@ -1,7 +1,9 @@
 package srparasites_traps.features.tesla_coil;
 
 import cofh.core.gui.GuiContainerCore;
+import cofh.core.gui.container.IAugmentableContainer;
 import cofh.core.gui.element.ElementEnergyStored;
+import cofh.core.gui.element.tab.TabAugment;
 import cofh.core.gui.element.tab.TabRedstoneControl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -24,5 +26,6 @@ public class TeslaCoilGui extends GuiContainerCore {
 
         this.addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage()));
         this.addTab(new TabRedstoneControl(this, this.tileEntity)).setOffsets(0, 16);
+        this.addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots).setOffsets(0, 16));
     }
 }

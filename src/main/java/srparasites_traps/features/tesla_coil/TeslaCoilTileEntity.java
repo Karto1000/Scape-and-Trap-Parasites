@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
@@ -20,6 +21,10 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.IDefaultValueHolder;
+import srparasites_traps.features.IExtendedAugmentable;
+import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.network.SpawnElectricityParticlePacket;
 import srparasites_traps.network.SpawnLightningParticlePacket;
@@ -33,8 +38,9 @@ import srparasites_traps.util.VecHelper;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedstoneControl {
+public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedstoneControl, IExtendedAugmentable, IDefaultValueHolder {
     public int maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_MAX_ENERGY;
     public int energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
     public int range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
@@ -49,6 +55,9 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     private final static Vec3d fireOffset = new Vec3d(0.5, 1.8, 0.5);
     private ControlMode controlMode = ControlMode.DISABLED;
     private boolean powered = false;
+    private final ItemStack[] augments = Stream.generate(() -> ItemStack.EMPTY)
+            .limit(ForgeConfigHandler.augments.TESLA_COIL_AUGMENT_SLOTS)
+            .toArray(ItemStack[]::new);
 
     public TeslaCoilTileEntity() {
         this.energyStorage = new DualEnergyStorage(maxEnergy);
@@ -107,6 +116,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         this.currentChargingDelay = NBTHelper.getIntegerOrElse(compound, "CurrentChargingDelay", () -> this.chargingDelay);
         this.powered = NBTHelper.getBooleanOrElse(compound, "Powered", () -> false);
         this.controlMode = ControlMode.values()[NBTHelper.getIntegerOrElse(compound, "ControlMode", ControlMode.DISABLED::ordinal)];
+        this.readAugmentsFromNBT(compound);
 
         super.readFromNBT(compound);
     }
@@ -117,6 +127,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         compound.setInteger("CurrentChargingDelay", this.currentChargingDelay);
         compound.setBoolean("Powered", this.powered);
         compound.setInteger("ControlMode", this.controlMode.ordinal());
+        this.writeAugmentsToNBT(compound);
 
         return super.writeToNBT(compound);
     }
@@ -260,5 +271,37 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     @Override
     public boolean isPowered() {
         return this.powered;
+    }
+
+    @Override
+    public void applyAugment(ItemStack augment) {
+        if (augment.isEmpty()) return;
+
+        if (augment.getItem() instanceof AttackSpeedAugment) {
+            this.shootLimiter.tickDuration -= ForgeConfigHandler.augments.TESLA_COIL_ATTACK_SPEED_INCREASE;
+        } else if (augment.getItem() instanceof RangeAugment) {
+            this.range += ForgeConfigHandler.augments.TESLA_COIL_RANGE_INCREASE;
+        }
+    }
+
+    @Override
+    public boolean isValidAugment(ItemStack itemStack) {
+        if (itemStack.isEmpty()) return false;
+        if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
+        return itemStack.getItem() instanceof RangeAugment;
+    }
+
+    @Override
+    public ItemStack[] getAugmentSlots() {
+        return augments;
+    }
+
+    @Override
+    public void applyDefaults() {
+        this.maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_MAX_ENERGY;
+        this.energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
+        this.range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
+        this.shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
+        this.chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
     }
 }

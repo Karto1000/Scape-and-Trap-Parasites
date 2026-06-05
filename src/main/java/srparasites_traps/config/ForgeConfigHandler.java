@@ -412,6 +412,22 @@ public class ForgeConfigHandler {
         @Config.Comment("The increase in damage for the sentry turret when a damage augment is applied")
         @Config.RangeInt(min = 0)
         public int SENTRY_TURRET_DAMAGE_INCREASE = 5;
+
+        @Config.Name("Tesla coil augment slots")
+        @Config.Comment("The number of augment slots available for the Tesla coil")
+        @Config.RangeInt(min = 0)
+        @Config.RequiresMcRestart
+        public int TESLA_COIL_AUGMENT_SLOTS = 2;
+
+        @Config.Name("Tesla coil attack speed increase (Ticks)")
+        @Config.Comment("The increase in attack speed for the Tesla coil when an attack speed augment is applied")
+        @Config.RangeInt(min = 0)
+        public int TESLA_COIL_ATTACK_SPEED_INCREASE = 20;
+
+        @Config.Name("Tesla coil range increase (Blocks)")
+        @Config.Comment("The increase in range for the Tesla coil in blocks when a range augment is applied")
+        @Config.RangeInt(min = 0)
+        public int TESLA_COIL_RANGE_INCREASE = 6;
     }
 
     public static class CommonConfig {

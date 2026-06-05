@@ -90,6 +90,17 @@ public class TeslaCoilBlock extends Block {
     }
 
     @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TeslaCoilTileEntity) {
+            TeslaCoilTileEntity teslaCoilTileEntity = (TeslaCoilTileEntity) tileEntity;
+            teslaCoilTileEntity.dropAugments(worldIn, pos);
+        }
+
+        super.breakBlock(worldIn, pos, state);
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
     }

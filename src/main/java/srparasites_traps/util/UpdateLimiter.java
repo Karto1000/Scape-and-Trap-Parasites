@@ -1,7 +1,7 @@
 package srparasites_traps.util;
 
 public class UpdateLimiter {
-    public final int tickDuration;
+    public int tickDuration;
     public int currentTickDelay;
 
     public UpdateLimiter(int updateDelayTicks) {
