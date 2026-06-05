@@ -59,12 +59,12 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret attack delay (Ticks)")
         @Config.Comment("The time in ticks between each attack of a sentry turret")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ATTACK_DELAY = 20;
+        public int DEFAULT_SENTRY_TURRET_ATTACK_DELAY = 10;
 
         @Config.Name("Default sentry turret range (Blocks)")
         @Config.Comment("The range in blocks that a sentry turret can attack")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_SENTRY_TURRET_RANGE = 16;
+        public double DEFAULT_SENTRY_TURRET_RANGE = 32;
 
         @Config.Name("Default sentry turret projectile parasite resistance reduction chance (%)")
         @Config.Comment("The chance that the projectile the sentry shoots will reduce the resistance of the parasite it hits")
@@ -104,7 +104,7 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret biomass per shot (mB)")
         @Config.Comment("The amount of biomass that a sentry turret uses per shot")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT = 100;
+        public int DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT = 20;
 
         @Config.Name("Default sentry turret energy per shot (RF)")
         @Config.Comment("The amount of energy that a sentry turret uses per shot")
@@ -136,7 +136,7 @@ public class ForgeConfigHandler {
         @Config.Name("Default relocator entity emerge time (Seconds)")
         @Config.Comment("The time that relocator entity takes to emerge from the ground")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_RELOCATOR_EMERGE_TIME = 4.0;
+        public double DEFAULT_RELOCATOR_EMERGE_TIME = 1.0;
 
         @Config.Name("Default relocator entity max health")
         @Config.Comment("The max health of the relocator entity")
@@ -307,6 +307,11 @@ public class ForgeConfigHandler {
         @Config.RequiresMcRestart
         public boolean ENABLE_TESLA_COIL = true;
 
+        @Config.Name("Enable static electricity generator")
+        @Config.Comment("If true, the static electricity generator will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_STATIC_ELECTRICITY_GENERATOR = true;
+
         @Config.Name("Default Tesla coil max energy (RF)")
         @Config.Comment("The maximum amount of energy that a Tesla coil can hold")
         @Config.RangeInt(min = 0)
@@ -363,6 +368,11 @@ public class ForgeConfigHandler {
         @Config.Comment("If true, the proximity sensor will be enabled")
         @Config.RequiresMcRestart
         public boolean ENABLE_PROXIMITY_SENSOR = true;
+
+        @Config.Name("Default proximity sensor max area distance (Blocks)")
+        @Config.Comment("The max distance the area from an area marker can be away from the source block")
+        @Config.RangeInt(min = 0)
+        public final int DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE = 20;
     }
 
     public static class HardnessAnalyzerConfig {

@@ -16,6 +16,7 @@ public class Translation {
         return I18n.format("tooltip." + SRParasitesTraps.MOD_ID + "." + id, args);
     }
 
+    // Can't pass args to server-side translation
     public static String getServerStatusFor(String id) {
         return "status." + SRParasitesTraps.MOD_ID + "." + id;
     }

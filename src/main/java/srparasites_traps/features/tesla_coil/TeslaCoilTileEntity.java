@@ -45,7 +45,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     private EntityLivingBase target;
     private TeslaCoilState state = TeslaCoilState.IDLE;
     private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY);
-    private int currentChargingDelay = 0;
+    private int currentChargingDelay = this.chargingDelay;
     private final static Vec3d fireOffset = new Vec3d(0.5, 1.8, 0.5);
     private ControlMode controlMode = ControlMode.DISABLED;
     private boolean powered = false;

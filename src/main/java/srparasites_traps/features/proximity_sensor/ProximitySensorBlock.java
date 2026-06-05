@@ -9,10 +9,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,12 +23,14 @@ import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
 import srparasites_traps.registry.ModItems;
+import srparasites_traps.util.Pair;
 import srparasites_traps.util.Translation;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+import static srparasites_traps.util.Translation.getServerStatusFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class ProximitySensorBlock extends Block {
@@ -75,6 +80,19 @@ public class ProximitySensorBlock extends Block {
         super.breakBlock(worldIn, pos, state);
     }
 
+    private boolean isDistanceAllowed(ProximitySensorTileEntity pste, ItemStack areaMarker) {
+        NBTTagCompound tagCompound = areaMarker.getTagCompound();
+        if (tagCompound == null) return false;
+
+        Optional<AxisAlignedBB> aabb = AreaMarkerItem.getBoundAreaAsAABB(tagCompound);
+        if (!aabb.isPresent()) return false;
+
+        AxisAlignedBB searchArea = aabb.get();
+        Pair<Double, Double> distances = AreaMarkerItem.getDistancesOfAreaTo(searchArea, pste.getPos());
+        return distances.first() <= ForgeConfigHandler.proximitySensor.DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE &&
+                distances.second() <= ForgeConfigHandler.proximitySensor.DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE;
+    }
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = playerIn.getHeldItem(hand);
@@ -95,8 +113,26 @@ public class ProximitySensorBlock extends Block {
         }
 
         if (heldItem.getItem() != ModItems.AREA_MARKER_ITEM) return false;
-        if (!AreaMarkerItem.hasBoundPosition(heldItem)) return false;
+        if (!AreaMarkerItem.hasBoundPosition(heldItem)) {
+            playerIn.sendStatusMessage(
+                    new TextComponentTranslation(getServerStatusFor("proximity_sensor.area_not_bound")),
+                    true
+            );
+            return true;
+        }
         if (pste.getAreaMarker().isPresent()) return false;
+
+        if (!isDistanceAllowed(pste, heldItem)) {
+            playerIn.sendStatusMessage(
+                    new TextComponentTranslation(
+                            getServerStatusFor("proximity_sensor.area_too_far_away"),
+                            ForgeConfigHandler.proximitySensor.DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE
+                    ),
+                    true
+            );
+            return true;
+        }
+
         pste.setAreaMarker(heldItem);
         playerIn.setHeldItem(hand, ItemStack.EMPTY);
 

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "srparasites_traps:static_electricity_generator"
+    }
+  }
+}

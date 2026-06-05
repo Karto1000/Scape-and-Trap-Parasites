@@ -27,6 +27,7 @@ public class ModItems {
     public static Item PROXIMITY_SENSOR_ITEM = getItemBlock(ModBlocks.PROXIMITY_SENSOR);
     public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
     public static Item TESLA_COIL_ITEM = getItemBlock(ModBlocks.TESLA_COIL);
+    public static Item STATIC_ELECTRICITY_GENERATOR_ITEM = getItemBlock(ModBlocks.STATIC_ELECTRICITY_GENERATOR);
     public static Item AREA_MARKER_ITEM = new AreaMarkerItem();
     public static HardnessAnalyzerItem HARDNESS_ANALYZER_ITEM = new HardnessAnalyzerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);

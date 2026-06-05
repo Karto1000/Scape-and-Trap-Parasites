@@ -13,6 +13,7 @@ import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.BurningSerratedSpikes;
 import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
 import srparasites_traps.features.serrated_spikes.ViralSerratedSpikes;
+import srparasites_traps.features.static_electricity_generator.StaticElectricityGeneratorBlock;
 import srparasites_traps.features.tesla_coil.TeslaCoilBlock;
 
 import java.lang.reflect.Field;
@@ -29,6 +30,7 @@ public class ModBlocks {
     public static Block OBSIDIAN_LADDER = new ObsidianLadderBlock();
     public static Block TESLA_COIL = new TeslaCoilBlock();
     public static Block PROXIMITY_SENSOR = new ProximitySensorBlock();
+    public static Block STATIC_ELECTRICITY_GENERATOR = new StaticElectricityGeneratorBlock();
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
 

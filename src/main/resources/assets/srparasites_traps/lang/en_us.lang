@@ -30,6 +30,7 @@ tile.srparasites_traps.obsidian_ladder.name=Obsidian Ladder
 tile.srparasites_traps.obsidian_slab.name=Obsidian Slab
 tile.srparasites_traps.tesla_coil.name=§6Tesla Coil§f
 tile.srparasites_traps.proximity_sensor.name=§6Proximity Sensor§f
+tile.srparasites_traps.static_electricity_generator.name=Static Electricity Generator
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit
@@ -65,12 +66,15 @@ tooltip.srparasites_traps.item.tesla_coil=A high-voltage apparatus delivering sh
 tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites and sends out a redstone signal if one is found.
 tooltip.srparasites_traps.item.hardness_analyzer=Tells you the hardness of blocks and which tier of parasites can break them.
 tooltip.srparasites_traps.item.coil=A mixture of iron and diamonds combined to maximize the electricity throughput §8(Don't question the color change)§f.
+tooltip.srparasites_traps.item.static_electricity_generator=Powers tesla coils by itself requiring no fuel.
 
 # Status Messages
 status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f
 status.srparasites_traps.area_marker.invalid_areas=§cUnbound area or area distance too big (> %s Blocks).§f
-status.srparasites_traps.area_marker.set_position=Set position to (%s, %s, %s)
-status.srparasites_traps.area_marker.remove_positions=Removed bound positions
+status.srparasites_traps.area_marker.set_position=Set position to (%s, %s, %s).
+status.srparasites_traps.area_marker.remove_positions=Removed bound positions.
+status.srparasites_traps.proximity_sensor.area_too_far_away=Area too far away from the source block (Max: %s Blocks).
+status.srparasites_traps.proximity_sensor.area_not_bound=No area bound to area marker.
 
 # Subtitles
 subtitle.srparasites_traps.decontaminator_spray=Decontaminator sprays
