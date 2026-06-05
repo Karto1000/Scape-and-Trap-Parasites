@@ -334,7 +334,7 @@ public class ForgeConfigHandler {
         @Config.Name("Default Tesla coil fire delay (Ticks)")
         @Config.Comment("The time between each shot")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_TESLA_COIL_FIRE_DELAY = 60;
+        public int DEFAULT_TESLA_COIL_FIRE_DELAY = 50;
 
         @Config.Name("Default Tesla coil charging delay (Ticks)")
         @Config.Comment("The time in ticks the Tesla coil has to charge up before shooting after finding an enemy")

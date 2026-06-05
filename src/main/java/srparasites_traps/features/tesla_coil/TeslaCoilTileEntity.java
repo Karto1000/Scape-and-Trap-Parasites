@@ -48,6 +48,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     public int chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
     public final DualEnergyStorage energyStorage;
 
+    private boolean firstTick = true;
     private EntityLivingBase target;
     private TeslaCoilState state = TeslaCoilState.IDLE;
     private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY);
@@ -201,6 +202,11 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     @Override
     public void update() {
+        if (this.firstTick) {
+            this.updateAugmentStatus();
+            this.firstTick = false;
+        }
+
         if (this.energyStorage.getEnergyStored() < energyPerShot) return;
 
         switch (this.state) {
@@ -303,5 +309,6 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         this.range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
         this.shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
         this.chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
+        this.shootLimiter.tickDuration = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY;
     }
 }

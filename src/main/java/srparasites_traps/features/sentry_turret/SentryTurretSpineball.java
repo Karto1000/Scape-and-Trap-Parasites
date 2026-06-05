@@ -72,6 +72,8 @@ public class SentryTurretSpineball extends EntityFireball {
         if (this.world.isRemote) return;
 
         SentryTurretEntity ste = (SentryTurretEntity) this.shootingEntity;
+        if (this.shootingEntity == null) return;
+        if (ste.tileEntity == null) return;
 
         EntityLivingBase target = null;
         DamageSource damageSource = DamageSource.causeThrownDamage(this, this);
