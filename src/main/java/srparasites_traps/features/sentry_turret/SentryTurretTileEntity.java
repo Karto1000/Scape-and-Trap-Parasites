@@ -13,6 +13,7 @@ import srparasites_traps.features.IDefaultValueHolder;
 import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.DamageAugment;
 import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.DebugHelper;
@@ -27,13 +28,17 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
     public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
     public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
+    public int poisonDuration = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_DURATION;
+    public int poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
+    public int chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
+    public int resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
     public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
     public double attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
     public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
+    public double damage = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_DAMAGE;
 
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
-
     private boolean firstTick = true;
     private double currentRespawnTime = 0.;
     private final StateManager<SentryTileEntityState> state = new StateManager<>(SentryTileEntityState.DEAD, (oldState, newState) -> DebugHelper.dbp("State changed from " + oldState + " to " + newState));
@@ -225,6 +230,9 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, (int) this.currentRespawnTime);
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 2, (int) this.damage);
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 3, this.attackDelay);
+        player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 4, (int) this.attackRange);
     }
 
     @Override
@@ -236,6 +244,15 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
                 break;
             case AVAILABLE_WINDOW_VAR + 1:
                 this.currentRespawnTime = data;
+                break;
+            case AVAILABLE_WINDOW_VAR + 2:
+                this.damage = data;
+                break;
+            case AVAILABLE_WINDOW_VAR + 3:
+                this.attackDelay = data;
+                break;
+            case AVAILABLE_WINDOW_VAR + 4:
+                this.attackRange = data;
                 break;
         }
     }
@@ -268,6 +285,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     public boolean isValidAugment(ItemStack itemStack) {
         if (itemStack.isEmpty()) return false;
         if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
+        else if (itemStack.getItem() instanceof DamageAugment) return true;
         return itemStack.getItem() instanceof RangeAugment;
     }
 
@@ -283,6 +301,8 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
             this.attackDelay -= ForgeConfigHandler.augments.SENTRY_TURRET_ATTACK_SPEED_INCREASE;
         if (itemStack.getItem() instanceof RangeAugment)
             this.attackRange += ForgeConfigHandler.augments.SENTRY_TURRET_RANGE_INCREASE;
+        if (itemStack.getItem() instanceof DamageAugment)
+            this.damage += ForgeConfigHandler.augments.SENTRY_TURRET_DAMAGE_INCREASE;
     }
 
     @Override
@@ -293,5 +313,10 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         this.respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
         this.attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
         this.emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
+        this.damage = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_DAMAGE;
+        this.poisonDuration = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_DURATION;
+        this.poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
+        this.chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
+        this.resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
     }
 }

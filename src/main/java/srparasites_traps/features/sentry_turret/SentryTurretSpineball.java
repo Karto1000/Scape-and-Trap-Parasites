@@ -12,24 +12,17 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import srparasites_traps.config.ForgeConfigHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SentryTurretSpineball extends EntityFireball {
-    private final float damage = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_DAMAGE;
-    private final int poisonDuration = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_DURATION;
-    private final int poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
-    private final int chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
-    private final int resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
-
     public SentryTurretSpineball(World worldIn) {
         super(worldIn);
         this.setNoGravity(true);
     }
 
-    public SentryTurretSpineball(World worldIn, EntityLivingBase shootingEntity) {
+    public SentryTurretSpineball(World worldIn, SentryTurretEntity shootingEntity) {
         super(worldIn);
         this.shootingEntity = shootingEntity;
         this.setNoGravity(true);
@@ -59,10 +52,12 @@ public class SentryTurretSpineball extends EntityFireball {
 
         if (resistanceI.isEmpty() || resistanceS.isEmpty()) return;
 
+        SentryTurretEntity ste = (SentryTurretEntity) this.shootingEntity;
+
         Random random = new Random();
-        if (random.nextInt(100) < chanceToReduceResistance) {
+        if (random.nextInt(100) < ste.tileEntity.chanceToReduceResistance) {
             int randomResistance = random.nextInt(resistanceI.size());
-            int newPoints = resistanceI.get(randomResistance) - resistanceReductionAmount;
+            int newPoints = resistanceI.get(randomResistance) - ste.tileEntity.resistanceReductionAmount;
             if (newPoints <= 0) {
                 resistanceI.remove(randomResistance);
                 resistanceS.remove(randomResistance);
@@ -75,6 +70,8 @@ public class SentryTurretSpineball extends EntityFireball {
     @Override
     protected void onImpact(RayTraceResult result) {
         if (this.world.isRemote) return;
+
+        SentryTurretEntity ste = (SentryTurretEntity) this.shootingEntity;
 
         EntityLivingBase target = null;
         DamageSource damageSource = DamageSource.causeThrownDamage(this, this);
@@ -93,7 +90,7 @@ public class SentryTurretSpineball extends EntityFireball {
             // Entity is a parasite body part
         } else if (result.entityHit instanceof EntityBody) {
             // We want the spineballs to be able to remove limbs off of parasites
-            result.entityHit.attackEntityFrom(damageSource, damage);
+            result.entityHit.attackEntityFrom(damageSource, (float) ste.tileEntity.damage);
             meabyReduceResistanceOfParasite((EntityPMalleable) ((EntityBody) result.entityHit).getFather());
             return;
         } else if (result.entityHit instanceof EntityHitbox) {
@@ -103,8 +100,8 @@ public class SentryTurretSpineball extends EntityFireball {
         if (target != null) {
             int hurtResistantTime = target.hurtResistantTime;
             target.hurtResistantTime = 0;
-            target.attackEntityFrom(damageSource, damage);
-            target.addPotionEffect(new PotionEffect(MobEffects.POISON, this.poisonDuration, this.poisonAmplifier));
+            target.attackEntityFrom(damageSource, (float) ste.tileEntity.damage);
+            target.addPotionEffect(new PotionEffect(MobEffects.POISON, ste.tileEntity.poisonDuration, ste.tileEntity.poisonAmplifier));
             target.hurtResistantTime = hurtResistantTime;
         }
 

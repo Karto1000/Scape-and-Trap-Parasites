@@ -407,6 +407,11 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 0)
         @Config.RequiresMcRestart
         public int SENTRY_TURRET_AUGMENT_SLOTS = 3;
+
+        @Config.Name("Sentry turret damage increase (Hearts)")
+        @Config.Comment("The increase in damage for the sentry turret when a damage augment is applied")
+        @Config.RangeInt(min = 0)
+        public int SENTRY_TURRET_DAMAGE_INCREASE = 5;
     }
 
     public static class CommonConfig {

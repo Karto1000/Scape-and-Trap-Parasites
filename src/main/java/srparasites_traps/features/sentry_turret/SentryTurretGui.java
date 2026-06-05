@@ -38,7 +38,8 @@ public class SentryTurretGui extends GuiContainerCore {
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
-        if (ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM) addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots));
+        if (ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM)
+            addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots));
         addTab(new TabRedstoneControl(this, this.tileEntity));
     }
 
@@ -47,7 +48,8 @@ public class SentryTurretGui extends GuiContainerCore {
 
         public String toString(SentryTurretTileEntity tileEntity) {
             if (this == ACTIVE) return "Active";
-            if (this == CANT_SPAWN) return "Can't Spawn\n> Sentry turret requires\n at least 4 air blocks\n above the origin";
+            if (this == CANT_SPAWN)
+                return "Can't Spawn\n> Sentry turret requires\n at least 4 air blocks\n above the origin";
             if (this == MISSING_ENERGY_SHOOT) return "Deployed\n> Missing energy";
             if (this == MISSING_BIOMASS_SHOOT) return "Deployed\n> Missing biomass";
             if (this == INACTIVE) return "Inactive";
@@ -79,7 +81,19 @@ public class SentryTurretGui extends GuiContainerCore {
         GlStateManager.pushMatrix();
         GlStateManager.scale(textScale, textScale, textScale);
         SentryGuiState sentryState = getSentryGuiState();
-        this.fontRenderer.drawSplitString(String.format("> Sentry %s", sentryState.toString(tileEntity)), (int) (Constants.CONSOLE_X_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX, (int) (Constants.CONSOLE_Y_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX, 164, getSentryStateColor(sentryState));
+        this.fontRenderer.drawSplitString(
+                String.format(
+                        "> Sentry %s\n\n> Damage: %s Hearts\n> Fire Delay: %s Ticks\n> Range: %s Blocks",
+                        sentryState.toString(tileEntity),
+                        tileEntity.damage,
+                        tileEntity.attackDelay,
+                        tileEntity.attackRange
+                ),
+                (int) (Constants.CONSOLE_X_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX,
+                (int) (Constants.CONSOLE_Y_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX,
+                164,
+                getSentryStateColor(sentryState)
+        );
         GlStateManager.popMatrix();
     }
 
