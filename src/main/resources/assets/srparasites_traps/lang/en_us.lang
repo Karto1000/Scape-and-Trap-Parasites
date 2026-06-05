@@ -44,6 +44,8 @@ item.srparasites_traps.beckon_heart.name=§aBeckon Heart§f
 item.srparasites_traps.hardness_analyzer.name=Hardness Analyzer
 item.srparasites_traps.antenna.name=Antenna
 item.srparasites_traps.coil.name=Coil
+item.srparasites_traps.attack_speed_augment.name=Attack Speed Augment
+item.srparasites_traps.range_augment.name=Range Augment
 
 # Tooltips
 tooltip.srparasites_traps.item.two_way_communication_unit=§7A chip designed to enable two-way communication between mechanical machines and §cparasitic entities.
@@ -67,6 +69,8 @@ tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites and
 tooltip.srparasites_traps.item.hardness_analyzer=Tells you the hardness of blocks and which tier of parasites can break them.
 tooltip.srparasites_traps.item.coil=A mixture of iron and diamonds combined to maximize the electricity throughput §8(Don't question the color change)§f.
 tooltip.srparasites_traps.item.static_electricity_generator=Powers tesla coils by itself requiring no fuel.
+tooltip.srparasites_traps.item.attack_speed_augment=Increases the attack speed of certain turrets.
+tooltip.srparasites_traps.item.range_augment=Increases the range of certain turrets.
 
 # Status Messages
 status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f

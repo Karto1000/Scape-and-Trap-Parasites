@@ -1,9 +1,10 @@
-package srparasites_traps.features.sentry_turret.turret;
+package srparasites_traps.features.sentry_turret;
 
 import com.dhanantry.scapeandrunparasites.client.model.entity.deterrent.ModelUnvo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
+import srparasites_traps.config.ForgeConfigHandler;
 
 public class SentryTurretModel extends ModelUnvo {
     @Override
@@ -80,7 +81,7 @@ public class SentryTurretModel extends ModelUnvo {
         SentryTurretEntityState state = sentryTurret.getEntityState();
         long ticksSinceTargetLost = (sentryTurret.world.getTotalWorldTime() - sentryTurret.getTicksWhenTargetLost());
 
-        if (state == SentryTurretEntityState.ATTACKING || ticksSinceTargetLost <= sentryTurret.attackDelay) {
+        if (state == SentryTurretEntityState.ATTACKING || ticksSinceTargetLost <= ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY) {
             float f1a = 0.3F * MathHelper.sin(ageInTicks * 0.021688F) * 0.006F;
             float f2a = -0.6F * MathHelper.sin(ageInTicks * 0.083515F) * 0.006F;
             this.tacleJoint1.rotateAngleX = f1a;

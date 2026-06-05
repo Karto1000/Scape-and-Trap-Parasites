@@ -1,17 +1,30 @@
-package srparasites_traps.features.sentry_turret.base;
+package srparasites_traps.features.sentry_turret;
 
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.core.gui.container.ContainerCore;
+import cofh.core.gui.container.IAugmentableContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.augments.AugmentInventory;
+import srparasites_traps.features.augments.AugmentSlot;
 
-public class SentryTurretContainer extends ContainerCore {
+public class SentryTurretContainer extends ContainerCore implements IAugmentableContainer {
     private final SentryTurretTileEntity tileEntity;
+    private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.SENTRY_TURRET_AUGMENT_SLOTS];
 
     public SentryTurretContainer(EntityPlayer player, SentryTurretTileEntity tileEntity) {
         this.tileEntity = tileEntity;
+
+        AugmentInventory<SentryTurretTileEntity> augmentInventory = new AugmentInventory<>(tileEntity);
+        for (int i = 0; i < this.augmentSlots.length; i++) {
+            this.augmentSlots[i] = new AugmentSlot<>(augmentInventory, i, 0, 0, this.tileEntity);
+            this.addSlotToContainer(this.augmentSlots[i]);
+        }
+
         bindPlayerInventory(player.inventory);
     }
 
@@ -51,6 +64,15 @@ public class SentryTurretContainer extends ContainerCore {
 
     @Override
     protected int getSizeInventory() {
-        return 2;
+        return ForgeConfigHandler.augments.SENTRY_TURRET_AUGMENT_SLOTS;
+    }
+
+    @Override
+    public void setAugmentLock(boolean b) {
+    }
+
+    @Override
+    public Slot[] getAugmentSlots() {
+        return this.augmentSlots;
     }
 }

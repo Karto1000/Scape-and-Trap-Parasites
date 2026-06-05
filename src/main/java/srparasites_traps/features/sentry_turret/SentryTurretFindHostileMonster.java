@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.turret;
+package srparasites_traps.features.sentry_turret;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -13,7 +13,7 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
     private final World world;
     private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
 
-    public SentryTurretFindHostileMonster(SentryTurretEntity sentry, World world, double range) {
+    public SentryTurretFindHostileMonster(SentryTurretEntity sentry, World world) {
         this.sentry = sentry;
         this.world = world;
     }
@@ -32,10 +32,10 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
     public void updateTask() {
         if (updateLimiter.tickDown()) return;
 
-        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.sentry.getEntityBoundingBox().grow(this.sentry.attackRangeBlocks));
+        List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.sentry.getEntityBoundingBox().grow(this.sentry.tileEntity.attackRange));
 
         for (EntityLivingBase target : list) {
-            if (target instanceof IMob && target.isEntityAlive() && this.sentry.canEntityBeSeen(target) && this.sentry.getDistance(target) <= this.sentry.attackRangeBlocks) {
+            if (target instanceof IMob && target.isEntityAlive() && this.sentry.canEntityBeSeen(target) && this.sentry.getDistance(target) <= this.sentry.tileEntity.attackRange) {
                 this.sentry.setAttackTarget(target);
                 this.sentry.setEntityState(SentryTurretEntityState.ATTACKING);
                 break;

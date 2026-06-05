@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.turret;
+package srparasites_traps.features.sentry_turret;
 
 import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import net.minecraft.entity.EntityLivingBase;
@@ -6,7 +6,6 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
 
 public class SentryTurretAttackTarget extends EntityAIBase {
     private final SentryTurretEntity sentryTurret;
@@ -23,7 +22,7 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         int elapsedTicks = (int) (this.world.getTotalWorldTime() - this.sentryTurret.getTicksWhenTargetLost());
         if (elapsedTicks <= this.sentryTurret.currentAttackCooldown)
             this.sentryTurret.currentAttackCooldown -= elapsedTicks;
-        else this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
+        else this.sentryTurret.currentAttackCooldown = this.sentryTurret.tileEntity.attackDelay;
         this.sentryTurret.setTicksWhenTargetLost(0);
     }
 
@@ -36,7 +35,7 @@ public class SentryTurretAttackTarget extends EntityAIBase {
     public boolean shouldContinueExecuting() {
         if (this.sentryTurret.getAttackTarget() == null) return false;
         EntityLivingBase target = this.sentryTurret.getAttackTarget();
-        return (this.sentryTurret.canEntityBeSeen(target) && target.isEntityAlive() && this.sentryTurret.getDistance(target) <= this.sentryTurret.attackRangeBlocks);
+        return (this.sentryTurret.canEntityBeSeen(target) && target.isEntityAlive() && this.sentryTurret.getDistance(target) <= this.sentryTurret.tileEntity.attackRange);
     }
 
     @Override
@@ -101,6 +100,6 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         Vec3d actualVelocity = shooterToTargetDelta.add(targetDistanceTraveledSinceLastTick.scale(ticksUntilHit)).normalize();
         this.shootSpineball(actualVelocity, sentryTurretTileEntity);
 
-        this.sentryTurret.currentAttackCooldown = this.sentryTurret.attackDelay;
+        this.sentryTurret.currentAttackCooldown = this.sentryTurret.tileEntity.attackDelay;
     }
 }

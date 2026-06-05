@@ -9,6 +9,9 @@ import net.minecraft.item.ItemSlab;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.BasicItem;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
+import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.RangeAugment;
+import srparasites_traps.features.augments.TurretAugment;
 import srparasites_traps.features.hardness_analyser.HardnessAnalyzerItem;
 
 import java.lang.reflect.Field;
@@ -39,6 +42,8 @@ public class ModItems {
     public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item ANTENNA = new BasicItem("antenna");
     public static Item COIL = new BasicItem("coil");
+    public static TurretAugment ATTACK_SPEED_AUGMENT = new AttackSpeedAugment();
+    public static TurretAugment RANGE_AUGMENT = new RangeAugment();
 
     private static Item getItemSlab(Block block, BlockSlab single, BlockSlab doubleSlab) {
         return new ItemSlab(block, single, doubleSlab).setRegistryName(Objects.requireNonNull(block.getRegistryName()));

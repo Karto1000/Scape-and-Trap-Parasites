@@ -46,6 +46,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the hardness analyzer")
     public static final HardnessAnalyzerConfig hardnessAnalyzer = new HardnessAnalyzerConfig();
 
+    @Config.Name("Augments")
+    @Config.Comment("Settings for the augment system")
+    public static final AugmentConfig augments = new AugmentConfig();
+
     @Config.Name("Common")
     @Config.Comment("Common settings for the mod")
     public static final CommonConfig common = new CommonConfig();
@@ -59,12 +63,12 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret attack delay (Ticks)")
         @Config.Comment("The time in ticks between each attack of a sentry turret")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ATTACK_DELAY = 10;
+        public int DEFAULT_SENTRY_TURRET_ATTACK_DELAY = 20;
 
         @Config.Name("Default sentry turret range (Blocks)")
         @Config.Comment("The range in blocks that a sentry turret can attack")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_SENTRY_TURRET_RANGE = 32;
+        public double DEFAULT_SENTRY_TURRET_RANGE = 16;
 
         @Config.Name("Default sentry turret projectile parasite resistance reduction chance (%)")
         @Config.Comment("The chance that the projectile the sentry shoots will reduce the resistance of the parasite it hits")
@@ -380,6 +384,29 @@ public class ForgeConfigHandler {
         @Config.Comment("If true, the hardness analyzer will be enabled")
         @Config.RequiresMcRestart
         public boolean ENABLE_HARDNESS_ANALYZER = true;
+    }
+
+    public static class AugmentConfig {
+        @Config.Name("Enable augment system")
+        @Config.Comment("If true, the augment system will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE_AUGMENT_SYSTEM = true;
+
+        @Config.Name("Sentry turret range increase (Blocks)")
+        @Config.Comment("The increase in range for the sentry turret in blocks when a range augment is applied")
+        @Config.RangeInt(min = 0)
+        public int SENTRY_TURRET_RANGE_INCREASE = 8;
+
+        @Config.Name("Sentry turret attack speed increase (Ticks)")
+        @Config.Comment("The increase in attack speed for the sentry turret in ticks when a speed augment is applied")
+        @Config.RangeInt(min = 0)
+        public int SENTRY_TURRET_ATTACK_SPEED_INCREASE = 5;
+
+        @Config.Name("Sentry turret augment slots")
+        @Config.Comment("The number of augment slots available for the sentry turret")
+        @Config.RangeInt(min = 0)
+        @Config.RequiresMcRestart
+        public int SENTRY_TURRET_AUGMENT_SLOTS = 3;
     }
 
     public static class CommonConfig {

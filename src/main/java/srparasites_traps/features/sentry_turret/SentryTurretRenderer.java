@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.turret;
+package srparasites_traps.features.sentry_turret;
 
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;

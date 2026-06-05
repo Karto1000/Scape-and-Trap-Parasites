@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.turret;
+package srparasites_traps.features.sentry_turret;
 
 import com.dhanantry.scapeandrunparasites.entity.EntityBody;
 import com.dhanantry.scapeandrunparasites.entity.EntityHitbox;

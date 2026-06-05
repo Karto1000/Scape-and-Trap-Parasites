@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.base;
+package srparasites_traps.features.sentry_turret;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -59,7 +59,11 @@ public class SentryTurretBlock extends Block {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof SentryTurretTileEntity) ((SentryTurretTileEntity) tileEntity).despawnTurret();
+            if (tileEntity instanceof SentryTurretTileEntity) {
+                SentryTurretTileEntity sentryTurretTileEntity = (SentryTurretTileEntity) tileEntity;
+                sentryTurretTileEntity.despawnTurret();
+                sentryTurretTileEntity.dropAugments(worldIn, pos);
+            }
         }
 
         super.breakBlock(worldIn, pos, state);

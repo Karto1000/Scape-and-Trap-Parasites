@@ -1,16 +1,19 @@
-package srparasites_traps.features.sentry_turret.base;
+package srparasites_traps.features.sentry_turret;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.IDefaultValueHolder;
+import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.features.TurretTileEntity;
-import srparasites_traps.features.sentry_turret.turret.SentryTileEntityState;
-import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
+import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.DebugHelper;
 import srparasites_traps.util.NBTHelper;
@@ -18,18 +21,26 @@ import srparasites_traps.util.StateManager;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
-public class SentryTurretTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
+public class SentryTurretTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider, IExtendedAugmentable, IDefaultValueHolder {
+    public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
     public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
-    public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
-    public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
+    public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
+    public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
+    public double attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
+    public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
 
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
 
+    private boolean firstTick = true;
     private double currentRespawnTime = 0.;
     private final StateManager<SentryTileEntityState> state = new StateManager<>(SentryTileEntityState.DEAD, (oldState, newState) -> DebugHelper.dbp("State changed from " + oldState + " to " + newState));
     private final static int SENTRY_TURRET_ENTITY_HEIGHT_BLOCKS = 4;
+    private final ItemStack[] augments = Stream.generate(() -> ItemStack.EMPTY)
+            .limit(ForgeConfigHandler.augments.SENTRY_TURRET_AUGMENT_SLOTS)
+            .toArray(ItemStack[]::new);
 
     public SentryTurretTileEntity() {
         super(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS, ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
@@ -57,7 +68,8 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
                 this.pos.getX() + 0.5,
                 this.pos.getY() + 1,
                 this.pos.getZ() + 0.5,
-                this.pos
+                this.pos,
+                this
         );
 
         this.world.spawnEntity(newTurret);
@@ -143,6 +155,8 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
         compound.setDouble("CurrentRespawnTime", this.currentRespawnTime);
         compound.setInteger("State", this.state.getState().ordinal());
+        compound.setInteger("ControlMode", this.controlMode.ordinal());
+        this.writeAugmentsToNBT(compound);
 
         if (this.assignedSentryTurretUUID != null)
             compound.setUniqueId("AssignedSentryTurret", this.assignedSentryTurretUUID);
@@ -157,6 +171,8 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
         this.currentRespawnTime = NBTHelper.getDoubleOrElse(compound, "CurrentRespawnTime", () -> 0.0);
         this.state.setState(SentryTileEntityState.values()[NBTHelper.getIntegerOrElse(compound, "State", SentryTileEntityState.DEAD::ordinal)]);
+        this.controlMode = ControlMode.values()[NBTHelper.getIntegerOrElse(compound, "ControlMode", ControlMode.DISABLED::ordinal)];
+        this.readAugmentsFromNBT(compound);
         if (compound.hasUniqueId("AssignedSentryTurret"))
             this.assignedSentryTurretUUID = compound.getUniqueId("AssignedSentryTurret");
         DebugHelper.dbp("Read assigned sentry turret uuid: " + this.assignedSentryTurretUUID);
@@ -164,7 +180,10 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
     @Override
     public void update() {
-        if (this.world.isRemote) return;
+        if (firstTick) {
+            this.updateAugmentStatus();
+            firstTick = false;
+        }
 
         switch (this.state.getState()) {
             case DEAD:
@@ -218,9 +237,6 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
             case AVAILABLE_WINDOW_VAR + 1:
                 this.currentRespawnTime = data;
                 break;
-            case AVAILABLE_WINDOW_VAR + 2:
-                this.controlMode = ControlMode.values()[data];
-                break;
         }
     }
 
@@ -246,5 +262,36 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
     public double getCurrentRespawnTime() {
         return this.currentRespawnTime;
+    }
+
+    @Override
+    public boolean isValidAugment(ItemStack itemStack) {
+        if (itemStack.isEmpty()) return false;
+        if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
+        return itemStack.getItem() instanceof RangeAugment;
+    }
+
+    @Override
+    public ItemStack[] getAugmentSlots() {
+        return this.augments;
+    }
+
+    @Override
+    public void applyAugment(ItemStack itemStack) {
+        if (itemStack.isEmpty()) return;
+        if (itemStack.getItem() instanceof AttackSpeedAugment)
+            this.attackDelay -= ForgeConfigHandler.augments.SENTRY_TURRET_ATTACK_SPEED_INCREASE;
+        if (itemStack.getItem() instanceof RangeAugment)
+            this.attackRange += ForgeConfigHandler.augments.SENTRY_TURRET_RANGE_INCREASE;
+    }
+
+    @Override
+    public void applyDefaults() {
+        this.attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
+        this.biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
+        this.energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
+        this.respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
+        this.attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
+        this.emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
     }
 }

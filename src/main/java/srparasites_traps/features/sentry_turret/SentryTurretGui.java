@@ -1,14 +1,16 @@
-package srparasites_traps.features.sentry_turret.base;
+package srparasites_traps.features.sentry_turret;
 
 import cofh.core.gui.GuiContainerCore;
+import cofh.core.gui.container.IAugmentableContainer;
 import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
+import cofh.core.gui.element.tab.TabAugment;
 import cofh.core.gui.element.tab.TabRedstoneControl;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.features.sentry_turret.turret.SentryTileEntityState;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 
 public class SentryTurretGui extends GuiContainerCore {
@@ -23,6 +25,7 @@ public class SentryTurretGui extends GuiContainerCore {
     private final static int ENERGY_HEIGHT_PX = 42;
     private final static double textScale = 0.75;
     private final SentryTurretTileEntity tileEntity;
+    private SentryTurretContainer container;
 
     public SentryTurretGui(EntityPlayer player, SentryTurretTileEntity tileEntity) {
         super(new SentryTurretContainer(player, tileEntity), TEXTURE);
@@ -35,6 +38,7 @@ public class SentryTurretGui extends GuiContainerCore {
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
+        if (ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM) addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots));
         addTab(new TabRedstoneControl(this, this.tileEntity));
     }
 

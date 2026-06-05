@@ -1,4 +1,4 @@
-package srparasites_traps.features.sentry_turret.turret;
+package srparasites_traps.features.sentry_turret;
 
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.entity.EntityLiving;
@@ -11,17 +11,15 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import srparasites_traps.config.ForgeConfigHandler;
-import srparasites_traps.features.sentry_turret.base.SentryTurretTileEntity;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.Serializers;
 
+import java.util.Optional;
+
 public class SentryTurretEntity extends EntityLiving {
+    public int currentAttackCooldown = 0;
     public BlockPos baseBlockPosition;
-    public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
-    public int currentAttackCooldown = attackDelay;
-    public double attackRangeBlocks = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
-    public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
+    public SentryTurretTileEntity tileEntity = null;
 
     private static final DataParameter<Long> ticksWhenTargetLost = EntityDataManager.createKey(SentryTurretEntity.class, Serializers.LONG);
     private static final DataParameter<Float> currentEmergeTime = EntityDataManager.createKey(SentryTurretEntity.class, DataSerializers.FLOAT);
@@ -30,13 +28,15 @@ public class SentryTurretEntity extends EntityLiving {
     public SentryTurretEntity(World worldIn) {
         super(worldIn);
         this.setSize(0.7F, 4.1F);
+
     }
 
-    public SentryTurretEntity(World worldIn, double x, double y, double z, BlockPos baseBlockPosition) {
+    public SentryTurretEntity(World worldIn, double x, double y, double z, BlockPos baseBlockPosition, SentryTurretTileEntity tileEntity) {
         super(worldIn);
         this.setSize(0.7F, 4.1F);
         this.setPosition(x, y, z);
         this.baseBlockPosition = baseBlockPosition;
+        this.tileEntity = tileEntity;
     }
 
     public double getCurrentEmergeTime() {
@@ -115,14 +115,40 @@ public class SentryTurretEntity extends EntityLiving {
         sentryTurretTileEntity.setState(SentryTileEntityState.DEAD);
     }
 
+    private Optional<SentryTurretTileEntity> getTileEntity() {
+        if (this.world == null) return Optional.empty();
+        if (this.baseBlockPosition == null) return Optional.empty();
+
+        if (this.tileEntity == null) {
+            TileEntity tileEntity = this.world.getTileEntity(this.baseBlockPosition);
+
+            if (tileEntity == null) {
+                this.despawnEntity();
+                return Optional.empty();
+            }
+
+            if (!(tileEntity instanceof SentryTurretTileEntity)) {
+                this.despawnEntity();
+                return Optional.empty();
+            }
+
+            this.tileEntity = (SentryTurretTileEntity) tileEntity;
+        }
+
+        return Optional.of(tileEntity);
+    }
+
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
+        Optional<SentryTurretTileEntity> tileEntity = getTileEntity();
+        if (!tileEntity.isPresent()) return;
+
         SentryTurretEntityState state = getEntityState();
         if (state == SentryTurretEntityState.EMERGING) {
             double currentEmergeTime = getCurrentEmergeTime();
-            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
+            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * tileEntity.get().emergeTimeSeconds));
 
             if (getCurrentEmergeTime() <= 0.00) {
                 setEntityState(SentryTurretEntityState.IDLE);
@@ -143,7 +169,7 @@ public class SentryTurretEntity extends EntityLiving {
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(1, new SentryTurretAttackTarget(this, this.world));
-        this.targetTasks.addTask(1, new SentryTurretFindHostileMonster(this, this.world, this.attackRangeBlocks));
+        this.targetTasks.addTask(1, new SentryTurretFindHostileMonster(this, this.world));
     }
 
     @Override

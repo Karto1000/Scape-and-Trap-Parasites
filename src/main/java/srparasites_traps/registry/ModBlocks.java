@@ -9,7 +9,7 @@ import srparasites_traps.features.obsidian_blocks.ObsidianLadderBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianSlabBlock;
 import srparasites_traps.features.proximity_sensor.ProximitySensorBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
-import srparasites_traps.features.sentry_turret.base.SentryTurretBlock;
+import srparasites_traps.features.sentry_turret.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.BurningSerratedSpikes;
 import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
 import srparasites_traps.features.serrated_spikes.ViralSerratedSpikes;

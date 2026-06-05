@@ -5,8 +5,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.relocator.RelocatorEntity;
-import srparasites_traps.features.sentry_turret.turret.SentryTurretEntity;
-import srparasites_traps.features.sentry_turret.turret.SentryTurretSpineball;
+import srparasites_traps.features.sentry_turret.SentryTurretEntity;
+import srparasites_traps.features.sentry_turret.SentryTurretSpineball;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
