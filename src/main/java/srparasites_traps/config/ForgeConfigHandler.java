@@ -212,7 +212,7 @@ public class ForgeConfigHandler {
         @Config.Name("Default serrated spikes move sum multiplier")
         @Config.Comment("Multiplies motion sum that reduces the invulnerability time of the entity")
         @Config.RangeDouble(min = 0.0)
-        public float DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER = 10.0F;
+        public float DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER = 20.0F;
 
         @Config.Name("Default serrated spikes slow down amount")
         @Config.Comment("The amount of motion that the entity will lose when the spikes hit it 0.1 -> lose 90% of movement speed")
@@ -222,7 +222,7 @@ public class ForgeConfigHandler {
         @Config.Name("Default serrated spikes min hurt resistance time (Ticks)")
         @Config.Comment("The time in ticks that the hurtResistance has to be lower than to cause more damage")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SERRATED_SPIKES_MIN_HURT_RESISTANT_TIME = 10;
+        public int DEFAULT_SERRATED_SPIKES_MIN_HURT_RESISTANT_TIME = 30;
 
         @Config.Name("Default serrated spikes deal bleeding damage")
         @Config.Comment("If true, the serrated spikes will deal bleeding damage to the entity they hit")
@@ -231,12 +231,12 @@ public class ForgeConfigHandler {
         @Config.Name("Default serrated spikes bleeding duration (Ticks)")
         @Config.Comment("The duration in ticks that the entity will be bleeding")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION = 40;
+        public int DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION = 80;
 
         @Config.Name("Default burning serrated spikes flame duration (Seconds)")
         @Config.Comment("The duration in seconds that the entity will be on fire")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_BURNING_SERRATED_SPIKES_FLAME_DURATION = 2;
+        public int DEFAULT_BURNING_SERRATED_SPIKES_FLAME_DURATION = 5;
 
         @Config.Name("Default serrated spikes viral duration (Ticks)")
         @Config.Comment("The duration in ticks that the entity will have the viral effect")

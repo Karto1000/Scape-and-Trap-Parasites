@@ -24,6 +24,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -191,6 +192,19 @@ public class SerratedSpikesBlock extends Block {
         if (motionSum <= 0) return;
         if (entityIn.hurtResistantTime > minHurtResistanceTime + motionSum * ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER) return;
         if (motionSum < damageThreshold) return;
+
+        EnumFacing facing = state.getValue(direction);
+        int horizontalIndex = facing.getHorizontalIndex();
+
+        Vec3d facingVec;
+        if (horizontalIndex == 0) facingVec = new Vec3d(0, 0, -1);
+        else if (horizontalIndex == 1) facingVec = new Vec3d(1, 0, 0);
+        else if (horizontalIndex == 2) facingVec = new Vec3d(0, 0, 1);
+        else facingVec = new Vec3d(-1, 0, 0);
+
+        double dp = facingVec.dotProduct(new Vec3d(dX, dY, dZ).normalize());
+        // We only want the spikes to damage the entity if the entity is moving towards the pointy ends of the spikes
+        if (dp < 0.2) return;
 
         damageEntity(entityIn, baseDamage);
         entityIn.motionX *= slowDownAmount;
