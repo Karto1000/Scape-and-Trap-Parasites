@@ -32,6 +32,8 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     public int poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
     public int chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
     public int resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
+    public int entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_INTERVAL;
+    public int entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_AMOUNT;
     public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
     public double attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
     public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
@@ -318,5 +320,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         this.poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
         this.chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
         this.resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
+        this.entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_INTERVAL;
+        this.entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_AMOUNT;
     }
 }

@@ -1,5 +1,6 @@
 package srparasites_traps.features.tesla_coil;
 
+import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -16,6 +17,7 @@ import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.network.SpawnLightningParticlePacket;
 import srparasites_traps.registry.ModSounds;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
@@ -43,52 +45,54 @@ public class ShockedPotion extends Potion {
     public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {
         World world = entityLivingBaseIn.getEntityWorld();
 
-        List<EntityLivingBase> entitiesInRange = world.getEntitiesWithinAABB(
-                EntityLivingBase.class,
-                entityLivingBaseIn.getEntityBoundingBox().grow(range)
-        );
-
-        int jumpCount = 0;
-        for (EntityLivingBase entity : entitiesInRange) {
-            if (jumpCount >= jumpLimit) break;
-
-            if (entity == entityLivingBaseIn) continue;
-            if (!entity.isEntityAlive()) continue;
-            if (entity.getActivePotionEffect(this) != null) continue;
-            if (entity instanceof EntityPlayer) if (((EntityPlayer) entity).isCreative()) continue;
-
-            RayTraceResult rayTraceResult = world.rayTraceBlocks(
-                    entityLivingBaseIn.getPositionVector(),
-                    entity.getPositionVector(),
-                    false,
-                    true,
-                    false
+        if (amplifier - 1 > 0) {
+            List<EntityLivingBase> entitiesInRange = world.getEntitiesWithinAABB(
+                    EntityLivingBase.class,
+                    entityLivingBaseIn.getEntityBoundingBox().grow(range)
             );
 
-            if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK) continue;
+            int jumpCount = 0;
+            for (EntityLivingBase entity : entitiesInRange) {
+                if (jumpCount >= jumpLimit) break;
 
-            if (world.rand.nextDouble() < (chanceToTransmit / 100) + (amplifier * 0.1)) {
-                entity.addPotionEffect(new PotionEffect(this, 5, amplifier - 1));
+                if (entity == entityLivingBaseIn) continue;
+                if (!entity.isEntityAlive()) continue;
+                if (entity.getActivePotionEffect(this) != null) continue;
+                if (entity instanceof EntityPlayer) if (((EntityPlayer) entity).isCreative()) continue;
 
-                Vec3d origin = entityLivingBaseIn.getPositionVector().add(0, entityLivingBaseIn.getEyeHeight(), 0);
-                Vec3d target = entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
-
-                SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
-                        new SpawnLightningParticlePacket(origin, target),
-                        new NetworkRegistry.TargetPoint(world.provider.getDimension(), origin.x, origin.y, origin.z, 32)
+                RayTraceResult rayTraceResult = world.rayTraceBlocks(
+                        entityLivingBaseIn.getPositionVector(),
+                        entity.getPositionVector(),
+                        false,
+                        true,
+                        false
                 );
 
-                world.playSound(
-                        null,
-                        entityLivingBaseIn.getPositionVector().x,
-                        entityLivingBaseIn.getPositionVector().y,
-                        entityLivingBaseIn.getPositionVector().z,
-                        ModSounds.ELECTRIC_ARC,
-                        SoundCategory.NEUTRAL,
-                        0.25F,
-                        1.0F
-                );
-                jumpCount++;
+                if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK) continue;
+
+                if (world.rand.nextDouble() < (chanceToTransmit / 100) + (amplifier * 0.1)) {
+                    entity.addPotionEffect(new PotionEffect(this, 5, amplifier - 1));
+
+                    Vec3d origin = entityLivingBaseIn.getPositionVector().add(0, entityLivingBaseIn.getEyeHeight(), 0);
+                    Vec3d target = entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
+
+                    SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
+                            new SpawnLightningParticlePacket(origin, target, amplifier - 1),
+                            new NetworkRegistry.TargetPoint(world.provider.getDimension(), origin.x, origin.y, origin.z, 32)
+                    );
+
+                    world.playSound(
+                            null,
+                            entityLivingBaseIn.getPositionVector().x,
+                            entityLivingBaseIn.getPositionVector().y,
+                            entityLivingBaseIn.getPositionVector().z,
+                            ModSounds.ELECTRIC_ARC,
+                            SoundCategory.NEUTRAL,
+                            0.25F,
+                            1.0F
+                    );
+                    jumpCount++;
+                }
             }
         }
 
@@ -96,5 +100,21 @@ public class ShockedPotion extends Potion {
         entityLivingBaseIn.hurtResistantTime = 0;
         entityLivingBaseIn.attackEntityFrom(DamageSource.GENERIC, (float) (damage * amplifier));
         entityLivingBaseIn.hurtResistantTime = hurtResistance;
+
+        // Make parasites explode immediately
+        if (entityLivingBaseIn instanceof EntityParasiteBase && !entityLivingBaseIn.isEntityAlive()) {
+            EntityParasiteBase parasite = (EntityParasiteBase) entityLivingBaseIn;
+            try {
+                Field timeSinceIgnited = EntityParasiteBase.class.getDeclaredField("timeSinceIgnited");
+                Field fuseTime = EntityParasiteBase.class.getDeclaredField("fuseTime");
+
+                fuseTime.setAccessible(true);
+                int fuseTimeValue = fuseTime.getInt(parasite);
+
+                timeSinceIgnited.setAccessible(true);
+                timeSinceIgnited.setInt(parasite, fuseTimeValue);
+            } catch (NoSuchFieldException | IllegalAccessException ignored) {
+            }
+        }
     }
 }

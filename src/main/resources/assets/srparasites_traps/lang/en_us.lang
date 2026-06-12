@@ -76,7 +76,7 @@ tooltip.srparasites_traps.item.static_electricity_generator=Powers tesla coils b
 tooltip.srparasites_traps.item.attack_speed_augment=Increases the attack speed of certain turrets.
 tooltip.srparasites_traps.item.range_augment=Increases the range of certain turrets.
 tooltip.srparasites_traps.item.damage_augment=Increases the damage of certain turrets.
-tooltip.srparasites_traps.item.augment_general=Can be placed in one of the augment tabs slots in the following machines:\n%s
+tooltip.srparasites_traps.item.augment_general=Can be placed in one of the augment tabs slots in the following turrets:\n%s
 tooltip.srparasites_traps.item.armored_semi_organic_plating=§8A plating acting as a bridge for parasitic signals while boasting a high resistance to external damage.§f
 
 # Status Messages
@@ -105,3 +105,5 @@ slot.srparasites_traps.biomass_factory_fluid_input=Place in a valid container to
 
 # Entites
 entity.sentry_turret_spineball.name=Spineball
+entity.sentry_turret.name=Sentry Turret
+entity.relocator.name=Relocator

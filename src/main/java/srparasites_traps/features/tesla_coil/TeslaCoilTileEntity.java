@@ -24,6 +24,7 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.IDefaultValueHolder;
 import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.DamageAugment;
 import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.network.SpawnElectricityParticlePacket;
@@ -136,7 +137,14 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     private void fireAt(EntityLivingBase target) {
         Vec3d firePos = this.getBlockCenter();
-        SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(new SpawnLightningParticlePacket(firePos, target.getPositionVector().add(0, target.getEyeHeight(), 0)), new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), firePos.x, firePos.y, firePos.z, 32));
+        SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
+                new SpawnLightningParticlePacket(
+                        firePos,
+                        target.getPositionVector().add(0, target.getEyeHeight(), 0),
+                        shockedAmplifier
+                ),
+                new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), firePos.x, firePos.y, firePos.z, 32)
+        );
 
         target.addPotionEffect(new PotionEffect(ModPotions.SHOCKED_POTION, 5, shockedAmplifier));
         this.energyStorage.extractEnergy(energyPerShot, false);
@@ -294,6 +302,8 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
         if (augment.getItem() instanceof AttackSpeedAugment) {
             this.shootLimiter.tickDuration -= ForgeConfigHandler.augments.TESLA_COIL_ATTACK_SPEED_INCREASE;
+        } else if (augment.getItem() instanceof DamageAugment) {
+            this.shockedAmplifier += ForgeConfigHandler.augments.TESLA_COIL_SHOCKED_AMPLIFIER_INCREASE;
         } else if (augment.getItem() instanceof RangeAugment) {
             this.range += ForgeConfigHandler.augments.TESLA_COIL_RANGE_INCREASE;
         }
@@ -303,6 +313,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     public boolean isValidAugment(ItemStack itemStack) {
         if (itemStack.isEmpty()) return false;
         if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
+        if (itemStack.getItem() instanceof DamageAugment) return true;
         return itemStack.getItem() instanceof RangeAugment;
     }
 

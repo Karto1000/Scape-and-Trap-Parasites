@@ -11,7 +11,7 @@ import java.util.List;
 public class SentryTurretFindHostileMonster extends EntityAIBase {
     private final SentryTurretEntity sentry;
     private final World world;
-    private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
+    private final UpdateLimiter updateLimiter = new UpdateLimiter(5);
 
     public SentryTurretFindHostileMonster(SentryTurretEntity sentry, World world) {
         this.sentry = sentry;

@@ -83,7 +83,11 @@ public class ForgeConfigHandler {
         @Config.Name("Default sentry turret projectile damage")
         @Config.Comment("The damage that the projectile the sentry shoots will deal to the entity it hits")
         @Config.RangeDouble(min = 0.0)
-        public float DEFAULT_SENTRY_TURRET_DAMAGE = 25;
+        public float DEFAULT_SENTRY_TURRET_DAMAGE = 20;
+
+        @Config.Name("Apply Poison")
+        @Config.Comment("Whether or not the projectile the sentry shoots will poison the entity it hits")
+        public boolean DEFAULT_SENTRY_TURRET_APPLY_POISON = false;
 
         @Config.Name("Default sentry turret projectile poison duration (Ticks)")
         @Config.Comment("The duration in ticks that the projectile the sentry shoots will poison the entity it hits")
@@ -124,6 +128,26 @@ public class ForgeConfigHandler {
         @Config.Comment("The time that the sentry turret takes to emerge from the ground")
         @Config.RangeDouble(min = 0.0)
         public double DEFAULT_SENTRY_TURRET_EMERGE_TIME = 5.1F;
+
+        @Config.Name("Default sentry turret entity health (Hearts)")
+        @Config.Comment("The health of the sentry turret entity")
+        @Config.RangeDouble(min = 0.0)
+        public double DEFAULT_SENTRY_TURRET_ENTITY_HEALTH = 40;
+
+        @Config.Name("Default sentry turret entity armor")
+        @Config.Comment("The armor of the sentry turret entity")
+        @Config.RangeDouble(min = 0.0)
+        public double DEFAULT_SENTRY_TURRET_ENTITY_ARMOR = 5.0;
+
+        @Config.Name("Default sentry turret entity heal interval (Ticks)")
+        @Config.Comment("The interval between each heal")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_SENTRY_TURRET_ENTITY_HEAL_INTERVAL = 20;
+
+        @Config.Name("Default sentry turret entity heal amount (Hearts)")
+        @Config.Comment("The amount of health that the sentry turret entity heals")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_SENTRY_TURRET_ENTITY_HEAL_AMOUNT = 2;
     }
 
     public static class RelocatorConfig {
@@ -428,6 +452,11 @@ public class ForgeConfigHandler {
         @Config.Comment("The increase in range for the Tesla coil in blocks when a range augment is applied")
         @Config.RangeInt(min = 0)
         public int TESLA_COIL_RANGE_INCREASE = 6;
+
+        @Config.Name("Tesla coil shocked amplifier increase")
+        @Config.Comment("The increase in amplifier for the shocked effect when a damage augment is applied")
+        @Config.RangeInt(min = 0)
+        public int TESLA_COIL_SHOCKED_AMPLIFIER_INCREASE = 2;
     }
 
     public static class CommonConfig {

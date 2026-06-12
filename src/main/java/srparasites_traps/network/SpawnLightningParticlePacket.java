@@ -10,17 +10,19 @@ import srparasites_traps.SRParasitesTraps;
 public class SpawnLightningParticlePacket implements IMessage {
     public double fromX, fromY, fromZ;
     public double toX, toY, toZ;
+    public int intensity;
 
     public SpawnLightningParticlePacket() {
     }
 
-    public SpawnLightningParticlePacket(Vec3d from, Vec3d to) {
+    public SpawnLightningParticlePacket(Vec3d from, Vec3d to, int intensity) {
         this.fromX = from.x;
         this.fromY = from.y;
         this.fromZ = from.z;
         this.toX = to.x;
         this.toY = to.y;
         this.toZ = to.z;
+        this.intensity = intensity;
     }
 
     /**
@@ -36,6 +38,7 @@ public class SpawnLightningParticlePacket implements IMessage {
         toX = buf.readDouble();
         toY = buf.readDouble();
         toZ = buf.readDouble();
+        intensity = buf.readInt();
     }
 
     /**
@@ -51,6 +54,7 @@ public class SpawnLightningParticlePacket implements IMessage {
         buf.writeDouble(toX);
         buf.writeDouble(toY);
         buf.writeDouble(toZ);
+        buf.writeInt(intensity);
     }
 
     public static class Handler implements IMessageHandler<SpawnLightningParticlePacket, IMessage> {

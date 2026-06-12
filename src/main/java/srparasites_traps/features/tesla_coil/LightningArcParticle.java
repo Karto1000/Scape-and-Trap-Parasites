@@ -21,14 +21,18 @@ public class LightningArcParticle extends Particle {
     private final int maxParticleAge;
     private final Vec3d from;
     private final Vec3d to;
+    private final int intensity;
+    private final static int DEFAULT_INNER_THICKNESS = 2;
+    private final static int DEFAULT_OUTER_THICKNESS = DEFAULT_INNER_THICKNESS * 2;
 
-    public LightningArcParticle(World worldIn, Vec3d from, Vec3d to, int maxParticleAge) {
+    public LightningArcParticle(World worldIn, Vec3d from, Vec3d to, int maxParticleAge, int intensity) {
         super(worldIn, from.x, from.y, from.z);
 
         this.from = from;
         this.to = to;
         this.maxParticleAge = maxParticleAge;
         this.maxStageVectors = (int) (to.subtract(from).length() * 2);
+        this.intensity = intensity;
 
         makeStageVectors();
     }
@@ -40,17 +44,22 @@ public class LightningArcParticle extends Particle {
 
     private void makeStageVectors() {
         Vec3d delta = this.to.subtract(this.from);
-        Vec3d stageVector = delta.scale((double) 1 / this.maxStageVectors);
+        Vec3d unitStageVector = delta.scale((double) 1 / this.maxStageVectors);
 
         for (int i = 0; i < maxStageVectors; i += 2){
-            float rotatePitch = (float) (this.rand.nextFloat() * Math.PI * 0.8);
-            float rotateYaw = (float) (this.rand.nextFloat() * Math.PI * 0.8);
+            float rotatePitch = (float) (this.rand.nextFloat() * Math.PI * 0.5);
+            float rotateYaw = (float) (this.rand.nextFloat() * Math.PI * 0.5);
 
-            Vec3d rotated = stageVector.rotatePitch(rotatePitch)
-                    .rotateYaw(rotateYaw);
+            double lengthMultiplier = 0.4 + this.rand.nextDouble() * 1.2;
+
+            Vec3d rotated = unitStageVector
+                    .rotatePitch(rotatePitch)
+                    .rotateYaw(rotateYaw)
+                    .scale(lengthMultiplier);
+
             this.stageVectors.add(rotated);
 
-            Vec3d backOnLine = stageVector.scale(2).subtract(rotated);
+            Vec3d backOnLine = unitStageVector.scale(2).subtract(rotated);
             this.stageVectors.add(backOnLine);
         }
     }
@@ -112,7 +121,7 @@ public class LightningArcParticle extends Particle {
                 0.F,
                 1.F,
                  1.F / this.particleAge,
-                8.0f
+               DEFAULT_OUTER_THICKNESS + (float) this.intensity / 2
         );
 
         tessellator.draw();
@@ -124,7 +133,7 @@ public class LightningArcParticle extends Particle {
                 1.F,
                 1.F,
                 1.F / this.particleAge,
-                4.0f
+                DEFAULT_INNER_THICKNESS + (float) this.intensity / 2
         );
 
         tessellator.draw();

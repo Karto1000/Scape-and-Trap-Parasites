@@ -11,6 +11,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.Serializers;
 
@@ -28,7 +29,6 @@ public class SentryTurretEntity extends EntityLiving {
     public SentryTurretEntity(World worldIn) {
         super(worldIn);
         this.setSize(0.7F, 4.1F);
-
     }
 
     public SentryTurretEntity(World worldIn, double x, double y, double z, BlockPos baseBlockPosition, SentryTurretTileEntity tileEntity) {
@@ -67,6 +67,8 @@ public class SentryTurretEntity extends EntityLiving {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEALTH);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_ARMOR);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
         this.getEntityData().setInteger("srpcothimmunity", 0);
     }
@@ -144,6 +146,12 @@ public class SentryTurretEntity extends EntityLiving {
 
         Optional<SentryTurretTileEntity> tileEntity = getTileEntity();
         if (!tileEntity.isPresent()) return;
+
+        if (!this.world.isRemote) {
+            if (this.ticksExisted % tileEntity.get().entityHealInterval == 0) {
+                this.heal(tileEntity.get().entityHealAmount);
+            }
+        }
 
         SentryTurretEntityState state = getEntityState();
         if (state == SentryTurretEntityState.EMERGING) {

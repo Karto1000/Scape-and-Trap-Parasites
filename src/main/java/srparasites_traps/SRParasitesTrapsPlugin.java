@@ -1,5 +1,6 @@
 package srparasites_traps;
 
+import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 
@@ -10,9 +11,8 @@ public class SRParasitesTrapsPlugin implements IFMLLoadingPlugin {
 
     public SRParasitesTrapsPlugin() {
         MixinBootstrap.init();
+        FermiumRegistryAPI.enqueueMixin(true, "mixins.srparasites_traps.srpmixin.json");
         //False for Vanilla/Coremod mixins, true for regular mod mixins
-        //FermiumRegistryAPI.enqueueMixin(false, "mixins.srparasites_traps.vanilla.json");
-        //FermiumRegistryAPI.enqueueMixin(true, "mixins.srpparasites_traps.jei.json", () -> Loader.isModLoaded("jei"));
         //--> Replaced by @MixinConfig.MixinToggle in ForgeConfigHandler. This way is still an option for more complicated conditions
     }
 

@@ -12,6 +12,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import srparasites_traps.config.ForgeConfigHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -103,7 +104,7 @@ public class SentryTurretSpineball extends EntityFireball {
             int hurtResistantTime = target.hurtResistantTime;
             target.hurtResistantTime = 0;
             target.attackEntityFrom(damageSource, (float) ste.tileEntity.damage);
-            target.addPotionEffect(new PotionEffect(MobEffects.POISON, ste.tileEntity.poisonDuration, ste.tileEntity.poisonAmplifier));
+            if (ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_APPLY_POISON) target.addPotionEffect(new PotionEffect(MobEffects.POISON, ste.tileEntity.poisonDuration, ste.tileEntity.poisonAmplifier));
             target.hurtResistantTime = hurtResistantTime;
         }
 
