@@ -102,3 +102,6 @@ potion.srparasites_traps.shocked=Shocked
 slot.srparasites_traps.relocator_search=Put in an area marker which will define the area to search for enemies to relocate.
 slot.srparasites_traps.relocator_destination=Put in an area marker to tell the relocator all valid positions where a grabbed enemy can be relocated to.
 slot.srparasites_traps.biomass_factory_fluid_input=Place in a valid container to extract the stored liquid.
+
+# Entites
+entity.sentry_turret_spineball.name=Spineball
