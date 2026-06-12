@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    "pmp",
+    "pmp",
+    "pmp"
+  ],
+  "key": {
+    "m": {
+      "item": "srparasites_traps:parasitic_matter"
+    },
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:hatch",
+    "count": 1
+  }
+}

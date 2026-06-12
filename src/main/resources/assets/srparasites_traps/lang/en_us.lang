@@ -33,13 +33,16 @@ tile.srparasites_traps.proximity_sensor.name=§6Proximity Sensor§f
 tile.srparasites_traps.static_electricity_generator.name=Static Electricity Generator
 
 # Items
-item.srparasites_traps.two_way_communication_unit.name=Two-way communication unit
+item.srparasites_traps.two_way_communication_unit.name=Two-way Communication Unit
 item.srparasites_traps.parasitic_matter.name=§bParasitic Matter§f
 item.srparasites_traps.area_marker.name=Area Marker
 item.srparasites_traps.dispatcher_brainstem.name=§cDispatcher Brainstem§f
 item.srparasites_traps.dispatcher_cerebrum.name=§cDispatcher Cerebrum§f
-item.srparasites_traps.reconstructed_sentry.name=Reconstructed Sentry
-item.srparasites_traps.reconstructed_seizer.name=Reconstructed Seizer
+#item.srparasites_traps.reconstructed_sentry.name=Reconstructed Sentry
+#item.srparasites_traps.reconstructed_seizer.name=Reconstructed Seizer
+item.srparasites_traps.armored_semi_organic_plating.name=Armored semi-organic Plating
+item.srparasites_traps.biomass_storage_unit.name=Biomass Storage Unit
+item.srparasites_traps.hatch.name=Hatch
 item.srparasites_traps.beckon_heart.name=§aBeckon Heart§f
 item.srparasites_traps.hardness_analyzer.name=Hardness Analyzer
 item.srparasites_traps.antenna.name=Antenna
@@ -49,7 +52,7 @@ item.srparasites_traps.range_augment.name=Range Augment
 item.srparasites_traps.damage_augment.name=Damage Augment
 
 # Tooltips
-tooltip.srparasites_traps.item.two_way_communication_unit=§7A chip designed to enable two-way communication between mechanical machines and §cparasitic entities.
+tooltip.srparasites_traps.item.two_way_communication_unit=§8A chip designed to enable two-way communication between mechanical machines and parasitic entities.§f
 tooltip.srparasites_traps.item.parasitic_matter=Matter that is formed into various parasites by §cDispatchers§f.
 tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §aDead Blood§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires an §aArea Marker§f to define coordinates aswell as §aDead Blood§f and §4energy§f to function.
@@ -60,19 +63,21 @@ tooltip.srparasites_traps.item.dispatcher_cerebrum=An important part of a §cDis
 tooltip.srparasites_traps.item.serrated_spikes=A trap with sharp angled spikes jutting out of it. Does more damage the faster someone moves over it and causes §cBleeding§f.
 tooltip.srparasites_traps.item.burning_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a burning substance. Does more damage the faster someone moves over it, causes §cBleeding§f and sets enemies on §6fire§f for a short amount of time.
 tooltip.srparasites_traps.item.viral_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a §agreen slime-like substance§f. Does more damage the faster someone moves over it, causes §cBleeding§f and applies §aViral§f for a short amount of time.
-tooltip.srparasites_traps.item.reconstructed_sentry=§7A crude reconstruction of a §cSentry§f.
-tooltip.srparasites_traps.item.reconstructed_seizer=§7A haphazard reconstruction of a §cSeizer§f.
+#tooltip.srparasites_traps.item.reconstructed_sentry=§8A crude reconstruction of a §cSentry§f.
+#tooltip.srparasites_traps.item.reconstructed_seizer=§8A haphazard reconstruction of a §cSeizer§f.
 tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §aBeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create §aDead Blood§f.
 tooltip.srparasites_traps.item.beckon_heart=An important part of a §aBeckon§f that somehow still remains intact.
-tooltip.srparasites_traps.item.decontaminator=A machine that rids any nearby player of the §aViral§f and §4Call of the Hive§f effect.
+tooltip.srparasites_traps.item.decontaminator=A machine that rids any nearby player of the §aViral§f and §4Call of the Hive§f effect. §8Wait... Does this literally just spray you with milk? How would that possibly cure Viral or COTH?§f.
 tooltip.srparasites_traps.item.tesla_coil=A high-voltage apparatus delivering shocks to any unfortunate being (including you) that manages to get close enough. Great for dealing with §cbig hordes§f.
-tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites and sends out a redstone signal if one is found.
+tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites using excreted pheromones which react with the contained matter. Sends out a redstone signal if there is a reaction.
 tooltip.srparasites_traps.item.hardness_analyzer=Tells you the hardness of blocks and which tier of parasites can break them.
-tooltip.srparasites_traps.item.coil=A mixture of iron and diamonds combined to maximize the electricity throughput §8(Don't question the color change)§f.
-tooltip.srparasites_traps.item.static_electricity_generator=Powers tesla coils by itself requiring no fuel.
+tooltip.srparasites_traps.item.coil=§8A mixture of iron and diamonds combined to maximize the electricity throughput (Don't question the color change).§f
+tooltip.srparasites_traps.item.static_electricity_generator=Powers tesla coils by itself requiring no fuel. §8According its inscription, these were originally produced by a company named "HBM Technologies".§f
 tooltip.srparasites_traps.item.attack_speed_augment=Increases the attack speed of certain turrets.
 tooltip.srparasites_traps.item.range_augment=Increases the range of certain turrets.
 tooltip.srparasites_traps.item.damage_augment=Increases the damage of certain turrets.
+tooltip.srparasites_traps.item.augment_general=Can be placed in one of the augment tabs slots in the following machines:\n%s
+tooltip.srparasites_traps.item.armored_semi_organic_plating=§8A plating acting as a bridge for parasitic signals while boasting a high resistance to external damage.§f
 
 # Status Messages
 status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f

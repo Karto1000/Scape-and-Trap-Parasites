@@ -6,8 +6,9 @@
     }
   ],
   "pattern": [
+    "ppp",
     "thb",
-    "sss"
+    "ppp"
   ],
   "key": {
     "t": {
@@ -17,10 +18,10 @@
       "item": "srparasites_traps:beckon_heart"
     },
     "b": {
-      "item": "minecraft:bucket"
+      "item": "srparasites_traps:biomass_storage_unit"
     },
-    "s": {
-      "item": "srparasites:semiorganic_ingot"
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
     }
   },
   "result": {

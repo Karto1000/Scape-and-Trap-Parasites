@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    "pdp",
+    "pmp",
+    "ppp"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:dispenser"
+    },
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    },
+    "m": {
+      "item": "minecraft:milk_bucket"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:decontaminator",
+    "count": 1
+  }
+}

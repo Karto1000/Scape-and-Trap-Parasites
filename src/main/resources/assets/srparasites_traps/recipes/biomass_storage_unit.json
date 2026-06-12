@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    " p ",
+    "pbp",
+    " p "
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:biomass_storage_unit",
+    "count": 1
+  }
+}

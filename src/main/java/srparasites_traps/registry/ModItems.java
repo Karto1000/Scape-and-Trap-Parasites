@@ -38,8 +38,11 @@ public class ModItems {
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
     public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item DISPATCHER_CEREBRUM = new BasicItem("dispatcher_cerebrum").maxStackSize(16).rarity(EnumRarity.RARE);
-    public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
-    public static Item RECONSTRUCTED_SEIZER = new BasicItem("reconstructed_seizer").maxStackSize(1);
+//    public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
+//    public static Item RECONSTRUCTED_SEIZER = new BasicItem("reconstructed_seizer").maxStackSize(1);
+    public static Item ARMORED_SEMI_ORGANIC_PLATING = new BasicItem("armored_semi_organic_plating");
+    public static Item BIOMASS_STORAGE_UNIT = new BasicItem("biomass_storage_unit");
+    public static Item HATCH = new BasicItem("hatch");
     public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item ANTENNA = new BasicItem("antenna");
     public static Item COIL = new BasicItem("coil");

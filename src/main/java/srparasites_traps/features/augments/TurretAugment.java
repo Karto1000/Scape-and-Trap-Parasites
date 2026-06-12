@@ -7,9 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.IExtendedAugmentable;
+import srparasites_traps.registry.ModTileEntities;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
@@ -24,7 +28,7 @@ public class TurretAugment extends Item implements IAugmentItem {
 
         this.setRegistryName(SRParasitesTraps.MOD_ID, registryName);
         this.setTranslationKey(getTranslationKeyFor(registryName));
-        this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override
@@ -39,6 +43,11 @@ public class TurretAugment extends Item implements IAugmentItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + this.registryName));
+        String machinesWithAugments = ModTileEntities.TILE_ENTITIES.stream()
+                .filter(t -> IExtendedAugmentable.class.isAssignableFrom(t.tileEntityClass))
+                .map(t -> String.format("- %s", t.block.getLocalizedName()))
+                .collect(Collectors.joining("\n"));
+
+        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + this.registryName) + "\n" + getTooltipFor("item.augment_general", machinesWithAugments));
     }
 }

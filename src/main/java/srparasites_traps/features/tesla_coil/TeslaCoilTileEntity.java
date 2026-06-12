@@ -28,6 +28,7 @@ import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.network.SpawnElectricityParticlePacket;
 import srparasites_traps.network.SpawnLightningParticlePacket;
+import srparasites_traps.registry.ModBlocks;
 import srparasites_traps.registry.ModPotions;
 import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.NBTHelper;
@@ -200,12 +201,20 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         }
     }
 
+    private void handleStaticElectricityGenerator() {
+        if (this.world.getBlockState(this.pos.down(1)).getBlock() == ModBlocks.STATIC_ELECTRICITY_GENERATOR) {
+            this.energyStorage.receiveEnergy(this.maxEnergy, false);
+        }
+    }
+
     @Override
     public void update() {
         if (this.firstTick) {
             this.updateAugmentStatus();
             this.firstTick = false;
         }
+
+        handleStaticElectricityGenerator();
 
         if (this.energyStorage.getEnergyStored() < energyPerShot) return;
 

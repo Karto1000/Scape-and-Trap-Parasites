@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 
 public class SentryTurretGui extends GuiContainerCore {
@@ -38,8 +37,7 @@ public class SentryTurretGui extends GuiContainerCore {
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
-        if (ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM)
-            addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots));
+        addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots));
         addTab(new TabRedstoneControl(this, this.tileEntity));
     }
 

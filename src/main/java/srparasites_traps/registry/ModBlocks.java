@@ -13,7 +13,7 @@ import srparasites_traps.features.sentry_turret.SentryTurretBlock;
 import srparasites_traps.features.serrated_spikes.BurningSerratedSpikes;
 import srparasites_traps.features.serrated_spikes.SerratedSpikesBlock;
 import srparasites_traps.features.serrated_spikes.ViralSerratedSpikes;
-import srparasites_traps.features.static_electricity_generator.StaticElectricityGeneratorBlock;
+import srparasites_traps.features.tesla_coil.StaticElectricityGeneratorBlock;
 import srparasites_traps.features.tesla_coil.TeslaCoilBlock;
 
 import java.lang.reflect.Field;

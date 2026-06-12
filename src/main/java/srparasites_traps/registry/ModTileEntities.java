@@ -1,5 +1,7 @@
 package srparasites_traps.registry;
 
+import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
@@ -12,19 +14,37 @@ import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
 import srparasites_traps.features.sentry_turret.SentryTurretBlock;
 import srparasites_traps.features.sentry_turret.SentryTurretTileEntity;
-import srparasites_traps.features.static_electricity_generator.StaticElectricityGeneratorBlock;
-import srparasites_traps.features.static_electricity_generator.StaticElectricityGeneratorTileEntity;
 import srparasites_traps.features.tesla_coil.TeslaCoilBlock;
 import srparasites_traps.features.tesla_coil.TeslaCoilTileEntity;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ModTileEntities {
+    public static final List<TileEntityRegistration> TILE_ENTITIES = Arrays.asList(
+            new TileEntityRegistration(SentryTurretTileEntity.class, ModBlocks.SENTRY_TURRET, SentryTurretBlock.REGISTRY_NAME),
+            new TileEntityRegistration(RelocatorTileEntity.class, ModBlocks.RELOCATOR, RelocatorBlock.REGISTRY_NAME),
+            new TileEntityRegistration(BiomassFactoryTileEntity.class, ModBlocks.BIOMASS_FACTORY, BiomassFactoryBlock.REGISTRY_NAME),
+            new TileEntityRegistration(DecontaminatorTileEntity.class, ModBlocks.DECONTAMINATOR, DecontaminatorBlock.REGISTRY_NAME),
+            new TileEntityRegistration(TeslaCoilTileEntity.class, ModBlocks.TESLA_COIL, TeslaCoilBlock.REGISTRY_NAME),
+            new TileEntityRegistration(ProximitySensorTileEntity.class, ModBlocks.PROXIMITY_SENSOR, ProximitySensorBlock.REGISTRY_NAME)
+    );
+
     public static void registerTileEntities() {
-        GameRegistry.registerTileEntity(SentryTurretTileEntity.class, SRParasitesTraps.MOD_ID + ":" + SentryTurretBlock.REGISTRY_NAME + "_tile_entity");
-        GameRegistry.registerTileEntity(RelocatorTileEntity.class, SRParasitesTraps.MOD_ID + ":" + RelocatorBlock.REGISTRY_NAME + "_tile_entity");
-        GameRegistry.registerTileEntity(BiomassFactoryTileEntity.class, SRParasitesTraps.MOD_ID + ":" + BiomassFactoryBlock.REGISTRY_NAME + "_tile_entity");
-        GameRegistry.registerTileEntity(DecontaminatorTileEntity.class, SRParasitesTraps.MOD_ID + ":" + DecontaminatorBlock.REGISTRY_NAME + "_tile_entity");
-        GameRegistry.registerTileEntity(TeslaCoilTileEntity.class, SRParasitesTraps.MOD_ID + ":" + TeslaCoilBlock.REGISTRY_NAME + "_tile_entity");
-        GameRegistry.registerTileEntity(ProximitySensorTileEntity.class, SRParasitesTraps.MOD_ID + ":" + ProximitySensorBlock.REGISTRY_NAME + "_tile_entity");
-        GameRegistry.registerTileEntity(StaticElectricityGeneratorTileEntity.class, SRParasitesTraps.MOD_ID + ":" + StaticElectricityGeneratorBlock.REGISTRY_NAME + "_tile_entity");
+        for (TileEntityRegistration tileEntity : TILE_ENTITIES) {
+            GameRegistry.registerTileEntity(tileEntity.tileEntityClass, SRParasitesTraps.MOD_ID + ":" + tileEntity.registryName + "_tile_entity");
+        }
+    }
+
+    public static class TileEntityRegistration {
+        public final Class<? extends TileEntity> tileEntityClass;
+        public final Block block;
+        public final String registryName;
+
+        public TileEntityRegistration(Class<? extends TileEntity> tileEntityClass, Block block, String registryName) {
+            this.tileEntityClass = tileEntityClass;
+            this.block = block;
+            this.registryName = registryName;
+        }
     }
 }

@@ -6,28 +6,25 @@
     }
   ],
   "pattern": [
-    " t ",
-    "crb",
-    "sns"
+    "php",
+    "snb",
+    "ppp"
   ],
   "key": {
-    "s": {
-      "item": "srparasites:semiorganic_ingot"
+    "h": {
+      "item": "srparasites_traps:hatch"
     },
-    "c": {
-      "item": "srparasites_traps:two_way_communication_unit"
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    },
+    "s": {
+      "item": "srparasites_traps:proximity_sensor"
     },
     "b": {
-      "item": "minecraft:bucket"
-    },
-    "t": {
-      "item": "srparasites_traps:reconstructed_sentry"
+      "item": "srparasites_traps:biomass_storage_unit"
     },
     "n": {
       "item": "srparasites:dispatchern"
-    },
-    "r": {
-      "item": "srparasites_traps:dispatcher_cerebrum"
     }
   },
   "result": {

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    "os",
+    "so"
+  ],
+  "key": {
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "s": {
+      "item": "srparasites:semiorganic_ingot"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:armored_semi_organic_plating",
+    "count": 2
+  }
+}

@@ -6,28 +6,28 @@
     }
   ],
   "pattern": [
-    " r ",
-    "cab",
-    "sns"
+    "aha",
+    "cnb",
+    "ppp"
   ],
   "key": {
-    "s": {
-      "item": "srparasites:semiorganic_ingot"
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
     },
     "c": {
       "item": "srparasites_traps:two_way_communication_unit"
     },
     "b": {
-      "item": "minecraft:bucket"
-    },
-    "r": {
-      "item": "srparasites_traps:reconstructed_seizer"
+      "item": "srparasites_traps:biomass_storage_unit"
     },
     "n": {
       "item": "srparasites:dispatchern"
     },
     "a": {
-      "item": "srparasites_traps:dispatcher_brainstem"
+      "item": "srparasites_traps:antenna"
+    },
+    "h": {
+      "item": "srparasites_traps:hatch"
     }
   },
   "result": {

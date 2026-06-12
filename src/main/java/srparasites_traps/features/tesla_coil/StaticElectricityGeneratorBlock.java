@@ -1,12 +1,10 @@
-package srparasites_traps.features.static_electricity_generator;
+package srparasites_traps.features.tesla_coil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
@@ -32,17 +30,6 @@ public class StaticElectricityGeneratorBlock extends Block {
 
         if (ForgeConfigHandler.teslaCoil.ENABLE_STATIC_ELECTRICITY_GENERATOR)
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
-    }
-
-    @Override
-    public boolean hasTileEntity(IBlockState state) {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        return new StaticElectricityGeneratorTileEntity();
     }
 
     @Override

@@ -61,6 +61,16 @@ public class JEICompat implements IModPlugin {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PROXIMITY_SENSOR));
         }
 
+        if (!ForgeConfigHandler.hardnessAnalyzer.ENABLE_HARDNESS_ANALYZER) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.HARDNESS_ANALYZER_ITEM));
+        }
+
+        if (!ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.DAMAGE_AUGMENT));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.RANGE_AUGMENT));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.ATTACK_SPEED_AUGMENT));
+        }
+
         for (Item item : ModItems.getItemList()) {
             String infoKey = String.format("info.srparasites_traps.%s", item.getRegistryName().getPath());
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    "pap",
+    "ptp",
+    "pmp"
+  ],
+  "key": {
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    },
+    "m": {
+      "item": "srparasites_traps:parasitic_matter"
+    },
+    "t": {
+      "item": "srparasites_traps:two_way_communication_unit"
+    },
+    "a": {
+      "item": "srparasites_traps:antenna"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:proximity_sensor",
+    "count": 1
+  }
+}
