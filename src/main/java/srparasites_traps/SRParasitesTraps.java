@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import srparasites_traps.config.SRParasitesTrapsCreativeTab;
 import srparasites_traps.proxy.CommonProxy;
 
-@Mod(modid = SRParasitesTraps.MOD_ID, version = SRParasitesTraps.VERSION, name = SRParasitesTraps.NAME, dependencies = "required-after:fermiumbooter")
+@Mod(modid = SRParasitesTraps.MOD_ID, version = SRParasitesTraps.VERSION, name = SRParasitesTraps.NAME, dependencies = "required-after:fermiumbooter;required-after:cofhcore;required-after:srparasites;required-after:redstoneflux")
 public class SRParasitesTraps {
     public static final String MOD_ID = "srparasites_traps";
     public static final String VERSION = "0.0.1";

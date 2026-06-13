@@ -1,15 +1,19 @@
 [
-{
-  "modid": "${mod_id}",
-  "name": "${mod_name}",
-  "description": "${mod_description}",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://www.curseforge.com/members/ReplaceMeAuthor/projects",
-  "updateUrl": "",
-  "authorList": ${mod_author},
-  "credits": "",
-  "logoFile": "",
-  "dependencies": []
-}
+  {
+    "modid": "${mod_id}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/Karto1000/Scape-and-Trap-Parasites",
+    "authorList": [
+      "Kartoffelbauer1000"
+    ],
+    "dependencies": [
+      "srparasites@[1.10.5,)",
+      "cofhcore@[4.6.6.1,)",
+      "fermiumbooter@[968474,)",
+      "redstoneflux@[1.12-2.1.1.1,)"
+    ]
+  }
 ]
