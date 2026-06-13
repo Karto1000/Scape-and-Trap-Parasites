@@ -58,105 +58,105 @@ public class ForgeConfigHandler {
         @Config.Name("Enable sentry turret")
         @Config.Comment("If true, the sentry turret will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_SENTRY_TURRET = true;
+        public boolean ENABLE = true;
 
-        @Config.Name("Default sentry turret attack delay (Ticks)")
+        @Config.Name("Default attack delay (Ticks)")
         @Config.Comment("The time in ticks between each attack of a sentry turret")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ATTACK_DELAY = 20;
+        public int DEFAULT_ATTACK_DELAY = 20;
 
-        @Config.Name("Default sentry turret range (Blocks)")
+        @Config.Name("Default range (Blocks)")
         @Config.Comment("The range in blocks that a sentry turret can attack")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_SENTRY_TURRET_RANGE = 16;
+        public double DEFAULT_RANGE = 16;
 
-        @Config.Name("Default sentry turret projectile parasite resistance reduction chance (%)")
+        @Config.Name("Default projectile parasite resistance reduction chance (%)")
         @Config.Comment("The chance that the projectile the sentry shoots will reduce the resistance of the parasite it hits")
         @Config.RangeInt(min = 0, max = 100)
-        public int DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE = 25;
+        public int DEFAULT_RESISTANCE_REDUCE_CHANCE = 25;
 
-        @Config.Name("Default sentry turret projectile parasite resistance reduction amount")
+        @Config.Name("Default projectile parasite resistance reduction amount")
         @Config.Comment("The amount of resistance that the projectile the sentry shoots will reduce the parasite it hits")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT = 4;
+        public int DEFAULT_RESISTANCE_REDUCTION_AMOUNT = 4;
 
-        @Config.Name("Default sentry turret projectile damage")
+        @Config.Name("Default projectile damage")
         @Config.Comment("The damage that the projectile the sentry shoots will deal to the entity it hits")
         @Config.RangeDouble(min = 0.0)
-        public float DEFAULT_SENTRY_TURRET_DAMAGE = 20;
+        public float DEFAULT_DAMAGE = 20;
 
         @Config.Name("Apply Poison")
         @Config.Comment("Whether or not the projectile the sentry shoots will poison the entity it hits")
-        public boolean DEFAULT_SENTRY_TURRET_APPLY_POISON = false;
+        public boolean APPLY_POISON = false;
 
-        @Config.Name("Default sentry turret projectile poison duration (Ticks)")
+        @Config.Name("Default projectile poison duration (Ticks)")
         @Config.Comment("The duration in ticks that the projectile the sentry shoots will poison the entity it hits")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_POISON_DURATION = 100;
+        public int DEFAULT_POISON_DURATION = 100;
 
-        @Config.Name("Default sentry turret projectile poison amplifier")
+        @Config.Name("Default projectile poison amplifier")
         @Config.Comment("The amplifier that the projectile the sentry shoots will poison the entity it hits (0 for none)")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER = 1;
+        public int DEFAULT_POISON_AMPLIFIER = 1;
 
-        @Config.Name("Default sentry turret max energy (RF)")
+        @Config.Name("Default max energy (RF)")
         @Config.Comment("The maximum amount of energy that a sentry turret can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_MAX_ENERGY = 10000;
+        public int DEFAULT_MAX_ENERGY = 10000;
 
-        @Config.Name("Default sentry turret max biomass (mB)")
+        @Config.Name("Default max biomass (mB)")
         @Config.Comment("The maximum amount of biomass that a sentry turret can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_MAX_BIOMASS = 2000;
+        public int DEFAULT_MAX_BIOMASS = 2000;
 
-        @Config.Name("Default sentry turret biomass per shot (mB)")
+        @Config.Name("Default biomass per shot (mB)")
         @Config.Comment("The amount of biomass that a sentry turret uses per shot")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT = 20;
+        public int DEFAULT_BIOMASS_PER_SHOT = 20;
 
-        @Config.Name("Default sentry turret energy per shot (RF)")
+        @Config.Name("Default energy per shot (RF)")
         @Config.Comment("The amount of energy that a sentry turret uses per shot")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT = 1000;
+        public int DEFAULT_ENERGY_PER_SHOT = 1000;
 
-        @Config.Name("Default sentry turret respawn time after dying (Seconds)")
-        @Config.Comment("The time that the sentry takes before being able to be deployed again")
+        @Config.Name("Default entity respawn time after dying (Seconds)")
+        @Config.Comment("The time that the sentry entity takes before being able to be deployed again")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_RESPAWN_TIME = 10;
+        public int DEFAULT_ENTITY_RESPAWN_TIME = 10;
 
-        @Config.Name("Default sentry turret emerge time (Seconds)")
-        @Config.Comment("The time that the sentry turret takes to emerge from the ground")
+        @Config.Name("Default entity emerge time (Seconds)")
+        @Config.Comment("The time that the sentry entity turret takes to emerge from the ground")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_SENTRY_TURRET_EMERGE_TIME = 5.1F;
+        public double DEFAULT_ENTITY_EMERGE_TIME = 5.1F;
 
-        @Config.Name("Default sentry turret entity health (Hearts)")
+        @Config.Name("Default entity health (Hearts)")
         @Config.Comment("The health of the sentry turret entity")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_SENTRY_TURRET_ENTITY_HEALTH = 40;
+        public double DEFAULT_ENTITY_HEALTH = 40;
 
-        @Config.Name("Default sentry turret entity armor")
+        @Config.Name("Default entity armor")
         @Config.Comment("The armor of the sentry turret entity")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_SENTRY_TURRET_ENTITY_ARMOR = 5.0;
+        public double DEFAULT_ENTITY_ARMOR = 5.0;
 
-        @Config.Name("Default sentry turret entity heal interval (Ticks)")
+        @Config.Name("Default entity heal interval (Ticks)")
         @Config.Comment("The interval between each heal")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ENTITY_HEAL_INTERVAL = 20;
+        public int DEFAULT_ENTITY_HEAL_INTERVAL = 20;
 
-        @Config.Name("Default sentry turret entity heal amount (Hearts)")
+        @Config.Name("Default entity heal amount (Hearts)")
         @Config.Comment("The amount of health that the sentry turret entity heals")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SENTRY_TURRET_ENTITY_HEAL_AMOUNT = 2;
+        public int DEFAULT_ENTITY_HEAL_AMOUNT = 2;
     }
 
     public static class RelocatorConfig {
         @Config.Name("Enable relocator")
         @Config.Comment("If true, the relocator will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_RELOCATOR = true;
+        public boolean ENABLE = true;
 
-        @Config.Name("Default relocation marker volume (Blocks)")
+        @Config.Name("Default area marker volume (Blocks)")
         @Config.Comment("The maximum area (x * y * z) that the relocation marker can be set to")
         @Config.RangeInt(min = 0)
         public int DEFAULT_AREA_MARKER_MAX_VOLUME = 200;
@@ -164,228 +164,228 @@ public class ForgeConfigHandler {
         @Config.Name("Default relocator entity emerge time (Seconds)")
         @Config.Comment("The time that relocator entity takes to emerge from the ground")
         @Config.RangeDouble(min = 0.0)
-        public double DEFAULT_RELOCATOR_EMERGE_TIME = 1.0;
+        public double DEFAULT_ENTITY_EMERGE_TIME = 1.0;
 
         @Config.Name("Default relocator entity max health")
         @Config.Comment("The max health of the relocator entity")
         @Config.RangeInt(min = 1)
-        public int DEFAULT_RELOCATOR_MAX_HEALTH = 30;
+        public int DEFAULT_ENTITY_MAX_HEALTH = 30;
 
-        @Config.Name("Default relocator block selection retries")
+        @Config.Name("Default block selection retries")
         @Config.Comment("The amount of times the relocator tries to find a valid block to relocate an entity to")
         @Config.RangeInt(min = 1)
-        public int DEFAULT_RELOCATOR_BLOCK_SELECTION_RETRIES = 10;
+        public int DEFAULT_BLOCK_SELECTION_RETRIES = 10;
 
-        @Config.Name("Default relocator block selection max block hardness")
+        @Config.Name("Default block selection max block hardness")
         @Config.Comment("The max hardness that a block can have to be considered valid for a relocator to spawn")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_MAX_BLOCK_HARDNESS = 5;
+        public int DEFAULT_MAX_BLOCK_HARDNESS = 5;
 
-        @Config.Name("Default relocator max relocators in reserve")
+        @Config.Name("Default max relocators in reserve")
         @Config.Comment("The max amount of relocators that can be spawned after one another")
         @Config.RangeInt(min = 1)
-        public int DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE = 2;
+        public int DEFAULT_MAX_RELOCATORS_IN_RESERVE = 2;
 
-        @Config.Name("Default relocator max relocator spawn delay (Ticks)")
+        @Config.Name("Default max relocator spawn delay (Ticks)")
         @Config.Comment("The time in ticks between each possible relocator spawn")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_RELOCATOR_CREATE_DELAY = 400;
+        public int DEFAULT_RELOCATOR_CREATE_DELAY = 400;
 
-        @Config.Name("Default relocator max energy (RF)")
+        @Config.Name("Default max energy (RF)")
         @Config.Comment("The maximum amount of energy that a relocation turret can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_MAX_ENERGY = 10000;
+        public int DEFAULT_MAX_ENERGY = 10000;
 
-        @Config.Name("Default sentry turret max biomass (mB)")
+        @Config.Name("Default max biomass (mB)")
         @Config.Comment("The maximum amount of biomass that a relocation turret can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_MAX_BIOMASS = 1000;
+        public int DEFAULT_MAX_BIOMASS = 1000;
 
-        @Config.Name("Default relocator energy per tick (RF)")
+        @Config.Name("Default energy per tick (RF)")
         @Config.Comment("The amount of energy that a relocation turret uses per tick")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_ENERGY_PER_TICK = 25;
+        public int DEFAULT_ENERGY_PER_TICK = 25;
 
-        @Config.Name("Default relocator biomass per relocator spawn (mB)")
+        @Config.Name("Default biomass per relocator entity spawn (mB)")
         @Config.Comment("The amount of biomass that a relocator requires to spawn")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN = 100;
+        public int DEFAULT_BIOMASS_FOR_SPAWN = 100;
 
-        @Config.Name("Default relocator max area distance (Blocks)")
+        @Config.Name("Default max area distance (Blocks)")
         @Config.Comment("The max distance the area can be away from the source block")
         @Config.RangeInt(min = 0)
-        public final int DEFAULT_RELOCATOR_MAX_AREA_DISTANCE = 20;
+        public final int DEFAULT_MAX_AREA_DISTANCE = 20;
     }
 
     public static class SerratedSpikesConfig {
         @Config.Name("Enable serrated spikes")
         @Config.Comment("If true, the serrated spikes will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_SERRATED_SPIKES = true;
+        public boolean ENABLE = true;
 
-        @Config.Name("Default serrated spikes damage")
+        @Config.Name("Default damage")
         @Config.Comment("The damage that the serrated spikes deal to the entity they hit")
         @Config.RangeDouble(min = 0.0)
-        public float DEFAULT_SERRATED_SPIKES_DAMAGE = 2;
+        public float DEFAULT_DAMAGE = 2;
 
-        @Config.Name("Default serrated spikes damage threshold")
+        @Config.Name("Default damage threshold")
         @Config.Comment("The combined motion on the x,y and z axis that the entity must have to be damaged by the spikes")
         @Config.RangeDouble(min = 0.0)
         public float DEFAULT_SERRATED_SPIKES_DAMAGE_MOVE_THRESHOLD = 0.1F;
 
-        @Config.Name("Default serrated spikes move sum multiplier")
+        @Config.Name("Default move sum multiplier")
         @Config.Comment("Multiplies motion sum that reduces the invulnerability time of the entity")
         @Config.RangeDouble(min = 0.0)
-        public float DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER = 15.0F;
+        public float DEFAULT_INVULNERABILITY_REDUCTION_MULTIPLIER = 15.0F;
 
-        @Config.Name("Default serrated spikes slow down amount")
+        @Config.Name("Default slow down amount")
         @Config.Comment("The amount of motion that the entity will lose when the spikes hit it 0.1 -> lose 90% of movement speed")
         @Config.RangeDouble(min = 0.0, max = 1.0)
-        public float DEFAULT_SERRATED_SPIKES_SLOW_DOWN_AMOUNT = 0.9F;
+        public float DEFAULT_SLOW_DOWN_AMOUNT = 0.9F;
 
-        @Config.Name("Default serrated spikes min hurt resistance time (Ticks)")
+        @Config.Name("Default min hurt resistance time (Ticks)")
         @Config.Comment("The time in ticks that the hurtResistance has to be lower than to cause more damage")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SERRATED_SPIKES_MIN_HURT_RESISTANT_TIME = 10;
+        public int DEFAULT_MIN_HURT_RESISTANT_TIME = 10;
 
-        @Config.Name("Default serrated spikes deal bleeding damage")
+        @Config.Name("Deal bleeding damage?")
         @Config.Comment("If true, the serrated spikes will deal bleeding damage to the entity they hit")
-        public boolean SERRATED_SPIKES_DEAL_BLEEDING_DAMAGE = true;
+        public boolean BLEEDING_DAMAGE = true;
 
-        @Config.Name("Default serrated spikes bleeding duration (Ticks)")
+        @Config.Name("Default bleeding duration (Ticks)")
         @Config.Comment("The duration in ticks that the entity will be bleeding")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION = 80;
+        public int DEFAULT_BLEEDING_DURATION = 80;
 
         @Config.Name("Default burning serrated spikes flame duration (Seconds)")
         @Config.Comment("The duration in seconds that the entity will be on fire")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_BURNING_SERRATED_SPIKES_FLAME_DURATION = 5;
+        public int DEFAULT_FLAME_DURATION = 5;
 
-        @Config.Name("Default serrated spikes viral duration (Ticks)")
+        @Config.Name("Default viral serrated spikes viral effect duration (Ticks)")
         @Config.Comment("The duration in ticks that the entity will have the viral effect")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_DURATION = 80;
+        public int DEFAULT_VIRAL_EFFECT_DURATION = 80;
 
-        @Config.Name("Default serrated spikes viral amplifier")
+        @Config.Name("Default viral serrated spikes viral effect amplifier")
         @Config.Comment("The amplifier level of the viral effect")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_AMPLIFIER = 0;
+        public int DEFAULT_VIRAL_AMPLIFIER = 0;
     }
 
     public static class BiomassFactoryConfig {
         @Config.Name("Enable biomass factory")
         @Config.Comment("If true, the biomass factory will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_BIOMASS_FACTORY = true;
+        public boolean ENABLE = true;
 
-        @Config.Name("Default biomass factory max biomass storage (mB)")
+        @Config.Name("Default max biomass storage (mB)")
         @Config.Comment("The maximum amount of biomass that a biomass factory can store")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_BIOMASS_FACTORY_MAX_BIOMASS = 1000;
+        public int DEFAULT_MAX_BIOMASS = 1000;
 
-        @Config.Name("Default biomass factory item consume time (Ticks)")
+        @Config.Name("Default item consume delay (Ticks)")
         @Config.Comment("The amount of ticks between each item consumption")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY = 2;
+        public int DEFAULT_CONSUME_DELAY = 2;
     }
 
     public static class DecontaminatorConfig {
         @Config.Name("Enable decontaminator")
         @Config.Comment("If true, the decontaminator will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_DECONTAMINATOR = true;
+        public boolean ENABLE = true;
 
-        @Config.Name("Default decontaminator max spray capacity")
+        @Config.Name("Default max spray capacity")
         @Config.Comment("The amount of spray charges the decontaminator can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_DECONTAMINATOR_SPRAY_CAPACITY = 2;
+        public int DEFAULT_SPRAY_CAPACITY = 2;
 
-        @Config.Name("Default decontaminator spray charge duration (Ticks)")
+        @Config.Name("Default spray charge duration (Ticks)")
         @Config.Comment("The amount of ticks that a decontaminator waits before spraying again")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS = 20;
+        public int DEFAULT_SPRAY_COOLDOWN_TICKS = 20;
 
-        @Config.Name("Default decontaminator open duration (Ticks)")
+        @Config.Name("Default open duration (Ticks)")
         @Config.Comment("The amount of ticks that a decontaminator takes to open")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS = 20;
+        public int DEFAULT_OPEN_DURATION_TICKS = 20;
 
-        @Config.Name("Default decontaminator close duration (Ticks)")
+        @Config.Name("Default close duration (Ticks)")
         @Config.Comment("The amount of ticks that a decontaminator takes to close")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS = 20;
+        public int DEFAULT_CLOSE_DURATION_TICKS = 20;
 
-        @Config.Name("Default decontaminator capacity regeneration time (Ticks)")
+        @Config.Name("Default capacity regeneration time (Ticks)")
         @Config.Comment("The amount of ticks that it takes for the decontaminator to regenerate one charge of its capacity")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS = 200;
+        public int DEFAULT_CAPACITY_REGEN_TIME_TICKS = 200;
     }
 
     public static class ObsidianBlocksConfig {
         @Config.Name("Enable obsidian blocks")
         @Config.Comment("If true, the obsidian blocks will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_OBSIDIAN_BLOCKS = true;
+        public boolean ENABLE = true;
     }
 
     public static class TeslaCoilConfig {
         @Config.Name("Enable Tesla coil")
         @Config.Comment("If true, the Tesla coil will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_TESLA_COIL = true;
+        public boolean ENABLE = true;
 
         @Config.Name("Enable static electricity generator")
         @Config.Comment("If true, the static electricity generator will be enabled")
         @Config.RequiresMcRestart
         public boolean ENABLE_STATIC_ELECTRICITY_GENERATOR = true;
 
-        @Config.Name("Default Tesla coil max energy (RF)")
+        @Config.Name("Default max energy (RF)")
         @Config.Comment("The maximum amount of energy that a Tesla coil can hold")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_TESLA_COIL_MAX_ENERGY = 10000;
+        public int DEFAULT__MAX_ENERGY = 10000;
 
-        @Config.Name("Default Tesla coil energy per shot (RF)")
+        @Config.Name("Default energy per shot (RF)")
         @Config.Comment("The amount of energy consumed by a Tesla coil per shot")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_TESLA_COIL_ENERGY_PER_SHOT = 1000;
+        public int DEFAULT_ENERGY_PER_SHOT = 1000;
 
-        @Config.Name("Default Tesla coil range (Blocks)")
+        @Config.Name("Default range (Blocks)")
         @Config.Comment("The range the Tesla coil can detect enemies")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_TESLA_COIL_RANGE = 10;
+        public int DEFAULT_RANGE = 10;
 
-        @Config.Name("Default Tesla coil fire delay (Ticks)")
+        @Config.Name("Default fire delay (Ticks)")
         @Config.Comment("The time between each shot")
         @Config.RangeInt(min = 0)
-        public int DEFAULT_TESLA_COIL_FIRE_DELAY = 50;
+        public int DEFAULT_FIRE_DELAY = 50;
 
-        @Config.Name("Default Tesla coil charging delay (Ticks)")
+        @Config.Name("Default charging delay (Ticks)")
         @Config.Comment("The time in ticks the Tesla coil has to charge up before shooting after finding an enemy")
         @Config.RangeInt(min = 0)
         public final int DEFAULT_CHARGING_DELAY = 5;
 
-        @Config.Name("Default Tesla coil shocked arc chance (%)")
+        @Config.Name("Default shocked arc chance (%)")
         @Config.Comment("The chance that an enemy hit by the Tesla coil will arc lightning to other nearby enemies")
         @Config.RangeInt(min = 0, max = 100)
         public int DEFAULT_SHOCKED_CHANCE_TO_ARC = 50;
 
-        @Config.Name("Default Tesla coil shocked arc range (Blocks)")
+        @Config.Name("Default shocked arc range (Blocks)")
         @Config.Comment("The range that the lightning arc can reach")
         @Config.RangeInt(min = 0)
         public int DEFAULT_SHOCKED_ARC_RANGE = 4;
 
-        @Config.Name("Default Tesla coil shocked arc damage")
+        @Config.Name("Default shocked arc damage")
         @Config.Comment("The amount of damage dealt by a lightning arc, is multiplied by the amplifier of the shocked effect")
         @Config.RangeDouble(min = 0)
         public double DEFAULT_SHOCKED_ARC_DAMAGE = 3;
 
-        @Config.Name("Default Tesla coil shocked arc amplifier")
+        @Config.Name("Default coil shocked arc amplifier")
         @Config.Comment("The amplifier of the shocked effect. The first enemy that is hit by the Tesla coil arc will have this amplifier. Each subsequent enemy that is hit in that chain will have an amplifier of this value - 1. The higher the amplifier, the more damage the lightning arc will deal and the further it will reach.")
         @Config.RangeInt(min = 0)
         public int DEFAULT_SHOCKED_ARC_AMPLIFIER = 3;
 
-        @Config.Name("Default Tesla coil shocked arc jump limit")
+        @Config.Name("Default shocked arc jump limit")
         @Config.Comment("The maximum number of entities that can be hit by an electrified entity.")
         @Config.RangeInt(min = 0)
         public final int DEFAULT_SHOCKED_JUMP_LIMIT = 2;
@@ -395,26 +395,36 @@ public class ForgeConfigHandler {
         @Config.Name("Enable proximity sensor")
         @Config.Comment("If true, the proximity sensor will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_PROXIMITY_SENSOR = true;
+        public boolean ENABLE = true;
 
-        @Config.Name("Default proximity sensor max area distance (Blocks)")
+        @Config.Name("Default max area distance (Blocks)")
         @Config.Comment("The max distance the area from an area marker can be away from the source block")
         @Config.RangeInt(min = 0)
-        public final int DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE = 20;
+        public final int DEFAULT_MAX_AREA_DISTANCE = 20;
     }
 
     public static class HardnessAnalyzerConfig {
         @Config.Name("Enable hardness analyzer")
         @Config.Comment("If true, the hardness analyzer will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_HARDNESS_ANALYZER = true;
+        public boolean ENABLE = true;
+
+        @Config.Name("Gui text offset X (Px)")
+        @Config.Comment("The X offset of the text in the hardness analyzer GUI")
+        @Config.RangeInt(min = 0)
+        public int GUI_TEXT_OFFSET_X = 5;
+
+        @Config.Name("Gui text offset Y (Px)")
+        @Config.Comment("The Y offset of the text in the hardness analyzer GUI")
+        @Config.RangeInt(min = 0)
+        public int GUI_TEXT_OFFSET_Y = 5;
     }
 
     public static class AugmentConfig {
         @Config.Name("Enable augment system")
         @Config.Comment("If true, the augment system will be enabled")
         @Config.RequiresMcRestart
-        public boolean ENABLE_AUGMENT_SYSTEM = true;
+        public boolean ENABLE = true;
 
         @Config.Name("Sentry turret range increase (Blocks)")
         @Config.Comment("The increase in range for the sentry turret in blocks when a range augment is applied")

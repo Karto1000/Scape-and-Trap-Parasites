@@ -40,7 +40,7 @@ public class BiomassFactoryBlock extends Block {
         this.setHarvestLevel("pickaxe", 2);
         this.setSoundType(SoundType.METAL);
 
-        if (ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY)
+        if (ForgeConfigHandler.biomassFactory.ENABLE)
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 

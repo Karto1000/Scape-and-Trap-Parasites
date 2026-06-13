@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class ProximitySensorConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.proximitySensor.ENABLE_PROXIMITY_SENSOR;
+        return () -> ForgeConfigHandler.proximitySensor.ENABLE;
     }
 }

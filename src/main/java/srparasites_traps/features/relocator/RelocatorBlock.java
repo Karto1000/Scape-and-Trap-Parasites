@@ -38,7 +38,7 @@ public class RelocatorBlock extends Block {
         setResistance(1200);
         setHarvestLevel("pickaxe", 2);
         setSoundType(SoundType.METAL);
-        if (ForgeConfigHandler.relocator.ENABLE_RELOCATOR) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.relocator.ENABLE) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

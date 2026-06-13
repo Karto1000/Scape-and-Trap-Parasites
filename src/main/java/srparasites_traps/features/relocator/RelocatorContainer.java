@@ -38,7 +38,7 @@ public class RelocatorContainer extends ContainerCore {
                         player.sendMessage(
                                 new TextComponentTranslation(
                                         getServerStatusFor("area_marker.invalid_areas"),
-                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_AREA_DISTANCE
+                                        ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE
                                 )
                         );
                     }
@@ -61,7 +61,7 @@ public class RelocatorContainer extends ContainerCore {
                         player.sendMessage(
                                 new TextComponentTranslation(
                                         getServerStatusFor("area_marker.invalid_areas"),
-                                        ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_AREA_DISTANCE
+                                        ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE
                                 )
                         );
                     }

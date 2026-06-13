@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
 import srparasites_traps.features.hardness_analyser.HardnessAnalyzerItem;
 import srparasites_traps.registry.ModItems;
@@ -27,7 +28,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RenderHandler {
-    private static final int HARDNESS_ANALYZER_OFFSET_PX = 5;
     private String cachedStatus = null;
     private Float cachedHardness = null;
     private String cachedName = null;
@@ -125,8 +125,8 @@ public class RenderHandler {
 
         mc.fontRenderer.drawSplitString(
                 text,
-                HARDNESS_ANALYZER_OFFSET_PX,
-                HARDNESS_ANALYZER_OFFSET_PX,
+                ForgeConfigHandler.hardnessAnalyzer.GUI_TEXT_OFFSET_X,
+                ForgeConfigHandler.hardnessAnalyzer.GUI_TEXT_OFFSET_Y,
                 500,
                 0xFFFFFF
         );

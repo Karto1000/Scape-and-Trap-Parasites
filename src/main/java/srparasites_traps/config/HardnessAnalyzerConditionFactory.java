@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class HardnessAnalyzerConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.hardnessAnalyzer.ENABLE_HARDNESS_ANALYZER;
+        return () -> ForgeConfigHandler.hardnessAnalyzer.ENABLE;
     }
 }

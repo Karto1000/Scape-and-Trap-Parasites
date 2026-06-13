@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class TeslaCoilConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.teslaCoil.ENABLE_TESLA_COIL;
+        return () -> ForgeConfigHandler.teslaCoil.ENABLE;
     }
 }

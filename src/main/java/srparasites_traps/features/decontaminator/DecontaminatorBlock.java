@@ -45,7 +45,7 @@ public class DecontaminatorBlock extends Block {
                 .withProperty(decontaminatorState, DecontaminatorState.IDLE)
         );
 
-        if (ForgeConfigHandler.decontaminator.ENABLE_DECONTAMINATOR) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.decontaminator.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
 

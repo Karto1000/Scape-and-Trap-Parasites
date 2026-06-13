@@ -40,10 +40,10 @@ import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class SerratedSpikesBlock extends Block {
-    public float baseDamage = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_DAMAGE;
+    public float baseDamage = ForgeConfigHandler.serratedSpikes.DEFAULT_DAMAGE;
     public double damageThreshold = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_DAMAGE_MOVE_THRESHOLD;
-    public double slowDownAmount = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_SLOW_DOWN_AMOUNT;
-    public int minHurtResistanceTime = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_MIN_HURT_RESISTANT_TIME;
+    public double slowDownAmount = ForgeConfigHandler.serratedSpikes.DEFAULT_SLOW_DOWN_AMOUNT;
+    public int minHurtResistanceTime = ForgeConfigHandler.serratedSpikes.DEFAULT_MIN_HURT_RESISTANT_TIME;
     protected static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0, 0, 0D, 1, 0.1D, 1);
     protected static final PropertyDirection direction = PropertyDirection.create("direction", EnumFacing.Plane.HORIZONTAL);
     protected static final DamageSource serratedSpikesDamage = new SerratedSpikesDamageSource();
@@ -57,7 +57,7 @@ public class SerratedSpikesBlock extends Block {
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
-        if (ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.serratedSpikes.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override
@@ -170,11 +170,11 @@ public class SerratedSpikesBlock extends Block {
         entity.hurtResistantTime = 0;
         entity.attackEntityFrom(serratedSpikesDamage, damage);
 
-        if (ForgeConfigHandler.serratedSpikes.SERRATED_SPIKES_DEAL_BLEEDING_DAMAGE) {
+        if (ForgeConfigHandler.serratedSpikes.BLEEDING_DAMAGE) {
             if (entity instanceof EntityPlayer) {
-                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION));
+                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_BLEEDING_DURATION));
             } else if (entity instanceof EntityLiving) {
-                ((EntityLiving) entity).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_BLEEDING_DURATION));
+                ((EntityLiving) entity).addPotionEffect(new PotionEffect(SRPPotions.BLEED_E, ForgeConfigHandler.serratedSpikes.DEFAULT_BLEEDING_DURATION));
             }
         }
     }
@@ -190,7 +190,7 @@ public class SerratedSpikesBlock extends Block {
         float motionSum = (float) (Math.abs(dX) + Math.abs(dY) + Math.abs(dZ));
 
         if (motionSum <= 0) return;
-        if (entityIn.hurtResistantTime > minHurtResistanceTime + motionSum * ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_INVULNERABILITY_REDUCTION_MULTIPLIER) return;
+        if (entityIn.hurtResistantTime > minHurtResistanceTime + motionSum * ForgeConfigHandler.serratedSpikes.DEFAULT_INVULNERABILITY_REDUCTION_MULTIPLIER) return;
         if (motionSum < damageThreshold) return;
 
         EnumFacing facing = state.getValue(direction);

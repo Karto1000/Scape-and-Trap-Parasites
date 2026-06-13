@@ -25,11 +25,11 @@ import java.util.List;
 
 // We can't inherit from TileCore since that doesn't allow the update method to be called on the client
 public class DecontaminatorTileEntity extends TileEntity implements ITickable {
-    public final static int DEFAULT_DECONTAMINATOR_CAPACITY = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_SPRAY_CAPACITY;
-    public final static int DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS;
-    public final static int DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS;
-    public final static int DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS;
-    public final static int DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_CAPACITY = ForgeConfigHandler.decontaminator.DEFAULT_SPRAY_CAPACITY;
+    public final static int DEFAULT_DECONTAMINATOR_SPRAY_COOLDOWN_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_SPRAY_COOLDOWN_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_OPEN_DURATION_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_OPEN_DURATION_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_CLOSE_DURATION_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_CLOSE_DURATION_TICKS;
+    public final static int DEFAULT_DECONTAMINATOR_CAPACITY_REGEN_TIME_TICKS = ForgeConfigHandler.decontaminator.DEFAULT_CAPACITY_REGEN_TIME_TICKS;
     public final static int ANIMATION_FRAMES = 6;
 
     private final static int DEFAULT_DECONTAMINATOR_CHECK_TICKS_COOLDOWN = 10;

@@ -28,7 +28,7 @@ public class TurretAugment extends Item implements IAugmentItem {
 
         this.setRegistryName(SRParasitesTraps.MOD_ID, registryName);
         this.setTranslationKey(getTranslationKeyFor(registryName));
-        if (ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.augments.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

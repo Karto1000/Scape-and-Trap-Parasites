@@ -43,9 +43,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedstoneControl, IExtendedAugmentable, IDefaultValueHolder {
-    public int maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_MAX_ENERGY;
-    public int energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
-    public int range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
+    public int maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT__MAX_ENERGY;
+    public int energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_ENERGY_PER_SHOT;
+    public int range = ForgeConfigHandler.teslaCoil.DEFAULT_RANGE;
     public int shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
     public int chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
     public final DualEnergyStorage energyStorage;
@@ -53,7 +53,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     private boolean firstTick = true;
     private EntityLivingBase target;
     private TeslaCoilState state = TeslaCoilState.IDLE;
-    private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY);
+    private final UpdateLimiter shootLimiter = new UpdateLimiter(ForgeConfigHandler.teslaCoil.DEFAULT_FIRE_DELAY);
     private int currentChargingDelay = this.chargingDelay;
     private final static Vec3d fireOffset = new Vec3d(0.5, 1.8, 0.5);
     private ControlMode controlMode = ControlMode.DISABLED;
@@ -324,11 +324,11 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     @Override
     public void applyDefaults() {
-        this.maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_MAX_ENERGY;
-        this.energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_ENERGY_PER_SHOT;
-        this.range = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_RANGE;
+        this.maxEnergy = ForgeConfigHandler.teslaCoil.DEFAULT__MAX_ENERGY;
+        this.energyPerShot = ForgeConfigHandler.teslaCoil.DEFAULT_ENERGY_PER_SHOT;
+        this.range = ForgeConfigHandler.teslaCoil.DEFAULT_RANGE;
         this.shockedAmplifier = ForgeConfigHandler.teslaCoil.DEFAULT_SHOCKED_ARC_AMPLIFIER;
         this.chargingDelay = ForgeConfigHandler.teslaCoil.DEFAULT_CHARGING_DELAY;
-        this.shootLimiter.tickDuration = ForgeConfigHandler.teslaCoil.DEFAULT_TESLA_COIL_FIRE_DELAY;
+        this.shootLimiter.tickDuration = ForgeConfigHandler.teslaCoil.DEFAULT_FIRE_DELAY;
     }
 }

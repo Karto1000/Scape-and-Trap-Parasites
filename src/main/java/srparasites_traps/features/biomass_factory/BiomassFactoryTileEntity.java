@@ -31,7 +31,7 @@ import java.util.Optional;
 public class BiomassFactoryTileEntity extends TileCore implements ICapabilityProvider, ITickable {
     public DeadBloodTank biomassStorage;
     public final static int DEFAULT_BIOMASS_VALUE_MB = 10;
-    public int consumeDelayTicks = ForgeConfigHandler.biomassFactory.DEFAULT_BIOMASS_FACTORY_CONSUME_DELAY;
+    public int consumeDelayTicks = ForgeConfigHandler.biomassFactory.DEFAULT_CONSUME_DELAY;
 
     private int currentConsumeCooldown = 0;
     private final Map<Item, Integer> allowedItems = new HashMap<>();
@@ -88,7 +88,7 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
     }
 
     public BiomassFactoryTileEntity() {
-        this.biomassStorage = new DeadBloodTank(ForgeConfigHandler.biomassFactory.DEFAULT_BIOMASS_FACTORY_MAX_BIOMASS);
+        this.biomassStorage = new DeadBloodTank(ForgeConfigHandler.biomassFactory.DEFAULT_MAX_BIOMASS);
         this.biomassStorage.setTileEntity(this);
 
         // Add all infested blocks to the allowed items list

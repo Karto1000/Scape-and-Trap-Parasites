@@ -41,7 +41,7 @@ public class ObsidianLadderBlock extends Block {
         this.setResistance(2000);
         this.setHarvestLevel("pickaxe", 3);
 
-        if (ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS)
+        if (ForgeConfigHandler.obsidianBlocks.ENABLE)
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 

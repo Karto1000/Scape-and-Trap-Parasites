@@ -30,8 +30,8 @@ public class ViralSerratedSpikes extends SerratedSpikesBlock {
             ((EntityLivingBase) entity).addPotionEffect(
                     new PotionEffect(
                             SRPPotions.VIRA_E,
-                            ForgeConfigHandler.serratedSpikes.DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_DURATION,
-                            ForgeConfigHandler.serratedSpikes.DEFAULT_VIRAL_SERRATED_SPIKES_EFFECT_AMPLIFIER
+                            ForgeConfigHandler.serratedSpikes.DEFAULT_VIRAL_EFFECT_DURATION,
+                            ForgeConfigHandler.serratedSpikes.DEFAULT_VIRAL_AMPLIFIER
                     )
             );
         }

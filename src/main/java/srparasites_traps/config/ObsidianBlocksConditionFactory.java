@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class ObsidianBlocksConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS;
+        return () -> ForgeConfigHandler.obsidianBlocks.ENABLE;
     }
 }

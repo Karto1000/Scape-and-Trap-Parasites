@@ -25,19 +25,19 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 public class SentryTurretTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider, IExtendedAugmentable, IDefaultValueHolder {
-    public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
-    public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
-    public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
-    public int poisonDuration = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_DURATION;
-    public int poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
-    public int chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
-    public int resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
-    public int entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_INTERVAL;
-    public int entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_AMOUNT;
-    public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
-    public double attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
-    public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
-    public double damage = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_DAMAGE;
+    public int attackDelay = ForgeConfigHandler.sentry.DEFAULT_ATTACK_DELAY;
+    public int biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_BIOMASS_PER_SHOT;
+    public int energyPerShot = ForgeConfigHandler.sentry.DEFAULT_ENTITY_RESPAWN_TIME;
+    public int poisonDuration = ForgeConfigHandler.sentry.DEFAULT_POISON_DURATION;
+    public int poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_POISON_AMPLIFIER;
+    public int chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_RESISTANCE_REDUCE_CHANCE;
+    public int resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_RESISTANCE_REDUCTION_AMOUNT;
+    public int entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEAL_INTERVAL;
+    public int entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEAL_AMOUNT;
+    public double respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_ENERGY_PER_SHOT;
+    public double attackRange = ForgeConfigHandler.sentry.DEFAULT_RANGE;
+    public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_ENTITY_EMERGE_TIME;
+    public double damage = ForgeConfigHandler.sentry.DEFAULT_DAMAGE;
 
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
@@ -50,7 +50,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
             .toArray(ItemStack[]::new);
 
     public SentryTurretTileEntity() {
-        super(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_BIOMASS, ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_MAX_ENERGY);
+        super(ForgeConfigHandler.sentry.DEFAULT_MAX_BIOMASS, ForgeConfigHandler.sentry.DEFAULT_MAX_ENERGY);
     }
 
     public void setAssignedSentryTurret(SentryTurretEntity sentryTurret) {
@@ -309,18 +309,18 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
     @Override
     public void applyDefaults() {
-        this.attackDelay = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ATTACK_DELAY;
-        this.biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_BIOMASS_PER_SHOT;
-        this.energyPerShot = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENERGY_PER_SHOT;
-        this.respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESPAWN_TIME;
-        this.attackRange = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RANGE;
-        this.emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_EMERGE_TIME;
-        this.damage = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_DAMAGE;
-        this.poisonDuration = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_DURATION;
-        this.poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_POISON_AMPLIFIER;
-        this.chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCE_CHANCE;
-        this.resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_RESISTANCE_REDUCTION_AMOUNT;
-        this.entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_INTERVAL;
-        this.entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEAL_AMOUNT;
+        this.attackDelay = ForgeConfigHandler.sentry.DEFAULT_ATTACK_DELAY;
+        this.biomassPerShot = ForgeConfigHandler.sentry.DEFAULT_BIOMASS_PER_SHOT;
+        this.energyPerShot = ForgeConfigHandler.sentry.DEFAULT_ENERGY_PER_SHOT;
+        this.respawnTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_ENTITY_RESPAWN_TIME;
+        this.attackRange = ForgeConfigHandler.sentry.DEFAULT_RANGE;
+        this.emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_ENTITY_EMERGE_TIME;
+        this.damage = ForgeConfigHandler.sentry.DEFAULT_DAMAGE;
+        this.poisonDuration = ForgeConfigHandler.sentry.DEFAULT_POISON_DURATION;
+        this.poisonAmplifier = ForgeConfigHandler.sentry.DEFAULT_POISON_AMPLIFIER;
+        this.chanceToReduceResistance = ForgeConfigHandler.sentry.DEFAULT_RESISTANCE_REDUCE_CHANCE;
+        this.resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_RESISTANCE_REDUCTION_AMOUNT;
+        this.entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEAL_INTERVAL;
+        this.entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEAL_AMOUNT;
     }
 }

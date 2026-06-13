@@ -104,7 +104,7 @@ public class SentryTurretSpineball extends EntityFireball {
             int hurtResistantTime = target.hurtResistantTime;
             target.hurtResistantTime = 0;
             target.attackEntityFrom(damageSource, (float) ste.tileEntity.damage);
-            if (ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_APPLY_POISON) target.addPotionEffect(new PotionEffect(MobEffects.POISON, ste.tileEntity.poisonDuration, ste.tileEntity.poisonAmplifier));
+            if (ForgeConfigHandler.sentry.APPLY_POISON) target.addPotionEffect(new PotionEffect(MobEffects.POISON, ste.tileEntity.poisonDuration, ste.tileEntity.poisonAmplifier));
             target.hurtResistantTime = hurtResistantTime;
         }
 

@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class AugmentsConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM;
+        return () -> ForgeConfigHandler.augments.ENABLE;
     }
 }

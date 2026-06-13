@@ -67,8 +67,8 @@ public class SentryTurretEntity extends EntityLiving {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_HEALTH);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(ForgeConfigHandler.sentry.DEFAULT_SENTRY_TURRET_ENTITY_ARMOR);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEALTH);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(ForgeConfigHandler.sentry.DEFAULT_ENTITY_ARMOR);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
         this.getEntityData().setInteger("srpcothimmunity", 0);
     }

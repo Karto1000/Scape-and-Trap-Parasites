@@ -1,6 +1,7 @@
 package srparasites_traps.features.hardness_analyser;
 
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -83,7 +84,7 @@ public class HardnessAnalyzerItem extends Item {
         this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
         this.setMaxStackSize(1);
 
-        if (ForgeConfigHandler.hardnessAnalyzer.ENABLE_HARDNESS_ANALYZER)
+        if (ForgeConfigHandler.hardnessAnalyzer.ENABLE)
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
@@ -132,6 +133,8 @@ public class HardnessAnalyzerItem extends Item {
         if (!worldIn.isRemote) return;
         if (!(entityIn instanceof EntityPlayer)) return;
 
+        EntityPlayer player = (EntityPlayer) entityIn;
+
         RayTraceResult result = Minecraft.getMinecraft().objectMouseOver;
         if (result == null || result.typeOfHit != RayTraceResult.Type.BLOCK) {
             resetHardnessAndName(stack);
@@ -142,7 +145,10 @@ public class HardnessAnalyzerItem extends Item {
         IBlockState state = worldIn.getBlockState(pos);
 
         float hardness = state.getBlockHardness(worldIn, pos);
-        String name = state.getBlock().getLocalizedName();
+
+        Block block = state.getBlock();
+        ItemStack pickedState = block.getPickBlock(state, result, worldIn, pos, player);
+        String name = pickedState.isEmpty() ? block.getLocalizedName() : pickedState.getDisplayName();
 
         NBTTagCompound tag = stack.getTagCompound();
         if (tag == null) tag = new NBTTagCompound();

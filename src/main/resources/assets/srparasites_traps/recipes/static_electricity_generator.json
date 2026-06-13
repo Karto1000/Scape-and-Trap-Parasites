@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pcp",
+    "pmp",
+    "psp"
+  ],
+  "key": {
+    "p": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    },
+    "s": {
+      "item": "srparasites:ada_summoner_drop"
+    },
+    "m": {
+      "item": "srparasites:ada_manducater_drop"
+    },
+    "c": {
+      "item": "srparasites_traps:coil"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:static_electricity_generator",
+    "count": 1
+  }
+}

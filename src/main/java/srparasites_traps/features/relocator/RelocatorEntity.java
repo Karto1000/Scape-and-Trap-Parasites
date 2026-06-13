@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class RelocatorEntity extends EntityLiving {
-    public double emergeTimeSeconds = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_EMERGE_TIME;
+    public double emergeTimeSeconds = ForgeConfigHandler.relocator.DEFAULT_ENTITY_EMERGE_TIME;
     private static final DataParameter<Float> currentEmergeTime = EntityDataManager.createKey(RelocatorEntity.class, DataSerializers.FLOAT);
     private static final DataParameter<Integer> state = EntityDataManager.createKey(RelocatorEntity.class, DataSerializers.VARINT);
 
@@ -118,7 +118,7 @@ public class RelocatorEntity extends EntityLiving {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_HEALTH);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.relocator.DEFAULT_ENTITY_MAX_HEALTH);
         this.getEntityData().setInteger("srpcothimmunity", 0);
     }
 

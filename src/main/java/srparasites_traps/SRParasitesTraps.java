@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import srparasites_traps.config.SRParasitesTrapsCreativeTab;
@@ -30,7 +31,7 @@ public class SRParasitesTraps {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         SRParasitesTraps.PROXY.preInit();
-        OBJLoader.INSTANCE.addDomain(MOD_ID);
+        if (event.getSide() == Side.CLIENT) OBJLoader.INSTANCE.addDomain(MOD_ID);
     }
 
     @Mod.EventHandler

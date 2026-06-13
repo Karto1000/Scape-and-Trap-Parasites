@@ -38,7 +38,7 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
         if (!this.isDouble()) bs = bs.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
         this.setDefaultState(bs.withProperty(VARIANT, Variant.DEFAULT));
 
-        if (ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS)
+        if (ForgeConfigHandler.obsidianBlocks.ENABLE)
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 

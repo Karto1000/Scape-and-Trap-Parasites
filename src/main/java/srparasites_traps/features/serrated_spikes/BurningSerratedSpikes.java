@@ -26,7 +26,7 @@ public class BurningSerratedSpikes extends SerratedSpikesBlock {
     @Override
     protected void damageEntity(Entity entity, float damage) {
         super.damageEntity(entity, damage);
-        entity.setFire(ForgeConfigHandler.serratedSpikes.DEFAULT_BURNING_SERRATED_SPIKES_FLAME_DURATION);
+        entity.setFire(ForgeConfigHandler.serratedSpikes.DEFAULT_FLAME_DURATION);
     }
 
     @Override

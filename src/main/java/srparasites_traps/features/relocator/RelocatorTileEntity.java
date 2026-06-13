@@ -35,14 +35,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class RelocatorTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
-    public int randomBlockSelectionRetries = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_BLOCK_SELECTION_RETRIES;
-    public int maxBlockHardness = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_BLOCK_HARDNESS;
-    public int maxRelocatorsInReserve = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_RELOCATORS_IN_RESERVE;
-    public int relocatorCreateDelay = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_RELOCATOR_CREATE_DELAY;
-    public int biomassPerRelocatorSpawn = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_BIOMASS_FOR_SPAWN;
-    public int energyPerTick = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_ENERGY_PER_TICK;
-    public int allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_AREA_DISTANCE;
-    public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_AREA_DISTANCE;
+    public int randomBlockSelectionRetries = ForgeConfigHandler.relocator.DEFAULT_BLOCK_SELECTION_RETRIES;
+    public int maxBlockHardness = ForgeConfigHandler.relocator.DEFAULT_MAX_BLOCK_HARDNESS;
+    public int maxRelocatorsInReserve = ForgeConfigHandler.relocator.DEFAULT_MAX_RELOCATORS_IN_RESERVE;
+    public int relocatorCreateDelay = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_CREATE_DELAY;
+    public int biomassPerRelocatorSpawn = ForgeConfigHandler.relocator.DEFAULT_BIOMASS_FOR_SPAWN;
+    public int energyPerTick = ForgeConfigHandler.relocator.DEFAULT_ENERGY_PER_TICK;
+    public int allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE;
+    public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE;
 
     private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
 
@@ -86,8 +86,8 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     public RelocatorTileEntity() {
         super(
-                ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_BIOMASS,
-                ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_MAX_ENERGY
+                ForgeConfigHandler.relocator.DEFAULT_MAX_BIOMASS,
+                ForgeConfigHandler.relocator.DEFAULT_MAX_ENERGY
         );
     }
 

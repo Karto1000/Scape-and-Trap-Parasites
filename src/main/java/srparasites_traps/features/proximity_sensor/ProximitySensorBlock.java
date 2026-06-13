@@ -46,7 +46,7 @@ public class ProximitySensorBlock extends Block {
         this.setHarvestLevel("pickaxe", 2);
         this.setSoundType(SoundType.METAL);
 
-        if (ForgeConfigHandler.proximitySensor.ENABLE_PROXIMITY_SENSOR)
+        if (ForgeConfigHandler.proximitySensor.ENABLE)
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
@@ -89,8 +89,8 @@ public class ProximitySensorBlock extends Block {
 
         AxisAlignedBB searchArea = aabb.get();
         Pair<Double, Double> distances = AreaMarkerItem.getDistancesOfAreaTo(searchArea, pste.getPos());
-        return distances.first() <= ForgeConfigHandler.proximitySensor.DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE &&
-                distances.second() <= ForgeConfigHandler.proximitySensor.DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE;
+        return distances.first() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE &&
+                distances.second() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class ProximitySensorBlock extends Block {
             playerIn.sendStatusMessage(
                     new TextComponentTranslation(
                             getServerStatusFor("proximity_sensor.area_too_far_away"),
-                            ForgeConfigHandler.proximitySensor.DEFAULT_PROXIMITY_SENSOR_MAX_AREA_DISTANCE
+                            ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE
                     ),
                     true
             );

@@ -25,47 +25,47 @@ public class JEICompat implements IModPlugin {
     public void register(IModRegistry registry) {
         IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
 
-        if (!ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) {
+        if (!ForgeConfigHandler.sentry.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SENTRY_TURRET));
         }
 
-        if (!ForgeConfigHandler.relocator.ENABLE_RELOCATOR) {
+        if (!ForgeConfigHandler.relocator.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.RELOCATOR));
         }
 
-        if (!ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES) {
+        if (!ForgeConfigHandler.serratedSpikes.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.SERRATED_SPIKES));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BURNING_SERRATED_SPIKES));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.VIRAL_SERRATED_SPIKES));
         }
 
-        if (!ForgeConfigHandler.biomassFactory.ENABLE_BIOMASS_FACTORY) {
+        if (!ForgeConfigHandler.biomassFactory.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BIOMASS_FACTORY));
         }
 
-        if (!ForgeConfigHandler.decontaminator.ENABLE_DECONTAMINATOR) {
+        if (!ForgeConfigHandler.decontaminator.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.DECONTAMINATOR));
         }
 
-        if (!ForgeConfigHandler.obsidianBlocks.ENABLE_OBSIDIAN_BLOCKS) {
+        if (!ForgeConfigHandler.obsidianBlocks.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_LADDER));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_SLAB));
         }
 
-        if (!ForgeConfigHandler.teslaCoil.ENABLE_TESLA_COIL) {
+        if (!ForgeConfigHandler.teslaCoil.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TESLA_COIL));
             blacklist.addIngredientToBlacklist(ModItems.COIL);
         }
 
-        if (!ForgeConfigHandler.proximitySensor.ENABLE_PROXIMITY_SENSOR) {
+        if (!ForgeConfigHandler.proximitySensor.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PROXIMITY_SENSOR));
         }
 
-        if (!ForgeConfigHandler.hardnessAnalyzer.ENABLE_HARDNESS_ANALYZER) {
+        if (!ForgeConfigHandler.hardnessAnalyzer.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.HARDNESS_ANALYZER_ITEM));
         }
 
-        if (!ForgeConfigHandler.augments.ENABLE_AUGMENT_SYSTEM) {
+        if (!ForgeConfigHandler.augments.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.DAMAGE_AUGMENT));
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.RANGE_AUGMENT));
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.ATTACK_SPEED_AUGMENT));

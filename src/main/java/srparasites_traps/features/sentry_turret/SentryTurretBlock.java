@@ -40,7 +40,7 @@ public class SentryTurretBlock extends Block {
         setResistance(1200);
         setHarvestLevel("pickaxe", 2);
         setSoundType(SoundType.METAL);
-        if (ForgeConfigHandler.sentry.ENABLE_SENTRY_TURRET) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.sentry.ENABLE) setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override

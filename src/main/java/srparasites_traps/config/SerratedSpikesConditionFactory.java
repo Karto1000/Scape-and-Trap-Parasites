@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class SerratedSpikesConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.serratedSpikes.ENABLE_SERRATED_SPIKES;
+        return () -> ForgeConfigHandler.serratedSpikes.ENABLE;
     }
 }

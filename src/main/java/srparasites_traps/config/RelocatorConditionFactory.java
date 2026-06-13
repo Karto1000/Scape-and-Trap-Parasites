@@ -9,6 +9,6 @@ import java.util.function.BooleanSupplier;
 public class RelocatorConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
-        return () -> ForgeConfigHandler.relocator.ENABLE_RELOCATOR;
+        return () -> ForgeConfigHandler.relocator.ENABLE;
     }
 }

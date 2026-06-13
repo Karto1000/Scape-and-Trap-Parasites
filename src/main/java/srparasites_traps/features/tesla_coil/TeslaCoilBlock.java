@@ -36,7 +36,7 @@ public class TeslaCoilBlock extends Block {
         this.setResistance(1200);
         this.setHarvestLevel("pickaxe", 2);
 
-        if (ForgeConfigHandler.teslaCoil.ENABLE_TESLA_COIL) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.teslaCoil.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
     @Override
