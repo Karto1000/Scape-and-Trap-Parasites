@@ -512,6 +512,11 @@ public class ForgeConfigHandler {
         @Config.Comment("The max amount of hearts dropped by a beckon")
         @Config.RangeInt(min = 0)
         public int MAX_BECKON_HEART_DROP_AMOUNT = 1;
+
+        @Config.Name("Beckon Nidus ticks to evolve (Ticks)")
+        @Config.Comment("The amount of ticks that a beckon nidus block needs to spawn a beckon")
+        @Config.RangeInt(min = 0)
+        public int BECKON_NIDUS_TICKS_TO_EVOLVE = 200;
     }
 
     @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)

@@ -32,14 +32,13 @@ public class ModItems {
     public static Item OBSIDIAN_SLAB_ITEM = getItemSlab(ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB, ModBlocks.OBSIDIAN_SLAB_DOUBLE);
     public static Item TESLA_COIL_ITEM = getItemBlock(ModBlocks.TESLA_COIL);
     public static Item STATIC_ELECTRICITY_GENERATOR_ITEM = getItemBlock(ModBlocks.STATIC_ELECTRICITY_GENERATOR);
+    public static Item BECKON_NIDUS_ITEM = getItemBlock(ModBlocks.BECKON_NIDUS);
     public static Item AREA_MARKER_ITEM = new AreaMarkerItem();
     public static HardnessAnalyzerItem HARDNESS_ANALYZER_ITEM = new HardnessAnalyzerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item TWO_WAY_COMMUNICATION_UNIT = new BasicItem("two_way_communication_unit").maxStackSize(1);
     public static Item DISPATCHER_BRAINSTEM = new BasicItem("dispatcher_brainstem").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item DISPATCHER_CEREBRUM = new BasicItem("dispatcher_cerebrum").maxStackSize(16).rarity(EnumRarity.RARE);
-//    public static Item RECONSTRUCTED_SENTRY = new BasicItem("reconstructed_sentry").maxStackSize(1);
-//    public static Item RECONSTRUCTED_SEIZER = new BasicItem("reconstructed_seizer").maxStackSize(1);
     public static Item ARMORED_SEMI_ORGANIC_PLATING = new BasicItem("armored_semi_organic_plating");
     public static Item BIOMASS_STORAGE_UNIT = new BasicItem("biomass_storage_unit");
     public static Item HATCH = new BasicItem("hatch");

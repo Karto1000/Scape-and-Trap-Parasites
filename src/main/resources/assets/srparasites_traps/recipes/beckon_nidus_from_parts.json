@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "mmm",
+    "mhm",
+    "mmm"
+  ],
+  "key": {
+    "m": {
+      "item": "srparasites:beckon_drop"
+    },
+    "h": {
+      "item": "srparasites_traps:beckon_heart"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:beckon_nidus",
+    "count": 1
+  }
+}

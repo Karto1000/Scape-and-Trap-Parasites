@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.biomass_factory.BeckonNidusBlock;
+import srparasites_traps.features.biomass_factory.BeckonNidusTileEntity;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
 import srparasites_traps.features.decontaminator.DecontaminatorBlock;
@@ -27,7 +29,8 @@ public class ModTileEntities {
             new TileEntityRegistration(BiomassFactoryTileEntity.class, ModBlocks.BIOMASS_FACTORY, BiomassFactoryBlock.REGISTRY_NAME),
             new TileEntityRegistration(DecontaminatorTileEntity.class, ModBlocks.DECONTAMINATOR, DecontaminatorBlock.REGISTRY_NAME),
             new TileEntityRegistration(TeslaCoilTileEntity.class, ModBlocks.TESLA_COIL, TeslaCoilBlock.REGISTRY_NAME),
-            new TileEntityRegistration(ProximitySensorTileEntity.class, ModBlocks.PROXIMITY_SENSOR, ProximitySensorBlock.REGISTRY_NAME)
+            new TileEntityRegistration(ProximitySensorTileEntity.class, ModBlocks.PROXIMITY_SENSOR, ProximitySensorBlock.REGISTRY_NAME),
+            new TileEntityRegistration(BeckonNidusTileEntity.class, ModBlocks.BECKON_NIDUS, BeckonNidusBlock.REGISTRY_NAME)
     );
 
     public static void registerTileEntities() {

@@ -31,6 +31,7 @@ tile.srparasites_traps.obsidian_slab.name=Obsidian Slab
 tile.srparasites_traps.tesla_coil.name=§6Tesla Coil§f
 tile.srparasites_traps.proximity_sensor.name=§6Proximity Sensor§f
 tile.srparasites_traps.static_electricity_generator.name=Static Electricity Generator
+tile.srparasites_traps.beckon_nidus.name=§aBeckon Nidus§f
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way Communication Unit
@@ -63,7 +64,7 @@ tooltip.srparasites_traps.item.burning_serrated_spikes=A trap with sharp angled 
 tooltip.srparasites_traps.item.viral_serrated_spikes=A trap with sharp angled spikes jutting out of it coated in a §agreen slime-like substance§f. Does more damage the faster someone moves over it, causes §cBleeding§f and applies §aViral§f for a short amount of time.
 tooltip.srparasites_traps.item.biomass_factory=A machine harnessing the §aBeckons§f power to create the essence all parasites are made of. Consumes §cparasitic matter§f to create §aDead Blood§f.
 tooltip.srparasites_traps.item.beckon_heart=An important part of a §aBeckon§f that somehow still remains intact.
-tooltip.srparasites_traps.item.decontaminator=A machine that rids any nearby player of the §aViral§f and §4Call of the Hive§f effect. §8Wait... Does this literally just spray you with milk? How would that possibly cure Viral or COTH?§f.
+tooltip.srparasites_traps.item.decontaminator=A machine that rids any nearby player of the §aViral§f and §4Call of the Hive§f effect. §8Wait... Does this literally just spray you with milk? How would that possibly cure Viral or COTH?.§f
 tooltip.srparasites_traps.item.tesla_coil=A high-voltage apparatus delivering shocks to any unfortunate being (including you) that manages to get close enough. Great for dealing with §cbig hordes§f.
 tooltip.srparasites_traps.item.proximity_sensor=Detects any nearby parasites using excreted pheromones which react with the contained matter. Sends out a redstone signal if there is a reaction.
 tooltip.srparasites_traps.item.hardness_analyzer=Tells you the hardness of blocks and which tier of parasites can break them.

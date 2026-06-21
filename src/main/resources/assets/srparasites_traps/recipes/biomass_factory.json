@@ -7,15 +7,15 @@
   ],
   "pattern": [
     "ppp",
-    "thb",
+    "tnb",
     "ppp"
   ],
   "key": {
     "t": {
       "item": "srparasites_traps:two_way_communication_unit"
     },
-    "h": {
-      "item": "srparasites_traps:beckon_heart"
+    "n": {
+      "item": "srparasites_traps:beckon_nidus"
     },
     "b": {
       "item": "srparasites_traps:biomass_storage_unit"
