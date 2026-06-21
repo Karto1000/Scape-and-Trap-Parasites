@@ -151,7 +151,7 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
 
     public EnumFacing getGrateFacingDirection() {
         IBlockState state = this.world.getBlockState(this.pos);
-        if (state.getBlock() instanceof DecontaminatorBlock) return state.getValue(DecontaminatorBlock.grateDirection);
+        if (state.getBlock() instanceof DecontaminatorBlock) return state.getValue(DecontaminatorBlock.GRATE_DIRECTION);
         return EnumFacing.NORTH;
     }
 

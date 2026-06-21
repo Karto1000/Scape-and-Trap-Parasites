@@ -1,7 +1,16 @@
 {
   "forge_marker": 1,
   "variants": {
-    "normal": {
+    "active=false": {
+      "model": "srparasites_traps:biomass_factory.obj",
+      "custom": {
+        "flip-v": true
+      },
+      "transform": {
+        "translation": [0.5, 0, 0.5]
+      }
+    },
+    "active=true": {
       "model": "srparasites_traps:biomass_factory.obj",
       "custom": {
         "flip-v": true

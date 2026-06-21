@@ -20,6 +20,8 @@ public class BiomassFactoryContainer extends ContainerCore {
     public static final int INPUT_SLOT_COUNT = INVENTORY_WIDTH * INVENTORY_HEIGHT;
     public static final int FLUID_FILL_SLOT = INPUT_SLOT_START + INPUT_SLOT_COUNT;
     public static final int FLUID_OUTPUT_SLOT = FLUID_FILL_SLOT + 1;
+    public static final int TILE_SLOT_COUNT = FLUID_OUTPUT_SLOT + 1;
+
 
     public BiomassFactoryContainer(EntityPlayer player, BiomassFactoryTileEntity tileEntity) {
         super();
@@ -71,6 +73,6 @@ public class BiomassFactoryContainer extends ContainerCore {
 
     @Override
     protected int getSizeInventory() {
-        return this.tileEntity.inputInventory.getSlots();
+        return TILE_SLOT_COUNT;
     }
 }

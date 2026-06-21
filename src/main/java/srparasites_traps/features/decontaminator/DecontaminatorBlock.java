@@ -27,8 +27,8 @@ import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class DecontaminatorBlock extends Block {
-    public static final PropertyDirection grateDirection = PropertyDirection.create("grate_direction");
-    public static final PropertyEnum<DecontaminatorState> decontaminatorState = PropertyEnum.create("state", DecontaminatorState.class);
+    public static final PropertyDirection GRATE_DIRECTION = PropertyDirection.create("grate_direction");
+    public static final PropertyEnum<DecontaminatorState> DECONTAMINATOR_STATE = PropertyEnum.create("state", DecontaminatorState.class);
     public static final String REGISTRY_NAME = "decontaminator";
 
     public DecontaminatorBlock() {
@@ -41,8 +41,8 @@ public class DecontaminatorBlock extends Block {
         this.setHarvestLevel("pickaxe", 2);
         this.setSoundType(SoundType.METAL);
         this.setDefaultState(this.blockState.getBaseState()
-                .withProperty(grateDirection, EnumFacing.NORTH)
-                .withProperty(decontaminatorState, DecontaminatorState.IDLE)
+                .withProperty(GRATE_DIRECTION, EnumFacing.NORTH)
+                .withProperty(DECONTAMINATOR_STATE, DecontaminatorState.IDLE)
         );
 
         if (ForgeConfigHandler.decontaminator.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
@@ -51,19 +51,19 @@ public class DecontaminatorBlock extends Block {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, grateDirection, decontaminatorState);
+        return new BlockStateContainer(this, GRATE_DIRECTION, DECONTAMINATOR_STATE);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        EnumFacing facing = state.getValue(DecontaminatorBlock.grateDirection);
+        EnumFacing facing = state.getValue(DecontaminatorBlock.GRATE_DIRECTION);
         return facing.getIndex();
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.byIndex(meta);
-        return this.getDefaultState().withProperty(grateDirection, facing);
+        return this.getDefaultState().withProperty(GRATE_DIRECTION, facing);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class DecontaminatorBlock extends Block {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof DecontaminatorTileEntity) {
             DecontaminatorTileEntity cte = (DecontaminatorTileEntity) tileEntity;
-            return state.withProperty(decontaminatorState, cte.getState());
+            return state.withProperty(DECONTAMINATOR_STATE, cte.getState());
         }
         return state;
     }
@@ -79,7 +79,7 @@ public class DecontaminatorBlock extends Block {
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         EnumFacing playerFacing = EnumFacing.getDirectionFromEntityLiving(pos, placer);
-        return this.getDefaultState().withProperty(grateDirection, playerFacing);
+        return this.getDefaultState().withProperty(GRATE_DIRECTION, playerFacing);
     }
 
     @Override
