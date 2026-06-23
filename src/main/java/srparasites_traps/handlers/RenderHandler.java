@@ -1,6 +1,7 @@
 package srparasites_traps.handlers;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -21,7 +22,6 @@ import srparasites_traps.features.hardness_analyser.HardnessAnalyzerItem;
 import srparasites_traps.registry.ModItems;
 import srparasites_traps.util.Pair;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -53,6 +53,54 @@ public class RenderHandler {
         boundArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ, 0.5F, 0.0F, 0.0F));
     }
 
+    private void drawOverlayTextBox(String text, int x, int y, int maxWidth, int textColor) {
+        Minecraft mc = Minecraft.getMinecraft();
+
+        int padding = 4;
+        int lineHeight = mc.fontRenderer.FONT_HEIGHT;
+        int textHeight = 0;
+        int textWidth = 0;
+
+        String[] lines = text.split("\n");
+        for (String line : lines) {
+            List<String> wrappedLines = mc.fontRenderer.listFormattedStringToWidth(line, maxWidth);
+
+            if (wrappedLines.isEmpty()) {
+                textHeight += lineHeight;
+                continue;
+            }
+
+            textHeight += wrappedLines.size() * lineHeight;
+
+            for (String wrappedLine : wrappedLines) {
+                textWidth = Math.max(textWidth, mc.fontRenderer.getStringWidth(wrappedLine));
+            }
+        }
+
+        int left = x - padding;
+        int top = y - padding;
+        int right = x + textWidth + padding;
+        int bottom = y + textHeight + padding;
+
+        GlStateManager.pushMatrix();
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.enableBlend();
+
+        Gui.drawRect(left, top, right, bottom, 0xAA000000);
+
+        Gui.drawRect(left + 1, top + 1, right - 1, top + 2, 0xFF36049a);
+        Gui.drawRect(left + 1, bottom - 2, right - 1, bottom - 1, 0xFF36049a);
+        Gui.drawRect(left + 1, top + 1, left + 2, bottom - 1, 0xFF36049a);
+        Gui.drawRect(right - 2, top + 1, right - 1, bottom - 1, 0xFF36049a);
+
+        mc.fontRenderer.drawSplitString(text, x, y, maxWidth, textColor);
+
+        GlStateManager.enableDepth();
+        GlStateManager.enableLighting();
+        GlStateManager.popMatrix();
+    }
+
     private void renderHardnessAnalyserOverlay() {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.player;
@@ -72,44 +120,20 @@ public class RenderHandler {
             cachedStatus = HardnessAnalyzerItem.getVulnerableCount(stack)
                     .entrySet()
                     .stream()
-                    .sorted((o1, o2) -> {
-                        List<String> order = Arrays.asList(
-                                "infected",
-                                "primitive",
-                                "hijacked",
-                                "adapted",
-                                "crude",
-                                "feral",
-                                "pure",
-                                "derived",
-                                "focused",
-                                "ancient"
-                        );
-
-                        String type1 = o1.getKey();
-                        String type2 = o2.getKey();
-
-                        int index1 = order.indexOf(type1);
-                        int index2 = order.indexOf(type2);
-
-                        if (index1 == -1) index1 = Integer.MAX_VALUE;
-                        if (index2 == -1) index2 = Integer.MAX_VALUE;
-
-                        return Integer.compare(index1, index2);
-                    })
+                    .sorted((o1, o2) -> Float.compare(o1.getValue().averageHardness(), o2.getValue().averageHardness()))
                     .map((entry) -> {
-                        Integer vulnerabilityCount = entry.getValue().first();
-                        Integer parasiteCount = entry.getValue().second();
-                        if (parasiteCount == 0) return "";
+                        HardnessAnalyzerItem.GroupGriefSummary summary = entry.getValue();
+                        if (summary.parasiteCount == 0) return "";
 
-                        if (vulnerabilityCount == 0)
-                            return String.format("> §a%s: No vulnerabilities§f", entry.getKey());
+                        if (summary.vulnerableCount == 0)
+                            return String.format("§a| %s: No vulnerabilities§f", entry.getKey());
+
                         return String.format(
-                                "> %s%s: breakable by %d of %d parasites§f",
-                                ((double) vulnerabilityCount / parasiteCount) <= 0.5 ? "§e" : "§c",
+                                "%s| %s: breakable by %d of %d parasites§f",
+                                ((double) summary.vulnerableCount / summary.parasiteCount) <= 0.5 ? "§e" : "§c",
                                 entry.getKey(),
-                                vulnerabilityCount,
-                                parasiteCount
+                                summary.vulnerableCount,
+                                summary.parasiteCount
                         );
                     })
                     .collect(Collectors.joining("\n"));
@@ -119,11 +143,11 @@ public class RenderHandler {
         }
 
 
-        String text = "> Name: " + blockName + "§f\n" +
-                "> Hardness: " + blockHardness + "\n"
+        String text = blockName + "\n" +
+                blockHardness + " Block Hardness \n"
                 + cachedStatus;
 
-        mc.fontRenderer.drawSplitString(
+        drawOverlayTextBox(
                 text,
                 ForgeConfigHandler.hardnessAnalyzer.GUI_TEXT_OFFSET_X,
                 ForgeConfigHandler.hardnessAnalyzer.GUI_TEXT_OFFSET_Y,

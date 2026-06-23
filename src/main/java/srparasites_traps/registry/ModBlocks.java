@@ -2,7 +2,6 @@ package srparasites_traps.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
-import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.biomass_factory.BeckonNidusBlock;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.decontaminator.DecontaminatorBlock;
@@ -17,8 +16,7 @@ import srparasites_traps.features.serrated_spikes.ViralSerratedSpikes;
 import srparasites_traps.features.tesla_coil.StaticElectricityGeneratorBlock;
 import srparasites_traps.features.tesla_coil.TeslaCoilBlock;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ModBlocks {
     public static Block SENTRY_TURRET = new SentryTurretBlock();
@@ -36,20 +34,7 @@ public class ModBlocks {
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
 
-    public static ArrayList<Block> getBlockList() {
-        ArrayList<Block> blocks = new ArrayList<>();
-
-        for (Field field : ModBlocks.class.getDeclaredFields()) {
-            if (field.getType() != Block.class && field.getType() != BlockSlab.class) continue;
-
-            try {
-                Block block = (Block) field.get(null);
-                blocks.add(block);
-            } catch (IllegalAccessException e) {
-                SRParasitesTraps.LOGGER.error("Failed to get block from field {}", field.getName());
-            }
-        }
-
-        return blocks;
+    public static List<Block> getBlockList() {
+        return RegistryHelper.getStaticFieldsOfType(ModBlocks.class, Block.class);
     }
 }

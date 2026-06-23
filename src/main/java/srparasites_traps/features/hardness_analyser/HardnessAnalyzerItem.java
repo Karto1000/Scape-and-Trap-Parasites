@@ -32,7 +32,7 @@ import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class HardnessAnalyzerItem extends Item {
     public static final String REGISTRY_NAME = "hardness_analyzer";
-    private static final Map<String, List<GriefingParasite>> griefingParasites = new HashMap<>();
+    private static final SortedMap<String, List<GriefingParasite>> griefingParasites = new TreeMap<>();
 
     public static class GriefingParasite {
         ResourceLocation id;
@@ -49,7 +49,7 @@ public class HardnessAnalyzerItem extends Item {
         }
     }
 
-    public static Map<String, List<GriefingParasite>> getGriefingParasites() {
+    public static SortedMap<String, List<GriefingParasite>> getGriefingParasites() {
         if (!griefingParasites.isEmpty()) return griefingParasites;
 
         for (String grief : SRPConfig.parasiteGriefing) {
@@ -100,19 +100,37 @@ public class HardnessAnalyzerItem extends Item {
         return Optional.of(Pair.of(hardness, name));
     }
 
+    public static class GroupGriefSummary {
+        public final int vulnerableCount;
+        public final int parasiteCount;
+        public final float hardnessSum;
+
+        public GroupGriefSummary(int vulnerableCount, int parasiteCount, float hardnessSum) {
+            this.vulnerableCount = vulnerableCount;
+            this.parasiteCount = parasiteCount;
+            this.hardnessSum = hardnessSum;
+        }
+
+        public float averageHardness() {
+            return hardnessSum / parasiteCount;
+        }
+    }
+
     @SideOnly(Side.CLIENT)
-    public static Map<String, Pair<Integer, Integer>> getVulnerableCount(ItemStack stack) {
+    public static Map<String, GroupGriefSummary> getVulnerableCount(ItemStack stack) {
         Optional<Pair<Float, String>> hardnessAndName = getHardnessAndName(stack);
         if (!hardnessAndName.isPresent()) return Collections.emptyMap();
         float blockHardness = hardnessAndName.get().first();
 
-        Map<String, Pair<Integer, Integer>> vulnerableCount = new HashMap<>();
+        SortedMap<String, GroupGriefSummary> vulnerableCount = new TreeMap<>();
         getGriefingParasites().forEach((key, value) -> {
-            vulnerableCount.put(key, Pair.of(0, value.size()));
+            vulnerableCount.put(key, new GroupGriefSummary(0, value.size(), 0));
 
             for (GriefingParasite parasite : value) {
-                if (blockHardness > parasite.hardness || blockHardness == -1.) continue;
-                vulnerableCount.put(key, Pair.of(vulnerableCount.get(key).first() + 1, value.size()));
+                GroupGriefSummary summary = vulnerableCount.get(key);
+                int newVulnerableCount = summary.vulnerableCount;
+                if (blockHardness <= parasite.hardness && blockHardness != -1.) newVulnerableCount++;
+                vulnerableCount.put(key, new GroupGriefSummary(newVulnerableCount, value.size(), summary.hardnessSum + parasite.hardness));
             }
         });
 

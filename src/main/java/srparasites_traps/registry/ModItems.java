@@ -6,7 +6,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSlab;
-import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.features.BasicItem;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
 import srparasites_traps.features.augments.AttackSpeedAugment;
@@ -15,8 +14,7 @@ import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.features.augments.TurretAugment;
 import srparasites_traps.features.hardness_analyser.HardnessAnalyzerItem;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ModItems {
@@ -57,20 +55,7 @@ public class ModItems {
         return new ItemBlock(block).setRegistryName(Objects.requireNonNull(block.getRegistryName()));
     }
 
-    public static ArrayList<Item> getItemList() {
-        ArrayList<Item> items = new ArrayList<>();
-
-        for (Field field : ModItems.class.getDeclaredFields()) {
-            if (!Item.class.isAssignableFrom(field.getType())) continue;
-
-            try {
-                Item item = (Item) field.get(null);
-                items.add(item);
-            } catch (IllegalAccessException e) {
-                SRParasitesTraps.LOGGER.error("Failed to get item from field {}", field.getName());
-            }
-        }
-
-        return items;
+    public static List<Item> getItemList() {
+        return RegistryHelper.getStaticFieldsOfType(ModItems.class, Item.class);
     }
 }

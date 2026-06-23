@@ -8,8 +8,7 @@ import srparasites_traps.features.relocator.RelocatorEntity;
 import srparasites_traps.features.sentry_turret.SentryTurretEntity;
 import srparasites_traps.features.sentry_turret.SentryTurretSpineball;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ModEntities {
     public static EntityEntry SENTRY_TURRET_ENTITY = EntityEntryBuilder.create()
@@ -31,20 +30,7 @@ public class ModEntities {
             .name("relocator")
             .build();
 
-    public static ArrayList<EntityEntry> getEntityList() {
-        ArrayList<EntityEntry> entities = new ArrayList<>();
-
-        for (Field field : ModEntities.class.getDeclaredFields()) {
-            if (field.getType() != EntityEntry.class) continue;
-
-            try {
-                EntityEntry entity = (EntityEntry) field.get(null);
-                entities.add(entity);
-            } catch (IllegalAccessException e) {
-                SRParasitesTraps.LOGGER.error("Failed to get entity entry from field {}", field.getName());
-            }
-        }
-
-        return entities;
+    public static List<EntityEntry> getEntityList() {
+        return RegistryHelper.getStaticFieldsOfType(ModEntities.class, EntityEntry.class);
     }
 }

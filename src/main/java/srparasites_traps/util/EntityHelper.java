@@ -7,7 +7,9 @@ import java.util.Optional;
 
 public class EntityHelper {
     public static Optional<String> getEntityParasiteType(Class<? extends Entity> entityClass) {
-        if (EntityPCrude.class.isAssignableFrom(entityClass)) {
+        if (EntityPAssimara.class.isAssignableFrom(entityClass)) {
+            return Optional.of("assimara");
+        } else if (EntityPCrude.class.isAssignableFrom(entityClass)) {
             return Optional.of("crude");
         } else if (EntityPPrimitive.class.isAssignableFrom(entityClass)) {
             return Optional.of("primitive");
@@ -27,6 +29,8 @@ public class EntityHelper {
             return Optional.of("hijacked");
         } else if (EntityPAncient.class.isAssignableFrom(entityClass)) {
             return Optional.of("ancient");
+        } else if (EntityPPreeminent.class.isAssignableFrom(entityClass)) {
+            return Optional.of("preeminent");
         }
 
         return Optional.empty();

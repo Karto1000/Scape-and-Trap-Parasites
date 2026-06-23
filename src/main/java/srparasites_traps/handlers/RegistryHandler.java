@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.registry.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)
 public class RegistryHandler {
@@ -30,35 +30,35 @@ public class RegistryHandler {
 
     @SubscribeEvent
     public static void registerEntityEvent(RegistryEvent.Register<EntityEntry> event) {
-        ArrayList<EntityEntry> entities = ModEntities.getEntityList();
+        List<EntityEntry> entities = ModEntities.getEntityList();
         SRParasitesTraps.LOGGER.info("Registering Entities {}", entities);
         event.getRegistry().registerAll(entities.toArray(new EntityEntry[0]));
     }
 
     @SubscribeEvent
     public static void registerSoundEvent(RegistryEvent.Register<SoundEvent> event) {
-        ArrayList<SoundEvent> sounds = ModSounds.getSoundList();
+        List<SoundEvent> sounds = ModSounds.getSoundList();
         SRParasitesTraps.LOGGER.info("Registering Sounds {}", sounds);
         event.getRegistry().registerAll(sounds.toArray(new SoundEvent[0]));
     }
 
     @SubscribeEvent
     public static void registerPotions(RegistryEvent.Register<Potion> event) {
-        ArrayList<Potion> potions = ModPotions.getPotionList();
+        List<Potion> potions = ModPotions.getPotionList();
         SRParasitesTraps.LOGGER.info("Registering Potions {}", potions);
         event.getRegistry().registerAll(potions.toArray(new Potion[0]));
     }
 
     @SubscribeEvent
     public static void registerItemEvent(RegistryEvent.Register<Item> event) {
-        ArrayList<Item> items = ModItems.getItemList();
+        List<Item> items = ModItems.getItemList();
         SRParasitesTraps.LOGGER.info("Registering Items {}", items);
         event.getRegistry().registerAll(items.toArray(new Item[0]));
     }
 
     @SubscribeEvent
     public static void registerBlockEvent(RegistryEvent.Register<Block> event) {
-        ArrayList<Block> blocks = ModBlocks.getBlockList();
+        List<Block> blocks = ModBlocks.getBlockList();
         SRParasitesTraps.LOGGER.info("Registering Blocks {}", blocks);
         event.getRegistry().registerAll(blocks.toArray(new Block[0]));
     }
