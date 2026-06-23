@@ -8,6 +8,7 @@
     "obsidian_blocks_enabled": "srparasites_traps.config.ObsidianBlocksConditionFactory",
     "hardness_analyzer_enabled": "srparasites_traps.config.HardnessAnalyzerConditionFactory",
     "tesla_coil_enabled": "srparasites_traps.config.TeslaCoilConditionFactory",
-    "proximity_sensor_enabled": "srparasites_traps.config.ProximitySensorConditionFactory"
+    "proximity_sensor_enabled": "srparasites_traps.config.ProximitySensorConditionFactory",
+    "augments_enabled": "srparasites_traps.config.AugmentsConditionFactory"
   }
 }

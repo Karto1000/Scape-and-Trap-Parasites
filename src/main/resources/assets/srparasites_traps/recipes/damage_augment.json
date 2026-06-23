@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:augments_enabled"
+    }
+  ],
+  "pattern": [
+    " s ",
+    "lql",
+    " b "
+  ],
+  "key": {
+    "q": {
+      "item": "srparasites:itemthrow"
+    },
+    "b": {
+      "item": "srparasites_traps:blank_augment"
+    },
+    "l": {
+      "item": "srparasites:lurecomponent4"
+    },
+    "s": {
+      "item": "minecraft:potion",
+      "type": "minecraft:item_nbt",
+      "nbt": {
+        "Potion": "minecraft:strength"
+      }
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:damage_augment",
+    "count": 1
+  }
+}

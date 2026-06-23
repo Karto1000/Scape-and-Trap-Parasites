@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:augments_enabled"
+    }
+  ],
+  "pattern": [
+    " n ",
+    "eqe",
+    " b "
+  ],
+  "key": {
+    "q": {
+      "item": "srparasites:itemthrow"
+    },
+    "b": {
+      "item": "srparasites_traps:blank_augment"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    },
+    "n": {
+      "item": "minecraft:potion",
+      "type": "minecraft:item_nbt",
+      "nbt": {
+        "Potion": "minecraft:night_vision"
+      }
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:range_augment",
+    "count": 1
+  }
+}

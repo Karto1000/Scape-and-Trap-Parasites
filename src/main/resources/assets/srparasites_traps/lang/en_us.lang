@@ -49,6 +49,7 @@ item.srparasites_traps.coil.name=Coil
 item.srparasites_traps.attack_speed_augment.name=Attack Speed Augment
 item.srparasites_traps.range_augment.name=Range Augment
 item.srparasites_traps.damage_augment.name=Damage Augment
+item.srparasites_traps.blank_augment.name=Blank Augment
 
 # Tooltips
 tooltip.srparasites_traps.item.two_way_communication_unit=§8A chip designed to enable two-way communication between mechanical machines and parasitic entities.§f

@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:augments_enabled"
+    }
+  ],
+  "pattern": [
+    " s ",
+    "nqn",
+    " b "
+  ],
+  "key": {
+    "q": {
+      "item": "srparasites:itemthrow"
+    },
+    "b": {
+      "item": "srparasites_traps:blank_augment"
+    },
+    "n": {
+      "item": "srparasites:lurecomponent5"
+    },
+    "s": {
+      "item": "minecraft:potion",
+      "type": "minecraft:item_nbt",
+      "nbt": {
+        "Potion": "minecraft:swiftness"
+      }
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:attack_speed_augment",
+    "count": 1
+  }
+}

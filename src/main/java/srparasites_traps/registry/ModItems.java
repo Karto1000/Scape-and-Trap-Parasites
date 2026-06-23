@@ -45,6 +45,7 @@ public class ModItems {
     public static Item BECKON_HEART = new BasicItem("beckon_heart").maxStackSize(16).rarity(EnumRarity.RARE);
     public static Item ANTENNA = new BasicItem("antenna");
     public static Item COIL = new BasicItem("coil");
+    public static Item BLANK_AUGMENT = new BasicItem("blank_augment");
     public static TurretAugment ATTACK_SPEED_AUGMENT = new AttackSpeedAugment();
     public static TurretAugment RANGE_AUGMENT = new RangeAugment();
     public static TurretAugment DAMAGE_AUGMENT = new DamageAugment();

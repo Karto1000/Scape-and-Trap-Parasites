@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:augments_enabled"
+    }
+  ],
+  "pattern": [
+    " s ",
+    "srs",
+    " s "
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:blaze_rod"
+    },
+    "s": {
+      "item": "srparasites:semiorganic_ingot"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:blank_augment",
+    "count": 1
+  }
+}
