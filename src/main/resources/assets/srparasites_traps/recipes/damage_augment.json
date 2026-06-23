@@ -7,12 +7,12 @@
   ],
   "pattern": [
     " s ",
-    "lql",
+    "lml",
     " b "
   ],
   "key": {
-    "q": {
-      "item": "srparasites:itemthrow"
+    "m": {
+      "item": "srparasites_traps:parasitic_matter"
     },
     "b": {
       "item": "srparasites_traps:blank_augment"

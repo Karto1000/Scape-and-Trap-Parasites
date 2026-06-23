@@ -41,7 +41,6 @@ item.srparasites_traps.dispatcher_brainstem.name=§cDispatcher Brainstem§f
 item.srparasites_traps.dispatcher_cerebrum.name=§cDispatcher Cerebrum§f
 item.srparasites_traps.armored_semi_organic_plating.name=Armored semi-organic Plating
 item.srparasites_traps.biomass_storage_unit.name=Biomass Storage Unit
-item.srparasites_traps.hatch.name=Hatch
 item.srparasites_traps.beckon_heart.name=§aBeckon Heart§f
 item.srparasites_traps.hardness_analyzer.name=Hardness Analyzer
 item.srparasites_traps.antenna.name=Antenna
@@ -53,7 +52,7 @@ item.srparasites_traps.blank_augment.name=Blank Augment
 
 # Tooltips
 tooltip.srparasites_traps.item.two_way_communication_unit=§8A chip designed to enable two-way communication between mechanical machines and parasitic entities.§f
-tooltip.srparasites_traps.item.parasitic_matter=Matter that is formed into various parasites by §cDispatchers§f.
+tooltip.srparasites_traps.item.parasitic_matter=Sticky matter that is formed into various parasites by §cDispatchers§f.
 tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §aDead Blood§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires an §aArea Marker§f to define coordinates aswell as §aDead Blood§f and §4energy§f to function.
 tooltip.srparasites_traps.item.area_marker.base=Can be placed inside certain traps to change their area of effect. Right-Click with item in hand to define the §carea§f.
