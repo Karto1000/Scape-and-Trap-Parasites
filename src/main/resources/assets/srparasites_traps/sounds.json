@@ -58,5 +58,15 @@
         "stream": false
       }
     ]
+  },
+  "biomass_factory_work": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.biomass_factory_work",
+    "sounds": [
+      {
+        "name": "srparasites_traps:biomass_factory_work",
+        "stream": false
+      }
+    ]
   }
 }

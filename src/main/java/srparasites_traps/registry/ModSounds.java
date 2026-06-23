@@ -14,6 +14,7 @@ public class ModSounds {
     public static final SoundEvent TESLA_COIL_FIRE = createSoundEvent("tesla_coil_fire");
     public static final SoundEvent ELECTRIC_ARC = createSoundEvent("electric_arc");
     public static final SoundEvent TESLA_COIL_CHARGE = createSoundEvent("tesla_coil_charge");
+    public static final SoundEvent BIOMASS_FACTORY_WORK = createSoundEvent("biomass_factory_work");
 
     private static SoundEvent createSoundEvent(String name) {
         return new SoundEvent(new ResourceLocation(SRParasitesTraps.MOD_ID, name))

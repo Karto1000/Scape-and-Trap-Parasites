@@ -3,8 +3,6 @@ package srparasites_traps.features.biomass_factory;
 import cofh.core.gui.container.ContainerCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
 import srparasites_traps.util.Constants;
 
@@ -15,6 +13,8 @@ public class BiomassFactoryContainer extends ContainerCore {
     private final static int INVENTORY_HEIGHT = 3;
     private final static int FIRST_SLOT_X_POSITION = 136;
     private final static int FIRST_SLOT_Y_POSITION_PX = 8;
+    private static final int BIOMASS_AMOUNT_ID = 0;
+    private int lastBiomassAmount = -1;
 
     public static final int INPUT_SLOT_START = 0;
     public static final int INPUT_SLOT_COUNT = INVENTORY_WIDTH * INVENTORY_HEIGHT;
@@ -49,16 +49,25 @@ public class BiomassFactoryContainer extends ContainerCore {
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-        for (IContainerListener listener : this.listeners) {
-            this.tileEntity.sendGuiNetworkData(this, listener);
+
+        int biomassAmount = this.tileEntity.biomassStorage.getFluidAmount();
+
+        if (this.lastBiomassAmount != biomassAmount) {
+            this.lastBiomassAmount = biomassAmount;
+
+            for (IContainerListener listener : this.listeners) {
+                listener.sendWindowProperty(this, BIOMASS_AMOUNT_ID, biomassAmount);
+            }
         }
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     public void updateProgressBar(int id, int data) {
         super.updateProgressBar(id, data);
-        this.tileEntity.receiveGuiNetworkData(id, data);
+
+        if (id == BIOMASS_AMOUNT_ID) {
+            this.tileEntity.biomassStorage.set(data);
+        }
     }
 
     @Override

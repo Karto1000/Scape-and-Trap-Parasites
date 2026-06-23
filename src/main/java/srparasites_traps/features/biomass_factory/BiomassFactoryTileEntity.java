@@ -1,20 +1,21 @@
 package srparasites_traps.features.biomass_factory;
 
-import cofh.core.block.TileCore;
+import cofh.core.audio.ISoundSource;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,14 +23,14 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import srparasites_traps.capability.DeadBloodTank;
 import srparasites_traps.config.ForgeConfigHandler;
-import srparasites_traps.util.InventoryHelper;
-import srparasites_traps.util.NBTHelper;
-import srparasites_traps.util.StateManager;
-import srparasites_traps.util.UpdateLimiter;
+import srparasites_traps.registry.ModSounds;
+import srparasites_traps.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,14 +38,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class BiomassFactoryTileEntity extends TileCore implements ICapabilityProvider, ITickable {
+public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityProvider, ISoundSource, ITickable {
     public DeadBloodTank biomassStorage;
     public final static int DEFAULT_BIOMASS_VALUE_MB = 10;
     public StateManager<BiomassFactoryState> state = new StateManager<>(BiomassFactoryState.IDLE, this::onSwitchState);
 
     private final UpdateLimiter updateLimiter = new UpdateLimiter(ForgeConfigHandler.biomassFactory.DEFAULT_CONSUME_DELAY);
-    private int workingSoundCooldown = 0;
     private final Map<Item, Integer> allowedItems = new HashMap<>();
+
+    @SideOnly(Side.CLIENT)
+    private FixedSoundTile sound;
 
     private void onSwitchState(BiomassFactoryState oldState, BiomassFactoryState newState) {
         IBlockState blockState = this.world.getBlockState(this.pos);
@@ -52,12 +55,13 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         switch (newState) {
             case IDLE:
                 this.world.setBlockState(this.pos, blockState.withProperty(BiomassFactoryBlock.ACTIVE, false));
-                this.workingSoundCooldown = 0;
                 break;
             case ACTIVE:
                 this.world.setBlockState(this.pos, blockState.withProperty(BiomassFactoryBlock.ACTIVE, true));
                 break;
         }
+
+        this.callBlockUpdate();
     }
 
     @Override
@@ -163,6 +167,11 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
     public void update() {
         if (updateLimiter.tickDown()) return;
 
+        if (this.world.isRemote) {
+            this.updateSound();
+            return;
+        }
+
         ItemStack fluidInputStack = fluidFillInventory.getStackInSlot(0);
         ItemStack fluidOutputStack = fluidOutputInventory.getStackInSlot(0);
         if (!fluidInputStack.isEmpty() && fluidOutputStack.isEmpty()) {
@@ -187,11 +196,6 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
                     return;
                 }
 
-                if (workingSoundCooldown == 0) {
-                    workingSoundCooldown = 20;
-                    this.world.playSound(null, this.pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                } else workingSoundCooldown--;
-
                 for (int i = 0; i < inputInventory.getSlots(); i++) {
                     ItemStack stack = inputInventory.getStackInSlot(i);
                     if (stack.isEmpty()) continue;
@@ -207,24 +211,36 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         }
     }
 
+    public void callBlockUpdate() {
+        if (this.world == null) return;
+
+        IBlockState state = this.world.getBlockState(this.pos);
+        this.world.notifyBlockUpdate(this.pos, state, state, 3);
+    }
+
     public boolean canWork() {
         return !InventoryHelper.isInventoryEmpty(inputInventory) && !this.biomassStorage.isFull();
     }
 
     @Override
-    public void sendGuiNetworkData(Container container, IContainerListener player) {
-        super.sendGuiNetworkData(container, player);
-        player.sendWindowProperty(container, 0, this.biomassStorage.getFluidAmount());
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
     }
 
     @Override
-    public void receiveGuiNetworkData(int id, int data) {
-        switch (id) {
-            case 0:
-                if (data == 0) this.biomassStorage.setFluid(null);
-                else this.biomassStorage.set(data);
-                break;
-        }
+    public void handleUpdateTag(NBTTagCompound tag) {
+        this.readFromNBT(tag);
+    }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.getNbtCompound());
     }
 
     @Nullable
@@ -252,5 +268,37 @@ public class BiomassFactoryTileEntity extends TileCore implements ICapabilityPro
         }
 
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void updateSound() {
+        if (!this.shouldPlaySound()) return;
+        if (this.sound != null && !this.sound.isDonePlaying()) return;
+
+        this.sound = (FixedSoundTile) this.getSound();
+        Minecraft.getMinecraft().getSoundHandler().playSound(this.sound);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ISound getSound() {
+        FixedSoundTile soundTile = new FixedSoundTile(
+                this,
+                ModSounds.BIOMASS_FACTORY_WORK,
+                0.25f,
+                0.8f,
+                true,
+                0,
+                VecHelper.blockPosToVec3d(this.pos)
+        );
+
+        soundTile.setFadeOut(20);
+        return soundTile;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldPlaySound() {
+        return this.state.getState() == BiomassFactoryState.ACTIVE;
     }
 }

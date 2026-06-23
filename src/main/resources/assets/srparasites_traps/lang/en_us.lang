@@ -91,6 +91,7 @@ subtitle.srparasites_traps.decontaminator_close=Decontaminator closes
 subtitle.srparasites_traps.tesla_coil_charge=Tesla coil charges
 subtitle.srparasites_traps.tesla_coil_fire=Tesla coil fires
 subtitle.srparasites_traps.electric_arc=Electricity arcs
+subtitle.srparasites_traps.biomass_factory_work=Liquid Boils
 
 # Potions
 potion.srparasites_traps.shocked=Shocked
