@@ -13,6 +13,7 @@ import srparasites_traps.features.IDefaultValueHolder;
 import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.AugmentCompatibility;
 import srparasites_traps.features.augments.DamageAugment;
 import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.util.Constants;
@@ -20,6 +21,7 @@ import srparasites_traps.util.DebugHelper;
 import srparasites_traps.util.NBTHelper;
 import srparasites_traps.util.StateManager;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -156,6 +158,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         return false;
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
@@ -285,10 +288,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
 
     @Override
     public boolean isValidAugment(ItemStack itemStack) {
-        if (itemStack.isEmpty()) return false;
-        if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
-        if (itemStack.getItem() instanceof DamageAugment) return true;
-        return itemStack.getItem() instanceof RangeAugment;
+        return AugmentCompatibility.isValidFor(SentryTurretTileEntity.class, itemStack);
     }
 
     @Override

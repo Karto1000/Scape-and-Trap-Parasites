@@ -16,6 +16,8 @@ import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.registry.ModItems;
 
+import javax.annotation.Nonnull;
+
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public abstract class ObsidianSlabBlock extends BlockSlab {
@@ -43,17 +45,19 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
     }
 
     @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(@Nonnull NonNullList<ItemStack> drops, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
         if (this.isDouble()) drops.add(new ItemStack(ModItems.OBSIDIAN_SLAB_ITEM, 2));
         else drops.add(new ItemStack(ModItems.OBSIDIAN_SLAB_ITEM, 1));
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState() {
         if (this.isDouble()) return new BlockStateContainer(this, VARIANT);
         return new BlockStateContainer(this, VARIANT, HALF);
     }
 
+    @Nonnull
     public IBlockState getStateFromMeta(int meta) {
         IBlockState bs = this.getDefaultState().withProperty(VARIANT, Variant.DEFAULT);
         if (!(meta == 0b0001))
@@ -61,30 +65,34 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
         return bs;
     }
 
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(@Nonnull IBlockState state) {
         if (this.isDouble()) return 0b0001;
         EnumBlockHalf half = state.getValue(HALF);
         return half == BlockSlab.EnumBlockHalf.BOTTOM ? 0b0010 : 0b0011;
     }
 
+    @Nonnull
     @Override
     public String getTranslationKey(int meta) {
         return super.getTranslationKey();
     }
 
+    @Nonnull
     @Override
     public IProperty<?> getVariantProperty() {
         return VARIANT;
     }
 
+    @Nonnull
     @Override
-    public Comparable<?> getTypeForItem(ItemStack stack) {
+    public Comparable<?> getTypeForItem(@Nonnull ItemStack stack) {
         return Variant.DEFAULT;
     }
 
     public enum Variant implements IStringSerializable {
         DEFAULT;
 
+        @Nonnull
         @Override
         public String getName() {
             return "default";

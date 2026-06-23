@@ -14,10 +14,12 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.registry.ModBlocks;
 import srparasites_traps.registry.ModItems;
 
+import javax.annotation.Nonnull;
+
 @JEIPlugin
 public class JEICompat implements IModPlugin {
     @Override
-    public void registerCategories(IRecipeCategoryRegistration registry) {
+    public void registerCategories(@Nonnull IRecipeCategoryRegistration registry) {
         IModPlugin.super.registerCategories(registry);
     }
 

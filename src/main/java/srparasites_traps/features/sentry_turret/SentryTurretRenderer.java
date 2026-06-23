@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.util.Constants;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class SentryTurretRenderer extends RenderLiving<SentryTurretEntity> {
@@ -16,7 +17,7 @@ public class SentryTurretRenderer extends RenderLiving<SentryTurretEntity> {
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(SentryTurretEntity entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull SentryTurretEntity entity) {
         return TEXTURE;
     }
 }

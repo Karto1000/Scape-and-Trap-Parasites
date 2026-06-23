@@ -16,6 +16,7 @@ import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.util.NBTHelper;
 import srparasites_traps.util.RedstoneControlHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class TurretTileEntity extends TileCore implements ICapabilityProvider, IRedstoneControl {
@@ -32,7 +33,7 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return true;
         } else if (capability == CapabilityEnergy.ENERGY) {
@@ -43,7 +44,7 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.biomassStorage);
         } else if (capability == CapabilityEnergy.ENERGY) {
@@ -63,6 +64,7 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
         super.readFromNBT(compound);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("BiomassStorage", this.biomassStorage.writeToNBT(new NBTTagCompound()));

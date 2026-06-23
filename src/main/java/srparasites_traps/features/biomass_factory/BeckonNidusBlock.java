@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
@@ -26,13 +27,13 @@ public class BeckonNidusBlock extends Block {
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(@Nonnull IBlockState state) {
         return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
         return new BeckonNidusTileEntity();
     }
 }

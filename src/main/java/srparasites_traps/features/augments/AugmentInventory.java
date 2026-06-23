@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 
 public class AugmentInventory<T extends TileCore & IAugmentable> implements IInventory {
@@ -26,11 +27,13 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
         return Arrays.stream(tileEntity.getAugmentSlots()).allMatch(ItemStack::isEmpty);
     }
 
+    @Nonnull
     @Override
     public ItemStack getStackInSlot(int index) {
         return tileEntity.getAugmentSlots()[index];
     }
 
+    @Nonnull
     @Override
     public ItemStack decrStackSize(int index, int count) {
         ItemStack stack = getStackInSlot(index);
@@ -38,6 +41,7 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
         return stack;
     }
 
+    @Nonnull
     @Override
     public ItemStack removeStackFromSlot(int index) {
         ItemStack stack = getStackInSlot(index);
@@ -68,21 +72,21 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(@Nonnull EntityPlayer player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(@Nonnull EntityPlayer player) {
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(@Nonnull EntityPlayer player) {
 
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
+    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
         return this.tileEntity.isValidAugment(stack);
     }
 
@@ -105,6 +109,7 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
     public void clear() {
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "";
@@ -115,6 +120,7 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
         return false;
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName() {
         return null;

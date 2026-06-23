@@ -8,9 +8,12 @@ import net.minecraft.util.ITickable;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.NBTHelper;
 
+import javax.annotation.Nonnull;
+
 public class BeckonNidusTileEntity extends TileCore implements ITickable {
     private int aliveTicks = 0;
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("AliveTicks", this.aliveTicks);
@@ -18,7 +21,7 @@ public class BeckonNidusTileEntity extends TileCore implements ITickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(@Nonnull NBTTagCompound compound) {
         this.aliveTicks = NBTHelper.getIntegerOrElse(compound, "AliveTicks", () -> 0);
         super.readFromNBT(compound);
     }

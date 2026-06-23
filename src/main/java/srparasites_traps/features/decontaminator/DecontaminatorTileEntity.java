@@ -20,6 +20,7 @@ import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.NBTHelper;
 import srparasites_traps.util.StateManager;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
         return state.getState();
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("State", this.state.getState().ordinal());
@@ -99,7 +101,7 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(@Nonnull NBTTagCompound compound) {
         this.currentCheckCooldown = NBTHelper.getIntegerOrElse(compound, "CurrentCheckCooldown", () -> DEFAULT_DECONTAMINATOR_CHECK_TICKS_COOLDOWN);
         this.currentCapacity = NBTHelper.getIntegerOrElse(compound, "CurrentCapacity", () -> DEFAULT_DECONTAMINATOR_CAPACITY);
         this.state.setState(DecontaminatorState.values()[NBTHelper.getIntegerOrElse(compound, "State", DecontaminatorState.IDLE::ordinal)]);
@@ -109,13 +111,14 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
         super.readFromNBT(compound);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
     }
 
     @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
+    public void handleUpdateTag(@Nonnull NBTTagCompound tag) {
         readFromNBT(tag);
     }
 
@@ -126,7 +129,7 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(@Nonnull NetworkManager net, SPacketUpdateTileEntity pkt) {
         readFromNBT(pkt.getNbtCompound());
     }
 

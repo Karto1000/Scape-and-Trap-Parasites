@@ -25,6 +25,7 @@ import srparasites_traps.features.relocator.RelocatorTileEntity;
 import srparasites_traps.util.Pair;
 import srparasites_traps.util.VecHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
@@ -57,14 +58,12 @@ public class AreaMarkerItem extends Item {
         if (!(block instanceof RelocatorBlock)) return false;
 
         TileEntity tileEntity = world.getTileEntity(pos);
-        if (!(tileEntity instanceof RelocatorTileEntity)) return false;
-
-        return true;
+        return tileEntity instanceof RelocatorTileEntity;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME + ".base", ForgeConfigHandler.relocator.DEFAULT_AREA_MARKER_MAX_VOLUME));
 
         if (worldIn == null) return;
@@ -79,8 +78,9 @@ public class AreaMarkerItem extends Item {
         }
     }
 
+    @Nonnull
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (heldItem.isEmpty()) return EnumActionResult.FAIL;
         if (!heldItem.hasTagCompound()) heldItem.setTagCompound(new NBTTagCompound());

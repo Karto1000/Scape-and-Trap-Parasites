@@ -22,6 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 
+import javax.annotation.Nonnull;
+
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class ObsidianLadderBlock extends Block {
@@ -45,7 +47,8 @@ public class ObsidianLadderBlock extends Block {
             this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    @Nonnull
+    public AxisAlignedBB getBoundingBox(IBlockState state, @Nonnull IBlockAccess source, @Nonnull BlockPos pos) {
         switch (state.getValue(FACING)) {
             case NORTH:
                 return LADDER_NORTH_AABB;
@@ -59,15 +62,15 @@ public class ObsidianLadderBlock extends Block {
         }
     }
 
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(@Nonnull IBlockState state) {
         return false;
     }
 
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(@Nonnull IBlockState state) {
         return false;
     }
 
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
+    public boolean canPlaceBlockOnSide(@Nonnull World worldIn, BlockPos pos, @Nonnull EnumFacing side) {
         if (this.canAttachTo(worldIn, pos.west(), side)) {
             return true;
         } else if (this.canAttachTo(worldIn, pos.east(), side)) {
@@ -85,7 +88,8 @@ public class ObsidianLadderBlock extends Block {
         return !flag && iblockstate.getBlockFaceShape(world, pos, facing) == BlockFaceShape.SOLID && !iblockstate.canProvidePower();
     }
 
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    @Nonnull
+    public IBlockState getStateForPlacement(@Nonnull World worldIn, @Nonnull BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer) {
         if (facing.getAxis().isHorizontal() && this.canAttachTo(worldIn, pos.offset(facing.getOpposite()), facing)) {
             return this.getDefaultState().withProperty(FACING, facing);
         } else {
@@ -99,7 +103,7 @@ public class ObsidianLadderBlock extends Block {
         }
     }
 
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+    public void neighborChanged(IBlockState state, @Nonnull World worldIn, BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos) {
         EnumFacing enumfacing = state.getValue(FACING);
 
         if (!this.canAttachTo(worldIn, pos.offset(enumfacing.getOpposite()), enumfacing)) {
@@ -110,6 +114,7 @@ public class ObsidianLadderBlock extends Block {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 
+    @Nonnull
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
@@ -120,6 +125,7 @@ public class ObsidianLadderBlock extends Block {
         return this.getDefaultState().withProperty(FACING, enumfacing);
     }
 
+    @Nonnull
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
@@ -129,24 +135,28 @@ public class ObsidianLadderBlock extends Block {
         return state.getValue(FACING).getIndex();
     }
 
+    @Nonnull
     public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
 
+    @Nonnull
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
     }
 
+    @Nonnull
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING);
     }
 
     @Override
-    public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
+    public boolean isLadder(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityLivingBase entity) {
         return true;
     }
 
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    @Nonnull
+    public BlockFaceShape getBlockFaceShape(@Nonnull IBlockAccess worldIn, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
 }

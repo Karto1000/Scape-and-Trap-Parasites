@@ -15,6 +15,7 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.Serializers;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class SentryTurretEntity extends EntityLiving {
@@ -181,7 +182,7 @@ public class SentryTurretEntity extends EntityLiving {
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound) {
+    public void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         if (this.baseBlockPosition != null) {
             compound.setLong("BaseBlockPosition", this.baseBlockPosition.toLong());
@@ -189,7 +190,7 @@ public class SentryTurretEntity extends EntityLiving {
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound) {
+    public void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         if (compound.hasKey("BaseBlockPosition")) {
             this.baseBlockPosition = BlockPos.fromLong(compound.getLong("BaseBlockPosition"));

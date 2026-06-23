@@ -10,6 +10,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -35,7 +36,7 @@ public class BurningSerratedSpikes extends SerratedSpikesBlock {
     }
 
     @Override
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+    public void randomDisplayTick(@Nonnull IBlockState stateIn, @Nonnull World worldIn, @Nonnull BlockPos pos, Random rand) {
         if (rand.nextInt(10) == 0) {
             worldIn.spawnParticle(
                     EnumParticleTypes.FLAME,

@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class LightningArcParticle extends Particle {
@@ -95,8 +96,8 @@ public class LightningArcParticle extends Particle {
     @Override
     @SideOnly(Side.CLIENT)
     public void renderParticle(
-            BufferBuilder buffer,
-            Entity entityIn,
+            @Nonnull BufferBuilder buffer,
+            @Nonnull Entity entityIn,
             float partialTicks,
             float rotationX,
             float rotationZ,

@@ -9,6 +9,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class BasicItem extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
         if (!I18n.hasKey("tooltip." + SRParasitesTraps.MOD_ID + ".item." + this.registryName)) return;
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + this.registryName));
     }

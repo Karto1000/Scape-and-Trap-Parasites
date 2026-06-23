@@ -5,6 +5,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class AugmentSlot<T extends IAugmentable> extends Slot {
     private final T tileEntity;
 
@@ -15,7 +17,7 @@ public class AugmentSlot<T extends IAugmentable> extends Slot {
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack) {
+    public boolean isItemValid(@Nonnull ItemStack stack) {
         return this.tileEntity.isValidAugment(stack);
     }
 

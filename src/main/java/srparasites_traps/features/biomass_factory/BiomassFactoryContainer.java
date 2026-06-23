@@ -6,6 +6,8 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraftforge.items.SlotItemHandler;
 import srparasites_traps.util.Constants;
 
+import javax.annotation.Nonnull;
+
 public class BiomassFactoryContainer extends ContainerCore {
     private final BiomassFactoryTileEntity tileEntity;
     private final EntityPlayer player;
@@ -71,7 +73,7 @@ public class BiomassFactoryContainer extends ContainerCore {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
         return true;
     }
 

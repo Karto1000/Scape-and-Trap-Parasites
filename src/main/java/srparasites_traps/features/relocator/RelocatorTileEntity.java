@@ -144,6 +144,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         return Optional.of(this.spawnedRelocator);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
@@ -178,6 +179,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         if (compound.hasKey("inventory")) this.inventory.deserializeNBT(compound.getCompoundTag("inventory"));
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
@@ -194,7 +196,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return true;
         }
@@ -203,7 +205,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inventory);
         }

@@ -20,6 +20,7 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.util.Constants;
 import srparasites_traps.util.NBTHelper;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -141,8 +142,9 @@ public class RelocatorEntity extends EntityLiving {
         return false;
     }
 
+    @Nonnull
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
         super.writeToNBT(compound);
 
         compound.setDouble("CurrentEmergeTime", getCurrentEmergeTime());
@@ -156,7 +158,7 @@ public class RelocatorEntity extends EntityLiving {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(@Nonnull NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         setCurrentEmergeTime(
@@ -224,7 +226,7 @@ public class RelocatorEntity extends EntityLiving {
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
+    public void onDeath(@Nonnull DamageSource cause) {
         super.onDeath(cause);
 
         this.releaseEntity();

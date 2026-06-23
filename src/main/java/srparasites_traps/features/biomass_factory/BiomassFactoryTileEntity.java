@@ -65,7 +65,7 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+    public boolean shouldRefresh(@Nonnull World world, @Nonnull BlockPos pos, IBlockState oldState, IBlockState newSate) {
         return oldState.getBlock() != newSate.getBlock();
     }
 
@@ -140,6 +140,7 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
         allowedItems.put(Item.getItemFromBlock(SRPBlocks.ParasiteStain), DEFAULT_BIOMASS_VALUE_MB);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("BiomassStorage", this.biomassStorage.writeToNBT(new NBTTagCompound()));
@@ -151,7 +152,7 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(@Nonnull NBTTagCompound compound) {
         super.readFromNBT(compound);
         if (compound.hasKey("BiomassStorage"))
             this.biomassStorage.readFromNBT(compound.getCompoundTag("BiomassStorage"));
@@ -222,13 +223,14 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
         return !InventoryHelper.isInventoryEmpty(inputInventory) && !this.biomassStorage.isFull();
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
     }
 
     @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
+    public void handleUpdateTag(@Nonnull NBTTagCompound tag) {
         this.readFromNBT(tag);
     }
 
@@ -239,13 +241,13 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(@Nonnull NetworkManager net, SPacketUpdateTileEntity pkt) {
         this.readFromNBT(pkt.getNbtCompound());
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.biomassStorage);
         }
@@ -258,16 +260,12 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return true;
         }
 
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return true;
-        }
-
-        return false;
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
     }
 
     @SideOnly(Side.CLIENT)

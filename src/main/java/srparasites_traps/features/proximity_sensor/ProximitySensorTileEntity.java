@@ -14,6 +14,7 @@ import srparasites_traps.registry.ModItems;
 import srparasites_traps.util.StateManager;
 import srparasites_traps.util.UpdateLimiter;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class ProximitySensorTileEntity extends TileCore implements ITickable {
         return Optional.ofNullable(this.areaMarker);
     }
 
-    public void setAreaMarker(ItemStack areaMarker) {
+    public void setAreaMarker(@Nullable ItemStack areaMarker) {
         this.areaMarker = areaMarker;
     }
 
@@ -58,7 +59,7 @@ public class ProximitySensorTileEntity extends TileCore implements ITickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(@Nonnull NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         if (compound.hasKey("areaMarkerNBT", Constants.NBT.TAG_COMPOUND)) {
@@ -67,8 +68,9 @@ public class ProximitySensorTileEntity extends TileCore implements ITickable {
         }
     }
 
+    @Nonnull
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
         if (this.areaMarker != null && this.areaMarker.getTagCompound() != null)
             compound.setTag("areaMarkerNBT", this.areaMarker.getTagCompound());
         return super.writeToNBT(compound);

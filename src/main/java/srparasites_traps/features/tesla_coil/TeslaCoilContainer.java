@@ -12,6 +12,8 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.augments.AugmentInventory;
 import srparasites_traps.features.augments.AugmentSlot;
 
+import javax.annotation.Nonnull;
+
 public class TeslaCoilContainer extends ContainerCore implements IAugmentableContainer {
     private final TeslaCoilTileEntity tileEntity;
     private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.TESLA_COIL_AUGMENT_SLOTS];
@@ -29,7 +31,7 @@ public class TeslaCoilContainer extends ContainerCore implements IAugmentableCon
     }
 
     @Override
-    public boolean enchantItem(EntityPlayer playerIn, int id) {
+    public boolean enchantItem(@Nonnull EntityPlayer playerIn, int id) {
         if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
         IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
         tileEntity.setControl(controlMode);
@@ -62,7 +64,7 @@ public class TeslaCoilContainer extends ContainerCore implements IAugmentableCon
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
         return true;
     }
 

@@ -24,6 +24,7 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.IDefaultValueHolder;
 import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.AugmentCompatibility;
 import srparasites_traps.features.augments.DamageAugment;
 import srparasites_traps.features.augments.RangeAugment;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
@@ -37,6 +38,7 @@ import srparasites_traps.util.RedstoneControlHelper;
 import srparasites_traps.util.UpdateLimiter;
 import srparasites_traps.util.VecHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
@@ -96,7 +98,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityEnergy.ENERGY && facing == EnumFacing.DOWN) {
             return CapabilityEnergy.ENERGY.cast(this.energyStorage);
         }
@@ -105,7 +107,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityEnergy.ENERGY && facing == EnumFacing.DOWN) {
             return true;
         }
@@ -124,6 +126,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         super.readFromNBT(compound);
     }
 
+    @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("EnergyStorage", this.energyStorage.writeToNBT(new NBTTagCompound()));
@@ -311,10 +314,7 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     @Override
     public boolean isValidAugment(ItemStack itemStack) {
-        if (itemStack.isEmpty()) return false;
-        if (itemStack.getItem() instanceof AttackSpeedAugment) return true;
-        if (itemStack.getItem() instanceof DamageAugment) return true;
-        return itemStack.getItem() instanceof RangeAugment;
+        return AugmentCompatibility.isValidFor(TeslaCoilTileEntity.class, itemStack);
     }
 
     @Override

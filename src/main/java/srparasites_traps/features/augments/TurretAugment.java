@@ -11,6 +11,7 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.registry.ModTileEntities;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,9 +43,13 @@ public class TurretAugment extends Item implements IAugmentItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
         String machinesWithAugments = ModTileEntities.TILE_ENTITIES.stream()
-                .filter(t -> IExtendedAugmentable.class.isAssignableFrom(t.tileEntityClass))
+                .filter(t -> {
+                    boolean inheritsAugmentable = IExtendedAugmentable.class.isAssignableFrom(t.tileEntityClass);
+                    if (!inheritsAugmentable) return false;
+                    return AugmentCompatibility.isValidFor(t.tileEntityClass, stack);
+                })
                 .map(t -> String.format("- %s", t.block.getLocalizedName()))
                 .collect(Collectors.joining("\n"));
 

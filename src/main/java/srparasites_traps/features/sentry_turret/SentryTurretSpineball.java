@@ -14,6 +14,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -34,6 +35,7 @@ public class SentryTurretSpineball extends EntityFireball {
         return 1;
     }
 
+    @Nonnull
     @Override
     protected EnumParticleTypes getParticleType() {
         return EnumParticleTypes.SLIME;
@@ -69,7 +71,7 @@ public class SentryTurretSpineball extends EntityFireball {
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
+    protected void onImpact(@Nonnull RayTraceResult result) {
         if (this.world.isRemote) return;
 
         SentryTurretEntity ste = (SentryTurretEntity) this.shootingEntity;

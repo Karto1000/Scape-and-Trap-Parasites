@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.util.Constants;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class RelocatorEntityRenderer extends RenderLiving<RelocatorEntity> {
@@ -16,7 +17,7 @@ public class RelocatorEntityRenderer extends RenderLiving<RelocatorEntity> {
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(RelocatorEntity entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull RelocatorEntity entity) {
         return TEXTURE;
     }
 }

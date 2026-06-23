@@ -75,7 +75,7 @@ public class RelocatorContainer extends ContainerCore {
     }
 
     @Override
-    public boolean enchantItem(EntityPlayer playerIn, int id) {
+    public boolean enchantItem(@Nonnull EntityPlayer playerIn, int id) {
         if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
         IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
         tileEntity.setControl(controlMode);
@@ -98,7 +98,7 @@ public class RelocatorContainer extends ContainerCore {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
         return true;
     }
 
