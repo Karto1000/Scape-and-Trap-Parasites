@@ -2,8 +2,10 @@ package srparasites_traps.features.relocator;
 
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.core.gui.container.ContainerCore;
+import cofh.core.gui.container.IAugmentableContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,17 +13,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
+import srparasites_traps.features.augments.AugmentInventory;
+import srparasites_traps.features.augments.AugmentSlot;
 
 import javax.annotation.Nonnull;
 
 import static srparasites_traps.util.Translation.getServerStatusFor;
 
-public class RelocatorContainer extends ContainerCore {
+public class RelocatorContainer extends ContainerCore implements IAugmentableContainer {
     private final RelocatorTileEntity tileEntity;
     private final static int SLOT_SEARCH_X_POSITION_PX = 88;
     private final static int SLOT_SEARCH_Y_POSITION_PX = 8;
     private final static int SLOT_DESTINATION_X_POSITION_PX = 88;
     private final static int SLOT_DESTINATION_Y_POSITION_PX = 45;
+    private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.RELOCATOR_AUGMENT_SLOTS];
 
     public RelocatorContainer(EntityPlayer player, RelocatorTileEntity tileEntity) {
         this.tileEntity = tileEntity;
@@ -71,6 +76,12 @@ public class RelocatorContainer extends ContainerCore {
             }
         });
 
+        AugmentInventory<RelocatorTileEntity> augmentInventory = new AugmentInventory<>(tileEntity);
+        for (int i = 0; i < this.augmentSlots.length; i++) {
+            this.augmentSlots[i] = new AugmentSlot<>(augmentInventory, i, 0, 0, this.tileEntity);
+            this.addSlotToContainer(this.augmentSlots[i]);
+        }
+
         bindPlayerInventory(player.inventory);
     }
 
@@ -109,6 +120,16 @@ public class RelocatorContainer extends ContainerCore {
 
     @Override
     protected int getSizeInventory() {
-        return 2;
+        return 2 + ForgeConfigHandler.augments.RELOCATOR_AUGMENT_SLOTS;
+    }
+
+    @Override
+    public void setAugmentLock(boolean b) {
+
+    }
+
+    @Override
+    public Slot[] getAugmentSlots() {
+        return this.augmentSlots;
     }
 }

@@ -93,6 +93,7 @@ public class RelocatorBlock extends Block {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof RelocatorTileEntity) {
             ((RelocatorTileEntity) tileEntity).dropInventory();
+            ((RelocatorTileEntity) tileEntity).dropAugments(worldIn, pos);
         }
 
         super.breakBlock(worldIn, pos, state);

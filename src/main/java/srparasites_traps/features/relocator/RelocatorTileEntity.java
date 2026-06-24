@@ -22,8 +22,12 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.IDefaultValueHolder;
+import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
+import srparasites_traps.features.augments.AttackSpeedAugment;
+import srparasites_traps.features.augments.AugmentCompatibility;
 import srparasites_traps.util.*;
 
 import javax.annotation.Nonnull;
@@ -33,8 +37,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class RelocatorTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider {
+public class RelocatorTileEntity extends TurretTileEntity implements ITickable, ICapabilityProvider, IExtendedAugmentable, IDefaultValueHolder {
     public int randomBlockSelectionRetries = ForgeConfigHandler.relocator.DEFAULT_BLOCK_SELECTION_RETRIES;
     public int maxBlockHardness = ForgeConfigHandler.relocator.DEFAULT_MAX_BLOCK_HARDNESS;
     public int maxRelocatorsInReserve = ForgeConfigHandler.relocator.DEFAULT_MAX_RELOCATORS_IN_RESERVE;
@@ -43,7 +48,12 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     public int energyPerTick = ForgeConfigHandler.relocator.DEFAULT_ENERGY_PER_TICK;
     public int allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE;
     public int allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE;
+    public double emergeTimeSeconds = ForgeConfigHandler.relocator.DEFAULT_ENTITY_EMERGE_TIME;
 
+    private boolean firstTick = true;
+    private final ItemStack[] augments = Stream.generate(() -> ItemStack.EMPTY)
+            .limit(ForgeConfigHandler.augments.RELOCATOR_AUGMENT_SLOTS)
+            .toArray(ItemStack[]::new);
     private final UpdateLimiter updateLimiter = new UpdateLimiter(20);
 
     public final ItemStackHandler inventory = new ItemStackHandler(2) {
@@ -169,6 +179,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
+        this.readAugmentsFromNBT(compound);
 
         this.state = RelocatorTileEntityState.values()[NBTHelper.getIntegerOrElse(compound, "State", RelocatorTileEntityState.IDLE::ordinal)];
         this.currentRelocatorCount = NBTHelper.getIntegerOrElse(compound, "CurrentRelocatorCount", () -> this.maxRelocatorsInReserve);
@@ -183,6 +194,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
+        this.writeAugmentsToNBT(compound);
 
         compound.setInteger("State", this.state.ordinal());
         compound.setInteger("CurrentRelocatorCount", this.currentRelocatorCount);
@@ -326,6 +338,11 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     @Override
     public void update() {
+        if (firstTick) {
+            this.updateAugmentStatus();
+            firstTick = false;
+        }
+
         if (this.state == RelocatorTileEntityState.RELOCATING) {
             Optional<RelocatorEntity> spawnedRelocator = getSpawnedRelocator();
             boolean isRelocatorValidForState = spawnedRelocator.isPresent() && spawnedRelocator.get().isEntityAlive();
@@ -366,5 +383,37 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         this.setState(RelocatorTileEntityState.RELOCATING);
 
         this.currentRelocatorCount--;
+    }
+
+    @Override
+    public void applyAugment(ItemStack augment) {
+        if (augment.isEmpty()) return;
+
+        if (augment.getItem() instanceof AttackSpeedAugment) {
+            this.emergeTimeSeconds -= ForgeConfigHandler.augments.RELOCATOR_EMERGE_TIME_REDUCTION;
+        }
+    }
+
+    @Override
+    public boolean isValidAugment(ItemStack itemStack) {
+        return AugmentCompatibility.isValidFor(RelocatorTileEntity.class, itemStack);
+    }
+
+    @Override
+    public ItemStack[] getAugmentSlots() {
+        return augments;
+    }
+
+    @Override
+    public void applyDefaults() {
+        this.randomBlockSelectionRetries = ForgeConfigHandler.relocator.DEFAULT_BLOCK_SELECTION_RETRIES;
+        this.maxBlockHardness = ForgeConfigHandler.relocator.DEFAULT_MAX_BLOCK_HARDNESS;
+        this.maxRelocatorsInReserve = ForgeConfigHandler.relocator.DEFAULT_MAX_RELOCATORS_IN_RESERVE;
+        this.relocatorCreateDelay = ForgeConfigHandler.relocator.DEFAULT_RELOCATOR_CREATE_DELAY;
+        this.biomassPerRelocatorSpawn = ForgeConfigHandler.relocator.DEFAULT_BIOMASS_FOR_SPAWN;
+        this.energyPerTick = ForgeConfigHandler.relocator.DEFAULT_ENERGY_PER_TICK;
+        this.allowedMaxSearchAreaDistance = ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE;
+        this.allowedMaxDestinationAreaDistance = ForgeConfigHandler.relocator.DEFAULT_MAX_AREA_DISTANCE;
+        this.emergeTimeSeconds = ForgeConfigHandler.relocator.DEFAULT_ENTITY_EMERGE_TIME;
     }
 }

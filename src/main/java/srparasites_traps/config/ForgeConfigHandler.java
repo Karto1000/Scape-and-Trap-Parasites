@@ -472,6 +472,17 @@ public class ForgeConfigHandler {
         @Config.Comment("The increase in amplifier for the shocked effect when a damage augment is applied")
         @Config.RangeInt(min = 0)
         public int TESLA_COIL_SHOCKED_AMPLIFIER_INCREASE = 2;
+
+        @Config.Name("Relocator augment slots")
+        @Config.Comment("The number of augment slots available for the relocator")
+        @Config.RangeInt(min = 0)
+        public int RELOCATOR_AUGMENT_SLOTS = 2;
+
+        @Config.Name("Relocator emerge time reduction (Seconds)")
+        @Config.Comment("The reduction in emerge time for the relocator when the attack speed augment is applied")
+        @Config.RangeDouble(min = 0, max = 1)
+        public double RELOCATOR_EMERGE_TIME_REDUCTION = 0.3;
+
     }
 
     public static class CommonConfig {

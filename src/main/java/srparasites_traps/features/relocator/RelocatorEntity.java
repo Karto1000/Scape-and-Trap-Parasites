@@ -28,7 +28,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class RelocatorEntity extends EntityLiving {
-    public double emergeTimeSeconds = ForgeConfigHandler.relocator.DEFAULT_ENTITY_EMERGE_TIME;
     private static final DataParameter<Float> currentEmergeTime = EntityDataManager.createKey(RelocatorEntity.class, DataSerializers.FLOAT);
     private static final DataParameter<Integer> state = EntityDataManager.createKey(RelocatorEntity.class, DataSerializers.VARINT);
 
@@ -146,6 +145,11 @@ public class RelocatorEntity extends EntityLiving {
         return false;
     }
 
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
     @Nonnull
     @Override
     public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
@@ -155,6 +159,7 @@ public class RelocatorEntity extends EntityLiving {
         compound.setInteger("State", getEntityState().ordinal());
         compound.setLong("TargetPosition", targetPosition.toLong());
         compound.setLong("TileEntityPosition", tileEntityPosition.toLong());
+        compound.setLong("SpawnPosition", spawnPosition.toLong());
 
         if (entityToRelocateUUID != null) compound.setUniqueId("EntityToRelocate", entityToRelocateUUID);
 
@@ -246,14 +251,29 @@ public class RelocatorEntity extends EntityLiving {
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
+        if (this.world.isRemote) return;
+
         this.motionX = 0;
         this.motionY = 0;
         this.motionZ = 0;
 
+        TileEntity tileEntity = this.world.getTileEntity(this.tileEntityPosition);
+        if (tileEntity == null) {
+            this.despawn();
+            return;
+        }
+
+        if (!(tileEntity instanceof RelocatorTileEntity)) {
+            this.despawn();
+            return;
+        }
+
+        RelocatorTileEntity rte = (RelocatorTileEntity) tileEntity;
+
         RelocatorEntityState state = getEntityState();
         if (state == RelocatorEntityState.EMERGING) {
             double currentEmergeTime = getCurrentEmergeTime();
-            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
+            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * rte.emergeTimeSeconds));
 
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
             entityToRelocate.ifPresent(e -> e.setPositionAndUpdate(spawnPosition.getX() + 0.5, spawnPosition.getY(), spawnPosition.getZ() + 0.5));
@@ -263,7 +283,7 @@ public class RelocatorEntity extends EntityLiving {
             }
         } else if (state == RelocatorEntityState.RETRACTING) {
             double currentEmergeTime = getCurrentEmergeTime();
-            setCurrentEmergeTime(currentEmergeTime + 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
+            setCurrentEmergeTime(currentEmergeTime + 1. / (Constants.TPS_LIMIT * rte.emergeTimeSeconds));
 
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
             entityToRelocate.ifPresent(e -> {
@@ -287,7 +307,7 @@ public class RelocatorEntity extends EntityLiving {
             }
         } else if (state == RelocatorEntityState.RELOCATING) {
             double currentEmergeTime = getCurrentEmergeTime();
-            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * emergeTimeSeconds));
+            setCurrentEmergeTime(currentEmergeTime - 1. / (Constants.TPS_LIMIT * rte.emergeTimeSeconds));
 
             Optional<EntityLivingBase> entityToRelocate = getEntityToRelocate();
             // Move the entity to the target position and a bit above so it doesn't clip through the block

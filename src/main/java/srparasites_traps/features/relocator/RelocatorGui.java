@@ -1,8 +1,10 @@
 package srparasites_traps.features.relocator;
 
 import cofh.core.gui.GuiContainerCore;
+import cofh.core.gui.container.IAugmentableContainer;
 import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
+import cofh.core.gui.element.tab.TabAugment;
 import cofh.core.gui.element.tab.TabRedstoneControl;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,6 +37,7 @@ public class RelocatorGui extends GuiContainerCore {
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
+        addTab(new TabAugment(this, (IAugmentableContainer) this.inventorySlots));
         addTab(new TabRedstoneControl(this, this.tileEntity));
     }
 
