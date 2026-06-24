@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
 import srparasites_traps.registry.ModBlocks;
@@ -57,6 +59,11 @@ public class ProximitySensorTileEntity extends TileCore implements ITickable {
         if (tagCompound == null) return defaultAABB;
 
         return AreaMarkerItem.getBoundAreaAsAABB(tagCompound).orElse(defaultAABB);
+    }
+
+    @Override
+    public boolean shouldRefresh(@Nonnull World world, @Nonnull BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return oldState.getBlock() != newSate.getBlock();
     }
 
     @Override

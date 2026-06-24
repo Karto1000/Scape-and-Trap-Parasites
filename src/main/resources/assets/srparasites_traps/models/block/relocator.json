@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "srparasites_traps:block/relocator_top_down",
+    "up": "srparasites_traps:block/relocator_top_down",
+    "down": "srparasites_traps:block/relocator_top_down",
+    "north": "srparasites_traps:block/relocator_side",
+    "east": "srparasites_traps:block/relocator_side",
+    "south": "srparasites_traps:block/relocator_side",
+    "west": "srparasites_traps:block/relocator_side"
+  }
+}
