@@ -23,7 +23,7 @@ public class LightningArcParticle extends Particle {
     private final Vec3d from;
     private final Vec3d to;
     private final int intensity;
-    private final static int DEFAULT_INNER_THICKNESS = 2;
+    private final static int DEFAULT_INNER_THICKNESS = 1;
     private final static int DEFAULT_OUTER_THICKNESS = DEFAULT_INNER_THICKNESS * 2;
 
     public LightningArcParticle(World worldIn, Vec3d from, Vec3d to, int maxParticleAge, int intensity) {
@@ -74,15 +74,38 @@ public class LightningArcParticle extends Particle {
             float a,
             float thickness
     ) {
-        bufferBuilder.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR);
-        GlStateManager.glLineWidth(thickness);
-
         Vec3d vecSum = actualFrom;
+
         for (Vec3d v : this.stageVectors) {
             Vec3d toPos = vecSum.add(v);
 
-            bufferBuilder.pos(vecSum.x, vecSum.y, vecSum.z).color(r, g, b, a).endVertex();
-            bufferBuilder.pos(toPos.x, toPos.y, toPos.z).color(r, g, b, a).endVertex();
+            // The camera is implicitly at (0,0,0) in these particle coordinates
+            Vec3d toCamera = vecSum.scale(-1).normalize();
+            Vec3d dir = v.normalize();
+
+            // Cross product gives us a perpendicular vector facing the camera
+            Vec3d right = dir.crossProduct(toCamera)
+                    .normalize()
+                    .scale(thickness);
+
+            // Fallback if segment points exactly at the camera
+            if (right.length() < 1e-4) right = new Vec3d(thickness, 0, 0);
+
+            // Quad vertices
+            Vec3d v1 = vecSum.subtract(right);
+            Vec3d v2 = toPos.subtract(right);
+            Vec3d v3 = toPos.add(right);
+            Vec3d v4 = vecSum.add(right);
+
+            // Full brightness lightmap for glowing effect (240, 240)
+            int skyLight = 240;
+            int blockLight = 240;
+
+            // Provide valid UVs (even generic ones like 0 to 1) so shaders don't crash
+            bufferBuilder.pos(v1.x, v1.y, v1.z).tex(0, 0).color(r, g, b, a).lightmap(skyLight, blockLight).endVertex();
+            bufferBuilder.pos(v2.x, v2.y, v2.z).tex(0, 0).color(r, g, b, a).lightmap(skyLight, blockLight).endVertex();
+            bufferBuilder.pos(v3.x, v3.y, v3.z).tex(0, 0).color(r, g, b, a).lightmap(skyLight, blockLight).endVertex();
+            bufferBuilder.pos(v4.x, v4.y, v4.z).tex(0, 0).color(r, g, b, a).lightmap(skyLight, blockLight).endVertex();
 
             vecSum = toPos;
         }
@@ -109,40 +132,40 @@ public class LightningArcParticle extends Particle {
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         GlStateManager.enableBlend();
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        GlStateManager.depthMask(false);
 
         Vec3d actualFrom = this.from.subtract(interpPosX, interpPosY, interpPosZ);
+        float outerThickness = (DEFAULT_OUTER_THICKNESS + this.intensity) * 0.005f;
+        float innerThickness = (DEFAULT_INNER_THICKNESS + this.intensity) * 0.005f;
+
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
         buildLineAlongStages(
-                bufferbuilder,
+                buffer,
                 actualFrom,
                  0.F,
                 0.F,
                 1.F,
-                 1.F / this.particleAge,
-               DEFAULT_OUTER_THICKNESS + (float) this.intensity / 2
+                 1.F / (this.particleAge == 0 ? 1.F : this.particleAge),
+                outerThickness
         );
 
-        tessellator.draw();
-
         buildLineAlongStages(
-                bufferbuilder,
+                buffer,
                 actualFrom,
                 1.F,
                 1.F,
                 1.F,
-                1.F / this.particleAge,
-                DEFAULT_INNER_THICKNESS + (float) this.intensity / 2
+                1.F / (this.particleAge == 0 ? 1.F : this.particleAge),
+                innerThickness
         );
 
-        tessellator.draw();
+        Tessellator.getInstance().draw();
 
+        GlStateManager.depthMask(true);
         GlStateManager.enableTexture2D();
         GlStateManager.enableLighting();
-        GlStateManager.enableBlend();
-        GlStateManager.glLineWidth(1.0F);
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }
