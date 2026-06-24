@@ -62,7 +62,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:fermiumbooter-${fermiumbooter_version}")
     implementation fg.deobf("curse.maven:jei-${jei_version}")
-    implementation fg.deobf("localjars:SRParasites:${srparasites_version}");
+    implementation fg.deobf("localjars:SRParasites:${srparasites_version}")
     implementation fg.deobf("localjars:CoFHCore:${minecraft_version}-${cofh_core_version}-universal")
     implementation fg.deobf("localjars:RedstoneFlux:1.12-${redstoneflux_version}-universal")
 }
@@ -125,10 +125,18 @@ tasks.register("copyReobfJar", Copy) {
     rename("output.jar", "${mod_name}-${mod_version}.jar")
 }
 
-afterEvaluate {
-    tasks.matching { it.name.startsWith("reobfJar") }.configureEach {
-        finalizedBy("copyReobfJar")
-    }
+tasks.named("build") {
+    finalizedBy("copyReobfJar")
 }
 
-jar.finalizedBy('reobfJar')
+tasks.named("assemble") {
+    finalizedBy("copyReobfJar")
+}
+
+//afterEvaluate {
+//    tasks.matching { it.name.startsWith("reobfJar") }.configureEach {
+//        finalizedBy("copyReobfJar")
+//    }
+//}
+//
+//jar.finalizedBy('reobfJar')
