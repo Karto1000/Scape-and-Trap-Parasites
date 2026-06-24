@@ -1,7 +1,10 @@
 {
   "variants": {
-    "normal": {
-      "model": "srparasites_traps:proximity_sensor"
+    "active=false": {
+      "model": "srparasites_traps:proximity_sensor_inactive"
+    },
+    "active=true": {
+      "model": "srparasites_traps:proximity_sensor_active"
     }
   }
 }

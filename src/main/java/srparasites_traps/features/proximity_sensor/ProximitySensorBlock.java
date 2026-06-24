@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
@@ -13,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -30,12 +33,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import static srparasites_traps.util.Translation.getServerStatusFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class ProximitySensorBlock extends Block {
     public static final String REGISTRY_NAME = "proximity_sensor";
+    public static final PropertyBool active = PropertyBool.create("active");
 
     public ProximitySensorBlock() {
         super(Material.IRON, MapColor.IRON);
@@ -46,9 +51,37 @@ public class ProximitySensorBlock extends Block {
         this.setResistance(1200);
         this.setHarvestLevel("pickaxe", 2);
         this.setSoundType(SoundType.METAL);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(active, false));
 
-        if (ForgeConfigHandler.proximitySensor.ENABLE)
-            this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        if (ForgeConfigHandler.proximitySensor.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(active) ? 1 : 0;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(active, meta == 1);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, active);
+    }
+
+    @Override
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if (!stateIn.getValue(active)) return;
+
+        worldIn.spawnParticle(
+                EnumParticleTypes.REDSTONE,
+                pos.getX() + Math.random() * 1.5,
+                pos.getY() + Math.random() * 1.5,
+                pos.getZ() + Math.random() * 1.5,
+                0, 0, 0
+        );
     }
 
     @Override
@@ -90,8 +123,7 @@ public class ProximitySensorBlock extends Block {
 
         AxisAlignedBB searchArea = aabb.get();
         Pair<Double, Double> distances = AreaMarkerItem.getDistancesOfAreaTo(searchArea, pste.getPos());
-        return distances.first() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE &&
-                distances.second() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE;
+        return distances.first() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE && distances.second() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE;
     }
 
     @Override
@@ -115,22 +147,13 @@ public class ProximitySensorBlock extends Block {
 
         if (heldItem.getItem() != ModItems.AREA_MARKER_ITEM) return false;
         if (!AreaMarkerItem.hasBoundPosition(heldItem)) {
-            playerIn.sendStatusMessage(
-                    new TextComponentTranslation(getServerStatusFor("proximity_sensor.area_not_bound")),
-                    true
-            );
+            playerIn.sendStatusMessage(new TextComponentTranslation(getServerStatusFor("proximity_sensor.area_not_bound")), true);
             return true;
         }
         if (pste.getAreaMarker().isPresent()) return false;
 
         if (!isDistanceAllowed(pste, heldItem)) {
-            playerIn.sendStatusMessage(
-                    new TextComponentTranslation(
-                            getServerStatusFor("proximity_sensor.area_too_far_away"),
-                            ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE
-                    ),
-                    true
-            );
+            playerIn.sendStatusMessage(new TextComponentTranslation(getServerStatusFor("proximity_sensor.area_too_far_away"), ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE), true);
             return true;
         }
 

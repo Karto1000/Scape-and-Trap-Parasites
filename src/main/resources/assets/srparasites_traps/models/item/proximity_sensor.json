@@ -1,5 +1,5 @@
 {
-  "parent": "srparasites_traps:block/proxmity_sensor",
+  "parent": "srparasites_traps:block/proximity_sensor_inactive",
   "display": {
     "gui": {
       "rotation": [

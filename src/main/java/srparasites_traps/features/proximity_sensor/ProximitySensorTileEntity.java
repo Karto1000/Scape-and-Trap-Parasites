@@ -10,6 +10,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
+import srparasites_traps.registry.ModBlocks;
 import srparasites_traps.registry.ModItems;
 import srparasites_traps.util.StateManager;
 import srparasites_traps.util.UpdateLimiter;
@@ -29,9 +30,9 @@ public class ProximitySensorTileEntity extends TileCore implements ITickable {
     private final StateManager<ProximitySensorState> stateManager = new StateManager<>(
             ProximitySensorState.INACTIVE,
             (oldState, newState) -> {
-                IBlockState state = this.world.getBlockState(this.pos);
-                this.world.notifyBlockUpdate(this.pos, state, state, 3);
-                this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
+                IBlockState state = this.world.getBlockState(this.pos).withProperty(ProximitySensorBlock.active, newState == ProximitySensorState.ACTIVE);
+                this.world.setBlockState(this.pos, state, 3);
+                this.world.notifyNeighborsOfStateChange(this.pos, ModBlocks.PROXIMITY_SENSOR, true);
             }
     );
 
