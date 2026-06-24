@@ -171,6 +171,11 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 1)
         public int DEFAULT_ENTITY_MAX_HEALTH = 30;
 
+        @Config.Name("Default relocator entity armor")
+        @Config.Comment("The armor of the relocator entity")
+        @Config.RangeInt(min = 0)
+        public int DEFAULT_ENTITY_ARMOR = 10;
+
         @Config.Name("Default block selection retries")
         @Config.Comment("The amount of times the relocator tries to find a valid block to relocate an entity to")
         @Config.RangeInt(min = 1)

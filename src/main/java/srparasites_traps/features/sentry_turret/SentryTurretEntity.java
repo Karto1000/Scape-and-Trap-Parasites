@@ -1,6 +1,7 @@
 package srparasites_traps.features.sentry_turret;
 
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
+import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,6 +10,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
@@ -16,6 +19,7 @@ import srparasites_traps.util.Constants;
 import srparasites_traps.util.Serializers;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class SentryTurretEntity extends EntityLiving {
@@ -63,6 +67,18 @@ public class SentryTurretEntity extends EntityLiving {
 
     public void setTicksWhenTargetLost(long ticks) {
         this.dataManager.set(ticksWhenTargetLost, ticks);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SRPSounds.UNVO_GROWL;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return this.rand.nextBoolean() ? SRPSounds.MOBSILENCE : SRPSounds.UNVO_HURT;
     }
 
     @Override

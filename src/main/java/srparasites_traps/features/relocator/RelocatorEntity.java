@@ -2,6 +2,7 @@ package srparasites_traps.features.relocator;
 
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
+import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,6 +14,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -21,6 +23,7 @@ import srparasites_traps.util.Constants;
 import srparasites_traps.util.NBTHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -120,6 +123,7 @@ public class RelocatorEntity extends EntityLiving {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(ForgeConfigHandler.relocator.DEFAULT_ENTITY_MAX_HEALTH);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(ForgeConfigHandler.relocator.DEFAULT_ENTITY_ARMOR);
         this.getEntityData().setInteger("srpcothimmunity", 0);
     }
 
@@ -201,6 +205,12 @@ public class RelocatorEntity extends EntityLiving {
                 compound,
                 "EntityToRelocate"
         );
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return SRPSounds.ADAPTATION_P;
     }
 
     @Override
