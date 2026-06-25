@@ -5,6 +5,7 @@ import net.minecraft.block.BlockSlab;
 import srparasites_traps.features.biomass_factory.BeckonNidusBlock;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.decontaminator.DecontaminatorBlock;
+import srparasites_traps.features.obsidian_blocks.ObsidianGlassBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianLadderBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianSlabBlock;
 import srparasites_traps.features.proximity_sensor.ProximitySensorBlock;
@@ -31,6 +32,7 @@ public class ModBlocks {
     public static Block PROXIMITY_SENSOR = new ProximitySensorBlock();
     public static Block STATIC_ELECTRICITY_GENERATOR = new StaticElectricityGeneratorBlock();
     public static Block BECKON_NIDUS = new BeckonNidusBlock();
+    public static Block OBSIDIAN_GLASS = new ObsidianGlassBlock();
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
 

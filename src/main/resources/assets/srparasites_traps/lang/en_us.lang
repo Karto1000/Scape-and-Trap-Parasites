@@ -28,6 +28,7 @@ tile.srparasites_traps.viral_serrated_spikes.name=§aViral§f Serrated Spikes
 tile.srparasites_traps.decontaminator.name=§6Decontaminator§f
 tile.srparasites_traps.obsidian_ladder.name=Obsidian Ladder
 tile.srparasites_traps.obsidian_slab.name=Obsidian Slab
+tile.srparasites_traps.obsidian_glass.name=Obsidian Glass
 tile.srparasites_traps.tesla_coil.name=§6Tesla Coil§f
 tile.srparasites_traps.proximity_sensor.name=§6Proximity Sensor§f
 tile.srparasites_traps.static_electricity_generator.name=Static Electricity Generator
