@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:obsidian_blocks_enabled"
+    }
+  ],
+  "pattern": [
+    "o  ",
+    "oo ",
+    "ooo"
+  ],
+  "key": {
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:obsidian_stairs",
+    "count": 6
+  }
+}

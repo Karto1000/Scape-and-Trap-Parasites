@@ -8,6 +8,7 @@ import srparasites_traps.features.decontaminator.DecontaminatorBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianGlassBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianLadderBlock;
 import srparasites_traps.features.obsidian_blocks.ObsidianSlabBlock;
+import srparasites_traps.features.obsidian_blocks.ObsidianStairsBlock;
 import srparasites_traps.features.proximity_sensor.ProximitySensorBlock;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.sentry_turret.SentryTurretBlock;
@@ -35,6 +36,7 @@ public class ModBlocks {
     public static Block OBSIDIAN_GLASS = new ObsidianGlassBlock();
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
+    public static Block OBSIDIAN_STAIRS = new ObsidianStairsBlock();
 
     public static List<Block> getBlockList() {
         return RegistryHelper.getStaticFieldsOfType(ModBlocks.class, Block.class);

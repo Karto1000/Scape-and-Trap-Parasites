@@ -32,6 +32,7 @@ public class ModItems {
     public static Item STATIC_ELECTRICITY_GENERATOR_ITEM = getItemBlock(ModBlocks.STATIC_ELECTRICITY_GENERATOR);
     public static Item BECKON_NIDUS_ITEM = getItemBlock(ModBlocks.BECKON_NIDUS);
     public static Item OBSIDIAN_GLASS_ITEM = getItemBlock(ModBlocks.OBSIDIAN_GLASS);
+    public static Item OBSIDIAN_STAIRS_ITEM = getItemBlock(ModBlocks.OBSIDIAN_STAIRS);
     public static Item AREA_MARKER_ITEM = new AreaMarkerItem();
     public static HardnessAnalyzerItem HARDNESS_ANALYZER_ITEM = new HardnessAnalyzerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);

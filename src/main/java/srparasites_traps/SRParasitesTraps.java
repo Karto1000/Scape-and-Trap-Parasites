@@ -41,6 +41,7 @@ public class SRParasitesTraps {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        SRParasitesTraps.PROXY.postInit();
         completedLoading = true;
     }
 }
