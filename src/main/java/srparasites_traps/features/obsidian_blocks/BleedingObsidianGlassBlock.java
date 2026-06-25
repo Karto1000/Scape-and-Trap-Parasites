@@ -1,8 +1,7 @@
 package srparasites_traps.features.obsidian_blocks;
 
-import net.minecraft.block.Block;
+import com.dhanantry.scapeandrunparasites.block.BlockParasiteSpreading;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -18,30 +17,27 @@ import javax.annotation.Nullable;
 
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
-public class ObsidianGlassBlock extends Block {
-    public static final String REGISTRY_NAME = "obsidian_glass";
+public class BleedingObsidianGlassBlock extends BlockParasiteSpreading {
+    public static final String REGISTRY_NAME = "bleeding_obsidian_glass";
 
-    public ObsidianGlassBlock() {
-        super(Material.GLASS, MapColor.BLACK);
-
-        this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
+    public BleedingObsidianGlassBlock() {
+        super(Material.GLASS, REGISTRY_NAME, 2.3f, true, false);
         this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
-        this.setHardness(50);
-        this.setResistance(2000);
-        this.setHarvestLevel("pickaxe", 3);
+        this.setHarvestLevel("pickaxe", 1);
 
         if (ForgeConfigHandler.obsidianBlocks.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
-    }
-
-    @Override
-    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
-        return SoundType.GLASS;
+        else this.setCreativeTab(null);
     }
 
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getRenderLayer()
     {
         return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        return SoundType.GLASS;
     }
 
     @Override

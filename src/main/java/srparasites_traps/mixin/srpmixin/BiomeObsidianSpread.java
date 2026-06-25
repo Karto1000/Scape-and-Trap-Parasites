@@ -4,6 +4,7 @@ import com.dhanantry.scapeandrunparasites.block.slabs.BlockSlabRubble;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasiteBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
@@ -65,6 +66,21 @@ public class BiomeObsidianSpread {
                     .withProperty(BlockStairs.HALF, lookingState.getValue(BlockStairs.HALF))
                     .withProperty(BlockStairs.SHAPE, lookingState.getValue(BlockStairs.SHAPE));
 
+            worldIn.setBlockState(helper, parasiteState, 2);
+            cir.setReturnValue(1);
+            return;
+        }
+
+        if (lookingBlock == ModBlocks.OBSIDIAN_GLASS) {
+            IBlockState parasiteState = ModBlocks.BLEEDING_OBSIDIAN_GLASS.getDefaultState();
+            worldIn.setBlockState(helper, parasiteState, 2);
+            cir.setReturnValue(1);
+            return;
+        }
+
+        if (lookingBlock == ModBlocks.OBSIDIAN_LADDER) {
+            IBlockState parasiteState = ModBlocks.BLEEDING_OBSIDIAN_LADDER.getDefaultState()
+                    .withProperty(BlockLadder.FACING, lookingState.getValue(BlockLadder.FACING));
             worldIn.setBlockState(helper, parasiteState, 2);
             cir.setReturnValue(1);
         }

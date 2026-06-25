@@ -23,6 +23,7 @@ public class ObsidianStairsBlock extends BlockStairs {
         this.useNeighborBrightness = true;
 
         if (ForgeConfigHandler.obsidianBlocks.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+        else this.setCreativeTab(null);
     }
 
     @Override

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:obsidian_blocks_enabled"
+    }
+  ],
+  "pattern": [
+    "og"
+  ],
+  "key": {
+    "o": {
+      "item": "srparasites:parasiterubble",
+      "data": 7
+    },
+    "g": {
+      "type": "forge:ore_dict",
+      "ore": "blockGlass"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:bleeding_obsidian_glass",
+    "count": 1
+  }
+}

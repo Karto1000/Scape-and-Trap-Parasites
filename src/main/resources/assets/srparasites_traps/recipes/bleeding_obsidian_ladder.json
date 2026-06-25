@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:obsidian_blocks_enabled"
+    }
+  ],
+  "pattern": [
+    "o o",
+    "ooo",
+    "o o"
+  ],
+  "key": {
+    "o": {
+      "item": "srparasites:parasiterubble",
+      "data": 7
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:bleeding_obsidian_ladder",
+    "count": 16
+  }
+}
