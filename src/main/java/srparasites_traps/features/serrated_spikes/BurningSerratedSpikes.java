@@ -6,16 +6,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.util.Translation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
-
-import static srparasites_traps.util.Translation.getTooltipFor;
 
 public class BurningSerratedSpikes extends SerratedSpikesBlock {
     public static final String REGISTRY_NAME = "burning_serrated_spikes";
@@ -32,7 +30,7 @@ public class BurningSerratedSpikes extends SerratedSpikesBlock {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME));
+        Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 
     @Override

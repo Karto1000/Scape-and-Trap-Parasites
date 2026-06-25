@@ -19,7 +19,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
@@ -181,6 +180,6 @@ public class ProximitySensorBlock extends Block {
 
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + Translation.getTooltipFor("item." + REGISTRY_NAME));
+        Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 }

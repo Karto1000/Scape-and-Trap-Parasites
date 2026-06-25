@@ -4,19 +4,18 @@ import cofh.api.item.IAugmentItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.IExtendedAugmentable;
 import srparasites_traps.registry.ModTileEntities;
+import srparasites_traps.util.Translation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class TurretAugment extends Item implements IAugmentItem {
@@ -53,6 +52,7 @@ public class TurretAugment extends Item implements IAugmentItem {
                 .map(t -> String.format("- %s", t.block.getLocalizedName()))
                 .collect(Collectors.joining("\n"));
 
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + this.registryName) + "\n" + getTooltipFor("item.augment_general", machinesWithAugments));
+        Translation.addMultilineTooltip(tooltip, "item." + this.registryName);
+        Translation.addMultilineTooltip(tooltip, "item.augment_general", machinesWithAugments);
     }
 }

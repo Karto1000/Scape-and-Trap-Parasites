@@ -25,19 +25,18 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.util.Translation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static srparasites_traps.util.Translation.getTooltipFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class SerratedSpikesBlock extends Block {
@@ -45,6 +44,7 @@ public class SerratedSpikesBlock extends Block {
     public double damageThreshold = ForgeConfigHandler.serratedSpikes.DEFAULT_SERRATED_SPIKES_DAMAGE_MOVE_THRESHOLD;
     public double slowDownAmount = ForgeConfigHandler.serratedSpikes.DEFAULT_SLOW_DOWN_AMOUNT;
     public int minHurtResistanceTime = ForgeConfigHandler.serratedSpikes.DEFAULT_MIN_HURT_RESISTANT_TIME;
+    private final String registryName;
     protected static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0, 0, 0D, 1, 0.1D, 1);
     protected static final PropertyDirection direction = PropertyDirection.create("direction", EnumFacing.Plane.HORIZONTAL);
     protected static final DamageSource serratedSpikesDamage = new SerratedSpikesDamageSource();
@@ -58,6 +58,7 @@ public class SerratedSpikesBlock extends Block {
         this.setHardness(1.5F);
         this.setResistance(10.0F);
         this.setHarvestLevel("pickaxe", 1);
+        this.registryName = registryName;
         if (ForgeConfigHandler.serratedSpikes.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
@@ -222,6 +223,6 @@ public class SerratedSpikesBlock extends Block {
 
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.WHITE + getTooltipFor("item.serrated_spikes"));
+        Translation.addMultilineTooltip(tooltip, "item." + this.registryName);
     }
 }

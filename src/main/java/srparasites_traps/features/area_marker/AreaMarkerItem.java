@@ -23,6 +23,7 @@ import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.relocator.RelocatorBlock;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
 import srparasites_traps.util.Pair;
+import srparasites_traps.util.Translation;
 import srparasites_traps.util.VecHelper;
 
 import javax.annotation.Nonnull;
@@ -74,7 +75,7 @@ public class AreaMarkerItem extends Item {
         if (nbt.hasKey(TAG_AREA_START) && nbt.hasKey(TAG_AREA_END)) {
             BlockPos pos1 = BlockPos.fromLong(nbt.getLong(TAG_AREA_START));
             BlockPos pos2 = BlockPos.fromLong(nbt.getLong(TAG_AREA_END));
-            tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME + ".area_defined", pos1.getX(), pos2.getX(), pos1.getY(), pos2.getY(), pos1.getZ(), pos2.getZ()));
+            Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME + ".area_defined_tooltip", pos1.getX(), pos2.getX(), pos1.getY(), pos2.getY(), pos1.getZ(), pos2.getZ());
         }
     }
 
