@@ -125,18 +125,18 @@ tasks.register("copyReobfJar", Copy) {
     rename("output.jar", "${mod_name}-${mod_version}.jar")
 }
 
-tasks.named("build") {
-    finalizedBy("copyReobfJar")
-}
-
-tasks.named("assemble") {
-    finalizedBy("copyReobfJar")
-}
-
-//afterEvaluate {
-//    tasks.matching { it.name.startsWith("reobfJar") }.configureEach {
-//        finalizedBy("copyReobfJar")
-//    }
+//tasks.named("build") {
+//    finalizedBy("copyReobfJar")
 //}
 //
-//jar.finalizedBy('reobfJar')
+//tasks.named("assemble") {
+//    finalizedBy("copyReobfJar")
+//}
+
+afterEvaluate {
+    tasks.matching { it.name.startsWith("reobfJar") }.configureEach {
+        finalizedBy("copyReobfJar")
+    }
+}
+
+jar.finalizedBy('reobfJar')

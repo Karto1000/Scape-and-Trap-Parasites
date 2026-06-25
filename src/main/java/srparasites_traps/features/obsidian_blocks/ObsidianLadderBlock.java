@@ -34,11 +34,11 @@ public class ObsidianLadderBlock extends Block {
     private static final AxisAlignedBB LADDER_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.1875D);
     private static final AxisAlignedBB LADDER_NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
 
-    public ObsidianLadderBlock() {
+    public ObsidianLadderBlock(String registryName) {
         super(Material.ROCK, MapColor.BLACK);
 
-        this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
-        this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
+        this.setRegistryName(SRParasitesTraps.MOD_ID, registryName);
+        this.setTranslationKey(getTranslationKeyFor(registryName));
         this.setHardness(50);
         this.setResistance(2000);
         this.setHarvestLevel("pickaxe", 3);

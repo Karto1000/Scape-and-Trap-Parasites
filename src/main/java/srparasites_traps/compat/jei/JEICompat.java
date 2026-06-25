@@ -52,6 +52,8 @@ public class JEICompat implements IModPlugin {
         if (!ForgeConfigHandler.obsidianBlocks.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_LADDER));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_SLAB));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_GLASS));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BLEEDING_OBSIDIAN_GLASS));
         }
 
         if (!ForgeConfigHandler.teslaCoil.ENABLE) {

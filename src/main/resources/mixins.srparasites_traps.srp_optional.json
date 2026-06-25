@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "srparasites_traps.mixin.srpmixin",
+  "refmap": "mixins.srparasites_traps.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "mixins": [
+    "BiomeObsidianSpread"
+  ],
+  "injectors": {
+    "maxShiftBy": 10
+  }
+}

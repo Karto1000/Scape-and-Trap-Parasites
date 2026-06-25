@@ -12,7 +12,7 @@ import srparasites_traps.network.SpawnLightningParticlePacket;
 public class CommonProxy {
 
     public void preInit() {
-    };
+    }
 
     public void init() {
         RegistryHandler.init();
@@ -22,9 +22,12 @@ public class CommonProxy {
         SRParasitesTrapsNetwork.init();
     }
 
-    public void handleLightningParticlePacket(SpawnLightningParticlePacket packet) {};
+    public void postInit() {
+    }
 
-    public void handleElectricityParticlePacket(SpawnElectricityParticlePacket packet) {};
+    public void handleLightningParticlePacket(SpawnLightningParticlePacket packet) {}
 
-    public void registerItemRenderer(Item item, int meta, String id) {};
+    public void handleElectricityParticlePacket(SpawnElectricityParticlePacket packet) {}
+
+    public void registerItemRenderer(Item item, int meta, String id) {}
 }

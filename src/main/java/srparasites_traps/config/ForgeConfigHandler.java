@@ -1,5 +1,6 @@
 package srparasites_traps.config;
 
+import fermiumbooter.annotations.MixinConfig;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -53,6 +54,10 @@ public class ForgeConfigHandler {
     @Config.Name("Common")
     @Config.Comment("Common settings for the mod")
     public static final CommonConfig common = new CommonConfig();
+
+    @Config.Name("Mixin Toggles")
+    @Config.Comment("Settings for mixin toggles")
+    public static final MixinToggleConfig mixinToggle = new MixinToggleConfig();
 
     public static class SentryTurretConfig {
         @Config.Name("Enable sentry turret")
@@ -533,6 +538,14 @@ public class ForgeConfigHandler {
         @Config.Comment("The amount of ticks that a beckon nidus block needs to spawn a beckon")
         @Config.RangeInt(min = 0)
         public int BECKON_NIDUS_TICKS_TO_EVOLVE = 200;
+    }
+
+    @MixinConfig(name = SRParasitesTraps.MOD_ID)
+    public static class MixinToggleConfig {
+        @Config.Name("Biome spread to new obsidian Blocks (SRP)")
+        @Config.Comment("When activated, a node will turn any of the new obsidian blocks into their bleeding counterparts")
+        @MixinConfig.MixinToggle(lateMixin = "mixins.srparasites_traps.srp_optional.json", defaultValue = true)
+        public boolean enableObsidianBiomeSpread = true;
     }
 
     @Mod.EventBusSubscriber(modid = SRParasitesTraps.MOD_ID)

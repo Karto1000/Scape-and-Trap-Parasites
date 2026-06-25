@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:obsidian_blocks_enabled"
+    }
+  ],
+  "pattern": [
+    "og"
+  ],
+  "key": {
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "g": {
+      "type": "forge:ore_dict",
+      "ore": "blockGlass"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:obsidian_glass",
+    "count": 1
+  }
+}
