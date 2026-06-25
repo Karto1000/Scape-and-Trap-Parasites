@@ -11,7 +11,8 @@ public class SRParasitesTrapsPlugin implements IFMLLoadingPlugin {
 
     public SRParasitesTrapsPlugin() {
         MixinBootstrap.init();
-        FermiumRegistryAPI.enqueueMixin(true, "mixins.srparasites_traps.srpmixin.json");
+        FermiumRegistryAPI.enqueueMixin(true, "mixins.srparasites_traps.srp_required.json");
+        FermiumRegistryAPI.enqueueMixin(true, "mixins.srparasites_traps.srp_optional.json");
         //False for Vanilla/Coremod mixins, true for regular mod mixins
         //--> Replaced by @MixinConfig.MixinToggle in ForgeConfigHandler. This way is still an option for more complicated conditions
     }
