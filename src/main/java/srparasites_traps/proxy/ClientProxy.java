@@ -14,6 +14,7 @@ import srparasites_traps.features.decontaminator.DecontaminatorTESR;
 import srparasites_traps.features.decontaminator.DecontaminatorTileEntity;
 import srparasites_traps.features.relocator.RelocatorEntity;
 import srparasites_traps.features.relocator.RelocatorEntityRenderer;
+import srparasites_traps.features.sentry_turret.SentryTurretAlafhaBall;
 import srparasites_traps.features.sentry_turret.SentryTurretEntity;
 import srparasites_traps.features.sentry_turret.SentryTurretRenderer;
 import srparasites_traps.features.sentry_turret.SentryTurretSpineball;
@@ -77,6 +78,11 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
                 SentryTurretSpineball.class,
                 manager -> new SRPProjectile(manager, 0.5F, new ResourceLocation(Constants.SRPARASITES_MOD_ID, "textures/entity/projectile/spineball.png"))
+        );
+
+        RenderingRegistry.registerEntityRenderingHandler(
+                SentryTurretAlafhaBall.class,
+                manager -> new SRPProjectile(manager, 0.5F, new ResourceLocation(Constants.SRPARASITES_MOD_ID, "textures/entity/projectile/alafha.png"))
         );
 
         RenderingRegistry.registerEntityRenderingHandler(

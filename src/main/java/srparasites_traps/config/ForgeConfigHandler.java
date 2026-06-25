@@ -153,6 +153,16 @@ public class ForgeConfigHandler {
         @Config.Comment("The amount of health that the sentry turret entity heals")
         @Config.RangeInt(min = 0)
         public int DEFAULT_ENTITY_HEAL_AMOUNT = 2;
+
+        @Config.Name("Default alafha ball explosion radius (Blocks)")
+        @Config.Comment("The radius of the explosion caused by the alafha ball")
+        @Config.RangeDouble(min = 0.0)
+        public double DEFAULT_ALAFHA_BALL_EXPLOSION_RADIUS = 3.;
+
+        @Config.Name("Default alafha ball explosion damage (Hearts)")
+        @Config.Comment("The amount of damage that the alafha ball explosion deals")
+        @Config.RangeDouble(min = 0.0)
+        public double DEFAULT_ALAFHA_BALL_EXPLOSION_DAMAGE = 10.;
     }
 
     public static class RelocatorConfig {

@@ -6,6 +6,9 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import srparasites_traps.registry.ModItems;
+
+import java.util.Arrays;
 
 public class SentryTurretAttackTarget extends EntityAIBase {
     private final SentryTurretEntity sentryTurret;
@@ -45,8 +48,12 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         this.sentryTurret.setEntityState(SentryTurretEntityState.IDLE);
     }
 
-    private void shootSpineball(Vec3d direction, SentryTurretTileEntity sentryTurret) {
-        SentryTurretSpineball projectile = new SentryTurretSpineball(this.world, this.sentryTurret);
+    private void shoot(Vec3d direction, SentryTurretTileEntity sentryTurret) {
+        boolean hasTwoDamageUpgrade = Arrays.stream(sentryTurret.getAugmentSlots())
+                .filter(augment -> augment.getItem() == ModItems.DAMAGE_AUGMENT)
+                .count() >= 2;
+
+        SentryTurretSpineball projectile = hasTwoDamageUpgrade ? new SentryTurretAlafhaBall(this.world, this.sentryTurret) : new SentryTurretSpineball(this.world, this.sentryTurret);
         projectile.setPosition(this.sentryTurret.posX + direction.x, this.sentryTurret.posY + this.sentryTurret.getEyeHeight(), this.sentryTurret.posZ + direction.z);
 
         projectile.motionX = direction.x;
@@ -98,7 +105,7 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         double distanceToTarget = shooterToTargetDelta.length();
         int ticksUntilHit = (int) (distanceToTarget / unCorrectedVelocity.length());
         Vec3d actualVelocity = shooterToTargetDelta.add(targetDistanceTraveledSinceLastTick.scale(ticksUntilHit)).normalize();
-        this.shootSpineball(actualVelocity, sentryTurretTileEntity);
+        this.shoot(actualVelocity, sentryTurretTileEntity);
 
         this.sentryTurret.currentAttackCooldown = this.sentryTurret.tileEntity.attackDelay;
     }

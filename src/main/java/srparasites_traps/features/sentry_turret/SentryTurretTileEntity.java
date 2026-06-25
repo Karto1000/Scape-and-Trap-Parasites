@@ -40,6 +40,8 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     public double attackRange = ForgeConfigHandler.sentry.DEFAULT_RANGE;
     public double emergeTimeSeconds = ForgeConfigHandler.sentry.DEFAULT_ENTITY_EMERGE_TIME;
     public double damage = ForgeConfigHandler.sentry.DEFAULT_DAMAGE;
+    public double alafhaBallExplosionRadius = ForgeConfigHandler.sentry.DEFAULT_ALAFHA_BALL_EXPLOSION_RADIUS;
+    public double alafhaBallExplosionDamage = ForgeConfigHandler.sentry.DEFAULT_ALAFHA_BALL_EXPLOSION_DAMAGE;
 
     private SentryTurretEntity assignedSentryTurret;
     private UUID assignedSentryTurretUUID;
@@ -322,5 +324,7 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
         this.resistanceReductionAmount = ForgeConfigHandler.sentry.DEFAULT_RESISTANCE_REDUCTION_AMOUNT;
         this.entityHealInterval = ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEAL_INTERVAL;
         this.entityHealAmount = ForgeConfigHandler.sentry.DEFAULT_ENTITY_HEAL_AMOUNT;
+        this.alafhaBallExplosionRadius = ForgeConfigHandler.sentry.DEFAULT_ALAFHA_BALL_EXPLOSION_RADIUS;
+        this.alafhaBallExplosionDamage = ForgeConfigHandler.sentry.DEFAULT_ALAFHA_BALL_EXPLOSION_DAMAGE;
     }
 }
