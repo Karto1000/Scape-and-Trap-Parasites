@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import srparasites_traps.SRParasitesTraps;
+import srparasites_traps.features.augments.TargetingAugmentGui;
 import srparasites_traps.features.biomass_factory.BiomassFactoryContainer;
 import srparasites_traps.features.biomass_factory.BiomassFactoryGui;
 import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
@@ -86,6 +87,10 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == Constants.TESLA_COIL_GUI_ID) {
             return new TeslaCoilGui(player, (TeslaCoilTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.TARGETING_AUGMENT_GUI_ID) {
+            return new TargetingAugmentGui(player);
         }
 
         return null;

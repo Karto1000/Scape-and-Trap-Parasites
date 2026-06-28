@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:augments_enabled"
+    }
+  ],
+  "pattern": [
+    "u",
+    "m",
+    "b"
+  ],
+  "key": {
+    "m": {
+      "item": "srparasites_traps:parasitic_matter"
+    },
+    "b": {
+      "item": "srparasites_traps:blank_augment"
+    },
+    "u": {
+      "item": "srparasites_traps:two_way_communication_unit"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:targeting_augment",
+    "count": 1
+  }
+}

@@ -1,9 +1,12 @@
 package srparasites_traps.features.sentry_turret;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import srparasites_traps.features.augments.TargetingAugment;
 import srparasites_traps.util.UpdateLimiter;
 
 import java.util.List;
@@ -16,6 +19,24 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
     public SentryTurretFindHostileMonster(SentryTurretEntity sentry, World world) {
         this.sentry = sentry;
         this.world = world;
+    }
+
+    private boolean isEntityValid(Entity entity) {
+        boolean prerequisites = entity.isEntityAlive() &&
+                !(entity instanceof SentryTurretEntity) &&
+                this.sentry.canEntityBeSeen(entity) &&
+                this.sentry.getDistance(entity) <= this.sentry.tileEntity.attackRange;
+
+        boolean hasTargetingAugment = false;
+        for (ItemStack augment : sentry.tileEntity.getAugmentSlots()) {
+            if (!(augment.getItem() instanceof TargetingAugment)) continue;
+            hasTargetingAugment = true;
+            if (TargetingAugment.isEntityValidForAugment(augment, entity)) return prerequisites;
+        }
+
+        if (hasTargetingAugment) return false;
+
+        return entity instanceof IMob && prerequisites;
     }
 
     @Override
@@ -35,7 +56,7 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
         List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.sentry.getEntityBoundingBox().grow(this.sentry.tileEntity.attackRange));
 
         for (EntityLivingBase target : list) {
-            if (target instanceof IMob && target.isEntityAlive() && this.sentry.canEntityBeSeen(target) && this.sentry.getDistance(target) <= this.sentry.tileEntity.attackRange) {
+            if (isEntityValid(target)) {
                 this.sentry.setAttackTarget(target);
                 this.sentry.setEntityState(SentryTurretEntityState.ATTACKING);
                 break;

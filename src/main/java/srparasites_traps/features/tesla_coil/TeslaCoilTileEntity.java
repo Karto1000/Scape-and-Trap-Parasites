@@ -23,10 +23,7 @@ import srparasites_traps.capability.DualEnergyStorage;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.features.IDefaultValueHolder;
 import srparasites_traps.features.IExtendedAugmentable;
-import srparasites_traps.features.augments.AttackSpeedAugment;
-import srparasites_traps.features.augments.AugmentCompatibility;
-import srparasites_traps.features.augments.DamageAugment;
-import srparasites_traps.features.augments.RangeAugment;
+import srparasites_traps.features.augments.*;
 import srparasites_traps.network.SRParasitesTrapsNetwork;
 import srparasites_traps.network.SpawnElectricityParticlePacket;
 import srparasites_traps.network.SpawnLightningParticlePacket;
@@ -72,13 +69,25 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
         return VecHelper.blockPosToVec3d(this.pos).add(fireOffset);
     }
 
+    private boolean isEntityValid(EntityLivingBase entity) {
+        boolean hasTargetingAugment = false;
+        for (ItemStack augment : this.augments) {
+            if (!(augment.getItem() instanceof TargetingAugment)) continue;
+            hasTargetingAugment = true;
+            if (TargetingAugment.isEntityValidForAugment(augment, entity)) return entity.isEntityAlive();
+        }
+
+        if (hasTargetingAugment) return false;
+
+        return entity.isEntityAlive() && entity instanceof EntityMob;
+    }
+
     private Optional<EntityLivingBase> findPossibleTarget() {
         AxisAlignedBB aabb = new AxisAlignedBB(this.pos).grow(range);
         List<EntityLivingBase> entityMobs = this.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 
         for (EntityLivingBase entity : entityMobs) {
-            if (!(entity instanceof EntityMob)) continue;
-            if (!entity.isEntityAlive()) continue;
+            if (!this.isEntityValid(entity)) continue;
 
             Vec3d targetPos = entity.getPositionVector().add(0, entity.height / 2.0, 0);
             Vec3d blockCenter = this.getBlockCenter();

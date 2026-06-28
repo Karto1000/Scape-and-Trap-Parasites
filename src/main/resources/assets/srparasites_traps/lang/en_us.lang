@@ -53,6 +53,7 @@ item.srparasites_traps.attack_speed_augment.name=Attack Speed Augment
 item.srparasites_traps.range_augment.name=Range Augment
 item.srparasites_traps.damage_augment.name=Damage Augment
 item.srparasites_traps.blank_augment.name=Blank Augment
+item.srparasites_traps.targeting_augment.name=Targeting Augment
 
 # Tooltips
 tooltip.srparasites_traps.item.two_way_communication_unit=§8A chip designed to enable two-way communication between mechanical machines and parasitic entities.§f
@@ -60,7 +61,7 @@ tooltip.srparasites_traps.item.parasitic_matter=Sticky matter that is formed int
 tooltip.srparasites_traps.item.sentry_turret=A mechanical-biological composition acting in the same manner as the deterrent §cSentry§f parasite created by dispatchers. Requires §aDead Blood§f and §4energy§f to function.
 tooltip.srparasites_traps.item.relocator=A machine that replicates the §cDispatcher's§f offensive capabilities. Spawns §cSeizers§f to forcefully apprehend targets in a designated search area and relocate them to a new destination. Requires an §aArea Marker§f to define coordinates aswell as §aDead Blood§f and §4energy§f to function.
 tooltip.srparasites_traps.item.area_marker.base=Can be placed inside certain traps to change their area of effect. Right-Click with item in hand to define the §carea§f.
-tooltip.srparasites_traps.item.area_marker.area_defined=§cArea (x: %d to %d, y: %d to %d, z: %d to %d)§f
+tooltip.srparasites_traps.item.area_marker.area_defined_tooltip=§cArea (x: %d to %d, y: %d to %d, z: %d to %d)§f
 tooltip.srparasites_traps.item.dispatcher_brainstem=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.dispatcher_cerebrum=An important part of a §cDispatchers§f brain that somehow still remains intact.
 tooltip.srparasites_traps.item.serrated_spikes=A trap with sharp angled spikes jutting out of it. Does more damage the faster someone moves over it and causes §cBleeding§f.
@@ -77,6 +78,7 @@ tooltip.srparasites_traps.item.static_electricity_generator=Harnesses the power 
 tooltip.srparasites_traps.item.attack_speed_augment=Increases the attack speed of certain turrets.
 tooltip.srparasites_traps.item.range_augment=Increases the range of certain turrets.
 tooltip.srparasites_traps.item.damage_augment=Increases the damage of certain turrets.
+tooltip.srparasites_traps.item.targeting_augment=Allows you to select which entities a turret should target.\nSimply right click the entity with this augment in the main hand.\nSneak + right click to show all assigned entities.
 tooltip.srparasites_traps.item.augment_general=Can be placed in one of the augment tabs slots in the following turrets:\n%s
 tooltip.srparasites_traps.item.armored_semi_organic_plating=§8A plating acting as a bridge for parasitic signals while boasting a high resistance to external damage.§f
 

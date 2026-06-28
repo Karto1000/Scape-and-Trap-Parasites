@@ -7,7 +7,10 @@ import srparasites_traps.features.relocator.RelocatorTileEntity;
 import srparasites_traps.features.sentry_turret.SentryTurretTileEntity;
 import srparasites_traps.features.tesla_coil.TeslaCoilTileEntity;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class AugmentCompatibility {
     private static final Map<Class<? extends TileEntity>, List<Class<? extends Item>>> VALID_AUGMENTS = new HashMap<>();
@@ -17,7 +20,8 @@ public final class AugmentCompatibility {
                 SentryTurretTileEntity.class, Arrays.asList(
                         AttackSpeedAugment.class,
                         DamageAugment.class,
-                        RangeAugment.class
+                        RangeAugment.class,
+                        TargetingAugment.class
                 )
         );
 
@@ -25,13 +29,15 @@ public final class AugmentCompatibility {
                 TeslaCoilTileEntity.class, Arrays.asList(
                         AttackSpeedAugment.class,
                         DamageAugment.class,
-                        RangeAugment.class
+                        RangeAugment.class,
+                        TargetingAugment.class
                 )
         );
 
         VALID_AUGMENTS.put(
-                RelocatorTileEntity.class, Collections.singletonList(
-                        AttackSpeedAugment.class
+                RelocatorTileEntity.class, Arrays.asList(
+                        AttackSpeedAugment.class,
+                        TargetingAugment.class
                 )
         );
     }

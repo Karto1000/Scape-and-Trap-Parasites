@@ -2,12 +2,28 @@ package srparasites_traps.util;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
 public class NBTHelper {
+    public static void removeStringFromList(NBTTagList list, String str) {
+        for (int i = 0; i < list.tagCount(); i++) if (list.getStringTagAt(i).equals(str)) list.removeTag(i);
+    }
+
+    public static boolean listHasString(NBTTagList list, String str) {
+        for (int i = 0; i < list.tagCount(); i++) if (list.getStringTagAt(i).equals(str)) return true;
+        return false;
+    }
+
+    public static String[] tagListToStringArray(NBTTagList list) {
+        String[] array = new String[list.tagCount()];
+        for (int i = 0; i < list.tagCount(); i++) array[i] = list.getStringTagAt(i);
+        return array;
+    }
+
     public static <T> T getOrElse(NBTTagCompound nbt, String key, Supplier<T> exists, Supplier<T> orElse) {
         if (nbt.hasKey(key)) return exists.get();
         return orElse.get();

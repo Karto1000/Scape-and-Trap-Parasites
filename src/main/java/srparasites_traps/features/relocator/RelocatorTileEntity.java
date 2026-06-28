@@ -28,6 +28,8 @@ import srparasites_traps.features.TurretTileEntity;
 import srparasites_traps.features.area_marker.AreaMarkerItem;
 import srparasites_traps.features.augments.AttackSpeedAugment;
 import srparasites_traps.features.augments.AugmentCompatibility;
+import srparasites_traps.features.augments.TargetingAugment;
+import srparasites_traps.registry.ModItems;
 import srparasites_traps.util.*;
 
 import javax.annotation.Nonnull;
@@ -303,8 +305,19 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         return result;
     }
 
-    private static boolean isEntityValidForRelocation(EntityLivingBase entity) {
-        return entity instanceof IMob && entity.isEntityAlive() && !entity.getEntityData().getBoolean("GrabbedByRelocator");
+    private boolean isEntityValidForRelocation(EntityLivingBase entity) {
+        boolean prerequisites = entity.isEntityAlive() && !entity.getEntityData().getBoolean("GrabbedByRelocator");
+
+        boolean hasTargetingAugment = false;
+        for (ItemStack augment : this.augments) {
+            if (augment.getItem() != ModItems.TARGETING_AUGMENT) continue;
+            hasTargetingAugment = true;
+            if (TargetingAugment.isEntityValidForAugment(augment, entity)) return prerequisites;
+        }
+
+        if (hasTargetingAugment) return false;
+
+        return entity instanceof IMob && prerequisites;
     }
 
     public List<EntityLivingBase> getRelocatableEntities() {
@@ -320,7 +333,7 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
         List<EntityLivingBase> entities = this.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb.get())
                 .stream()
-                .filter(RelocatorTileEntity::isEntityValidForRelocation)
+                .filter(this::isEntityValidForRelocation)
                 .collect(Collectors.toList());
 
         List<EntityLivingBase> resultList = new ArrayList<>();
