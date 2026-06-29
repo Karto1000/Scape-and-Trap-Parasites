@@ -107,6 +107,16 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         return this.state;
     }
 
+    public boolean isMissingBiomass() {
+        return this.biomassStorage.getFluidAmount() < this.biomassPerRelocatorSpawn
+                && this.state != RelocatorTileEntityState.RELOCATING
+                && this.currentRelocatorCount == 0;
+    }
+
+    public boolean isMissingEnergy() {
+        return this.energyStorage.getEnergyStored() < this.energyPerTick;
+    }
+
     public void setState(RelocatorTileEntityState state) {
         this.state = state;
     }
@@ -366,10 +376,13 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
         else this.energyStorage.extractEnergy(this.energyPerTick, false);
 
         // Slowly increase the number of relocators in reserve
-        if (this.currentRelocatorCount < this.maxRelocatorsInReserve && this.biomassStorage.getFluidAmount() >= this.biomassPerRelocatorSpawn) {
-            if (this.currentRelocatorCreateDelay > 0) {
-                this.currentRelocatorCreateDelay--;
-            } else {
+        boolean canTickDown = this.currentRelocatorCount < this.maxRelocatorsInReserve
+                && this.biomassStorage.getFluidAmount() >= this.biomassPerRelocatorSpawn
+                && this.state != RelocatorTileEntityState.RELOCATING;
+
+        if (canTickDown) {
+            if (this.currentRelocatorCreateDelay > 0) this.currentRelocatorCreateDelay--;
+            else {
                 this.currentRelocatorCreateDelay = this.relocatorCreateDelay;
                 this.biomassStorage.drain(this.biomassPerRelocatorSpawn, true);
                 this.currentRelocatorCount++;

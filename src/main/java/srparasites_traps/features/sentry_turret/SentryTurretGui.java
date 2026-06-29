@@ -6,11 +6,10 @@ import cofh.core.gui.element.ElementEnergyStored;
 import cofh.core.gui.element.ElementFluidTank;
 import cofh.core.gui.element.tab.TabAugment;
 import cofh.core.gui.element.tab.TabRedstoneControl;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.util.Constants;
+import srparasites_traps.util.GuiHelper;
 
 public class SentryTurretGui extends GuiContainerCore {
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/sentry_turret.png");
@@ -22,9 +21,8 @@ public class SentryTurretGui extends GuiContainerCore {
     private final static int ENERGY_Y_POSITION_PX = 7;
     private final static int ENERGY_WIDTH_PX = 15;
     private final static int ENERGY_HEIGHT_PX = 42;
-    private final static double textScale = 0.75;
     private final SentryTurretTileEntity tileEntity;
-    private SentryTurretContainer container;
+    private GuiHelper.GuiConsole console;
 
     public SentryTurretGui(EntityPlayer player, SentryTurretTileEntity tileEntity) {
         super(new SentryTurretContainer(player, tileEntity), TEXTURE);
@@ -34,6 +32,20 @@ public class SentryTurretGui extends GuiContainerCore {
     @Override
     public void initGui() {
         super.initGui();
+
+        int CONSOLE_X_POSITION_PX = 4;
+        int CONSOLE_Y_POSITION_PX = 8;
+        int CONSOLE_WIDTH_PX = 97;
+        int CONSOLE_HEIGHT_PX = 55;
+        double TEXT_SCALE = 0.75;
+        this.console = GuiHelper.GuiConsole.init(
+                this.fontRenderer,
+                CONSOLE_X_POSITION_PX,
+                CONSOLE_Y_POSITION_PX,
+                CONSOLE_WIDTH_PX,
+                CONSOLE_HEIGHT_PX,
+                TEXT_SCALE
+        );
 
         addElement(new ElementFluidTank(this, TANK_X_POSITION_PX, TANK_Y_POSITION_PX, this.tileEntity.biomassStorage).setSize(TANK_WIDTH_PX, TANK_HEIGHT_PX).setEnabled(true));
         addElement(new ElementEnergyStored(this, ENERGY_X_POSITION_PX, ENERGY_Y_POSITION_PX, this.tileEntity.energyStorage.getRfEnergyStorage())).setSize(ENERGY_WIDTH_PX, ENERGY_HEIGHT_PX).setEnabled(true);
@@ -76,23 +88,17 @@ public class SentryTurretGui extends GuiContainerCore {
     @Override
     protected void drawElements(float partialTick, boolean foreground) {
         super.drawElements(partialTick, foreground);
-        GlStateManager.pushMatrix();
-        GlStateManager.scale(textScale, textScale, textScale);
+
         SentryGuiState sentryState = getSentryGuiState();
-        this.fontRenderer.drawSplitString(
-                String.format(
-                        "> Sentry %s\n\n> Damage: %s Hearts\n> Fire Delay: %s Ticks\n> Range: %s Blocks",
-                        sentryState.toString(tileEntity),
-                        tileEntity.damage,
-                        tileEntity.attackDelay,
-                        tileEntity.attackRange
-                ),
-                (int) (Constants.CONSOLE_X_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX,
-                (int) (Constants.CONSOLE_Y_POSITION_PX / textScale) + Constants.CONSOLE_TEXT_PADDING_PX,
-                164,
-                getSentryStateColor(sentryState)
+        String text = String.format(
+                "> Turret: %s\n\n> Damage: %s Hearts\n> Fire Delay: %s Ticks\n> Range: %s Blocks",
+                sentryState.toString(tileEntity),
+                tileEntity.damage,
+                tileEntity.attackDelay,
+                tileEntity.attackRange
         );
-        GlStateManager.popMatrix();
+
+        this.console.drawElements(text, getSentryStateColor(sentryState));
     }
 
     @Override
