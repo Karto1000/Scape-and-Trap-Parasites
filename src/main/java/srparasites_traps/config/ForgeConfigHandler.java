@@ -51,6 +51,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the augment system")
     public static final AugmentConfig augments = new AugmentConfig();
 
+    @Config.Name("Barbed Wire")
+    @Config.Comment("Settings for the barbed wire")
+    public static final BarbedWireConfig barbedWire = new BarbedWireConfig();
+
     @Config.Name("Common")
     @Config.Comment("Common settings for the mod")
     public static final CommonConfig common = new CommonConfig();
@@ -498,6 +502,33 @@ public class ForgeConfigHandler {
         @Config.RangeDouble(min = 0, max = 1)
         public double RELOCATOR_EMERGE_TIME_REDUCTION = 0.3;
 
+    }
+
+    public static class BarbedWireConfig {
+        @Config.Name("Enable barbed wire")
+        @Config.Comment("If true, the barbed wire will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE = true;
+
+        @Config.Name("Barbed wire block hardness")
+        @Config.Comment("The block hardness of the barbed wire block")
+        @Config.RangeDouble(min = -1)
+        public float HARDNESS = 10;
+
+        @Config.Name("Barbed wire block resistance")
+        @Config.Comment("The block resistance of the barbed wire block")
+        @Config.RangeDouble(min = -1)
+        public float RESISTANCE = 100;
+
+        @Config.Name("Barbed wire block movement speed multiplier")
+        @Config.Comment("The percentage reduction in movement speed (0.9 == 90% reduction)")
+        @Config.RangeDouble(min = 0, max = 1.)
+        public float MOVEMENT_SPEED_REDUCTION = 0.7F;
+
+        @Config.Name("Barbed wire block damage (Hearts)")
+        @Config.Comment("The block damage of the barbed wire block")
+        @Config.RangeDouble(min = 0)
+        public float DAMAGE = 5.F;
     }
 
     public static class CommonConfig {

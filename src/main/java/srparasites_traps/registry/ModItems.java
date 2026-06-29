@@ -32,6 +32,7 @@ public class ModItems {
     public static Item OBSIDIAN_STAIRS_ITEM = getItemBlock(ModBlocks.OBSIDIAN_STAIRS);
     public static Item BLEEDING_OBSIDIAN_GLASS_ITEM = getItemBlock(ModBlocks.BLEEDING_OBSIDIAN_GLASS);
     public static Item BLEEDING_OBSIDIAN_LADDER_ITEM = getItemBlock(ModBlocks.BLEEDING_OBSIDIAN_LADDER);
+    public static Item BARBED_WIRE_ITEM = getItemBlock(ModBlocks.BARBED_WIRE);
     public static Item AREA_MARKER_ITEM = new AreaMarkerItem();
     public static HardnessAnalyzerItem HARDNESS_ANALYZER_ITEM = new HardnessAnalyzerItem();
     public static Item PARASITIC_MATTER = new BasicItem("parasitic_matter").maxStackSize(16).rarity(EnumRarity.RARE);

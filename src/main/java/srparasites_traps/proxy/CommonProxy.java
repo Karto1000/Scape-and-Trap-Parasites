@@ -4,10 +4,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import srparasites_traps.features.augments.TargetingAugment;
-import srparasites_traps.handlers.EntityHandler;
-import srparasites_traps.handlers.GuiHandler;
-import srparasites_traps.handlers.LootHandler;
-import srparasites_traps.handlers.RegistryHandler;
+import srparasites_traps.handlers.*;
 import srparasites_traps.network.*;
 
 
@@ -18,6 +15,7 @@ public class CommonProxy {
 
     public void init() {
         RegistryHandler.init();
+        SlowdownHandler.init();
         GuiHandler.init();
         LootHandler.init();
         EntityHandler.init();

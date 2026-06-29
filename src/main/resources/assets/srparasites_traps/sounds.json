@@ -68,5 +68,15 @@
         "stream": false
       }
     ]
+  },
+  "barbed_wire": {
+    "category": "block",
+    "replace": false,
+    "sounds": [
+      {
+        "name": "srparasites_traps:barbed_wire",
+        "stream": false
+      }
+    ]
   }
 }

@@ -1,4 +1,4 @@
-package srparasites_traps.features.serrated_spikes;
+package srparasites_traps.features.barbed_wire;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -8,10 +8,10 @@ import srparasites_traps.util.Translation;
 
 import javax.annotation.Nonnull;
 
-public class SerratedSpikesDamageSource extends DamageSource {
-    public static final String NAME = "serrated_spikes";
+public class BarbedWireDamageSource extends DamageSource {
+    public static final String NAME = "barbed_wire";
 
-    public SerratedSpikesDamageSource() {
+    public BarbedWireDamageSource() {
         super(NAME);
     }
 

@@ -9,6 +9,7 @@
     "hardness_analyzer_enabled": "srparasites_traps.config.HardnessAnalyzerConditionFactory",
     "tesla_coil_enabled": "srparasites_traps.config.TeslaCoilConditionFactory",
     "proximity_sensor_enabled": "srparasites_traps.config.ProximitySensorConditionFactory",
-    "augments_enabled": "srparasites_traps.config.AugmentsConditionFactory"
+    "augments_enabled": "srparasites_traps.config.AugmentsConditionFactory",
+    "barbed_wire_enabled": "srparasites_traps.config.BarbedWireConditionFactory"
   }
 }

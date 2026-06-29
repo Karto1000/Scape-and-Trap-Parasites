@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:barbed_wire_enabled"
+    }
+  ],
+  "pattern": [
+    "nin",
+    "i i",
+    "nin"
+  ],
+  "key": {
+    "n": {
+      "item": "minecraft:iron_nugget"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:barbed_wire",
+    "count": 4
+  }
+}

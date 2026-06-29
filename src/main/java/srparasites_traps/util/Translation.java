@@ -35,4 +35,8 @@ public class Translation {
     public static String getSlotDescriptionFor(String id) {
         return "slot." + SRParasitesTraps.MOD_ID + "." + id;
     }
+
+    public static String getDamageSourceFor(String id, Object... args) {
+        return I18n.format("damage." + SRParasitesTraps.MOD_ID + "." + id, args);
+    }
 }
