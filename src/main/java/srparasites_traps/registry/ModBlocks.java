@@ -3,6 +3,7 @@ package srparasites_traps.registry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import srparasites_traps.features.barbed_wire.BasicBarbedWire;
+import srparasites_traps.features.barbed_wire.BurningBarbedWire;
 import srparasites_traps.features.biomass_factory.BeckonNidusBlock;
 import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.decontaminator.DecontaminatorBlock;
@@ -33,6 +34,7 @@ public class ModBlocks {
     public static Block BECKON_NIDUS = new BeckonNidusBlock();
     public static Block OBSIDIAN_GLASS = new ObsidianGlassBlock();
     public static Block BARBED_WIRE = new BasicBarbedWire();
+    public static Block BURNING_BARBED_WIRE = new BurningBarbedWire();
     public static BlockSlab OBSIDIAN_SLAB = new ObsidianSlabBlock.Half();
     public static BlockSlab OBSIDIAN_SLAB_DOUBLE = new ObsidianSlabBlock.Double();
     public static Block OBSIDIAN_STAIRS = new ObsidianStairsBlock();

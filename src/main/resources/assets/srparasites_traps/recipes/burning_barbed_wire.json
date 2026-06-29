@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:barbed_wire_enabled"
+    }
+  ],
+  "pattern": [
+    "p",
+    "b"
+  ],
+  "key": {
+    "b": {
+      "item": "srparasites_traps:barbed_wire"
+    },
+    "p": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:burning_barbed_wire",
+    "count": 1
+  }
+}

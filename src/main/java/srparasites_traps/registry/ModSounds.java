@@ -16,6 +16,17 @@ public class ModSounds {
     public static final SoundEvent TESLA_COIL_CHARGE = createSoundEvent("tesla_coil_charge");
     public static final SoundEvent BIOMASS_FACTORY_WORK = createSoundEvent("biomass_factory_work");
     public static final SoundEvent BARBED_WIRE = createSoundEvent("barbed_wire");
+    public static final SoundEvent BURNING_BARBED_WIRE = createSoundEvent("burning_barbed_wire");
+
+    public static final SoundType BURNING_BARBED_WIRE_ST = new SoundType(
+            0.5f,
+            1.5f,
+            ModSounds.BARBED_WIRE,
+            ModSounds.BARBED_WIRE,
+            ModSounds.BURNING_BARBED_WIRE,
+            ModSounds.BARBED_WIRE,
+            ModSounds.BARBED_WIRE
+    );
 
     public static final SoundType BARBED_WIRE_ST = new SoundType(
             0.5f,

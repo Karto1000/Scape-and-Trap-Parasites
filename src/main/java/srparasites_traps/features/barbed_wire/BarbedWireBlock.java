@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
 import srparasites_traps.handlers.SlowdownHandler;
-import srparasites_traps.registry.ModBlocks;
 import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.Translation;
 
@@ -49,6 +48,7 @@ public abstract class BarbedWireBlock extends Block {
         this.setTranslationKey(getTranslationKeyFor(registryName));
         this.setHardness(ForgeConfigHandler.barbedWire.HARDNESS);
         this.setResistance(ForgeConfigHandler.barbedWire.RESISTANCE);
+        this.setHarvestLevel("pickaxe", 1);
         this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, true).withProperty(SOUTH, false).withProperty(WEST, true));
 
         if (ForgeConfigHandler.barbedWire.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
@@ -107,20 +107,24 @@ public abstract class BarbedWireBlock extends Block {
     @Nonnull
     @Override
     public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, @Nonnull EnumHand hand) {
-        boolean isNorthBarbedWire = world.getBlockState(pos.north()).getBlock() == ModBlocks.BARBED_WIRE;
-        boolean isEastBarbedWire = world.getBlockState(pos.east()).getBlock() == ModBlocks.BARBED_WIRE;
-        boolean isSouthBarbedWire = world.getBlockState(pos.south()).getBlock() == ModBlocks.BARBED_WIRE;
-        boolean isWestBarbedWire = world.getBlockState(pos.west()).getBlock() == ModBlocks.BARBED_WIRE;
+        boolean isNorthBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.north()).getBlock().getClass());
+        boolean isEastBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.east()).getBlock().getClass());
+        boolean isSouthBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.south()).getBlock().getClass());
+        boolean isWestBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.west()).getBlock().getClass());
 
-        return this.getDefaultState().withProperty(NORTH, isNorthBarbedWire).withProperty(EAST, isEastBarbedWire).withProperty(SOUTH, isSouthBarbedWire).withProperty(WEST, isWestBarbedWire);
+        return this.getDefaultState()
+                .withProperty(NORTH, isNorthBarbedWire)
+                .withProperty(EAST, isEastBarbedWire)
+                .withProperty(SOUTH, isSouthBarbedWire)
+                .withProperty(WEST, isWestBarbedWire);
     }
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos) {
-        boolean isNorthBarbedWire = worldIn.getBlockState(pos.north()).getBlock() == ModBlocks.BARBED_WIRE;
-        boolean isEastBarbedWire = worldIn.getBlockState(pos.east()).getBlock() == ModBlocks.BARBED_WIRE;
-        boolean isSouthBarbedWire = worldIn.getBlockState(pos.south()).getBlock() == ModBlocks.BARBED_WIRE;
-        boolean isWestBarbedWire = worldIn.getBlockState(pos.west()).getBlock() == ModBlocks.BARBED_WIRE;
+        boolean isNorthBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.north()).getBlock().getClass());
+        boolean isEastBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.east()).getBlock().getClass());
+        boolean isSouthBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.south()).getBlock().getClass());
+        boolean isWestBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.west()).getBlock().getClass());
 
         IBlockState newState = state.
                 withProperty(NORTH, isNorthBarbedWire)

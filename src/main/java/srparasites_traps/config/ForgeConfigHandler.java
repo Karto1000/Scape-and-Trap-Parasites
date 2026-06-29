@@ -529,6 +529,11 @@ public class ForgeConfigHandler {
         @Config.Comment("The block damage of the barbed wire block")
         @Config.RangeDouble(min = 0)
         public float DAMAGE = 5.F;
+
+        @Config.Name("Burning Barbed burn duration (Seconds)")
+        @Config.Comment("The duration in seconds that the entity touching the barbed wire will be on fire")
+        @Config.RangeInt(min = 0)
+        public int BURNING_BARBED_WIRE_BURN_DURATION = 3;
     }
 
     public static class CommonConfig {
