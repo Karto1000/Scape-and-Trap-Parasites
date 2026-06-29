@@ -10,7 +10,7 @@
       "Kartoffelbauer1000"
     ],
     "dependencies": [
-      "srparasites@[1.10.5,)",
+      "srparasites@[1.10.7,)",
       "cofhcore@[4.6.6.1,)",
       "fermiumbooter@[968474,)",
       "redstoneflux@[1.12-2.1.1.1,)"
