@@ -184,6 +184,7 @@ public class SentryTurretEntity extends EntityLiving {
         this.motionX = 0;
         this.motionY = 0;
         this.motionZ = 0;
+        this.setPosition(this.baseBlockPosition.getX() + 0.5, this.baseBlockPosition.getY() + 1, this.baseBlockPosition.getZ() + 0.5);
     }
 
     @Override
