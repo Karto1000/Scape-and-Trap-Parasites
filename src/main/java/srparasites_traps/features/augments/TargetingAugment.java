@@ -1,8 +1,8 @@
 package srparasites_traps.features.augments;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,8 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import srparasites_traps.SRParasitesTraps;
-import srparasites_traps.network.SRParasitesTrapsNetwork;
-import srparasites_traps.network.SetEntityForTargetingAugment;
 import srparasites_traps.registry.ModItems;
 import srparasites_traps.util.NBTHelper;
 
@@ -33,8 +31,17 @@ public class TargetingAugment extends TurretAugment {
     }
 
     @Override
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+    public boolean itemInteractionForEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer playerIn, @Nonnull EntityLivingBase target, @Nonnull EnumHand hand) {
+        if (playerIn.world.isRemote) return true;
 
+        ResourceLocation entityId = EntityList.getKey(target);
+        if (entityId == null) return false;
+
+        TargetingAugment.addEntityToNBT(stack, entityId.toString());
+        playerIn.setHeldItem(hand, stack);
+        playerIn.inventory.markDirty();
+
+        return true;
     }
 
     @Nonnull
@@ -42,20 +49,11 @@ public class TargetingAugment extends TurretAugment {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         if (!worldIn.isRemote) return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 
-        Entity pointedEntity = Minecraft.getMinecraft().pointedEntity;
-        if (pointedEntity == null) {
-            if (!playerIn.isSneaking())
-                return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+        if (!playerIn.isSneaking())
+            return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 
-            BlockPos pos = playerIn.getPosition();
-            playerIn.openGui(SRParasitesTraps.instance, srparasites_traps.util.Constants.TARGETING_AUGMENT_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
-            return ActionResult.newResult(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
-        }
-
-        ResourceLocation entityId = EntityList.getKey(pointedEntity);
-        if (entityId == null) return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
-        SRParasitesTrapsNetwork.CHANNEL.sendToServer(new SetEntityForTargetingAugment(entityId.toString()));
-
+        BlockPos pos = playerIn.getPosition();
+        playerIn.openGui(SRParasitesTraps.instance, srparasites_traps.util.Constants.TARGETING_AUGMENT_GUI_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return ActionResult.newResult(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 

@@ -33,11 +33,6 @@ public class CommonProxy {
     public void handleElectricityParticlePacket(SpawnElectricityParticlePacket packet) {
     }
 
-    public void handleSetEntityForTargetingAugmentPacket(SetEntityForTargetingAugment packet, MessageContext ctx) {
-        EntityPlayerMP player = ctx.getServerHandler().player;
-        TargetingAugment.addEntityToNBT(player.getHeldItemMainhand(), packet.entityId);
-    }
-
     public void handleRemoveEntityFromTargetingAugmentPacket(RemoveEntityFromTargetingAugment packet, MessageContext ctx) {
         EntityPlayerMP player = ctx.getServerHandler().player;
         TargetingAugment.removeEntityFromNBT(player.getHeldItemMainhand(), packet.entityId);

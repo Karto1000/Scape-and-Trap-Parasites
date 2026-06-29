@@ -82,7 +82,6 @@ public class TargetingAugmentGui extends GuiScreen {
 
                 targetingMode = targetingMode == TargetingMode.WHITELIST ? TargetingMode.BLACKLIST : TargetingMode.WHITELIST;
                 this.displayString = targetingMode.toString();
-                System.out.println(targetingMode);
                 SRParasitesTrapsNetwork.CHANNEL.sendToServer(new UpdateTargetingMode(targetingMode));
                 return true;
             }
