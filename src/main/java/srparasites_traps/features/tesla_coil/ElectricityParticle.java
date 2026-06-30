@@ -6,7 +6,10 @@ import net.minecraft.world.World;
 import srparasites_traps.handlers.ClientHandler;
 
 public class ElectricityParticle extends Particle {
-    public ElectricityParticle(World worldIn, Vec3d pos) {
+    public ElectricityParticle(
+            World worldIn,
+            Vec3d pos
+    ) {
         super(worldIn, pos.x, pos.y, pos.z);
 
         this.setParticleTexture(ClientHandler.electricityParticleTexture);

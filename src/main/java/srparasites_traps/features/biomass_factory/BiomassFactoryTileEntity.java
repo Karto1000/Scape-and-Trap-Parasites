@@ -49,7 +49,10 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     @SideOnly(Side.CLIENT)
     private FixedSoundTile sound;
 
-    private void onSwitchState(BiomassFactoryState oldState, BiomassFactoryState newState) {
+    private void onSwitchState(
+            BiomassFactoryState oldState,
+            BiomassFactoryState newState
+    ) {
         IBlockState blockState = this.world.getBlockState(this.pos);
 
         switch (newState) {
@@ -65,13 +68,21 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public boolean shouldRefresh(@Nonnull World world, @Nonnull BlockPos pos, IBlockState oldState, IBlockState newSate) {
+    public boolean shouldRefresh(
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            IBlockState oldState,
+            IBlockState newSate
+    ) {
         return oldState.getBlock() != newSate.getBlock();
     }
 
     public final ItemStackHandler inputInventory = new ItemStackHandler(6) {
         @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        public boolean isItemValid(
+                int slot,
+                @Nonnull ItemStack stack
+        ) {
             if (stack.isEmpty()) return false;
             Item item = stack.getItem();
             return allowedItems.get(item) != null;
@@ -80,7 +91,10 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
 
     public final ItemStackHandler fluidFillInventory = new ItemStackHandler(1) {
         @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        public boolean isItemValid(
+                int slot,
+                @Nonnull ItemStack stack
+        ) {
             IFluidHandlerItem handler = FluidUtil.getFluidHandler(stack);
             return handler != null;
         }
@@ -88,7 +102,10 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
 
     public final ItemStackHandler fluidOutputInventory = new ItemStackHandler(1) {
         @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        public boolean isItemValid(
+                int slot,
+                @Nonnull ItemStack stack
+        ) {
             return false;
         }
     };
@@ -241,13 +258,19 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public void onDataPacket(@Nonnull NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(
+            @Nonnull NetworkManager net,
+            SPacketUpdateTileEntity pkt
+    ) {
         this.readFromNBT(pkt.getNbtCompound());
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(
+            @Nonnull Capability<T> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.biomassStorage);
         }
@@ -260,7 +283,10 @@ public class BiomassFactoryTileEntity extends TileEntity implements ICapabilityP
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(
+            @Nonnull Capability<?> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return true;
         }

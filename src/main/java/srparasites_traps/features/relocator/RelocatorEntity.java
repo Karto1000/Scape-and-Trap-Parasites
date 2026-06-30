@@ -41,7 +41,13 @@ public class RelocatorEntity extends EntityLiving {
         super(worldIn);
     }
 
-    public RelocatorEntity(World worldIn, BlockPos tileEntityPosition, BlockPos spawnPosition, BlockPos targetPosition, EntityLivingBase entityToRelocate) {
+    public RelocatorEntity(
+            World worldIn,
+            BlockPos tileEntityPosition,
+            BlockPos spawnPosition,
+            BlockPos targetPosition,
+            EntityLivingBase entityToRelocate
+    ) {
         super(worldIn);
         this.spawnPosition = spawnPosition;
         this.tileEntityPosition = tileEntityPosition;

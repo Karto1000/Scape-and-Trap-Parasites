@@ -62,7 +62,12 @@ public class ProximitySensorTileEntity extends TileCore implements ITickable {
     }
 
     @Override
-    public boolean shouldRefresh(@Nonnull World world, @Nonnull BlockPos pos, IBlockState oldState, IBlockState newSate) {
+    public boolean shouldRefresh(
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            IBlockState oldState,
+            IBlockState newSate
+    ) {
         return oldState.getBlock() != newSate.getBlock();
     }
 

@@ -29,7 +29,10 @@ public class RelocatorGui extends GuiContainerCore {
     private final RelocatorTileEntity tileEntity;
     private GuiHelper.GuiConsole console;
 
-    public RelocatorGui(EntityPlayer player, RelocatorTileEntity tileEntity) {
+    public RelocatorGui(
+            EntityPlayer player,
+            RelocatorTileEntity tileEntity
+    ) {
         super(new RelocatorContainer(player, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }
@@ -84,7 +87,10 @@ public class RelocatorGui extends GuiContainerCore {
     }
 
     @Override
-    protected void drawElements(float partialTick, boolean foreground) {
+    protected void drawElements(
+            float partialTick,
+            boolean foreground
+    ) {
         super.drawElements(partialTick, foreground);
 
         RelocatorGuiState state = getRelocatorGuiState();
@@ -101,7 +107,11 @@ public class RelocatorGui extends GuiContainerCore {
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(
+            int mouseX,
+            int mouseY,
+            float partialTicks
+    ) {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 

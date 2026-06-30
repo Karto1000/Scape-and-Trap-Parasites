@@ -55,6 +55,10 @@ public class ForgeConfigHandler {
     @Config.Comment("Settings for the barbed wire")
     public static final BarbedWireConfig barbedWire = new BarbedWireConfig();
 
+    @Config.Name("Infested Beacon")
+    @Config.Comment("Settings for the infested beacon")
+    public static final InfestedBeaconConfig infestedBeacon = new InfestedBeaconConfig();
+
     @Config.Name("Common")
     @Config.Comment("Common settings for the mod")
     public static final CommonConfig common = new CommonConfig();
@@ -544,6 +548,33 @@ public class ForgeConfigHandler {
         @Config.Comment("The amplifier level of the viral effect")
         @Config.RangeInt(min = 0)
         public int VIRAL_BARBED_WIRE_VIRAL_AMPLIFIER = 0;
+    }
+
+    public static class InfestedBeaconConfig {
+        @Config.Name("Enable infested beacon")
+        @Config.Comment("If true, the infested beacon will be enabled")
+        @Config.RequiresMcRestart
+        public boolean ENABLE = true;
+
+        @Config.Name("Infested beacon range (Blocks)")
+        @Config.Comment("The range of the infested beacon")
+        @Config.RangeInt(min = 0)
+        public int RANGE = 20;
+
+        @Config.Name("Infested beacon pivot effect duration (Ticks)")
+        @Config.Comment("The duration in ticks that the player will have the pivot effect")
+        @Config.RangeInt(min = 0)
+        public int PIVOT_DURATION = 40;
+
+        @Config.Name("Infested beacon max damage reduction (%)")
+        @Config.Comment("The max percentage reduction of damage dealt to the player when the infested beacon pivot effect is applied to them")
+        @Config.RangeInt(min = 0, max = 100)
+        public int MAX_DAMAGE_REDUCTION_PERCENT = 25;
+
+        @Config.Name("Infested beacon max pivot effect level")
+        @Config.Comment("The maximum level of the pivot effect")
+        @Config.RangeInt(min = 0)
+        public int MAX_PIVOT_EFFECT_LEVEL = 5;
     }
 
     public static class CommonConfig {

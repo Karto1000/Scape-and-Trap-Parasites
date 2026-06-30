@@ -53,7 +53,10 @@ public class SpawnElectricityParticlePacket implements IMessage {
          * @return an optional return message
          */
         @Override
-        public IMessage onMessage(SpawnElectricityParticlePacket message, MessageContext ctx) {
+        public IMessage onMessage(
+                SpawnElectricityParticlePacket message,
+                MessageContext ctx
+        ) {
             SRParasitesTraps.PROXY.handleElectricityParticlePacket(message);
             return null;
         }

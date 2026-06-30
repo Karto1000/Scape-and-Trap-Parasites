@@ -15,7 +15,10 @@ public class SentryTurretAttackTarget extends EntityAIBase {
     private final World world;
     private Vec3d lastTargetPosition;
 
-    public SentryTurretAttackTarget(SentryTurretEntity sentryTurret, World world) {
+    public SentryTurretAttackTarget(
+            SentryTurretEntity sentryTurret,
+            World world
+    ) {
         this.sentryTurret = sentryTurret;
         this.world = world;
     }
@@ -48,7 +51,10 @@ public class SentryTurretAttackTarget extends EntityAIBase {
         this.sentryTurret.setEntityState(SentryTurretEntityState.IDLE);
     }
 
-    private void shoot(Vec3d direction, SentryTurretTileEntity sentryTurret) {
+    private void shoot(
+            Vec3d direction,
+            SentryTurretTileEntity sentryTurret
+    ) {
         boolean hasTwoDamageUpgrade = Arrays.stream(sentryTurret.getAugmentSlots())
                 .filter(augment -> augment.getItem() == ModItems.DAMAGE_AUGMENT)
                 .count() >= 2;

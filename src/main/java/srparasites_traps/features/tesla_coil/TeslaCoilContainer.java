@@ -18,7 +18,10 @@ public class TeslaCoilContainer extends ContainerCore implements IAugmentableCon
     private final TeslaCoilTileEntity tileEntity;
     private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.TESLA_COIL_AUGMENT_SLOTS];
 
-    public TeslaCoilContainer(EntityPlayer player, TeslaCoilTileEntity tileEntity) {
+    public TeslaCoilContainer(
+            EntityPlayer player,
+            TeslaCoilTileEntity tileEntity
+    ) {
         this.tileEntity = tileEntity;
 
         AugmentInventory<TeslaCoilTileEntity> augmentInventory = new AugmentInventory<>(tileEntity);
@@ -31,7 +34,10 @@ public class TeslaCoilContainer extends ContainerCore implements IAugmentableCon
     }
 
     @Override
-    public boolean enchantItem(@Nonnull EntityPlayer playerIn, int id) {
+    public boolean enchantItem(
+            @Nonnull EntityPlayer playerIn,
+            int id
+    ) {
         if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
         IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
         tileEntity.setControl(controlMode);
@@ -48,7 +54,10 @@ public class TeslaCoilContainer extends ContainerCore implements IAugmentableCon
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void updateProgressBar(int id, int data) {
+    public void updateProgressBar(
+            int id,
+            int data
+    ) {
         super.updateProgressBar(id, data);
         this.tileEntity.receiveGuiNetworkData(id, data);
     }

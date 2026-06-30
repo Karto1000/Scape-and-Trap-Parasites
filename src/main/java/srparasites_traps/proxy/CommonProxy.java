@@ -31,16 +31,26 @@ public class CommonProxy {
     public void handleElectricityParticlePacket(SpawnElectricityParticlePacket packet) {
     }
 
-    public void handleRemoveEntityFromTargetingAugmentPacket(RemoveEntityFromTargetingAugment packet, MessageContext ctx) {
+    public void handleRemoveEntityFromTargetingAugmentPacket(
+            RemoveEntityFromTargetingAugment packet,
+            MessageContext ctx
+    ) {
         EntityPlayerMP player = ctx.getServerHandler().player;
         TargetingAugment.removeEntityFromNBT(player.getHeldItemMainhand(), packet.entityId);
     }
 
-    public void handleUpdateTargetingModePacket(UpdateTargetingMode packet, MessageContext ctx) {
+    public void handleUpdateTargetingModePacket(
+            UpdateTargetingMode packet,
+            MessageContext ctx
+    ) {
         EntityPlayerMP player = ctx.getServerHandler().player;
         TargetingAugment.setTargetingMode(player.getHeldItemMainhand(), packet.targetingMode);
     }
 
-    public void registerItemRenderer(Item item, int meta, String id) {
+    public void registerItemRenderer(
+            Item item,
+            int meta,
+            String id
+    ) {
     }
 }

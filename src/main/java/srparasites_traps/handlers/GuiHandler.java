@@ -10,6 +10,9 @@ import srparasites_traps.features.augments.TargetingAugmentGui;
 import srparasites_traps.features.biomass_factory.BiomassFactoryContainer;
 import srparasites_traps.features.biomass_factory.BiomassFactoryGui;
 import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
+import srparasites_traps.features.infested_beacon.InfestedBeaconContainer;
+import srparasites_traps.features.infested_beacon.InfestedBeaconGui;
+import srparasites_traps.features.infested_beacon.InfestedBeaconTileEntity;
 import srparasites_traps.features.relocator.RelocatorContainer;
 import srparasites_traps.features.relocator.RelocatorGui;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
@@ -37,7 +40,14 @@ public class GuiHandler implements IGuiHandler {
      */
     @Nullable
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(
+            int ID,
+            EntityPlayer player,
+            World world,
+            int x,
+            int y,
+            int z
+    ) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
             return new SentryTurretContainer(player, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
@@ -52,6 +62,10 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == Constants.TESLA_COIL_GUI_ID) {
             return new TeslaCoilContainer(player, (TeslaCoilTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.INFESTED_BEACON_GUI_ID) {
+            return new InfestedBeaconContainer(player, (InfestedBeaconTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;
@@ -72,7 +86,14 @@ public class GuiHandler implements IGuiHandler {
      */
     @Nullable
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(
+            int ID,
+            EntityPlayer player,
+            World world,
+            int x,
+            int y,
+            int z
+    ) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
             return new SentryTurretGui(player, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
@@ -91,6 +112,10 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == Constants.TARGETING_AUGMENT_GUI_ID) {
             return new TargetingAugmentGui(player);
+        }
+
+        if (ID == Constants.INFESTED_BEACON_GUI_ID) {
+            return new InfestedBeaconGui(player, (InfestedBeaconTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;

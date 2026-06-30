@@ -28,7 +28,10 @@ public class RelocatorContainer extends ContainerCore implements IAugmentableCon
     private final static int SLOT_DESTINATION_Y_POSITION_PX = 45;
     private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.RELOCATOR_AUGMENT_SLOTS];
 
-    public RelocatorContainer(EntityPlayer player, RelocatorTileEntity tileEntity) {
+    public RelocatorContainer(
+            EntityPlayer player,
+            RelocatorTileEntity tileEntity
+    ) {
         this.tileEntity = tileEntity;
         addSlotToContainer(new SlotItemHandler(this.tileEntity.inventory, 0, SLOT_SEARCH_X_POSITION_PX, SLOT_SEARCH_Y_POSITION_PX) {
             @Override
@@ -86,7 +89,10 @@ public class RelocatorContainer extends ContainerCore implements IAugmentableCon
     }
 
     @Override
-    public boolean enchantItem(@Nonnull EntityPlayer playerIn, int id) {
+    public boolean enchantItem(
+            @Nonnull EntityPlayer playerIn,
+            int id
+    ) {
         if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
         IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
         tileEntity.setControl(controlMode);
@@ -103,7 +109,10 @@ public class RelocatorContainer extends ContainerCore implements IAugmentableCon
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void updateProgressBar(int id, int data) {
+    public void updateProgressBar(
+            int id,
+            int data
+    ) {
         super.updateProgressBar(id, data);
         this.tileEntity.receiveGuiNetworkData(id, data);
     }

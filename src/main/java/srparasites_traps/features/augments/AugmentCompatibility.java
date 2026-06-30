@@ -45,7 +45,10 @@ public final class AugmentCompatibility {
     private AugmentCompatibility() {
     }
 
-    public static boolean isValidFor(Class<? extends TileEntity> tileEntityClass, ItemStack stack) {
+    public static boolean isValidFor(
+            Class<? extends TileEntity> tileEntityClass,
+            ItemStack stack
+    ) {
         if (stack.isEmpty()) return false;
 
         List<Class<? extends Item>> validAugments = VALID_AUGMENTS.get(tileEntityClass);

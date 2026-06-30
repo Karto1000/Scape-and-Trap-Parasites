@@ -1,8 +1,8 @@
 {
-	"parent": "srparasites_traps:block/serrated_spikes",
-	"textures": {
-		"particle": "srparasites_traps:block/iron_block_green",
-		"1": "srparasites_traps:block/iron_block_green",
-		"2": "srparasites_traps:block/viral_serrated_spikes"
-	}
+  "parent": "srparasites_traps:block/serrated_spikes",
+  "textures": {
+    "particle": "srparasites_traps:block/iron_block_green",
+    "1": "srparasites_traps:block/iron_block_green",
+    "2": "srparasites_traps:block/viral_serrated_spikes"
+  }
 }

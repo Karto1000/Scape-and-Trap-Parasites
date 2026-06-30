@@ -47,14 +47,20 @@ public class AreaMarkerItem extends Item {
         setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
     }
 
-    public static Pair<Double, Double> getDistancesOfAreaTo(AxisAlignedBB aabb, BlockPos pos1) {
+    public static Pair<Double, Double> getDistancesOfAreaTo(
+            AxisAlignedBB aabb,
+            BlockPos pos1
+    ) {
         return Pair.of(
                 Math.sqrt(pos1.distanceSq(aabb.minX, aabb.minY, aabb.minZ)),
                 Math.sqrt(pos1.distanceSq(aabb.maxX, aabb.maxY, aabb.maxZ))
         );
     }
 
-    private boolean isBlockAtPositionRelocator(World world, BlockPos pos) {
+    private boolean isBlockAtPositionRelocator(
+            World world,
+            BlockPos pos
+    ) {
         Block block = world.getBlockState(pos).getBlock();
         if (!(block instanceof RelocatorBlock)) return false;
 
@@ -64,7 +70,12 @@ public class AreaMarkerItem extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         tooltip.add(TextFormatting.WHITE + getTooltipFor("item." + REGISTRY_NAME + ".base", ForgeConfigHandler.relocator.DEFAULT_AREA_MARKER_MAX_VOLUME));
 
         if (worldIn == null) return;
@@ -81,7 +92,16 @@ public class AreaMarkerItem extends Item {
 
     @Nonnull
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(
+            EntityPlayer player,
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumHand hand,
+            @Nonnull EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ
+    ) {
         ItemStack heldItem = player.getHeldItem(hand);
         if (heldItem.isEmpty()) return EnumActionResult.FAIL;
         if (!heldItem.hasTagCompound()) heldItem.setTagCompound(new NBTTagCompound());

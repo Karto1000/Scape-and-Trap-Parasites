@@ -53,7 +53,13 @@ public class RenderHandler {
         boundArea.ifPresent(box -> drawSelectionBox(box.minX - renderX, box.minY - renderY, box.minZ - renderZ, box.maxX - box.minX, box.maxY - box.minY, box.maxZ - box.minZ, 0.5F, 0.0F, 0.0F));
     }
 
-    private void drawOverlayTextBox(String text, int x, int y, int maxWidth, int textColor) {
+    private void drawOverlayTextBox(
+            String text,
+            int x,
+            int y,
+            int maxWidth,
+            int textColor
+    ) {
         Minecraft mc = Minecraft.getMinecraft();
 
         int padding = 4;
@@ -156,7 +162,17 @@ public class RenderHandler {
         );
     }
 
-    private void drawSelectionBox(double x, double y, double z, double w, double h, double d, float r, float g, float b) {
+    private void drawSelectionBox(
+            double x,
+            double y,
+            double z,
+            double w,
+            double h,
+            double d,
+            float r,
+            float g,
+            float b
+    ) {
         AxisAlignedBB box = new AxisAlignedBB(x, y, z, x + w, y + h, z + d).grow(0.002);
 
         GlStateManager.enableBlend();

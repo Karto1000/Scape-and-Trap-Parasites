@@ -22,7 +22,12 @@ public class ViralBarbedWire extends BarbedWireBlock {
     }
 
     @Override
-    public void onEntityCollision(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Entity entityIn) {
+    public void onEntityCollision(
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            @Nonnull Entity entityIn
+    ) {
         if (worldIn.isRemote) return;
         if (!(entityIn instanceof EntityLivingBase)) return;
 
@@ -39,7 +44,12 @@ public class ViralBarbedWire extends BarbedWireBlock {
 
     @Nonnull
     @Override
-    public SoundType getSoundType(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(
+            @Nonnull IBlockState state,
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nullable Entity entity
+    ) {
         return ModSounds.BARBED_WIRE_ST;
     }
 }

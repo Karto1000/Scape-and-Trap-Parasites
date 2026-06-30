@@ -31,7 +31,12 @@ public class TargetingAugment extends TurretAugment {
     }
 
     @Override
-    public boolean itemInteractionForEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer playerIn, @Nonnull EntityLivingBase target, @Nonnull EnumHand hand) {
+    public boolean itemInteractionForEntity(
+            @Nonnull ItemStack stack,
+            @Nonnull EntityPlayer playerIn,
+            @Nonnull EntityLivingBase target,
+            @Nonnull EnumHand hand
+    ) {
         if (playerIn.world.isRemote) return true;
 
         ResourceLocation entityId = EntityList.getKey(target);
@@ -46,7 +51,11 @@ public class TargetingAugment extends TurretAugment {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(
+            World worldIn,
+            @Nonnull EntityPlayer playerIn,
+            @Nonnull EnumHand handIn
+    ) {
         if (!worldIn.isRemote) return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 
         if (!playerIn.isSneaking())
@@ -57,7 +66,10 @@ public class TargetingAugment extends TurretAugment {
         return ActionResult.newResult(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
-    public static void addEntityToNBT(ItemStack stack, String entityId) {
+    public static void addEntityToNBT(
+            ItemStack stack,
+            String entityId
+    ) {
         if (stack.getItem() != ModItems.TARGETING_AUGMENT) return;
 
         NBTTagCompound compound = stack.getTagCompound();
@@ -73,7 +85,10 @@ public class TargetingAugment extends TurretAugment {
         stack.setTagCompound(compound);
     }
 
-    public static void removeEntityFromNBT(ItemStack stack, String entityId) {
+    public static void removeEntityFromNBT(
+            ItemStack stack,
+            String entityId
+    ) {
         if (stack.getItem() != ModItems.TARGETING_AUGMENT) return;
 
         NBTTagCompound compound = stack.getTagCompound();
@@ -100,7 +115,10 @@ public class TargetingAugment extends TurretAugment {
         return TargetingAugmentGui.TargetingMode.values()[compound.getInteger("mode")];
     }
 
-    public static void setTargetingMode(ItemStack stack, TargetingAugmentGui.TargetingMode mode) {
+    public static void setTargetingMode(
+            ItemStack stack,
+            TargetingAugmentGui.TargetingMode mode
+    ) {
         if (stack.getItem() != ModItems.TARGETING_AUGMENT) return;
         NBTTagCompound compound = stack.getTagCompound();
         if (compound == null) compound = new NBTTagCompound();
@@ -108,7 +126,10 @@ public class TargetingAugment extends TurretAugment {
         stack.setTagCompound(compound);
     }
 
-    public static boolean isEntityValidForAugment(ItemStack stack, Entity entity) {
+    public static boolean isEntityValidForAugment(
+            ItemStack stack,
+            Entity entity
+    ) {
         ResourceLocation entityKey = EntityList.getKey(entity);
         if (entityKey == null) return false;
 

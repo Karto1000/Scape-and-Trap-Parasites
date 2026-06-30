@@ -89,12 +89,22 @@ public abstract class BarbedWireBlock extends Block {
     }
 
     @Override
-    public boolean isSideSolid(@Nonnull IBlockState base_state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
+    public boolean isSideSolid(
+            @Nonnull IBlockState base_state,
+            @Nonnull IBlockAccess world,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing side
+    ) {
         return false;
     }
 
     @Override
-    public SoundType getSoundType(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(
+            @Nonnull IBlockState state,
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nullable Entity entity
+    ) {
         return ModSounds.BARBED_WIRE_ST;
     }
 
@@ -106,7 +116,17 @@ public abstract class BarbedWireBlock extends Block {
 
     @Nonnull
     @Override
-    public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, @Nonnull EnumHand hand) {
+    public IBlockState getStateForPlacement(
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ,
+            int meta,
+            @Nonnull EntityLivingBase placer,
+            @Nonnull EnumHand hand
+    ) {
         boolean isNorthBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.north()).getBlock().getClass());
         boolean isEastBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.east()).getBlock().getClass());
         boolean isSouthBarbedWire = BarbedWireBlock.class.isAssignableFrom(world.getBlockState(pos.south()).getBlock().getClass());
@@ -120,7 +140,13 @@ public abstract class BarbedWireBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos) {
+    public void neighborChanged(
+            IBlockState state,
+            World worldIn,
+            BlockPos pos,
+            @Nonnull Block blockIn,
+            @Nonnull BlockPos fromPos
+    ) {
         boolean isNorthBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.north()).getBlock().getClass());
         boolean isEastBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.east()).getBlock().getClass());
         boolean isSouthBarbedWire = BarbedWireBlock.class.isAssignableFrom(worldIn.getBlockState(pos.south()).getBlock().getClass());
@@ -143,25 +169,43 @@ public abstract class BarbedWireBlock extends Block {
 
     @Nonnull
     @Override
-    public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess source, @Nonnull BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(
+            @Nonnull IBlockState state,
+            @Nonnull IBlockAccess source,
+            @Nonnull BlockPos pos
+    ) {
         return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.9, 0.9D);
     }
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(@Nonnull IBlockState blockState, @Nonnull IBlockAccess worldIn, @Nonnull BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(
+            @Nonnull IBlockState blockState,
+            @Nonnull IBlockAccess worldIn,
+            @Nonnull BlockPos pos
+    ) {
         return NULL_AABB;
     }
 
     @Nullable
     @Override
-    public net.minecraft.pathfinding.PathNodeType getAiPathNodeType(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nullable EntityLiving entity) {
+    public net.minecraft.pathfinding.PathNodeType getAiPathNodeType(
+            @Nonnull IBlockState state,
+            @Nonnull IBlockAccess world,
+            @Nonnull BlockPos pos,
+            @Nullable EntityLiving entity
+    ) {
         return PathNodeType.WALKABLE;
     }
 
 
     @Override
-    public void onEntityCollision(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Entity entityIn) {
+    public void onEntityCollision(
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            @Nonnull Entity entityIn
+    ) {
         if (worldIn.isRemote) return;
         if (!(entityIn instanceof EntityLivingBase)) return;
 
@@ -173,7 +217,12 @@ public abstract class BarbedWireBlock extends Block {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            @Nonnull List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + this.registryName);
     }
 }

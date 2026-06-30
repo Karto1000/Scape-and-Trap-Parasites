@@ -37,12 +37,18 @@ public class ShockedPotion extends Potion {
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isReady(
+            int duration,
+            int amplifier
+    ) {
         return duration == 5;
     }
 
     @Override
-    public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {
+    public void performEffect(
+            EntityLivingBase entityLivingBaseIn,
+            int amplifier
+    ) {
         World world = entityLivingBaseIn.getEntityWorld();
 
         if (amplifier - 1 > 0) {

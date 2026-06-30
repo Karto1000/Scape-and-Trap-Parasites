@@ -6,7 +6,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
 public class RelocatorEntityModel extends ModelNak {
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+    public void setRotationAngles(
+            float limbSwing,
+            float limbSwingAmount,
+            float ageInTicks,
+            float netHeadYaw,
+            float headPitch,
+            float scaleFactor,
+            Entity entityIn
+    ) {
         /* Animation code copied from SRP tweaked to make it work with a Entity that does not inherit from EntityParasiteBase */
 
         RelocatorEntity relocator = (RelocatorEntity) entityIn;
@@ -64,7 +72,12 @@ public class RelocatorEntityModel extends ModelNak {
         }
     }
 
-    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setLivingAnimations(
+            EntityLivingBase entitylivingbaseIn,
+            float limbSwing,
+            float limbSwingAmount,
+            float partialTickTime
+    ) {
         /* Code also from ModelNak */
         RelocatorEntity relocator = (RelocatorEntity) entitylivingbaseIn;
         double emergeTime = relocator.getCurrentEmergeTime();

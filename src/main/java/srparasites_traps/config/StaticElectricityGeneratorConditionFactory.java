@@ -8,7 +8,10 @@ import java.util.function.BooleanSupplier;
 
 public class StaticElectricityGeneratorConditionFactory implements IConditionFactory {
     @Override
-    public BooleanSupplier parse(JsonContext context, JsonObject json) {
+    public BooleanSupplier parse(
+            JsonContext context,
+            JsonObject json
+    ) {
         return () -> ForgeConfigHandler.teslaCoil.ENABLE_STATIC_ELECTRICITY_GENERATOR;
     }
 }

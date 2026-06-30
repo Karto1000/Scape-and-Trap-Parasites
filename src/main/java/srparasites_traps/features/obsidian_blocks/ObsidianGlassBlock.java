@@ -34,13 +34,17 @@ public class ObsidianGlassBlock extends Block {
     }
 
     @Override
-    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(
+            IBlockState state,
+            World world,
+            BlockPos pos,
+            @Nullable Entity entity
+    ) {
         return SoundType.GLASS;
     }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
-    {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

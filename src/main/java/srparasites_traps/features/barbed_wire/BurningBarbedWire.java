@@ -22,7 +22,12 @@ public class BurningBarbedWire extends BarbedWireBlock {
     }
 
     @Override
-    public void onEntityCollision(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Entity entityIn) {
+    public void onEntityCollision(
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            @Nonnull Entity entityIn
+    ) {
         if (worldIn.isRemote) return;
         if (!(entityIn instanceof EntityLivingBase)) return;
 
@@ -31,7 +36,12 @@ public class BurningBarbedWire extends BarbedWireBlock {
     }
 
     @Override
-    public void randomDisplayTick(@Nonnull IBlockState stateIn, World worldIn, BlockPos pos, @Nonnull Random rand) {
+    public void randomDisplayTick(
+            @Nonnull IBlockState stateIn,
+            World worldIn,
+            BlockPos pos,
+            @Nonnull Random rand
+    ) {
         if (worldIn.rand.nextInt(20) != 0) return;
 
         worldIn.spawnParticle(
@@ -45,7 +55,12 @@ public class BurningBarbedWire extends BarbedWireBlock {
 
     @Nonnull
     @Override
-    public SoundType getSoundType(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(
+            @Nonnull IBlockState state,
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nullable Entity entity
+    ) {
         return ModSounds.BURNING_BARBED_WIRE_ST;
     }
 }

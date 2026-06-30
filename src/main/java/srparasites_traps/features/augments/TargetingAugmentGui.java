@@ -64,7 +64,8 @@ public class TargetingAugmentGui extends GuiScreen {
         super.initGui();
 
         ItemStack stack = this.player.getHeldItemMainhand();
-        if (stack.getItem() == ModItems.TARGETING_AUGMENT) this.targetingMode = TargetingAugment.getTargetingMode(stack);
+        if (stack.getItem() == ModItems.TARGETING_AUGMENT)
+            this.targetingMode = TargetingAugment.getTargetingMode(stack);
 
         this.guiLeft = this.width / 2 - GUI_WIDTH / 2;
         this.guiTop = this.height / 2 - GUI_HEIGHT / 2;
@@ -77,7 +78,11 @@ public class TargetingAugmentGui extends GuiScreen {
         );
         this.toggleModeButton = new GuiButton(0, this.guiLeft + GUI_WIDTH - 108, this.guiTop + 4, 100, 20, this.targetingMode.toString()) {
             @Override
-            public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+            public boolean mousePressed(
+                    Minecraft mc,
+                    int mouseX,
+                    int mouseY
+            ) {
                 if (!super.mousePressed(mc, mouseX, mouseY)) return false;
 
                 targetingMode = targetingMode == TargetingMode.WHITELIST ? TargetingMode.BLACKLIST : TargetingMode.WHITELIST;
@@ -104,7 +109,11 @@ public class TargetingAugmentGui extends GuiScreen {
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    protected void mouseClicked(
+            int mouseX,
+            int mouseY,
+            int mouseButton
+    ) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         this.textField.mouseClicked(mouseX, mouseY, mouseButton);
         this.toggleModeButton.mousePressed(this.mc, mouseX, mouseY);
@@ -202,13 +211,20 @@ public class TargetingAugmentGui extends GuiScreen {
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    protected void keyTyped(
+            char typedChar,
+            int keyCode
+    ) throws IOException {
         super.keyTyped(typedChar, keyCode);
         this.textField.textboxKeyTyped(typedChar, keyCode);
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(
+            int mouseX,
+            int mouseY,
+            float partialTicks
+    ) {
         this.drawDefaultBackground();
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);

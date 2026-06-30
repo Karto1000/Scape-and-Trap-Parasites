@@ -23,7 +23,10 @@ public class SlowdownHandler {
         MinecraftForge.EVENT_BUS.register(SlowdownHandler.class);
     }
 
-    public static void applySlowdown(EntityLivingBase entity, double amount) {
+    public static void applySlowdown(
+            EntityLivingBase entity,
+            double amount
+    ) {
         IAttributeInstance speedAttribute = entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 
         if (speedAttribute.getModifier(SLOWDOWN_UUID) == null) {

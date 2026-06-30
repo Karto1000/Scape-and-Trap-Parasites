@@ -48,7 +48,11 @@ public class ObsidianLadderBlock extends Block {
     }
 
     @Nonnull
-    public AxisAlignedBB getBoundingBox(IBlockState state, @Nonnull IBlockAccess source, @Nonnull BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(
+            IBlockState state,
+            @Nonnull IBlockAccess source,
+            @Nonnull BlockPos pos
+    ) {
         switch (state.getValue(FACING)) {
             case NORTH:
                 return LADDER_NORTH_AABB;
@@ -70,7 +74,11 @@ public class ObsidianLadderBlock extends Block {
         return false;
     }
 
-    public boolean canPlaceBlockOnSide(@Nonnull World worldIn, BlockPos pos, @Nonnull EnumFacing side) {
+    public boolean canPlaceBlockOnSide(
+            @Nonnull World worldIn,
+            BlockPos pos,
+            @Nonnull EnumFacing side
+    ) {
         if (this.canAttachTo(worldIn, pos.west(), side)) {
             return true;
         } else if (this.canAttachTo(worldIn, pos.east(), side)) {
@@ -82,14 +90,27 @@ public class ObsidianLadderBlock extends Block {
         }
     }
 
-    private boolean canAttachTo(World world, BlockPos pos, EnumFacing facing) {
+    private boolean canAttachTo(
+            World world,
+            BlockPos pos,
+            EnumFacing facing
+    ) {
         IBlockState iblockstate = world.getBlockState(pos);
         boolean flag = isExceptBlockForAttachWithPiston(iblockstate.getBlock());
         return !flag && iblockstate.getBlockFaceShape(world, pos, facing) == BlockFaceShape.SOLID && !iblockstate.canProvidePower();
     }
 
     @Nonnull
-    public IBlockState getStateForPlacement(@Nonnull World worldIn, @Nonnull BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ,
+            int meta,
+            @Nonnull EntityLivingBase placer
+    ) {
         if (facing.getAxis().isHorizontal() && this.canAttachTo(worldIn, pos.offset(facing.getOpposite()), facing)) {
             return this.getDefaultState().withProperty(FACING, facing);
         } else {
@@ -103,7 +124,13 @@ public class ObsidianLadderBlock extends Block {
         }
     }
 
-    public void neighborChanged(IBlockState state, @Nonnull World worldIn, BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos) {
+    public void neighborChanged(
+            IBlockState state,
+            @Nonnull World worldIn,
+            BlockPos pos,
+            @Nonnull Block blockIn,
+            @Nonnull BlockPos fromPos
+    ) {
         EnumFacing enumfacing = state.getValue(FACING);
 
         if (!this.canAttachTo(worldIn, pos.offset(enumfacing.getOpposite()), enumfacing)) {
@@ -136,12 +163,18 @@ public class ObsidianLadderBlock extends Block {
     }
 
     @Nonnull
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+    public IBlockState withRotation(
+            IBlockState state,
+            Rotation rot
+    ) {
         return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Nonnull
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+    public IBlockState withMirror(
+            IBlockState state,
+            Mirror mirrorIn
+    ) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
     }
 
@@ -151,12 +184,22 @@ public class ObsidianLadderBlock extends Block {
     }
 
     @Override
-    public boolean isLadder(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityLivingBase entity) {
+    public boolean isLadder(
+            @Nonnull IBlockState state,
+            @Nonnull IBlockAccess world,
+            @Nonnull BlockPos pos,
+            @Nonnull EntityLivingBase entity
+    ) {
         return true;
     }
 
     @Nonnull
-    public BlockFaceShape getBlockFaceShape(@Nonnull IBlockAccess worldIn, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(
+            @Nonnull IBlockAccess worldIn,
+            @Nonnull IBlockState state,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing face
+    ) {
         return BlockFaceShape.UNDEFINED;
     }
 }

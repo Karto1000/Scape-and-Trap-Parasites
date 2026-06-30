@@ -50,7 +50,10 @@ public class RemoveEntityFromTargetingAugment implements IMessage {
          * @return an optional return message
          */
         @Override
-        public IMessage onMessage(RemoveEntityFromTargetingAugment message, MessageContext ctx) {
+        public IMessage onMessage(
+                RemoveEntityFromTargetingAugment message,
+                MessageContext ctx
+        ) {
             SRParasitesTraps.PROXY.handleRemoveEntityFromTargetingAugmentPacket(message, ctx);
             return null;
         }

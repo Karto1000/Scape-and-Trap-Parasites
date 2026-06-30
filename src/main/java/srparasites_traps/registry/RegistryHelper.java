@@ -10,7 +10,10 @@ public final class RegistryHelper {
     private RegistryHelper() {
     }
 
-    public static <T> List<T> getStaticFieldsOfType(Class<?> registryClass, Class<T> entryType) {
+    public static <T> List<T> getStaticFieldsOfType(
+            Class<?> registryClass,
+            Class<T> entryType
+    ) {
         List<T> entries = new ArrayList<T>();
 
         for (Field field : registryClass.getDeclaredFields()) {

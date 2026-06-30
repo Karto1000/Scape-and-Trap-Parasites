@@ -45,7 +45,13 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
     }
 
     @Override
-    public void getDrops(@Nonnull NonNullList<ItemStack> drops, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
+    public void getDrops(
+            @Nonnull NonNullList<ItemStack> drops,
+            @Nonnull IBlockAccess world,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            int fortune
+    ) {
         if (this.isDouble()) drops.add(new ItemStack(ModItems.OBSIDIAN_SLAB_ITEM, 2));
         else drops.add(new ItemStack(ModItems.OBSIDIAN_SLAB_ITEM, 1));
     }

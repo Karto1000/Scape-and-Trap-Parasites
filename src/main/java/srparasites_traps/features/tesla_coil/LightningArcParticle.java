@@ -26,7 +26,13 @@ public class LightningArcParticle extends Particle {
     private final static int DEFAULT_INNER_THICKNESS = 1;
     private final static int DEFAULT_OUTER_THICKNESS = DEFAULT_INNER_THICKNESS * 2;
 
-    public LightningArcParticle(World worldIn, Vec3d from, Vec3d to, int maxParticleAge, int intensity) {
+    public LightningArcParticle(
+            World worldIn,
+            Vec3d from,
+            Vec3d to,
+            int maxParticleAge,
+            int intensity
+    ) {
         super(worldIn, from.x, from.y, from.z);
 
         this.from = from;
@@ -47,7 +53,7 @@ public class LightningArcParticle extends Particle {
         Vec3d delta = this.to.subtract(this.from);
         Vec3d unitStageVector = delta.scale((double) 1 / this.maxStageVectors);
 
-        for (int i = 0; i < maxStageVectors; i += 2){
+        for (int i = 0; i < maxStageVectors; i += 2) {
             float rotatePitch = (float) (this.rand.nextFloat() * Math.PI * 0.5);
             float rotateYaw = (float) (this.rand.nextFloat() * Math.PI * 0.5);
 
@@ -143,10 +149,10 @@ public class LightningArcParticle extends Particle {
         buildLineAlongStages(
                 buffer,
                 actualFrom,
-                 0.F,
+                0.F,
                 0.F,
                 1.F,
-                 1.F / (this.particleAge == 0 ? 1.F : this.particleAge),
+                1.F / (this.particleAge == 0 ? 1.F : this.particleAge),
                 outerThickness
         );
 

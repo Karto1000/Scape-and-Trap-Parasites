@@ -25,7 +25,10 @@ public class BiomassFactoryContainer extends ContainerCore {
     public static final int TILE_SLOT_COUNT = FLUID_OUTPUT_SLOT + 1;
 
 
-    public BiomassFactoryContainer(EntityPlayer player, BiomassFactoryTileEntity tileEntity) {
+    public BiomassFactoryContainer(
+            EntityPlayer player,
+            BiomassFactoryTileEntity tileEntity
+    ) {
         super();
 
         this.player = player;
@@ -64,7 +67,10 @@ public class BiomassFactoryContainer extends ContainerCore {
     }
 
     @Override
-    public void updateProgressBar(int id, int data) {
+    public void updateProgressBar(
+            int id,
+            int data
+    ) {
         super.updateProgressBar(id, data);
 
         if (id == BIOMASS_AMOUNT_ID) {

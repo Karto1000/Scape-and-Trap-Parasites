@@ -20,7 +20,10 @@ public class AttackFix {
             remap = false,
             cancellable = true
     )
-    public void srparasites_traps_can_attack_class_fix(Class<? extends EntityLivingBase> cls, CallbackInfoReturnable<Boolean> cir) {
+    public void srparasites_traps_can_attack_class_fix(
+            Class<? extends EntityLivingBase> cls,
+            CallbackInfoReturnable<Boolean> cir
+    ) {
         // Because this function checks if an entity contains the name "srparasites" and our mod id is called "srparasites_traps".
         // The targeting function will always return false for any entity of this mod. To fix this, we need to check for it before.
         if (cls != EntityPlayer.class && cls != EntityPlayerMP.class) {

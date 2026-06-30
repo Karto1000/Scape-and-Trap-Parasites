@@ -37,7 +37,12 @@ public class StaticElectricityGeneratorBlock extends Block {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 

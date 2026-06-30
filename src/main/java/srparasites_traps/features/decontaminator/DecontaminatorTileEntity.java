@@ -43,7 +43,11 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
             SRPPotions.VIRA_E,
             SRPPotions.COTH_E
     };
-    private void onSwitchState(DecontaminatorState lastState, DecontaminatorState newState) {
+
+    private void onSwitchState(
+            DecontaminatorState lastState,
+            DecontaminatorState newState
+    ) {
         switch (lastState) {
             case IDLE:
                 this.world.playSound(
@@ -129,7 +133,10 @@ public class DecontaminatorTileEntity extends TileEntity implements ITickable {
     }
 
     @Override
-    public void onDataPacket(@Nonnull NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(
+            @Nonnull NetworkManager net,
+            SPacketUpdateTileEntity pkt
+    ) {
         readFromNBT(pkt.getNbtCompound());
     }
 

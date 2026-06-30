@@ -233,7 +233,10 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     }
 
     @Override
-    public void sendGuiNetworkData(Container container, IContainerListener player) {
+    public void sendGuiNetworkData(
+            Container container,
+            IContainerListener player
+    ) {
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, (int) this.currentRespawnTime);
@@ -243,7 +246,10 @@ public class SentryTurretTileEntity extends TurretTileEntity implements ITickabl
     }
 
     @Override
-    public void receiveGuiNetworkData(int id, int data) {
+    public void receiveGuiNetworkData(
+            int id,
+            int data
+    ) {
         super.receiveGuiNetworkData(id, data);
         switch (id) {
             case AVAILABLE_WINDOW_VAR:

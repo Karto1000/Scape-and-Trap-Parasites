@@ -60,7 +60,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        public boolean isItemValid(
+                int slot,
+                @Nonnull ItemStack stack
+        ) {
             if (stack.isEmpty()) return false;
             if (!(stack.getItem() instanceof AreaMarkerItem)) return false;
 
@@ -184,7 +187,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(
+            NetworkManager net,
+            SPacketUpdateTileEntity pkt
+    ) {
         readFromNBT(pkt.getNbtCompound());
     }
 
@@ -220,7 +226,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(
+            @Nonnull Capability<?> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return true;
         }
@@ -229,7 +238,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(
+            @Nonnull Capability<T> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inventory);
         }
@@ -237,7 +249,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     }
 
     @Override
-    public void sendGuiNetworkData(Container container, IContainerListener player) {
+    public void sendGuiNetworkData(
+            Container container,
+            IContainerListener player
+    ) {
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR, this.getState().ordinal());
         player.sendWindowProperty(container, AVAILABLE_WINDOW_VAR + 1, this.currentRelocatorCount);
@@ -245,7 +260,10 @@ public class RelocatorTileEntity extends TurretTileEntity implements ITickable, 
     }
 
     @Override
-    public void receiveGuiNetworkData(int id, int data) {
+    public void receiveGuiNetworkData(
+            int id,
+            int data
+    ) {
         super.receiveGuiNetworkData(id, data);
         switch (id) {
             case AVAILABLE_WINDOW_VAR:

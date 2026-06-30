@@ -71,7 +71,12 @@ public class BiomassFactoryBlock extends Block {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 
@@ -82,12 +87,19 @@ public class BiomassFactoryBlock extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
+    public TileEntity createTileEntity(
+            @Nonnull World world,
+            @Nonnull IBlockState state
+    ) {
         return new BiomassFactoryTileEntity();
     }
 
     @Override
-    public void breakBlock(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+    public void breakBlock(
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state
+    ) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof BiomassFactoryTileEntity) {
             ((BiomassFactoryTileEntity) tileEntity).dropInventory();
@@ -113,7 +125,12 @@ public class BiomassFactoryBlock extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull Random rand) {
+    public void randomDisplayTick(
+            IBlockState stateIn,
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull Random rand
+    ) {
         if (!stateIn.getValue(ACTIVE)) return;
 
         worldIn.spawnParticle(
@@ -128,7 +145,17 @@ public class BiomassFactoryBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            @Nonnull EntityPlayer playerIn,
+            @Nonnull EnumHand hand,
+            @Nonnull EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ
+    ) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (!(tileEntity instanceof BiomassFactoryTileEntity)) return false;
         BiomassFactoryTileEntity bft = (BiomassFactoryTileEntity) tileEntity;

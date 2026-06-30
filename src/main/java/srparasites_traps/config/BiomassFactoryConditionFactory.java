@@ -8,7 +8,10 @@ import java.util.function.BooleanSupplier;
 
 public class BiomassFactoryConditionFactory implements IConditionFactory {
     @Override
-    public BooleanSupplier parse(JsonContext context, JsonObject json) {
+    public BooleanSupplier parse(
+            JsonContext context,
+            JsonObject json
+    ) {
         return () -> ForgeConfigHandler.biomassFactory.ENABLE;
     }
 }

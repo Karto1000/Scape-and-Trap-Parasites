@@ -41,7 +41,12 @@ public class BasicItem extends Item {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            @Nonnull List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         if (!I18n.hasKey("tooltip." + SRParasitesTraps.MOD_ID + ".item." + this.registryName)) return;
         Translation.addMultilineTooltip(tooltip, "item." + this.registryName);
     }

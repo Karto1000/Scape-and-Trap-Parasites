@@ -39,6 +39,7 @@ tile.srparasites_traps.beckon_nidus.name=§aBeckon Nidus§f
 tile.srparasites_traps.barbed_wire.name=Barbed Wire
 tile.srparasites_traps.burning_barbed_wire.name=§6Burning§f Barbed Wire
 tile.srparasites_traps.viral_barbed_wire.name=§aViral§f Barbed Wire
+tile.srparasites_traps.infested_beacon.name=§6Infested Beacon§f
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way Communication Unit
@@ -87,6 +88,7 @@ tooltip.srparasites_traps.item.armored_semi_organic_plating=§8A plating acting 
 tooltip.srparasites_traps.item.barbed_wire=Slows down and damages any entity that comes into contact with it.
 tooltip.srparasites_traps.item.burning_barbed_wire=Slows down, damages and sets on §6fire§f any entity that comes into contact with it.
 tooltip.srparasites_traps.item.viral_barbed_wire=Slows down, damages and applies §aViral§f to any entity that comes into contact with it.
+tooltip.srparasites_traps.item.infested_beacon=Placeholder
 
 # Status Messages
 status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f
@@ -112,6 +114,7 @@ potion.srparasites_traps.shocked=Shocked
 slot.srparasites_traps.relocator_search=Put in an area marker which will define the area to search for enemies to relocate.
 slot.srparasites_traps.relocator_destination=Put in an area marker to tell the relocator all valid positions where a grabbed enemy can be relocated to.
 slot.srparasites_traps.biomass_factory_fluid_input=Place in a valid container to extract the stored liquid.
+slot.srparasites_traps.infested_beacon_lure=Place a lure next to the beacon to boost its effectiveness.
 
 # Entites
 entity.sentry_turret_spineball.name=Spineball

@@ -10,7 +10,12 @@ import srparasites_traps.SRParasitesTraps;
 public class GuiHelper {
     private final static ResourceLocation BUTTON_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/button_spritesheet.png");
 
-    public static ElementButton createNewButton(GuiContainerCore gui, String name, int xPosition, int yPosition) {
+    public static ElementButton createNewButton(
+            GuiContainerCore gui,
+            String name,
+            int xPosition,
+            int yPosition
+    ) {
         return new ElementButton(
                 gui,
                 xPosition,
@@ -36,7 +41,14 @@ public class GuiHelper {
         public final double textScale;
         private final FontRenderer fontRenderer;
 
-        private GuiConsole(FontRenderer fr, int xPosition, int yPosition, int width, int height, double textScale) {
+        private GuiConsole(
+                FontRenderer fr,
+                int xPosition,
+                int yPosition,
+                int width,
+                int height,
+                double textScale
+        ) {
             this.xPosition = xPosition;
             this.yPosition = yPosition;
             this.width = width;
@@ -45,11 +57,21 @@ public class GuiHelper {
             this.fontRenderer = fr;
         }
 
-        public static GuiConsole init(FontRenderer fr, int xPosition, int yPosition, int width, int height, double textScale) {
+        public static GuiConsole init(
+                FontRenderer fr,
+                int xPosition,
+                int yPosition,
+                int width,
+                int height,
+                double textScale
+        ) {
             return new GuiConsole(fr, xPosition, yPosition, width, height, textScale);
         }
 
-        public void drawElements(String text, int color) {
+        public void drawElements(
+                String text,
+                int color
+        ) {
             GlStateManager.pushMatrix();
             GlStateManager.scale(textScale, textScale, textScale);
 

@@ -15,7 +15,11 @@ public class SpawnLightningParticlePacket implements IMessage {
     public SpawnLightningParticlePacket() {
     }
 
-    public SpawnLightningParticlePacket(Vec3d from, Vec3d to, int intensity) {
+    public SpawnLightningParticlePacket(
+            Vec3d from,
+            Vec3d to,
+            int intensity
+    ) {
         this.fromX = from.x;
         this.fromY = from.y;
         this.fromZ = from.z;
@@ -67,7 +71,10 @@ public class SpawnLightningParticlePacket implements IMessage {
          * @return an optional return message
          */
         @Override
-        public IMessage onMessage(SpawnLightningParticlePacket message, MessageContext ctx) {
+        public IMessage onMessage(
+                SpawnLightningParticlePacket message,
+                MessageContext ctx
+        ) {
             SRParasitesTraps.PROXY.handleLightningParticlePacket(message);
             return null;
         }

@@ -28,7 +28,12 @@ public class BiomeObsidianSpread {
             remap = false,
             cancellable = true
     )
-    public void srparasites_traps_convert_block(BlockPos helper, World worldIn, Random rand, CallbackInfoReturnable<Integer> cir) {
+    public void srparasites_traps_convert_block(
+            BlockPos helper,
+            World worldIn,
+            Random rand,
+            CallbackInfoReturnable<Integer> cir
+    ) {
         IBlockState lookingState = worldIn.getBlockState(helper);
         Block lookingBlock = lookingState.getBlock();
 

@@ -74,7 +74,10 @@ public interface IExtendedAugmentable extends IAugmentable, IDefaultValueHolder 
         return true;
     }
 
-    default void dropAugments(World world, BlockPos pos) {
+    default void dropAugments(
+            World world,
+            BlockPos pos
+    ) {
         ItemStack[] augments = this.getAugmentSlots();
         for (ItemStack augment : augments) {
             if (!augment.isEmpty()) {

@@ -15,7 +15,10 @@ public class TeslaCoilGui extends GuiContainerCore {
     private final static int ENERGY_X_POSITION_PX = 155;
     private final static int ENERGY_Y_POSITION_PX = 20;
 
-    public TeslaCoilGui(EntityPlayer player, TeslaCoilTileEntity tileEntity) {
+    public TeslaCoilGui(
+            EntityPlayer player,
+            TeslaCoilTileEntity tileEntity
+    ) {
         super(new TeslaCoilContainer(player, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }

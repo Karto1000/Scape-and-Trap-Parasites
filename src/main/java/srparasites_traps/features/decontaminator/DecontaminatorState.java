@@ -21,7 +21,6 @@ public enum DecontaminatorState implements IStringSerializable, StateTransition<
             case CLOSING:
                 return "closing";
         }
-        ;
 
         return null;
     }

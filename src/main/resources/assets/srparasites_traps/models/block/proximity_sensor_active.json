@@ -1,6 +1,6 @@
 {
-	"parent": "block/cube_all",
-	"textures": {
-		"all": "srparasites_traps:block/proximity_sensor_active"
-	}
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "srparasites_traps:block/proximity_sensor_active"
+  }
 }

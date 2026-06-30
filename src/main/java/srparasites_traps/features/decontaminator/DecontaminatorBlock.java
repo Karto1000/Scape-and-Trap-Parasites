@@ -70,7 +70,11 @@ public class DecontaminatorBlock extends Block {
 
     @Nonnull
     @Override
-    public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess worldIn, @Nonnull BlockPos pos) {
+    public IBlockState getActualState(
+            @Nonnull IBlockState state,
+            IBlockAccess worldIn,
+            @Nonnull BlockPos pos
+    ) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof DecontaminatorTileEntity) {
             DecontaminatorTileEntity cte = (DecontaminatorTileEntity) tileEntity;
@@ -81,7 +85,17 @@ public class DecontaminatorBlock extends Block {
 
     @Nonnull
     @Override
-    public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, @Nonnull EnumHand hand) {
+    public IBlockState getStateForPlacement(
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ,
+            int meta,
+            @Nonnull EntityLivingBase placer,
+            @Nonnull EnumHand hand
+    ) {
         EnumFacing playerFacing = EnumFacing.getDirectionFromEntityLiving(pos, placer);
         return this.getDefaultState().withProperty(GRATE_DIRECTION, playerFacing);
     }
@@ -93,12 +107,20 @@ public class DecontaminatorBlock extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
+    public TileEntity createTileEntity(
+            @Nonnull World world,
+            @Nonnull IBlockState state
+    ) {
         return new DecontaminatorTileEntity();
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 }

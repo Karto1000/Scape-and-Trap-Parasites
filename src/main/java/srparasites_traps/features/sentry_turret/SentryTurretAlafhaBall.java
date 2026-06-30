@@ -17,7 +17,10 @@ public class SentryTurretAlafhaBall extends SentryTurretSpineball {
         super(worldIn);
     }
 
-    public SentryTurretAlafhaBall(World worldIn, SentryTurretEntity sentryTurretEntity) {
+    public SentryTurretAlafhaBall(
+            World worldIn,
+            SentryTurretEntity sentryTurretEntity
+    ) {
         super(worldIn, sentryTurretEntity);
         this.setSize(0.3F, 0.3F);
     }

@@ -24,7 +24,10 @@ public class SentryTurretGui extends GuiContainerCore {
     private final SentryTurretTileEntity tileEntity;
     private GuiHelper.GuiConsole console;
 
-    public SentryTurretGui(EntityPlayer player, SentryTurretTileEntity tileEntity) {
+    public SentryTurretGui(
+            EntityPlayer player,
+            SentryTurretTileEntity tileEntity
+    ) {
         super(new SentryTurretContainer(player, tileEntity), TEXTURE);
         this.tileEntity = tileEntity;
     }
@@ -86,7 +89,10 @@ public class SentryTurretGui extends GuiContainerCore {
     }
 
     @Override
-    protected void drawElements(float partialTick, boolean foreground) {
+    protected void drawElements(
+            float partialTick,
+            boolean foreground
+    ) {
         super.drawElements(partialTick, foreground);
 
         SentryGuiState sentryState = getSentryGuiState();
@@ -102,7 +108,11 @@ public class SentryTurretGui extends GuiContainerCore {
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(
+            int mouseX,
+            int mouseY,
+            float partialTicks
+    ) {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);

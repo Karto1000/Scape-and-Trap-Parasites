@@ -35,7 +35,10 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
 
     @Nonnull
     @Override
-    public ItemStack decrStackSize(int index, int count) {
+    public ItemStack decrStackSize(
+            int index,
+            int count
+    ) {
         ItemStack stack = getStackInSlot(index);
         setInventorySlotContents(index, ItemStack.EMPTY);
         return stack;
@@ -50,7 +53,10 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
+    public void setInventorySlotContents(
+            int index,
+            ItemStack stack
+    ) {
         if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
             stack.setCount(getInventoryStackLimit());
         }
@@ -86,7 +92,10 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
+    public boolean isItemValidForSlot(
+            int index,
+            @Nonnull ItemStack stack
+    ) {
         return this.tileEntity.isValidAugment(stack);
     }
 
@@ -96,7 +105,10 @@ public class AugmentInventory<T extends TileCore & IAugmentable> implements IInv
     }
 
     @Override
-    public void setField(int id, int value) {
+    public void setField(
+            int id,
+            int value
+    ) {
 
     }
 

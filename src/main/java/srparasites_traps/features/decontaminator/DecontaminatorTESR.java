@@ -15,7 +15,15 @@ public class DecontaminatorTESR extends TileEntitySpecialRenderer<Decontaminator
     private static final ResourceLocation ANIMATION_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/block/decontaminator_opening.png");
 
     @Override
-    public void render(DecontaminatorTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(
+            DecontaminatorTileEntity te,
+            double x,
+            double y,
+            double z,
+            float partialTicks,
+            int destroyStage,
+            float alpha
+    ) {
         int frame = te.getAnimationFrame();
         if (frame < 0) return;
 

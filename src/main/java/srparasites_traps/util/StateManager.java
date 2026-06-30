@@ -11,7 +11,10 @@ public class StateManager<T extends Enum<T> & StateTransition<T>> {
         this.state = state;
     }
 
-    public StateManager(T state, BiConsumer<T, T> onStateChange) {
+    public StateManager(
+            T state,
+            BiConsumer<T, T> onStateChange
+    ) {
         this.state = state;
         this.onStateChange = onStateChange;
     }
@@ -20,7 +23,10 @@ public class StateManager<T extends Enum<T> & StateTransition<T>> {
         return this.state;
     }
 
-    public void setState(T state, long ticks) {
+    public void setState(
+            T state,
+            long ticks
+    ) {
         if (this.state == state) return;
 
         T oldState = this.state;

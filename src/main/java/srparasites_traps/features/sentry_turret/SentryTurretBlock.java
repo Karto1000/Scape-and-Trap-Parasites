@@ -50,13 +50,20 @@ public class SentryTurretBlock extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
+    public TileEntity createTileEntity(
+            @Nonnull World world,
+            @Nonnull IBlockState state
+    ) {
         return new SentryTurretTileEntity();
     }
 
 
     @Override
-    public void breakBlock(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+    public void breakBlock(
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state
+    ) {
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof SentryTurretTileEntity) {
@@ -70,7 +77,17 @@ public class SentryTurretBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand hand, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            @Nonnull EntityPlayer playerIn,
+            @Nonnull EnumHand hand,
+            @Nonnull EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ
+    ) {
         if (worldIn.isRemote) return true;
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -83,7 +100,11 @@ public class SentryTurretBlock extends Block {
     }
 
     @Override
-    public void onBlockAdded(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
+    public void onBlockAdded(
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state
+    ) {
         if (worldIn.isRemote) return;
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -94,7 +115,13 @@ public class SentryTurretBlock extends Block {
     }
 
     @Override
-    public void neighborChanged(@Nonnull IBlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos) {
+    public void neighborChanged(
+            @Nonnull IBlockState state,
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull Block blockIn,
+            @Nonnull BlockPos fromPos
+    ) {
         if (worldIn.isRemote) return;
 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -104,7 +131,12 @@ public class SentryTurretBlock extends Block {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 }

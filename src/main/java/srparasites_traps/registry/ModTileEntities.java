@@ -10,6 +10,8 @@ import srparasites_traps.features.biomass_factory.BiomassFactoryBlock;
 import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
 import srparasites_traps.features.decontaminator.DecontaminatorBlock;
 import srparasites_traps.features.decontaminator.DecontaminatorTileEntity;
+import srparasites_traps.features.infested_beacon.InfestedBeaconBlock;
+import srparasites_traps.features.infested_beacon.InfestedBeaconTileEntity;
 import srparasites_traps.features.proximity_sensor.ProximitySensorBlock;
 import srparasites_traps.features.proximity_sensor.ProximitySensorTileEntity;
 import srparasites_traps.features.relocator.RelocatorBlock;
@@ -30,7 +32,8 @@ public class ModTileEntities {
             new TileEntityRegistration(DecontaminatorTileEntity.class, ModBlocks.DECONTAMINATOR, DecontaminatorBlock.REGISTRY_NAME),
             new TileEntityRegistration(TeslaCoilTileEntity.class, ModBlocks.TESLA_COIL, TeslaCoilBlock.REGISTRY_NAME),
             new TileEntityRegistration(ProximitySensorTileEntity.class, ModBlocks.PROXIMITY_SENSOR, ProximitySensorBlock.REGISTRY_NAME),
-            new TileEntityRegistration(BeckonNidusTileEntity.class, ModBlocks.BECKON_NIDUS, BeckonNidusBlock.REGISTRY_NAME)
+            new TileEntityRegistration(BeckonNidusTileEntity.class, ModBlocks.BECKON_NIDUS, BeckonNidusBlock.REGISTRY_NAME),
+            new TileEntityRegistration(InfestedBeaconTileEntity.class, ModBlocks.INFESTED_BEACON, InfestedBeaconBlock.REGISTRY_NAME)
     );
 
     public static void registerTileEntities() {
@@ -44,7 +47,11 @@ public class ModTileEntities {
         public final Block block;
         public final String registryName;
 
-        public TileEntityRegistration(Class<? extends TileEntity> tileEntityClass, Block block, String registryName) {
+        public TileEntityRegistration(
+                Class<? extends TileEntity> tileEntityClass,
+                Block block,
+                String registryName
+        ) {
             this.tileEntityClass = tileEntityClass;
             this.block = block;
             this.registryName = registryName;

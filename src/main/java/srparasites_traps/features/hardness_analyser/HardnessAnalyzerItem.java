@@ -37,7 +37,10 @@ public class HardnessAnalyzerItem extends Item {
         ResourceLocation id;
         float hardness;
 
-        public GriefingParasite(ResourceLocation id, float blockH) {
+        public GriefingParasite(
+                ResourceLocation id,
+                float blockH
+        ) {
             this.id = id;
             this.hardness = blockH;
         }
@@ -104,7 +107,11 @@ public class HardnessAnalyzerItem extends Item {
         public final int parasiteCount;
         public final float hardnessSum;
 
-        public GroupGriefSummary(int vulnerableCount, int parasiteCount, float hardnessSum) {
+        public GroupGriefSummary(
+                int vulnerableCount,
+                int parasiteCount,
+                float hardnessSum
+        ) {
             this.vulnerableCount = vulnerableCount;
             this.parasiteCount = parasiteCount;
             this.hardnessSum = hardnessSum;
@@ -144,7 +151,13 @@ public class HardnessAnalyzerItem extends Item {
     }
 
     @Override
-    public void onUpdate(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull Entity entityIn, int itemSlot, boolean isSelected) {
+    public void onUpdate(
+            @Nonnull ItemStack stack,
+            @Nonnull World worldIn,
+            @Nonnull Entity entityIn,
+            int itemSlot,
+            boolean isSelected
+    ) {
         super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 
         if (!isSelected) return;
@@ -176,7 +189,12 @@ public class HardnessAnalyzerItem extends Item {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 }

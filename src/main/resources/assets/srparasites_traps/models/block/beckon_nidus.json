@@ -1,12 +1,12 @@
 {
-	"parent": "block/cube_all",
-	"textures": {
-		"particle": "srparasites_traps:block/beckon_nidus_down",
-		"down": "srparasites_traps:block/beckon_nidus_down",
-		"up": "srparasites_traps:block/beckon_nidus_up",
-		"east": "srparasites_traps:block/beckon_nidus_side",
-		"west": "srparasites_traps:block/beckon_nidus_side",
-		"north": "srparasites_traps:block/beckon_nidus_side",
-		"south": "srparasites_traps:block/beckon_nidus_side"
-	}
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "srparasites_traps:block/beckon_nidus_down",
+    "down": "srparasites_traps:block/beckon_nidus_down",
+    "up": "srparasites_traps:block/beckon_nidus_up",
+    "east": "srparasites_traps:block/beckon_nidus_side",
+    "west": "srparasites_traps:block/beckon_nidus_side",
+    "north": "srparasites_traps:block/beckon_nidus_side",
+    "south": "srparasites_traps:block/beckon_nidus_side"
+  }
 }

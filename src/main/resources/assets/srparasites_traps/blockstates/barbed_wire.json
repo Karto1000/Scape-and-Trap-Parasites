@@ -1,24 +1,66 @@
 {
   "variants": {
-    "east=false,north=false,south=false,west=false": { "model": "srparasites_traps:barbed_wire_intersection" },
-    "east=true,north=true,south=true,west=true": { "model": "srparasites_traps:barbed_wire_intersection" },
-
-    "east=false,north=true,south=false,west=false": { "model": "srparasites_traps:barbed_wire", "y": 90 },
-    "east=false,north=false,south=true,west=false": { "model": "srparasites_traps:barbed_wire", "y": 90 },
-    "east=true,north=false,south=false,west=false": { "model": "srparasites_traps:barbed_wire", "y": 0 },
-    "east=false,north=false,south=false,west=true": { "model": "srparasites_traps:barbed_wire", "y": 0 },
-
-    "east=true,north=false,south=false,west=true": { "model": "srparasites_traps:barbed_wire", "y": 0 },
-    "east=false,north=true,south=true,west=false": { "model": "srparasites_traps:barbed_wire", "y": 90 },
-
-    "east=false,north=false,south=true,west=true": { "model": "srparasites_traps:barbed_wire_corner", "y": 0 },
-    "east=false,north=true,south=false,west=true": { "model": "srparasites_traps:barbed_wire_corner", "y": 90 },
-    "east=true,north=true,south=false,west=false": { "model": "srparasites_traps:barbed_wire_corner", "y": 180 },
-    "east=true,north=false,south=true,west=false": { "model": "srparasites_traps:barbed_wire_corner", "y": 270 },
-
-    "east=true,north=true,south=false,west=true": { "model": "srparasites_traps:barbed_wire_t", "y": 0 },
-    "east=true,north=true,south=true,west=false": { "model": "srparasites_traps:barbed_wire_t", "y": 90 },
-    "east=true,north=false,south=true,west=true": { "model": "srparasites_traps:barbed_wire_t", "y": 180 },
-    "east=false,north=true,south=true,west=true": { "model": "srparasites_traps:barbed_wire_t", "y": 270 }
+    "east=false,north=false,south=false,west=false": {
+      "model": "srparasites_traps:barbed_wire_intersection"
+    },
+    "east=true,north=true,south=true,west=true": {
+      "model": "srparasites_traps:barbed_wire_intersection"
+    },
+    "east=false,north=true,south=false,west=false": {
+      "model": "srparasites_traps:barbed_wire",
+      "y": 90
+    },
+    "east=false,north=false,south=true,west=false": {
+      "model": "srparasites_traps:barbed_wire",
+      "y": 90
+    },
+    "east=true,north=false,south=false,west=false": {
+      "model": "srparasites_traps:barbed_wire",
+      "y": 0
+    },
+    "east=false,north=false,south=false,west=true": {
+      "model": "srparasites_traps:barbed_wire",
+      "y": 0
+    },
+    "east=true,north=false,south=false,west=true": {
+      "model": "srparasites_traps:barbed_wire",
+      "y": 0
+    },
+    "east=false,north=true,south=true,west=false": {
+      "model": "srparasites_traps:barbed_wire",
+      "y": 90
+    },
+    "east=false,north=false,south=true,west=true": {
+      "model": "srparasites_traps:barbed_wire_corner",
+      "y": 0
+    },
+    "east=false,north=true,south=false,west=true": {
+      "model": "srparasites_traps:barbed_wire_corner",
+      "y": 90
+    },
+    "east=true,north=true,south=false,west=false": {
+      "model": "srparasites_traps:barbed_wire_corner",
+      "y": 180
+    },
+    "east=true,north=false,south=true,west=false": {
+      "model": "srparasites_traps:barbed_wire_corner",
+      "y": 270
+    },
+    "east=true,north=true,south=false,west=true": {
+      "model": "srparasites_traps:barbed_wire_t",
+      "y": 0
+    },
+    "east=true,north=true,south=true,west=false": {
+      "model": "srparasites_traps:barbed_wire_t",
+      "y": 90
+    },
+    "east=true,north=false,south=true,west=true": {
+      "model": "srparasites_traps:barbed_wire_t",
+      "y": 180
+    },
+    "east=false,north=true,south=true,west=true": {
+      "model": "srparasites_traps:barbed_wire_t",
+      "y": 270
+    }
   }
 }

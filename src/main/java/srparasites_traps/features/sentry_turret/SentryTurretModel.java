@@ -8,7 +8,15 @@ import srparasites_traps.config.ForgeConfigHandler;
 
 public class SentryTurretModel extends ModelUnvo {
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+    public void setRotationAngles(
+            float limbSwing,
+            float limbSwingAmount,
+            float ageInTicks,
+            float netHeadYaw,
+            float headPitch,
+            float scaleFactor,
+            Entity entityIn
+    ) {
         /* Animation code copied from SRP tweaked to make it work with a Entity that does not inherit from EntityParasiteBase */
 
         SentryTurretEntity sentryTurret = (SentryTurretEntity) entityIn;
@@ -244,7 +252,12 @@ public class SentryTurretModel extends ModelUnvo {
     }
 
     @Override
-    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void setLivingAnimations(
+            EntityLivingBase entitylivingbaseIn,
+            float limbSwing,
+            float limbSwingAmount,
+            float partialTickTime
+    ) {
         /* Code also from ModelUnvo */
         SentryTurretEntity sentry = (SentryTurretEntity) entitylivingbaseIn;
         double emergeTime = sentry.getCurrentEmergeTime();

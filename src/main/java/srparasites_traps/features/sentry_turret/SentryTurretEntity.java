@@ -36,7 +36,14 @@ public class SentryTurretEntity extends EntityLiving {
         this.setSize(0.7F, 4.1F);
     }
 
-    public SentryTurretEntity(World worldIn, double x, double y, double z, BlockPos baseBlockPosition, SentryTurretTileEntity tileEntity) {
+    public SentryTurretEntity(
+            World worldIn,
+            double x,
+            double y,
+            double z,
+            BlockPos baseBlockPosition,
+            SentryTurretTileEntity tileEntity
+    ) {
         super(worldIn);
         this.setSize(0.7F, 4.1F);
         this.setPosition(x, y, z);

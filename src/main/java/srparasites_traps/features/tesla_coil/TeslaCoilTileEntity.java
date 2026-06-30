@@ -107,7 +107,10 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(
+            @Nonnull Capability<T> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityEnergy.ENERGY && facing == EnumFacing.DOWN) {
             return CapabilityEnergy.ENERGY.cast(this.energyStorage);
         }
@@ -116,7 +119,10 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(
+            @Nonnull Capability<?> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityEnergy.ENERGY && facing == EnumFacing.DOWN) {
             return true;
         }
@@ -202,14 +208,20 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
     }
 
     @Override
-    public void sendGuiNetworkData(Container container, IContainerListener player) {
+    public void sendGuiNetworkData(
+            Container container,
+            IContainerListener player
+    ) {
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, 0, this.energyStorage.getEnergyStored());
         player.sendWindowProperty(container, 1, this.controlMode.ordinal());
     }
 
     @Override
-    public void receiveGuiNetworkData(int id, int data) {
+    public void receiveGuiNetworkData(
+            int id,
+            int data
+    ) {
         super.receiveGuiNetworkData(id, data);
         switch (id) {
             case 0:

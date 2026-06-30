@@ -9,7 +9,15 @@ import java.lang.reflect.Field;
 
 // Fix the setFadeIn and setFadeOut setters because they use Math.min(0, x) which means that they will always set it to 0
 public class FixedSoundTile extends SoundTile {
-    public FixedSoundTile(ISoundSource source, SoundEvent sound, float volume, float pitch, boolean repeat, int repeatDelay, Vec3d pos) {
+    public FixedSoundTile(
+            ISoundSource source,
+            SoundEvent sound,
+            float volume,
+            float pitch,
+            boolean repeat,
+            int repeatDelay,
+            Vec3d pos
+    ) {
         super(source, sound, volume, pitch, repeat, repeatDelay, pos);
     }
 

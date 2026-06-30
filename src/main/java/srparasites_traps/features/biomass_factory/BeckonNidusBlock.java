@@ -33,7 +33,10 @@ public class BeckonNidusBlock extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState state) {
+    public TileEntity createTileEntity(
+            @Nonnull World world,
+            @Nonnull IBlockState state
+    ) {
         return new BeckonNidusTileEntity();
     }
 }

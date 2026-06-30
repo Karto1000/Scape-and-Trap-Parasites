@@ -17,14 +17,20 @@ public class DualEnergyStorage extends EnergyStorage {
     }
 
     @Override
-    public int extractEnergy(int maxExtract, boolean simulate) {
+    public int extractEnergy(
+            int maxExtract,
+            boolean simulate
+    ) {
         int extracted = super.extractEnergy(maxExtract, simulate);
         this.rfEnergyStorage.setEnergyStored(this.energy);
         return extracted;
     }
 
     @Override
-    public int receiveEnergy(int maxReceive, boolean simulate) {
+    public int receiveEnergy(
+            int maxReceive,
+            boolean simulate
+    ) {
         int received = super.receiveEnergy(maxReceive, simulate);
         this.rfEnergyStorage.setEnergyStored(this.energy);
         return received;

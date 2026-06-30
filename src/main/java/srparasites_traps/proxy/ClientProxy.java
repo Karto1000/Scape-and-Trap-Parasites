@@ -39,7 +39,11 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(DecontaminatorTileEntity.class, new DecontaminatorTESR());
     }
 
-    public void registerItemRenderer(Item item, int meta, String id) {
+    public void registerItemRenderer(
+            Item item,
+            int meta,
+            String id
+    ) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
     }
 

@@ -9,7 +9,10 @@ import java.io.IOException;
 
 public class Serializers {
     public static final DataSerializer<Long> LONG = new DataSerializer<Long>() {
-        public void write(PacketBuffer buf, @Nonnull Long value) {
+        public void write(
+                PacketBuffer buf,
+                @Nonnull Long value
+        ) {
             buf.writeLong(value);
         }
 

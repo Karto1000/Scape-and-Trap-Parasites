@@ -16,7 +16,10 @@ public class BiomassFactoryGui extends GuiContainerCore {
     private final BiomassFactoryTileEntity tileEntity;
     private final static ResourceLocation TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/biomass_factory.png");
 
-    public BiomassFactoryGui(EntityPlayer player, BiomassFactoryTileEntity tileEntity) {
+    public BiomassFactoryGui(
+            EntityPlayer player,
+            BiomassFactoryTileEntity tileEntity
+    ) {
         super(new BiomassFactoryContainer(player, tileEntity), TEXTURE);
 
         this.player = player;
@@ -32,7 +35,11 @@ public class BiomassFactoryGui extends GuiContainerCore {
     }
 
     @Override
-    public void drawScreen(int x, int y, float partialTick) {
+    public void drawScreen(
+            int x,
+            int y,
+            float partialTick
+    ) {
         super.drawScreen(x, y, partialTick);
 
         Slot fluidInputSlot = this.inventorySlots.getSlot(BiomassFactoryContainer.FLUID_FILL_SLOT);

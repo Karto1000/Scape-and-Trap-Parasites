@@ -18,7 +18,10 @@ public class SentryTurretContainer extends ContainerCore implements IAugmentable
     private final SentryTurretTileEntity tileEntity;
     private final Slot[] augmentSlots = new Slot[ForgeConfigHandler.augments.SENTRY_TURRET_AUGMENT_SLOTS];
 
-    public SentryTurretContainer(EntityPlayer player, SentryTurretTileEntity tileEntity) {
+    public SentryTurretContainer(
+            EntityPlayer player,
+            SentryTurretTileEntity tileEntity
+    ) {
         this.tileEntity = tileEntity;
 
         AugmentInventory<SentryTurretTileEntity> augmentInventory = new AugmentInventory<>(tileEntity);
@@ -32,7 +35,10 @@ public class SentryTurretContainer extends ContainerCore implements IAugmentable
 
     // Not actually anything to do with enchanting, but its being used for setting the control mode on the server
     @Override
-    public boolean enchantItem(@Nonnull EntityPlayer playerIn, int id) {
+    public boolean enchantItem(
+            @Nonnull EntityPlayer playerIn,
+            int id
+    ) {
         if (id < 0 || id >= IRedstoneControl.ControlMode.values().length) return false;
         IRedstoneControl.ControlMode controlMode = IRedstoneControl.ControlMode.values()[id];
         tileEntity.setControl(controlMode);
@@ -49,7 +55,10 @@ public class SentryTurretContainer extends ContainerCore implements IAugmentable
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void updateProgressBar(int id, int data) {
+    public void updateProgressBar(
+            int id,
+            int data
+    ) {
         super.updateProgressBar(id, data);
         this.tileEntity.receiveGuiNetworkData(id, data);
     }

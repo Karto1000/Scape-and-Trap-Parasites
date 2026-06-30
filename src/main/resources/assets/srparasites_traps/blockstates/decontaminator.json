@@ -1,31 +1,108 @@
 {
   "variants": {
-    "grate_direction=up,state=idle": { "model": "srparasites_traps:decontaminator" },
-    "grate_direction=down,state=idle": { "model": "srparasites_traps:decontaminator", "x": 180 },
-    "grate_direction=north,state=idle": { "model": "srparasites_traps:decontaminator", "x": 90 },
-    "grate_direction=south,state=idle": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 180 },
-    "grate_direction=west,state=idle": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 270 },
-    "grate_direction=east,state=idle": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 90 },
-
-    "grate_direction=up,state=opening": { "model": "srparasites_traps:decontaminator" },
-    "grate_direction=down,state=opening": { "model": "srparasites_traps:decontaminator", "x": 180 },
-    "grate_direction=north,state=opening": { "model": "srparasites_traps:decontaminator", "x": 90 },
-    "grate_direction=south,state=opening": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 180 },
-    "grate_direction=west,state=opening": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 270 },
-    "grate_direction=east,state=opening": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 90 },
-
-    "grate_direction=up,state=dispensing": { "model": "srparasites_traps:decontaminator" },
-    "grate_direction=down,state=dispensing": { "model": "srparasites_traps:decontaminator", "x": 180 },
-    "grate_direction=north,state=dispensing": { "model": "srparasites_traps:decontaminator", "x": 90 },
-    "grate_direction=south,state=dispensing": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 180 },
-    "grate_direction=west,state=dispensing": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 270 },
-    "grate_direction=east,state=dispensing": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 90 },
-
-    "grate_direction=up,state=closing": { "model": "srparasites_traps:decontaminator" },
-    "grate_direction=down,state=closing": { "model": "srparasites_traps:decontaminator", "x": 180 },
-    "grate_direction=north,state=closing": { "model": "srparasites_traps:decontaminator", "x": 90 },
-    "grate_direction=south,state=closing": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 180 },
-    "grate_direction=west,state=closing": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 270 },
-    "grate_direction=east,state=closing": { "model": "srparasites_traps:decontaminator", "x": 90, "y": 90 }
+    "grate_direction=up,state=idle": {
+      "model": "srparasites_traps:decontaminator"
+    },
+    "grate_direction=down,state=idle": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 180
+    },
+    "grate_direction=north,state=idle": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90
+    },
+    "grate_direction=south,state=idle": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 180
+    },
+    "grate_direction=west,state=idle": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 270
+    },
+    "grate_direction=east,state=idle": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 90
+    },
+    "grate_direction=up,state=opening": {
+      "model": "srparasites_traps:decontaminator"
+    },
+    "grate_direction=down,state=opening": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 180
+    },
+    "grate_direction=north,state=opening": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90
+    },
+    "grate_direction=south,state=opening": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 180
+    },
+    "grate_direction=west,state=opening": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 270
+    },
+    "grate_direction=east,state=opening": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 90
+    },
+    "grate_direction=up,state=dispensing": {
+      "model": "srparasites_traps:decontaminator"
+    },
+    "grate_direction=down,state=dispensing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 180
+    },
+    "grate_direction=north,state=dispensing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90
+    },
+    "grate_direction=south,state=dispensing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 180
+    },
+    "grate_direction=west,state=dispensing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 270
+    },
+    "grate_direction=east,state=dispensing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 90
+    },
+    "grate_direction=up,state=closing": {
+      "model": "srparasites_traps:decontaminator"
+    },
+    "grate_direction=down,state=closing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 180
+    },
+    "grate_direction=north,state=closing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90
+    },
+    "grate_direction=south,state=closing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 180
+    },
+    "grate_direction=west,state=closing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 270
+    },
+    "grate_direction=east,state=closing": {
+      "model": "srparasites_traps:decontaminator",
+      "x": 90,
+      "y": 90
+    }
   }
 }

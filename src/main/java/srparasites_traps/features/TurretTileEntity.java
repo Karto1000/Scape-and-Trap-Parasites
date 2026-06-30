@@ -26,14 +26,20 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
     public boolean powered = false;
     protected final static int AVAILABLE_WINDOW_VAR = 3;
 
-    public TurretTileEntity(int maxBiomass, int maxEnergy) {
+    public TurretTileEntity(
+            int maxBiomass,
+            int maxEnergy
+    ) {
         this.biomassStorage = new DeadBloodTank(maxBiomass);
         this.biomassStorage.setTileEntity(this);
         this.energyStorage = new DualEnergyStorage(maxEnergy);
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(
+            @Nonnull Capability<?> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return true;
         } else if (capability == CapabilityEnergy.ENERGY) {
@@ -44,7 +50,10 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(
+            @Nonnull Capability<T> capability,
+            @Nullable EnumFacing facing
+    ) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this.biomassStorage);
         } else if (capability == CapabilityEnergy.ENERGY) {
@@ -76,7 +85,10 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
     }
 
     @Override
-    public void sendGuiNetworkData(Container container, IContainerListener player) {
+    public void sendGuiNetworkData(
+            Container container,
+            IContainerListener player
+    ) {
         super.sendGuiNetworkData(container, player);
         player.sendWindowProperty(container, 0, this.biomassStorage.getFluidAmount());
         player.sendWindowProperty(container, 1, this.energyStorage.getEnergyStored());
@@ -84,7 +96,10 @@ public abstract class TurretTileEntity extends TileCore implements ICapabilityPr
     }
 
     @Override
-    public void receiveGuiNetworkData(int id, int data) {
+    public void receiveGuiNetworkData(
+            int id,
+            int data
+    ) {
         super.receiveGuiNetworkData(id, data);
         switch (id) {
             case 0:

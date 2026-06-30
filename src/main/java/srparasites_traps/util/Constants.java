@@ -10,6 +10,7 @@ public class Constants {
     public static final int BIOMASS_FACTORY_GUI_ID = 2;
     public static final int TESLA_COIL_GUI_ID = 3;
     public static final int TARGETING_AUGMENT_GUI_ID = 4;
+    public static final int INFESTED_BEACON_GUI_ID = 5;
     public static final Fluid TURRET_FUEL = SRPFluids.DEADBLOOD_FLUID;
     public static final int TPS_LIMIT = 20;
     public static final int BUTTON_SPRITESHEET_BUTTON_WIDTH = 22;

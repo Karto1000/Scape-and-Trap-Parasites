@@ -65,13 +65,23 @@ public class SerratedSpikesBlock extends Block {
 
     @Nonnull
     @Override
-    public SoundType getSoundType(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nullable Entity entity) {
+    public SoundType getSoundType(
+            @Nonnull IBlockState state,
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nullable Entity entity
+    ) {
         return SoundType.ANVIL;
     }
 
     @Nonnull
     @Override
-    public BlockFaceShape getBlockFaceShape(@Nonnull IBlockAccess worldIn, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(
+            @Nonnull IBlockAccess worldIn,
+            @Nonnull IBlockState state,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing face
+    ) {
         return BlockFaceShape.UNDEFINED;
     }
 
@@ -82,26 +92,50 @@ public class SerratedSpikesBlock extends Block {
     }
 
     @Override
-    public boolean isSideSolid(@Nonnull IBlockState base_state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
+    public boolean isSideSolid(
+            @Nonnull IBlockState base_state,
+            @Nonnull IBlockAccess world,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing side
+    ) {
         return false;
     }
 
     @Nonnull
     @Override
-    public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, @Nonnull EnumHand hand) {
+    public IBlockState getStateForPlacement(
+            @Nonnull World world,
+            @Nonnull BlockPos pos,
+            @Nonnull EnumFacing facing,
+            float hitX,
+            float hitY,
+            float hitZ,
+            int meta,
+            @Nonnull EntityLivingBase placer,
+            @Nonnull EnumHand hand
+    ) {
         EnumFacing playerFacing = EnumFacing.getDirectionFromEntityLiving(pos, placer);
         return this.getDefaultState()
                 .withProperty(direction, EnumFacing.fromAngle(playerFacing.getHorizontalAngle()));
     }
 
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+    public boolean canPlaceBlockAt(
+            World worldIn,
+            BlockPos pos
+    ) {
         IBlockState blockBelow = worldIn.getBlockState(pos.down());
         return blockBelow.isSideSolid(worldIn, pos.down(), EnumFacing.UP);
     }
 
     @Override
-    public void neighborChanged(@Nonnull IBlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos) {
+    public void neighborChanged(
+            @Nonnull IBlockState state,
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull Block blockIn,
+            @Nonnull BlockPos fromPos
+    ) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
 
         if (!fromPos.equals(pos.down(1))) return;
@@ -115,7 +149,12 @@ public class SerratedSpikesBlock extends Block {
 
     @Nullable
     @Override
-    public net.minecraft.pathfinding.PathNodeType getAiPathNodeType(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nullable EntityLiving entity) {
+    public net.minecraft.pathfinding.PathNodeType getAiPathNodeType(
+            @Nonnull IBlockState state,
+            @Nonnull IBlockAccess world,
+            @Nonnull BlockPos pos,
+            @Nullable EntityLiving entity
+    ) {
         return PathNodeType.WALKABLE;
     }
 
@@ -155,13 +194,21 @@ public class SerratedSpikesBlock extends Block {
 
     @Nonnull
     @Override
-    public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess source, @Nonnull BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(
+            @Nonnull IBlockState state,
+            @Nonnull IBlockAccess source,
+            @Nonnull BlockPos pos
+    ) {
         return BOUNDING_BOX;
     }
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(@Nonnull IBlockState blockState, @Nonnull IBlockAccess worldIn, @Nonnull BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(
+            @Nonnull IBlockState blockState,
+            @Nonnull IBlockAccess worldIn,
+            @Nonnull BlockPos pos
+    ) {
         return NULL_AABB;
     }
 
@@ -182,7 +229,10 @@ public class SerratedSpikesBlock extends Block {
         return false;
     }
 
-    protected void damageEntity(Entity entity, float damage) {
+    protected void damageEntity(
+            Entity entity,
+            float damage
+    ) {
         entity.hurtResistantTime = 0;
         entity.attackEntityFrom(serratedSpikesDamage, damage);
 
@@ -196,7 +246,12 @@ public class SerratedSpikesBlock extends Block {
     }
 
     @Override
-    public void onEntityCollision(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Entity entityIn) {
+    public void onEntityCollision(
+            World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull IBlockState state,
+            @Nonnull Entity entityIn
+    ) {
         if (worldIn.isRemote) return;
         if (entityIn instanceof EntityPlayer && entityIn.isSneaking()) return;
 
@@ -206,7 +261,8 @@ public class SerratedSpikesBlock extends Block {
         float motionSum = (float) (Math.abs(dX) + Math.abs(dY) + Math.abs(dZ));
 
         if (motionSum <= 0) return;
-        if (entityIn.hurtResistantTime > minHurtResistanceTime + motionSum * ForgeConfigHandler.serratedSpikes.DEFAULT_INVULNERABILITY_REDUCTION_MULTIPLIER) return;
+        if (entityIn.hurtResistantTime > minHurtResistanceTime + motionSum * ForgeConfigHandler.serratedSpikes.DEFAULT_INVULNERABILITY_REDUCTION_MULTIPLIER)
+            return;
         if (motionSum < damageThreshold) return;
 
         EnumFacing facing = state.getValue(direction);
@@ -229,7 +285,12 @@ public class SerratedSpikesBlock extends Block {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + this.registryName);
     }
 }

@@ -42,7 +42,12 @@ public class TurretAugment extends Item implements IAugmentItem {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(
+            @Nonnull ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            @Nonnull ITooltipFlag flagIn
+    ) {
         String machinesWithAugments = ModTileEntities.TILE_ENTITIES.stream()
                 .filter(t -> {
                     boolean inheritsAugmentable = IExtendedAugmentable.class.isAssignableFrom(t.tileEntityClass);

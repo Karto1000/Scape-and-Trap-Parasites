@@ -10,7 +10,13 @@ import javax.annotation.Nonnull;
 public class AugmentSlot<T extends IAugmentable> extends Slot {
     private final T tileEntity;
 
-    public AugmentSlot(IInventory inventoryIn, int index, int xPosition, int yPosition, T tileEntity) {
+    public AugmentSlot(
+            IInventory inventoryIn,
+            int index,
+            int xPosition,
+            int yPosition,
+            T tileEntity
+    ) {
         super(inventoryIn, index, xPosition, yPosition);
 
         this.tileEntity = tileEntity;

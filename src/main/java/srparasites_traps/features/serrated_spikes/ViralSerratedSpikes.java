@@ -21,7 +21,10 @@ public class ViralSerratedSpikes extends SerratedSpikesBlock {
     }
 
     @Override
-    protected void damageEntity(Entity entity, float damage) {
+    protected void damageEntity(
+            Entity entity,
+            float damage
+    ) {
         super.damageEntity(entity, damage);
 
         if (entity instanceof EntityLivingBase) {
@@ -36,7 +39,12 @@ public class ViralSerratedSpikes extends SerratedSpikesBlock {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(
+            ItemStack stack,
+            @Nullable World worldIn,
+            List<String> tooltip,
+            ITooltipFlag flagIn
+    ) {
         Translation.addMultilineTooltip(tooltip, "item." + REGISTRY_NAME);
     }
 }

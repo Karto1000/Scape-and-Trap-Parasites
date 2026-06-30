@@ -47,7 +47,10 @@ public class UpdateTargetingMode implements IMessage {
          * @return an optional return message
          */
         @Override
-        public IMessage onMessage(UpdateTargetingMode message, MessageContext ctx) {
+        public IMessage onMessage(
+                UpdateTargetingMode message,
+                MessageContext ctx
+        ) {
             SRParasitesTraps.PROXY.handleUpdateTargetingModePacket(message, ctx);
             return null;
         }

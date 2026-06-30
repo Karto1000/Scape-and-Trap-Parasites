@@ -16,7 +16,10 @@ public class SentryTurretFindHostileMonster extends EntityAIBase {
     private final World world;
     private final UpdateLimiter updateLimiter = new UpdateLimiter(5);
 
-    public SentryTurretFindHostileMonster(SentryTurretEntity sentry, World world) {
+    public SentryTurretFindHostileMonster(
+            SentryTurretEntity sentry,
+            World world
+    ) {
         this.sentry = sentry;
         this.world = world;
     }

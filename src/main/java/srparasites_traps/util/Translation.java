@@ -17,11 +17,18 @@ public class Translation {
         return I18n.format("tooltip." + SRParasitesTraps.MOD_ID + "." + id);
     }
 
-    public static String getTooltipFor(String id, Object... args) {
+    public static String getTooltipFor(
+            String id,
+            Object... args
+    ) {
         return I18n.format("tooltip." + SRParasitesTraps.MOD_ID + "." + id, args);
     }
 
-    public static void addMultilineTooltip(List<String> tooltip, String id, Object... args) {
+    public static void addMultilineTooltip(
+            List<String> tooltip,
+            String id,
+            Object... args
+    ) {
         String text = getTooltipFor(id, args);
         List<String> lines = Arrays.stream(text.split("\n")).map(s -> TextFormatting.WHITE + s).collect(Collectors.toList());
         tooltip.addAll(lines);
@@ -36,7 +43,10 @@ public class Translation {
         return "slot." + SRParasitesTraps.MOD_ID + "." + id;
     }
 
-    public static String getDamageSourceFor(String id, Object... args) {
+    public static String getDamageSourceFor(
+            String id,
+            Object... args
+    ) {
         return I18n.format("damage." + SRParasitesTraps.MOD_ID + "." + id, args);
     }
 }
