@@ -87,8 +87,15 @@ public class JEICompat implements IModPlugin {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.VIRAL_BARBED_WIRE));
         }
 
+        if (!ForgeConfigHandler.infestedBeacon.ENABLE) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.INFESTED_BEACON));
+        }
+
         for (Item item : ModItems.getItemList()) {
-            String infoKey = String.format("info.srparasites_traps.%s", Objects.requireNonNull(item.getRegistryName()).getPath());
+            String infoKey = String.format(
+                    "info.srparasites_traps.%s",
+                    Objects.requireNonNull(item.getRegistryName()).getPath()
+            );
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);
             if (I18n.hasKey(infoKey)) {
                 registry.addIngredientInfo(

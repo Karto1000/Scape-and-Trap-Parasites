@@ -41,7 +41,6 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
             int destroyStage,
             float alpha
     ) {
-        System.out.println(te.getTotalPower());
         if (te.getTotalPower() == 0) return;
 
         World world = this.getWorld();

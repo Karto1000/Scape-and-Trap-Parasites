@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:infested_beacon_enabled"
+    }
+  ],
+  "pattern": [
+    "sgs",
+    "cbm",
+    "shs"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:beacon"
+    },
+    "s": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    },
+    "h": {
+      "item": "srparasites:hive_scrap"
+    },
+    "g": {
+      "type": "forge:ore_dict",
+      "ore": "blockGlass"
+    },
+    "m": {
+      "item": "srparasites:ada_manducater_drop"
+    },
+    "c": {
+      "item": "srparasites:ada_summoner_drop"
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:infested_beacon",
+    "count": 1
+  }
+}

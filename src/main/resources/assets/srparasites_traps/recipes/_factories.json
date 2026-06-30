@@ -11,6 +11,7 @@
     "proximity_sensor_enabled": "srparasites_traps.config.ProximitySensorConditionFactory",
     "augments_enabled": "srparasites_traps.config.AugmentsConditionFactory",
     "barbed_wire_enabled": "srparasites_traps.config.BarbedWireConditionFactory",
-    "static_electricity_generator_enabled": "srparasites_traps.config.StaticElectricityGeneratorConditionFactory"
+    "static_electricity_generator_enabled": "srparasites_traps.config.StaticElectricityGeneratorConditionFactory",
+    "infested_beacon_enabled": "srparasites_traps.config.InfestedBeaconConditionFactory"
   }
 }
