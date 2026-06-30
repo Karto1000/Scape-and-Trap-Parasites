@@ -106,5 +106,12 @@
         "pitch": 1.5
       }
     ]
+  },
+  "infested_beacon_activate": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.infested_beacon_activate",
+    "sounds": [
+      "srparasites_traps:infested_beacon_activate"
+    ]
   }
 }

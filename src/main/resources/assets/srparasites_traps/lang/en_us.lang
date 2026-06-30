@@ -106,15 +106,18 @@ subtitle.srparasites_traps.tesla_coil_charge=Tesla coil charges
 subtitle.srparasites_traps.tesla_coil_fire=Tesla coil fires
 subtitle.srparasites_traps.electric_arc=Electricity arcs
 subtitle.srparasites_traps.biomass_factory_work=Liquid Boils
+subtitle.srparasites_traps.infested_beacon_activate=Infested Beacon Activates
 
 # Potions
 potion.srparasites_traps.shocked=Shocked
+potion.srparasites_traps.cure=Cure
 
 # Slot descriptions
 slot.srparasites_traps.relocator_search=Put in an area marker which will define the area to search for enemies to relocate.
 slot.srparasites_traps.relocator_destination=Put in an area marker to tell the relocator all valid positions where a grabbed enemy can be relocated to.
 slot.srparasites_traps.biomass_factory_fluid_input=Place in a valid container to extract the stored liquid.
 slot.srparasites_traps.infested_beacon_lure=Place a lure next to the beacon to boost its effectiveness.
+slot.srparasites_traps.infested_beacon_power=Effectiveness at %s%%.
 
 # Entites
 entity.sentry_turret_spineball.name=Spineball

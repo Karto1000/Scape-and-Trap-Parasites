@@ -105,6 +105,15 @@ public class NBTHelper {
         );
     }
 
+    public static byte[] getByteArrayOrElse(NBTTagCompound compound, String key, Supplier<byte[]> orElse) {
+        return getOrElse(
+                compound,
+                key,
+                () -> compound.getByteArray(key),
+                orElse
+        );
+    }
+
     public static <T> T getOrDie(
             EntityLiving entityLiving,
             NBTTagCompound nbt,
@@ -161,4 +170,5 @@ public class NBTHelper {
     ) {
         return getOrDie(entityLiving, nbt, key, () -> BlockPos.fromLong(nbt.getLong(key)));
     }
+
 }

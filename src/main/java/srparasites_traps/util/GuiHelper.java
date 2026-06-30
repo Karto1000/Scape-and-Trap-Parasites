@@ -4,11 +4,17 @@ import cofh.core.gui.GuiContainerCore;
 import cofh.core.gui.element.ElementButton;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import srparasites_traps.SRParasitesTraps;
 
+import java.util.Collections;
+
 public class GuiHelper {
-    private final static ResourceLocation BUTTON_TEXTURE = new ResourceLocation(SRParasitesTraps.MOD_ID, "textures/gui/button_spritesheet.png");
+    private final static ResourceLocation BUTTON_TEXTURE = new ResourceLocation(
+            SRParasitesTraps.MOD_ID,
+            "textures/gui/button_spritesheet.png"
+    );
 
     public static ElementButton createNewButton(
             GuiContainerCore gui,
@@ -31,6 +37,29 @@ public class GuiHelper {
                 Constants.BUTTON_SPRITESHEET_BUTTON_HEIGHT,
                 BUTTON_TEXTURE.toString()
         );
+    }
+
+    public static void drawHoveringTextOnRect(
+            GuiContainerCore gui,
+            int rectX,
+            int rectY,
+            int width,
+            int height,
+            int mouseX,
+            int mouseY,
+            String key,
+            Object... args
+    ) {
+        if (
+                mouseX >= rectX + gui.getGuiLeft() && mouseX <= rectX + width + gui.getGuiLeft() &&
+                        mouseY >= rectY + gui.getGuiTop() && mouseY <= rectY + height + gui.getGuiTop()
+        ) {
+            gui.drawHoveringText(
+                    Collections.singletonList(I18n.format(Translation.getSlotDescriptionFor(key), args)),
+                    mouseX,
+                    mouseY
+            );
+        }
     }
 
     public static class GuiConsole {

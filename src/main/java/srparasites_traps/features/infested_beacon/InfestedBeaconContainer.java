@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 public class InfestedBeaconContainer extends ContainerCore {
     private final InfestedBeaconTileEntity tileEntity;
+    private final int lastTotalPower = 0;
 
     public InfestedBeaconContainer(EntityPlayer player, InfestedBeaconTileEntity tileEntity) {
         super();
@@ -21,6 +22,7 @@ public class InfestedBeaconContainer extends ContainerCore {
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
+
         for (IContainerListener listener : this.listeners) {
             this.tileEntity.sendGuiNetworkData(this, listener);
         }

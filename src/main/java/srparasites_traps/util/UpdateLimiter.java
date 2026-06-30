@@ -14,6 +14,10 @@ public class UpdateLimiter {
         return --this.currentTickDelay > 0;
     }
 
+    public boolean every(int ticks) {
+        return this.currentTickDelay % ticks == 0;
+    }
+
     public void allowUpdate() {
         this.currentTickDelay = 0;
     }

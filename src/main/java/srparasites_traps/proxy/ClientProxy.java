@@ -12,6 +12,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import srparasites_traps.features.decontaminator.DecontaminatorTESR;
 import srparasites_traps.features.decontaminator.DecontaminatorTileEntity;
+import srparasites_traps.features.infested_beacon.InfestedBeaconTESR;
+import srparasites_traps.features.infested_beacon.InfestedBeaconTileEntity;
 import srparasites_traps.features.relocator.RelocatorEntity;
 import srparasites_traps.features.relocator.RelocatorEntityRenderer;
 import srparasites_traps.features.sentry_turret.SentryTurretAlafhaBall;
@@ -37,6 +39,7 @@ public class ClientProxy extends CommonProxy {
 
     public void registerTileEntitySpecialRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(DecontaminatorTileEntity.class, new DecontaminatorTESR());
+        ClientRegistry.bindTileEntitySpecialRenderer(InfestedBeaconTileEntity.class, new InfestedBeaconTESR());
     }
 
     public void registerItemRenderer(

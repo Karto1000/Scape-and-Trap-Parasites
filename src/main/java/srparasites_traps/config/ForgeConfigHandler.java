@@ -564,17 +564,32 @@ public class ForgeConfigHandler {
         @Config.Name("Infested beacon pivot effect duration (Ticks)")
         @Config.Comment("The duration in ticks that the player will have the pivot effect")
         @Config.RangeInt(min = 0)
-        public int PIVOT_DURATION = 40;
+        public int PIVOT_DURATION = 100;
 
         @Config.Name("Infested beacon max damage reduction (%)")
-        @Config.Comment("The max percentage reduction of damage dealt to the player when the infested beacon pivot effect is applied to them")
+        @Config.Comment("The max percentage reduction of damage dealt to the player when the highest level pivot effect is applied to them")
         @Config.RangeInt(min = 0, max = 100)
         public int MAX_DAMAGE_REDUCTION_PERCENT = 25;
 
-        @Config.Name("Infested beacon max pivot effect level")
-        @Config.Comment("The maximum level of the pivot effect")
+        @Config.Name("Infested beacon max level")
+        @Config.Comment("The maximum level of the beacon")
         @Config.RangeInt(min = 0)
-        public int MAX_PIVOT_EFFECT_LEVEL = 5;
+        public int MAX_LEVEL = 5;
+
+        @Config.Name("Infested beacon cure ability cooldown (Ticks)")
+        @Config.Comment("The cooldown in ticks between using the cure ability")
+        @Config.RangeInt(min = 0)
+        public int CURE_ABILITY_COOLDOWN = 200;
+
+        @Config.Name("Infested beacon cure lingering duration (Ticks)")
+        @Config.Comment("The duration in seconds that the cure lingering effect will last")
+        @Config.RangeInt(min = 0)
+        public int CURE_LINGERING_DURATION = 80;
+
+        @Config.Name("Infested beacon range increase per level (Blocks)")
+        @Config.Comment("The blocks the range will increase per level")
+        @Config.RangeInt(min = 0)
+        public int RANGE_INCREASE_PER_LEVEL = 10;
     }
 
     public static class CommonConfig {

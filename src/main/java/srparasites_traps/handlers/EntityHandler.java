@@ -51,7 +51,7 @@ public class EntityHandler {
         float damageAmount = event.getAmount();
         float damageReduced = (damageAmount / 100) *
                 InfestedBeaconTileEntity.maxDamageReduction *
-                ((float) (amplifier + 1) / InfestedBeaconTileEntity.maxPivotEffectLevel);
+                ((float) (amplifier + 1) / InfestedBeaconTileEntity.maxLevel);
         event.setAmount(damageAmount - damageReduced);
     }
 
