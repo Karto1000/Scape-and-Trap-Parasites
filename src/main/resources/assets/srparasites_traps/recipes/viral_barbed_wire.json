@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "srparasites_traps:barbed_wire_enabled"
+    }
+  ],
+  "pattern": [
+    "www",
+    "wbw",
+    "www"
+  ],
+  "key": {
+    "w": {
+      "item": "srparasites_traps:barbed_wire"
+    },
+    "b": {
+      "item": "forge:bucketfilled",
+      "type": "minecraft:item_nbt",
+      "nbt": {
+        "FluidName": "deadblood",
+        "Amount": 1000
+      }
+    }
+  },
+  "result": {
+    "item": "srparasites_traps:viral_barbed_wire",
+    "count": 8
+  }
+}

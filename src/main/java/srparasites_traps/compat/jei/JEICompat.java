@@ -15,6 +15,7 @@ import srparasites_traps.registry.ModBlocks;
 import srparasites_traps.registry.ModItems;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 @JEIPlugin
 public class JEICompat implements IModPlugin {
@@ -53,12 +54,15 @@ public class JEICompat implements IModPlugin {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_LADDER));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_SLAB));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_GLASS));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.OBSIDIAN_STAIRS));
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BLEEDING_OBSIDIAN_GLASS));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BLEEDING_OBSIDIAN_LADDER));
         }
 
         if (!ForgeConfigHandler.teslaCoil.ENABLE) {
             blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TESLA_COIL));
-            blacklist.addIngredientToBlacklist(ModItems.COIL);
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.STATIC_ELECTRICITY_GENERATOR));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.COIL));
         }
 
         if (!ForgeConfigHandler.proximitySensor.ENABLE) {
@@ -70,13 +74,21 @@ public class JEICompat implements IModPlugin {
         }
 
         if (!ForgeConfigHandler.augments.ENABLE) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.BLANK_AUGMENT));
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.DAMAGE_AUGMENT));
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.RANGE_AUGMENT));
             blacklist.addIngredientToBlacklist(new ItemStack(ModItems.ATTACK_SPEED_AUGMENT));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModItems.TARGETING_AUGMENT));
+        }
+
+        if (!ForgeConfigHandler.barbedWire.ENABLE) {
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BARBED_WIRE));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.BURNING_BARBED_WIRE));
+            blacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.VIRAL_BARBED_WIRE));
         }
 
         for (Item item : ModItems.getItemList()) {
-            String infoKey = String.format("info.srparasites_traps.%s", item.getRegistryName().getPath());
+            String infoKey = String.format("info.srparasites_traps.%s", Objects.requireNonNull(item.getRegistryName()).getPath());
             SRParasitesTraps.LOGGER.info("Adding info for {}", infoKey);
             if (I18n.hasKey(infoKey)) {
                 registry.addIngredientInfo(

@@ -20,7 +20,7 @@ public class ModSounds {
 
     public static final SoundType BURNING_BARBED_WIRE_ST = new SoundType(
             0.5f,
-            1.5f,
+            1.0f,
             ModSounds.BARBED_WIRE,
             ModSounds.BARBED_WIRE,
             ModSounds.BURNING_BARBED_WIRE,
@@ -30,7 +30,7 @@ public class ModSounds {
 
     public static final SoundType BARBED_WIRE_ST = new SoundType(
             0.5f,
-            1.5f,
+            1.0f,
             ModSounds.BARBED_WIRE,
             ModSounds.BARBED_WIRE,
             ModSounds.BARBED_WIRE,

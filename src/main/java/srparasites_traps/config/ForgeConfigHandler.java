@@ -534,6 +534,16 @@ public class ForgeConfigHandler {
         @Config.Comment("The duration in seconds that the entity touching the barbed wire will be on fire")
         @Config.RangeInt(min = 0)
         public int BURNING_BARBED_WIRE_BURN_DURATION = 3;
+
+        @Config.Name("Viral Barbed viral effect duration (Ticks)")
+        @Config.Comment("The duration in ticks that the entity touching the barbed wire will have the viral effect")
+        @Config.RangeInt(min = 0)
+        public int VIRAL_BARBED_WIRE_VIRAL_EFFECT_DURATION = 80;
+
+        @Config.Name("Viral Barbed viral effect amplifier")
+        @Config.Comment("The amplifier level of the viral effect")
+        @Config.RangeInt(min = 0)
+        public int VIRAL_BARBED_WIRE_VIRAL_AMPLIFIER = 0;
     }
 
     public static class CommonConfig {

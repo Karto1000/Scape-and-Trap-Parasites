@@ -38,6 +38,7 @@ tile.srparasites_traps.static_electricity_generator.name=Static Electricity Gene
 tile.srparasites_traps.beckon_nidus.name=§aBeckon Nidus§f
 tile.srparasites_traps.barbed_wire.name=Barbed Wire
 tile.srparasites_traps.burning_barbed_wire.name=§6Burning§f Barbed Wire
+tile.srparasites_traps.viral_barbed_wire.name=§aViral§f Barbed Wire
 
 # Items
 item.srparasites_traps.two_way_communication_unit.name=Two-way Communication Unit
@@ -84,7 +85,8 @@ tooltip.srparasites_traps.item.targeting_augment=Allows you to select which enti
 tooltip.srparasites_traps.item.augment_general=Can be placed in one of the augment tabs slots in the following turrets:\n%s
 tooltip.srparasites_traps.item.armored_semi_organic_plating=§8A plating acting as a bridge for parasitic signals while boasting a high resistance to external damage.§f
 tooltip.srparasites_traps.item.barbed_wire=Slows down and damages any entity that comes into contact with it.
-tooltip.srparasites_traps.item.burning_barbed_wire=Slows down, damages and sets on fire any entity that comes into contact with it.
+tooltip.srparasites_traps.item.burning_barbed_wire=Slows down, damages and sets on §6fire§f any entity that comes into contact with it.
+tooltip.srparasites_traps.item.viral_barbed_wire=Slows down, damages and applies §aViral§f to any entity that comes into contact with it.
 
 # Status Messages
 status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s blocks.§f

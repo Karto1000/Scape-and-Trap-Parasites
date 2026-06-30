@@ -1,0 +1,7 @@
+{
+  "parent": "srparasites_traps:block/barbed_wire_intersection",
+  "textures": {
+    "0": "srparasites_traps:block/viral_barbed_wire",
+    "particle": "srparasites_traps:block/viral_barbed_wire"
+  }
+}

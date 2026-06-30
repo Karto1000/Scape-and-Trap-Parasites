@@ -2,6 +2,7 @@ package srparasites_traps.features.serrated_spikes;
 
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -60,6 +61,12 @@ public class SerratedSpikesBlock extends Block {
         this.setHarvestLevel("pickaxe", 1);
         this.registryName = registryName;
         if (ForgeConfigHandler.serratedSpikes.ENABLE) this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
+    }
+
+    @Nonnull
+    @Override
+    public SoundType getSoundType(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nullable Entity entity) {
+        return SoundType.ANVIL;
     }
 
     @Nonnull

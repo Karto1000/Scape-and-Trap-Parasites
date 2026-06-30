@@ -3,79 +3,77 @@
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.decontaminator_spray",
     "sounds": [
-      {
-        "name": "srparasites_traps:decontaminator_spray",
-        "stream": false
-      }
+      "srparasites_traps:decontaminator_spray"
     ]
   },
   "decontaminator_open": {
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.decontaminator_open",
     "sounds": [
-      {
-        "name": "srparasites_traps:decontaminator_open",
-        "stream": false
-      }
+      "srparasites_traps:decontaminator_open"
     ]
   },
   "decontaminator_close": {
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.decontaminator_close",
     "sounds": [
-      {
-        "name": "srparasites_traps:decontaminator_close",
-        "stream": false
-      }
+      "srparasites_traps:decontaminator_close"
     ]
   },
   "tesla_coil_fire": {
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.tesla_coil_fire",
     "sounds": [
-      {
-        "name": "srparasites_traps:tesla_coil_fire",
-        "stream": false
-      }
+      "srparasites_traps:tesla_coil_fire"
     ]
   },
   "electric_arc": {
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.electric_arc",
     "sounds": [
-      {
-        "name": "srparasites_traps:electric_arc",
-        "stream": false
-      }
+      "srparasites_traps:electric_arc"
     ]
   },
   "tesla_coil_charge": {
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.tesla_coil_charge",
     "sounds": [
-      {
-        "name": "srparasites_traps:tesla_coil_charge",
-        "stream": false
-      }
+      "srparasites_traps:tesla_coil_charge"
     ]
   },
   "biomass_factory_work": {
     "category": "block",
     "subtitle": "subtitle.srparasites_traps.biomass_factory_work",
     "sounds": [
-      {
-        "name": "srparasites_traps:biomass_factory_work",
-        "stream": false
-      }
+      "srparasites_traps:biomass_factory_work"
     ]
   },
   "barbed_wire": {
     "category": "block",
-    "replace": false,
     "sounds": [
       {
         "name": "srparasites_traps:barbed_wire",
-        "stream": false
+        "pitch": 1.0
+      },
+      {
+        "name": "srparasites_traps:barbed_wire",
+        "pitch": 1.1
+      },
+      {
+        "name": "srparasites_traps:barbed_wire",
+        "pitch": 1.2
+      },
+      {
+        "name": "srparasites_traps:barbed_wire",
+        "pitch": 1.3
+      },
+      {
+        "name": "srparasites_traps:barbed_wire",
+        "pitch": 1.4
+      },
+      {
+        "name": "srparasites_traps:barbed_wire",
+        "pitch": 1.5
       }
     ]
   },
@@ -85,7 +83,27 @@
     "sounds": [
       {
         "name": "srparasites_traps:burning_barbed_wire",
-        "stream": false
+        "pitch": 1.0
+      },
+      {
+        "name": "srparasites_traps:burning_barbed_wire",
+        "pitch": 1.1
+      },
+      {
+        "name": "srparasites_traps:burning_barbed_wire",
+        "pitch": 1.2
+      },
+      {
+        "name": "srparasites_traps:burning_barbed_wire",
+        "pitch": 1.3
+      },
+      {
+        "name": "srparasites_traps:burning_barbed_wire",
+        "pitch": 1.4
+      },
+      {
+        "name": "srparasites_traps:burning_barbed_wire",
+        "pitch": 1.5
       }
     ]
   }
