@@ -1,6 +1,7 @@
 package srparasites_traps.features.infested_beacon;
 
 import cofh.core.gui.GuiContainerCore;
+import com.dhanantry.scapeandrunparasites.block.BlockEvolutionLure;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,8 @@ public class InfestedBeaconGui extends GuiContainerCore {
     );
 
     public ResourceLocation getLureTexture(int tier) {
-        return new ResourceLocation(Constants.SRPARASITES_MOD_ID, "textures/blocks/lure" + tier + ".png");
+        BlockEvolutionLure.EnumType type = BlockEvolutionLure.EnumType.values()[tier - 1];
+        return new ResourceLocation(Constants.SRPARASITES_MOD_ID, "textures/blocks/evolutionlure_" + type.getName() + "_up.png");
     }
 
     public InfestedBeaconGui(EntityPlayer player, InfestedBeaconTileEntity tileEntity) {

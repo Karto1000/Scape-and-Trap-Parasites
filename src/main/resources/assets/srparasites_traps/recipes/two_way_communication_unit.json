@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "   ",
-    "mcr",
+    "tcr",
     "iii"
   ],
   "key": {
@@ -15,8 +15,8 @@
     "c": {
       "item": "minecraft:comparator"
     },
-    "m": {
-      "item": "srparasites:tissue_spike"
+    "t": {
+      "item": "minecraft:redstone_torch"
     }
   },
   "result": {

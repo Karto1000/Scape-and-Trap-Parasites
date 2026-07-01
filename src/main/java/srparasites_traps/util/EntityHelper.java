@@ -7,18 +7,12 @@ import java.util.Optional;
 
 public class EntityHelper {
     public static Optional<String> getEntityParasiteType(Class<? extends Entity> entityClass) {
-        if (EntityPAssimara.class.isAssignableFrom(entityClass)) {
-            return Optional.of("assimara");
-        } else if (EntityPCrude.class.isAssignableFrom(entityClass)) {
+        if (EntityPCrude.class.isAssignableFrom(entityClass)) {
             return Optional.of("crude");
         } else if (EntityPPrimitive.class.isAssignableFrom(entityClass)) {
             return Optional.of("primitive");
         } else if (EntityPInfected.class.isAssignableFrom(entityClass)) {
             return Optional.of("infected");
-        } else if (EntityPDerived.class.isAssignableFrom(entityClass)) {
-            return Optional.of("derived");
-        } else if (EntityPFocused.class.isAssignableFrom(entityClass)) {
-            return Optional.of("focused");
         } else if (EntityPFeral.class.isAssignableFrom(entityClass)) {
             return Optional.of("feral");
         } else if (EntityPAdapted.class.isAssignableFrom(entityClass)) {

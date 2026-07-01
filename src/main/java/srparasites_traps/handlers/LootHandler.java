@@ -1,9 +1,9 @@
 package srparasites_traps.handlers;
 
-import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPBeckon;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPDispatcher;
 import com.dhanantry.scapeandrunparasites.entity.monster.deterrent.EntityNak;
 import com.dhanantry.scapeandrunparasites.entity.monster.deterrent.EntityUnvo;
+import com.dhanantry.scapeandrunparasites.entity.monster.deterrent.nexus.EntityVenkrol;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -48,8 +48,8 @@ public class LootHandler {
 
             doDrop(event, world, ForgeConfigHandler.common.DISPATCHER_CEREBRUM_DROP_CHANCE * Math.max(dod.getStageV() * .75, 1), ForgeConfigHandler.common.MAX_DISPATCHER_CEREBRUM_DROP_AMOUNT, ModItems.DISPATCHER_CEREBRUM);
             doDrop(event, world, ForgeConfigHandler.common.DISPATCHER_BRAINSTEM_DROP_CHANCE * Math.max(dod.getStageV() * .75, 1), ForgeConfigHandler.common.MAX_DISPATCHER_BRAINSTEM_DROP_AMOUNT, ModItems.DISPATCHER_BRAINSTEM);
-        } else if (entity instanceof EntityPBeckon) {
-            EntityPBeckon venkrol = (EntityPBeckon) entity;
+        } else if (entity instanceof EntityVenkrol) {
+            EntityVenkrol venkrol = (EntityVenkrol) entity;
             World world = entity.world;
 
             doDrop(event, world, ForgeConfigHandler.common.BECKON_HEART_DROP_CHANCE * Math.max(venkrol.getStageV() * .75, 1), ForgeConfigHandler.common.MAX_BECKON_HEART_DROP_AMOUNT, ModItems.BECKON_HEART);

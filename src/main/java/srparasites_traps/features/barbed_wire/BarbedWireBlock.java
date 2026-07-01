@@ -189,7 +189,7 @@ public abstract class BarbedWireBlock extends Block {
 
     @Nullable
     @Override
-    public net.minecraft.pathfinding.PathNodeType getAiPathNodeType(
+    public PathNodeType getAiPathNodeType(
             @Nonnull IBlockState state,
             @Nonnull IBlockAccess world,
             @Nonnull BlockPos pos,

@@ -3,7 +3,6 @@ package srparasites_traps.features.infested_beacon;
 import cofh.core.block.TileCore;
 import com.dhanantry.scapeandrunparasites.block.BlockEvolutionLure;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
-import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,13 +33,12 @@ import java.util.List;
 public class InfestedBeaconTileEntity extends TileCore implements ITickable {
     public static final int range = ForgeConfigHandler.infestedBeacon.RANGE;
     public static final int effectDuration = ForgeConfigHandler.infestedBeacon.EFFECTS_DURATION;
-    public static final int maxDamageReduction = ForgeConfigHandler.infestedBeacon.MAX_DAMAGE_REDUCTION_PERCENT;
     public static final int maxLevel = ForgeConfigHandler.infestedBeacon.MAX_LEVEL;
     public static final int cureAbilityCooldown = ForgeConfigHandler.infestedBeacon.CURE_ABILITY_COOLDOWN;
     public static final int cureLingeringDuration = ForgeConfigHandler.infestedBeacon.CURE_LINGERING_DURATION;
     public static final int rangeIncreasePerLevel = ForgeConfigHandler.infestedBeacon.RANGE_INCREASE_PER_LEVEL;
-    public static final int maxStrengthEffectAplifier = ForgeConfigHandler.infestedBeacon.MAX_STRENGTH_EFFECT_AMPLIFIER;
-    public static final int maxPivotEffectAmplifier = ForgeConfigHandler.infestedBeacon.MAX_PIVOT_EFFECT_AMPLIFIER;
+    public static final int maxStrengthEffectAmplifier = ForgeConfigHandler.infestedBeacon.MAX_STRENGTH_EFFECT_AMPLIFIER;
+    public static final int maxResistanceEffectAmplifier = ForgeConfigHandler.infestedBeacon.MAX_RESISTANCE_EFFECT_AMPLIFIER;
 
     // Same as the vanilla beacon
     private final UpdateLimiter updateLimiter = new UpdateLimiter(80);
@@ -193,14 +191,14 @@ public class InfestedBeaconTileEntity extends TileCore implements ITickable {
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
         for (EntityPlayer entity : entities) {
             entity.addPotionEffect(new PotionEffect(
-                    SRPPotions.PIVOT_E,
+                    MobEffects.RESISTANCE,
                     effectDuration,
-                    (int) ((float) maxPivotEffectAmplifier / maxLevel * level)
+                    (int) ((float) maxResistanceEffectAmplifier / maxLevel * level)
             ));
             entity.addPotionEffect(new PotionEffect(
                     MobEffects.STRENGTH,
                     effectDuration,
-                    (int) ((float) maxStrengthEffectAplifier / maxLevel * level)
+                    (int) ((float) maxStrengthEffectAmplifier / maxLevel * level)
             ));
 
             if (this.canPerformSpecialAbility() && CurePotion.hasCurableEffect(entity)) {

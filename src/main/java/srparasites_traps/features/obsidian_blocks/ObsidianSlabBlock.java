@@ -37,7 +37,7 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
         this.useNeighborBrightness = !this.isDouble();
 
         IBlockState bs = this.blockState.getBaseState();
-        if (!this.isDouble()) bs = bs.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+        if (!this.isDouble()) bs = bs.withProperty(HALF, EnumBlockHalf.BOTTOM);
         this.setDefaultState(bs.withProperty(VARIANT, Variant.DEFAULT));
 
         if (ForgeConfigHandler.obsidianBlocks.ENABLE)
@@ -67,14 +67,14 @@ public abstract class ObsidianSlabBlock extends BlockSlab {
     public IBlockState getStateFromMeta(int meta) {
         IBlockState bs = this.getDefaultState().withProperty(VARIANT, Variant.DEFAULT);
         if (!(meta == 0b0001))
-            bs = bs.withProperty(HALF, meta == 0b0010 ? BlockSlab.EnumBlockHalf.BOTTOM : EnumBlockHalf.TOP);
+            bs = bs.withProperty(HALF, meta == 0b0010 ? EnumBlockHalf.BOTTOM : EnumBlockHalf.TOP);
         return bs;
     }
 
     public int getMetaFromState(@Nonnull IBlockState state) {
         if (this.isDouble()) return 0b0001;
         EnumBlockHalf half = state.getValue(HALF);
-        return half == BlockSlab.EnumBlockHalf.BOTTOM ? 0b0010 : 0b0011;
+        return half == EnumBlockHalf.BOTTOM ? 0b0010 : 0b0011;
     }
 
     @Nonnull

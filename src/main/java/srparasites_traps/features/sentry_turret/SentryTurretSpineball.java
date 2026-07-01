@@ -1,7 +1,6 @@
 package srparasites_traps.features.sentry_turret;
 
 import com.dhanantry.scapeandrunparasites.entity.EntityBody;
-import com.dhanantry.scapeandrunparasites.entity.EntityHitbox;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPMalleable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -100,8 +99,6 @@ public class SentryTurretSpineball extends EntityFireball {
             // We want the spineballs to be able to remove limbs off of parasites
             result.entityHit.attackEntityFrom(damageSource, (float) ste.tileEntity.damage);
             meabyReduceResistanceOfParasite((EntityPMalleable) ((EntityBody) result.entityHit).getFather());
-            return;
-        } else if (result.entityHit instanceof EntityHitbox) {
             return;
         }
 

@@ -1,9 +1,11 @@
 package srparasites_traps.features.biomass_factory;
 
-import com.dhanantry.scapeandrunparasites.init.SRPSoundTypes;
+import com.dhanantry.scapeandrunparasites.init.SRPSounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
@@ -22,7 +24,15 @@ public class BeckonNidusBlock extends Block {
         this.setRegistryName(SRParasitesTraps.MOD_ID, REGISTRY_NAME);
         this.setTranslationKey(getTranslationKeyFor(REGISTRY_NAME));
         this.setCreativeTab(SRParasitesTraps.CREATIVE_TAB);
-        this.setSoundType(SRPSoundTypes.FLESH);
+        this.setSoundType(new SoundType(
+                1.0F,
+                0.5F,
+                SRPSounds.BLOCKINFEST_BREAK,
+                SRPSounds.BLOCKINFEST_STEP,
+                SRPSounds.BLOCKINFEST_PLACE,
+                SRPSounds.BLOCKINFEST_HIT,
+                SoundEvents.BLOCK_SLIME_FALL
+        ));
         this.setDefaultState(this.blockState.getBaseState());
     }
 

@@ -6,16 +6,16 @@
     }
   ],
   "pattern": [
-    "psp",
-    "sms",
-    "psp"
+    "pip",
+    "imi",
+    "pip"
   ],
   "key": {
     "p": {
       "item": "minecraft:blaze_powder"
     },
-    "s": {
-      "item": "srparasites:semiorganic_ingot"
+    "i": {
+      "item": "minecraft:iron_ingot"
     },
     "m": {
       "item": "srparasites_traps:parasitic_matter"

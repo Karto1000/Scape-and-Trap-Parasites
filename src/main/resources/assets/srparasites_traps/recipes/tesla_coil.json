@@ -8,7 +8,7 @@
   "pattern": [
     "cbc",
     " p ",
-    " s "
+    " i "
   ],
   "key": {
     "c": {
@@ -20,8 +20,8 @@
     "p": {
       "item": "srparasites_traps:armored_semi_organic_plating"
     },
-    "s": {
-      "item": "srparasites:semiorganic_block"
+    "i": {
+      "item": "minecraft:iron_block"
     }
   },
   "result": {

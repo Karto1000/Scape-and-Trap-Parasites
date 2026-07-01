@@ -566,11 +566,6 @@ public class ForgeConfigHandler {
         @Config.RangeInt(min = 0)
         public int EFFECTS_DURATION = 100;
 
-        @Config.Name("Infested beacon max damage reduction (%)")
-        @Config.Comment("The max percentage reduction of damage dealt to the player when the highest level pivot effect is applied to them")
-        @Config.RangeInt(min = 0, max = 100)
-        public int MAX_DAMAGE_REDUCTION_PERCENT = 50;
-
         @Config.Name("Infested beacon max level")
         @Config.Comment("The maximum level of the beacon")
         @Config.RangeInt(min = 0)
@@ -584,7 +579,7 @@ public class ForgeConfigHandler {
         @Config.Name("Infested beacon max pivot effect amplifier")
         @Config.Comment("The maximum level of the pivot amplifier")
         @Config.RangeInt(min = 0)
-        public int MAX_PIVOT_EFFECT_AMPLIFIER = 4;
+        public int MAX_RESISTANCE_EFFECT_AMPLIFIER = 2;
 
         @Config.Name("Infested beacon cure ability cooldown (Ticks)")
         @Config.Comment("The cooldown in ticks between using the cure ability")
