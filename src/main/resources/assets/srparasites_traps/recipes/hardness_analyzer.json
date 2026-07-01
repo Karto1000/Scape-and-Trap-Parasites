@@ -7,7 +7,7 @@
   ],
   "pattern": [
     " a ",
-    "trt",
+    "frf",
     " i "
   ],
   "key": {
@@ -17,8 +17,8 @@
     "r": {
       "item": "minecraft:redstone_block"
     },
-    "t": {
-      "item": "srparasites:tissue_spike"
+    "f": {
+      "item": "srparasites:assimilated_flesh"
     },
     "i": {
       "item": "minecraft:iron_ingot"

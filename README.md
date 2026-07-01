@@ -10,4 +10,4 @@ Changes:
 - Rename EntityPBeckon to EntityVenkrol
 - Change the string path of evolution lure textures
 - Make infested beacon give resistance instead of pivot
-- Change recipe of tesla coil, armored semi-organic plating, infested beacon, two-way communication unit and blank augment
+- Change recipe of tesla coil, armored semi-organic plating, infested beacon, two-way communication unit, blank augment and hardness analyzer
