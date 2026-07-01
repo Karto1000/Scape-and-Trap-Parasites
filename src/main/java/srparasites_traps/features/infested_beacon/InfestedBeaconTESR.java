@@ -19,8 +19,8 @@ import javax.annotation.Nonnull;
 
 @SideOnly(Side.CLIENT)
 public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeaconTileEntity> {
-    private final static float BEAM_THICKNESS = 0.35F;
-    private final static float GLOW_THICKNESS = 0.1F;
+    private final static float BEAM_THICKNESS = 0.5F;
+    private final static float GLOW_THICKNESS = 0.025F;
     private final static ResourceLocation TEXTURE = new ResourceLocation(
             SRParasitesTraps.MOD_ID,
             "textures/particle/infested_beacon_beam.png"
@@ -60,7 +60,7 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
                 GlStateManager.SourceFactor.ONE,
                 GlStateManager.DestFactor.ZERO
         );
-        GlStateManager.translate(x + 0.5D, y, z + 0.5D);
+        GlStateManager.translate(x + 0.5D, y + 0.9D, z + 0.5D);
         this.bindTexture(TEXTURE);
 
         float continuousTime = (float) world.getTotalWorldTime() + partialTicks;
@@ -89,28 +89,28 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
                         0,
                         perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
-                .color(1.0F, 1.0F, 1.0F, 0.5F)
+                .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
         buffer.pos(
                         perpendicularToCam.x * (BEAM_THICKNESS + GLOW_THICKNESS),
                         heightRemaining,
                         perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
-                .color(1.0F, 1.0F, 1.0F, 0.5F)
+                .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
         buffer.pos(
                         -perpendicularToCam.x * (BEAM_THICKNESS + GLOW_THICKNESS),
                         heightRemaining,
                         -perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
-                .color(1.0F, 1.0F, 1.0F, 0.5F)
+                .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
         buffer.pos(
                         -perpendicularToCam.x * (BEAM_THICKNESS + GLOW_THICKNESS),
                         0,
                         -perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
-                .color(1.0F, 1.0F, 1.0F, 0.5F)
+                .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
 
         tessellator.draw();

@@ -1,0 +1,51 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "srparasites_traps:block/infested_beacon",
+		"particle": "srparasites_traps:block/infested_beacon"
+	},
+	"elements": [
+		{
+			"name": "Glass shell",
+			"from": [0, 4, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14, 0]},
+			"faces": {
+				"north": {"uv": [8, 0, 12, 3], "texture": "#0"},
+				"east": {"uv": [8, 0, 12, 3], "texture": "#0"},
+				"south": {"uv": [8, 0, 12, 3], "texture": "#0"},
+				"west": {"uv": [8, 0, 12, 3], "texture": "#0"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#0"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Obsidian base",
+			"from": [0, 0.1, 0],
+			"to": [16, 4, 16],
+			"faces": {
+				"north": {"uv": [5, 11.5, 9, 12.5], "texture": "#0"},
+				"east": {"uv": [9, 11.5, 13, 12.5], "texture": "#0"},
+				"south": {"uv": [12, 0, 16, 1], "texture": "#0"},
+				"west": {"uv": [12, 1, 16, 2], "texture": "#0"},
+				"up": {"uv": [8, 4, 4, 0], "texture": "#0"},
+				"down": {"uv": [8, 4, 4, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Inner beacon texture",
+			"from": [3, 3, 3],
+			"to": [13, 14, 13],
+			"faces": {
+				"north": {"uv": [8, 6, 10.5, 8.75], "texture": "#0"},
+				"east": {"uv": [8, 8.75, 10.5, 11.5], "texture": "#0"},
+				"south": {"uv": [10.5, 6, 13, 8.75], "texture": "#0"},
+				"west": {"uv": [10.5, 8.75, 13, 11.5], "texture": "#0"},
+				"up": {"uv": [2.5, 13.5, 0, 11], "texture": "#0"},
+				"down": {"uv": [5, 11, 2.5, 13.5], "texture": "#0"}
+			}
+		}
+	]
+}
