@@ -11,21 +11,16 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import srparasites_traps.SRParasitesTraps;
 import srparasites_traps.config.ForgeConfigHandler;
-import srparasites_traps.features.area_marker.AreaMarkerItem;
-import srparasites_traps.registry.ModItems;
-import srparasites_traps.util.Pair;
+import srparasites_traps.util.Constants;
 import srparasites_traps.util.Translation;
 
 import javax.annotation.Nonnull;
@@ -34,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import static srparasites_traps.util.Translation.getServerStatusFor;
 import static srparasites_traps.util.Translation.getTranslationKeyFor;
 
 public class ProximitySensorBlock extends Block {
@@ -60,11 +54,13 @@ public class ProximitySensorBlock extends Block {
         return state.getValue(active) ? 1 : 0;
     }
 
+    @Nonnull
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(active, meta == 1);
     }
 
+    @Nonnull
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, active);
@@ -73,9 +69,9 @@ public class ProximitySensorBlock extends Block {
     @Override
     public void randomDisplayTick(
             IBlockState stateIn,
-            World worldIn,
-            BlockPos pos,
-            Random rand
+            @Nonnull World worldIn,
+            @Nonnull BlockPos pos,
+            @Nonnull Random rand
     ) {
         if (!stateIn.getValue(active)) return;
 
@@ -120,31 +116,21 @@ public class ProximitySensorBlock extends Block {
         if (tileEntity instanceof ProximitySensorTileEntity) {
             ProximitySensorTileEntity pste = (ProximitySensorTileEntity) tileEntity;
             Optional<ItemStack> areaMarker = pste.getAreaMarker();
-            areaMarker.ifPresent(itemStack -> worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), itemStack)));
-            pste.setAreaMarker(null);
+            areaMarker.ifPresent(itemStack -> worldIn.spawnEntity(new EntityItem(
+                    worldIn,
+                    pos.getX(),
+                    pos.getY(),
+                    pos.getZ(),
+                    itemStack
+            )));
         }
 
         super.breakBlock(worldIn, pos, state);
     }
 
-    private boolean isDistanceAllowed(
-            ProximitySensorTileEntity pste,
-            ItemStack areaMarker
-    ) {
-        NBTTagCompound tagCompound = areaMarker.getTagCompound();
-        if (tagCompound == null) return false;
-
-        Optional<AxisAlignedBB> aabb = AreaMarkerItem.getBoundAreaAsAABB(tagCompound);
-        if (!aabb.isPresent()) return false;
-
-        AxisAlignedBB searchArea = aabb.get();
-        Pair<Double, Double> distances = AreaMarkerItem.getDistancesOfAreaTo(searchArea, pste.getPos());
-        return distances.first() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE && distances.second() <= ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE;
-    }
-
     @Override
     public boolean onBlockActivated(
-            World worldIn,
+            @Nonnull World worldIn,
             @Nonnull BlockPos pos,
             @Nonnull IBlockState state,
             EntityPlayer playerIn,
@@ -154,37 +140,14 @@ public class ProximitySensorBlock extends Block {
             float hitY,
             float hitZ
     ) {
-        ItemStack heldItem = playerIn.getHeldItem(hand);
-
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity == null) return false;
-        if (!(tileEntity instanceof ProximitySensorTileEntity)) return false;
-        ProximitySensorTileEntity pste = (ProximitySensorTileEntity) tileEntity;
-
-        if (heldItem.isEmpty()) {
-            Optional<ItemStack> areaMarker = pste.getAreaMarker();
-
-            if (!areaMarker.isPresent()) return false;
-            pste.setAreaMarker(null);
-            playerIn.setHeldItem(hand, areaMarker.get());
-
-            return true;
-        }
-
-        if (heldItem.getItem() != ModItems.AREA_MARKER_ITEM) return false;
-        if (!AreaMarkerItem.hasBoundPosition(heldItem)) {
-            playerIn.sendStatusMessage(new TextComponentTranslation(getServerStatusFor("proximity_sensor.area_not_bound")), true);
-            return true;
-        }
-        if (pste.getAreaMarker().isPresent()) return false;
-
-        if (!isDistanceAllowed(pste, heldItem)) {
-            playerIn.sendStatusMessage(new TextComponentTranslation(getServerStatusFor("proximity_sensor.area_too_far_away"), ForgeConfigHandler.proximitySensor.DEFAULT_MAX_AREA_DISTANCE), true);
-            return true;
-        }
-
-        pste.setAreaMarker(heldItem);
-        playerIn.setHeldItem(hand, ItemStack.EMPTY);
+        playerIn.openGui(
+                SRParasitesTraps.instance,
+                Constants.PROXIMITY_SENSOR_GUI_ID,
+                worldIn,
+                pos.getX(),
+                pos.getY(),
+                pos.getZ()
+        );
 
         return true;
     }

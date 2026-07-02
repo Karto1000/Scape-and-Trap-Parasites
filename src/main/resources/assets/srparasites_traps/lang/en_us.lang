@@ -95,8 +95,6 @@ status.srparasites_traps.area_marker.area_too_big=§cArea exceeds limit of %s bl
 status.srparasites_traps.area_marker.invalid_areas=§cUnbound area or area distance too big (> %s Blocks).§f
 status.srparasites_traps.area_marker.set_position=Set position to (%s, %s, %s).
 status.srparasites_traps.area_marker.remove_positions=Removed bound positions.
-status.srparasites_traps.proximity_sensor.area_too_far_away=Area too far away from the source block (Max: %s Blocks).
-status.srparasites_traps.proximity_sensor.area_not_bound=No area bound to area marker.
 
 # Subtitles
 subtitle.srparasites_traps.decontaminator_spray=Decontaminator sprays
@@ -118,6 +116,7 @@ slot.srparasites_traps.relocator_destination=Put in an area marker to tell the r
 slot.srparasites_traps.biomass_factory_fluid_input=Place in a valid container to extract the stored liquid.
 slot.srparasites_traps.infested_beacon_lure=Place a lure next to the beacon to boost its effectiveness.
 slot.srparasites_traps.infested_beacon_power=Effectiveness at %s%%.
+slot.srparasites_traps.proximity_sensor_search=Put in an area marker which will define the area the proximity sensor will scan for parasites.
 
 # Entites
 entity.sentry_turret_spineball.name=Spineball

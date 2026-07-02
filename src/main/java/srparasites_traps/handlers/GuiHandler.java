@@ -13,6 +13,9 @@ import srparasites_traps.features.biomass_factory.BiomassFactoryTileEntity;
 import srparasites_traps.features.infested_beacon.InfestedBeaconContainer;
 import srparasites_traps.features.infested_beacon.InfestedBeaconGui;
 import srparasites_traps.features.infested_beacon.InfestedBeaconTileEntity;
+import srparasites_traps.features.proximity_sensor.ProximitySensorContainer;
+import srparasites_traps.features.proximity_sensor.ProximitySensorGui;
+import srparasites_traps.features.proximity_sensor.ProximitySensorTileEntity;
 import srparasites_traps.features.relocator.RelocatorContainer;
 import srparasites_traps.features.relocator.RelocatorGui;
 import srparasites_traps.features.relocator.RelocatorTileEntity;
@@ -49,7 +52,10 @@ public class GuiHandler implements IGuiHandler {
             int z
     ) {
         if (ID == Constants.SENTRY_TURRET_GUI_ID) {
-            return new SentryTurretContainer(player, (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new SentryTurretContainer(
+                    player,
+                    (SentryTurretTileEntity) world.getTileEntity(new BlockPos(x, y, z))
+            );
         }
 
         if (ID == Constants.RELOCATOR_GUI_ID) {
@@ -57,7 +63,10 @@ public class GuiHandler implements IGuiHandler {
         }
 
         if (ID == Constants.BIOMASS_FACTORY_GUI_ID) {
-            return new BiomassFactoryContainer(player, (BiomassFactoryTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new BiomassFactoryContainer(
+                    player,
+                    (BiomassFactoryTileEntity) world.getTileEntity(new BlockPos(x, y, z))
+            );
         }
 
         if (ID == Constants.TESLA_COIL_GUI_ID) {
@@ -65,7 +74,17 @@ public class GuiHandler implements IGuiHandler {
         }
 
         if (ID == Constants.INFESTED_BEACON_GUI_ID) {
-            return new InfestedBeaconContainer(player, (InfestedBeaconTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+            return new InfestedBeaconContainer(
+                    player,
+                    (InfestedBeaconTileEntity) world.getTileEntity(new BlockPos(x, y, z))
+            );
+        }
+
+        if (ID == Constants.PROXIMITY_SENSOR_GUI_ID) {
+            return new ProximitySensorContainer(
+                    player,
+                    (ProximitySensorTileEntity) world.getTileEntity(new BlockPos(x, y, z))
+            );
         }
 
         return null;
@@ -116,6 +135,13 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == Constants.INFESTED_BEACON_GUI_ID) {
             return new InfestedBeaconGui(player, (InfestedBeaconTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+        }
+
+        if (ID == Constants.PROXIMITY_SENSOR_GUI_ID) {
+            return new ProximitySensorGui(
+                    player,
+                    (ProximitySensorTileEntity) world.getTileEntity(new BlockPos(x, y, z))
+            );
         }
 
         return null;

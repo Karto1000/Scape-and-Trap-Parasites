@@ -93,7 +93,7 @@ public class AreaMarkerItem extends Item {
     @Nonnull
     @Override
     public EnumActionResult onItemUse(
-            EntityPlayer player,
+            @Nonnull EntityPlayer player,
             @Nonnull World worldIn,
             @Nonnull BlockPos pos,
             @Nonnull EnumHand hand,
@@ -102,6 +102,8 @@ public class AreaMarkerItem extends Item {
             float hitY,
             float hitZ
     ) {
+        if (worldIn.isRemote) return EnumActionResult.PASS;
+
         ItemStack heldItem = player.getHeldItem(hand);
         if (heldItem.isEmpty()) return EnumActionResult.FAIL;
         if (!heldItem.hasTagCompound()) heldItem.setTagCompound(new NBTTagCompound());
