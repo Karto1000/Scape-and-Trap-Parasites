@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:armored_semi_organic_plating",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:beckon_nidus"
+    },
+    "title": {
+      "text": "Nesting II"
+    },
+    "description": {
+      "text": "Acquire a Beckon Nidus before it evolves into a Beckon"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_beckon_nidus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:beckon_nidus"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:root",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:hardness_analyzer"
+    },
+    "title": {
+      "text": "Kowalski, Analysis!"
+    },
+    "description": {
+      "text": "Craft a Hardness Analyzer which lets you know the hardness value of blocks"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_hardness_analyzer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:hardness_analyzer"
+          }
+        ]
+      }
+    }
+  }
+}

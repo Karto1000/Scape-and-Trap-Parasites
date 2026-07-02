@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:root",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:serrated_spikes"
+    },
+    "title": {
+      "text": "Small but Deadly"
+    },
+    "description": {
+      "text": "Craft some Serrated Spikes"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_serrated_spike": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:serrated_spikes"
+          }
+        ]
+      }
+    }
+  }
+}

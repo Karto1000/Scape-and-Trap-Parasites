@@ -89,7 +89,6 @@ public class RenderHandler {
         int bottom = y + textHeight + padding;
 
         GlStateManager.pushMatrix();
-        GlStateManager.disableLighting();
         GlStateManager.disableDepth();
         GlStateManager.enableBlend();
 
@@ -102,8 +101,9 @@ public class RenderHandler {
 
         mc.fontRenderer.drawSplitString(text, x, y, maxWidth, textColor);
 
+        GlStateManager.resetColor();
         GlStateManager.enableDepth();
-        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 
@@ -192,7 +192,8 @@ public class RenderHandler {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onTextRender(RenderGameOverlayEvent.Text event) {
+    public void onTextRender(RenderGameOverlayEvent.Post event) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) return;
         renderHardnessAnalyserOverlay();
     }
 

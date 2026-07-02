@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:root",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:barbed_wire"
+    },
+    "title": {
+      "text": "Ol' Reliable"
+    },
+    "description": {
+      "text": "Craft some Barbed Wire"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_barbed_wire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:barbed_wire"
+          }
+        ]
+      }
+    }
+  }
+}

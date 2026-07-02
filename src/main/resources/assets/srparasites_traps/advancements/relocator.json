@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:dispatcher_nidus",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:relocator"
+    },
+    "title": {
+      "text": "Stealing §mfrom§r the Parasites"
+    },
+    "description": {
+      "text": "Build a Relocator"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_relocator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:relocator"
+          }
+        ]
+      }
+    }
+  }
+}

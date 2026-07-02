@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:armored_semi_organic_plating",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:decontaminator"
+    },
+    "title": {
+      "text": "Déjà-vu"
+    },
+    "description": {
+      "text": "Build a Decontaminator"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_decontaminator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:decontaminator"
+          }
+        ]
+      }
+    }
+  }
+}

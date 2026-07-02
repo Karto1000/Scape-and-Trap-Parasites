@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:armored_semi_organic_plating",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:infested_beacon"
+    },
+    "title": {
+      "text": "The food's gone rotten"
+    },
+    "description": {
+      "text": "Build an infested beacon"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_infested_beacon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:infested_beacon"
+          }
+        ]
+      }
+    }
+  }
+}

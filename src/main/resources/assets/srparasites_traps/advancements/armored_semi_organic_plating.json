@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:root",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:armored_semi_organic_plating"
+    },
+    "title": {
+      "text": "Armored Up"
+    },
+    "description": {
+      "text": "Get some Armored Semi-Organic Plating. An important component for any machine"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_armored_semi_organic_plating": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:armored_semi_organic_plating"
+          }
+        ]
+      }
+    }
+  }
+}

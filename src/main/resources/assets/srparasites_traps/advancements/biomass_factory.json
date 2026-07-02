@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:beckon_nidus",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:biomass_factory"
+    },
+    "title": {
+      "text": "Factorio"
+    },
+    "description": {
+      "text": "Build a Biomass Factory to start producing Dead Blood"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_beckon_nidus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:biomass_factory"
+          }
+        ]
+      }
+    }
+  }
+}

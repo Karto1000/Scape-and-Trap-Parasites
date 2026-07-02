@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:dispatcher_nidus",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:sentry_turret"
+    },
+    "title": {
+      "text": "Stealing from the Parasites"
+    },
+    "description": {
+      "text": "Build a Sentry Turret"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_sentry_turret": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:sentry_turret"
+          }
+        ]
+      }
+    }
+  }
+}

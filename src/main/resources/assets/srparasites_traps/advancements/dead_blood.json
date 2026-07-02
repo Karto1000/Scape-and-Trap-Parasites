@@ -1,0 +1,32 @@
+{
+  "parent": "srparasites_traps:biomass_factory",
+  "display": {
+    "icon": {
+      "item": "forge:bucketfilled",
+      "nbt": "{\"FluidName\":\"deadblood\"}"
+    },
+    "title": {
+      "text": "Lifeblood"
+    },
+    "description": {
+      "text": "Acquire a bucket of dead blood"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_dead_blood": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "forge:bucketfilled",
+            "nbt": "{\"FluidName\":\"deadblood\"}"
+          }
+        ]
+      }
+    }
+  }
+}

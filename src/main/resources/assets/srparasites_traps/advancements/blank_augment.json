@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:root",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:blank_augment"
+    },
+    "title": {
+      "text": "Augmentable"
+    },
+    "description": {
+      "text": "Craft a Blank Augment. An ingredient required for any Augment."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_blank_augment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:blank_augment"
+          }
+        ]
+      }
+    }
+  }
+}

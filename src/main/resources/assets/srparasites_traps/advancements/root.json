@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:dispatcher_cerebrum"
+    },
+    "title": {
+      "text": "Scape and Trap Parasites"
+    },
+    "description": {
+      "text": ""
+    },
+    "background": "srparasites:textures/gui/advancement_wallpaper.png",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "auto_unlock": {
+      "trigger": "minecraft:location"
+    }
+  }
+}

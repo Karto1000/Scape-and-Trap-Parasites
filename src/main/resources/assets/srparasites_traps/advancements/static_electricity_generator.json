@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:tesla_coil",
+  "display": {
+    "icon": {
+      "item": "srparasites_traps:static_electricity_generator"
+    },
+    "title": {
+      "text": "Infinite Power!"
+    },
+    "description": {
+      "text": "Build a Static Electricity Generator"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_static_electricity_generator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites_traps:static_electricity_generator"
+          }
+        ]
+      }
+    }
+  }
+}

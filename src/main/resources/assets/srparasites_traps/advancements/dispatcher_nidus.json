@@ -1,0 +1,30 @@
+{
+  "parent": "srparasites_traps:armored_semi_organic_plating",
+  "display": {
+    "icon": {
+      "item": "srparasites:dispatchern"
+    },
+    "title": {
+      "text": "Nesting"
+    },
+    "description": {
+      "text": "Acquire a Dispatcher Nidus before it evolves into a Dispatcher"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_dispatcher_nidus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "srparasites:dispatchern"
+          }
+        ]
+      }
+    }
+  }
+}
