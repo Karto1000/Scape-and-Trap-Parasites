@@ -83,8 +83,18 @@ public class ShockedPotion extends Potion {
                     Vec3d target = entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
 
                     SRParasitesTrapsNetwork.CHANNEL.sendToAllAround(
-                            new SpawnLightningParticlePacket(origin, target, amplifier - 1),
-                            new NetworkRegistry.TargetPoint(world.provider.getDimension(), origin.x, origin.y, origin.z, 32)
+                            new SpawnLightningParticlePacket(
+                                    origin, target,
+                                    amplifier - 1,
+                                    0xFFFFFFFF, 0xFF0000FF
+                            ),
+                            new NetworkRegistry.TargetPoint(
+                                    world.provider.getDimension(),
+                                    origin.x,
+                                    origin.y,
+                                    origin.z,
+                                    32
+                            )
                     );
 
                     world.playSound(

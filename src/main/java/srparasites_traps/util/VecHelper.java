@@ -37,6 +37,6 @@ public class VecHelper {
     }
 
     public static Vec3d random(Random random) {
-        return new Vec3d(random.nextDouble(), random.nextDouble(), random.nextDouble());
+        return new Vec3d((random.nextDouble() * 2) - 1, (random.nextDouble() * 2) - 1, (random.nextDouble() * 2) - 1);
     }
 }

@@ -18,6 +18,7 @@ public class ModSounds {
     public static final SoundEvent BARBED_WIRE = createSoundEvent("barbed_wire");
     public static final SoundEvent BURNING_BARBED_WIRE = createSoundEvent("burning_barbed_wire");
     public static final SoundEvent INFESTED_BEACON_ACTIVATE = createSoundEvent("infested_beacon_activate");
+    public static final SoundEvent INFESTED_BEACON_DEACTIVATE = createSoundEvent("infested_beacon_deactivate");
 
     public static final SoundType BURNING_BARBED_WIRE_ST = new SoundType(
             0.5f,

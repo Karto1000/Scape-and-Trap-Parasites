@@ -11,6 +11,7 @@ public class SpawnLightningParticlePacket implements IMessage {
     public double fromX, fromY, fromZ;
     public double toX, toY, toZ;
     public int intensity;
+    public int primaryColor, secondaryColor;
 
     public SpawnLightningParticlePacket() {
     }
@@ -18,7 +19,9 @@ public class SpawnLightningParticlePacket implements IMessage {
     public SpawnLightningParticlePacket(
             Vec3d from,
             Vec3d to,
-            int intensity
+            int intensity,
+            int primaryColor,
+            int secondaryColor
     ) {
         this.fromX = from.x;
         this.fromY = from.y;
@@ -27,6 +30,8 @@ public class SpawnLightningParticlePacket implements IMessage {
         this.toY = to.y;
         this.toZ = to.z;
         this.intensity = intensity;
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
     }
 
     /**
@@ -43,6 +48,8 @@ public class SpawnLightningParticlePacket implements IMessage {
         toY = buf.readDouble();
         toZ = buf.readDouble();
         intensity = buf.readInt();
+        primaryColor = buf.readInt();
+        secondaryColor = buf.readInt();
     }
 
     /**
@@ -59,6 +66,8 @@ public class SpawnLightningParticlePacket implements IMessage {
         buf.writeDouble(toY);
         buf.writeDouble(toZ);
         buf.writeInt(intensity);
+        buf.writeInt(primaryColor);
+        buf.writeInt(secondaryColor);
     }
 
     public static class Handler implements IMessageHandler<SpawnLightningParticlePacket, IMessage> {

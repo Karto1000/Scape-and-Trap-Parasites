@@ -113,5 +113,12 @@
     "sounds": [
       "srparasites_traps:infested_beacon_activate"
     ]
+  },
+  "infested_beacon_deactivate": {
+    "category": "block",
+    "subtitle": "subtitle.srparasites_traps.infested_beacon_deactivate",
+    "sounds": [
+      "srparasites_traps:infested_beacon_deactivate"
+    ]
   }
 }

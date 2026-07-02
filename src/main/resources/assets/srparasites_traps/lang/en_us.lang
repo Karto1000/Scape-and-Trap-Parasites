@@ -105,6 +105,7 @@ subtitle.srparasites_traps.tesla_coil_fire=Tesla coil fires
 subtitle.srparasites_traps.electric_arc=Electricity arcs
 subtitle.srparasites_traps.biomass_factory_work=Liquid Boils
 subtitle.srparasites_traps.infested_beacon_activate=Infested Beacon Activates
+subtitle.srparasites_traps.infested_beacon_deactivate=Infested Beacon Powers down
 
 # Potions
 potion.srparasites_traps.shocked=Shocked

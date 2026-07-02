@@ -1,10 +1,10 @@
 package srparasites_traps.features.infested_beacon;
 
-import cofh.core.block.TileCore;
 import com.dhanantry.scapeandrunparasites.block.BlockEvolutionLure;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import com.dhanantry.scapeandrunparasites.init.SRPPotions;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,17 +22,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import srparasites_traps.config.ForgeConfigHandler;
+import srparasites_traps.features.tesla_coil.LightningArcParticle;
 import srparasites_traps.registry.ModPotions;
 import srparasites_traps.registry.ModSounds;
 import srparasites_traps.util.NBTHelper;
 import srparasites_traps.util.UpdateLimiter;
+import srparasites_traps.util.VecHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class InfestedBeaconTileEntity extends TileCore implements ITickable {
+public class InfestedBeaconTileEntity extends TileEntity implements ITickable {
     public static final int range = ForgeConfigHandler.infestedBeacon.RANGE;
     public static final int effectDuration = ForgeConfigHandler.infestedBeacon.EFFECTS_DURATION;
     public static final int maxDamageReduction = ForgeConfigHandler.infestedBeacon.MAX_DAMAGE_REDUCTION_PERCENT;
@@ -112,13 +115,11 @@ public class InfestedBeaconTileEntity extends TileCore implements ITickable {
         this.readFromNBT(pkt.getNbtCompound());
     }
 
-    @Override
     public void sendGuiNetworkData(Container container, IContainerListener player) {
         int powerLevelInt = this.powerLevels[0] << 24 | this.powerLevels[1] << 16 | this.powerLevels[2] << 8 | this.powerLevels[3];
         player.sendWindowProperty(container, 0, powerLevelInt);
     }
 
-    @Override
     public void receiveGuiNetworkData(int id, int data) {
         switch (id) {
             case 0:
@@ -170,7 +171,7 @@ public class InfestedBeaconTileEntity extends TileCore implements ITickable {
     public void update() {
         if (this.currentCureAbilityCooldown > 0) this.currentCureAbilityCooldown -= 1;
 
-        if (updateLimiter.every(5)) {
+        if (!world.isRemote && updateLimiter.every(5)) {
             byte[] newPowerLevels = calculatePowerLevels();
 
             if (!Arrays.equals(newPowerLevels, powerLevels)) {
@@ -180,31 +181,63 @@ public class InfestedBeaconTileEntity extends TileCore implements ITickable {
                 if (this.getTotalPower() == 0) {
                     world.playSound(null, pos, ModSounds.INFESTED_BEACON_ACTIVATE, SoundCategory.BLOCKS, 0.5F, 1.0F);
                 }
-            }
 
-            powerLevels = calculatePowerLevels();
+                powerLevels = newPowerLevels;
+
+                // The beacon just got powered down, play a sound
+                if (this.getTotalPower() == 0) {
+                    world.playSound(null, pos, ModSounds.INFESTED_BEACON_DEACTIVATE, SoundCategory.BLOCKS, 0.5F, 1.0F);
+                }
+            }
         }
+
+        int totalPower = this.getTotalPower();
+        boolean shouldSpawnLightning = world.isRemote &&
+                totalPower > 0 &&
+                updateLimiter.every((this.getMaxPower() + 2) - totalPower);
+        if (shouldSpawnLightning) {
+            int heightAdded = world.rand.nextInt(40) + 1;
+
+            LightningArcParticle p = new LightningArcParticle(
+                    world,
+                    VecHelper.blockPosToVec3d(this.pos)
+                            .add(0.5, heightAdded, 0.5),
+                    VecHelper.blockPosToVec3d(this.pos)
+                            .add(0.5, heightAdded, 0.5)
+                            .add(VecHelper.random(world.rand).scale(2)),
+                    40,
+                    5,
+                    0xFF523232,
+                    0xFF000000
+            );
+            Minecraft.getMinecraft().effectRenderer.addEffect(p);
+        }
+
         if (updateLimiter.tickDown()) return;
+        if (world.isRemote) {
+            updateLimiter.reset();
+            return;
+        }
         if (this.getTotalPower() == 0) return;
 
         int level = this.getBeaconLevel();
 
         AxisAlignedBB aabb = new AxisAlignedBB(pos).grow(range + this.getBeaconLevel() * rangeIncreasePerLevel);
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
-        for (EntityPlayer entity : entities) {
-            entity.addPotionEffect(new PotionEffect(
+        for (EntityPlayer player : entities) {
+            player.addPotionEffect(new PotionEffect(
                     SRPPotions.PIVOT_E,
                     effectDuration,
                     (int) ((float) maxPivotEffectAmplifier / maxLevel * level)
             ));
-            entity.addPotionEffect(new PotionEffect(
+            player.addPotionEffect(new PotionEffect(
                     MobEffects.STRENGTH,
                     effectDuration,
                     (int) ((float) maxStrengthEffectAplifier / maxLevel * level)
             ));
 
-            if (this.canPerformSpecialAbility() && CurePotion.hasCurableEffect(entity)) {
-                this.performSpecialAbility(entity);
+            if (this.canPerformSpecialAbility() && CurePotion.hasCurableEffect(player)) {
+                this.performSpecialAbility(player);
                 currentCureAbilityCooldown = cureAbilityCooldown;
             }
         }

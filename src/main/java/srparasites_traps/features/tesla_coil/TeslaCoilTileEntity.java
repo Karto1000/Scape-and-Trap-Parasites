@@ -159,7 +159,9 @@ public class TeslaCoilTileEntity extends TileCore implements ITickable, IRedston
                 new SpawnLightningParticlePacket(
                         firePos,
                         target.getPositionVector().add(0, target.getEyeHeight(), 0),
-                        shockedAmplifier
+                        shockedAmplifier,
+                        0xFFFFFFFF,
+                        0xFF0000FF
                 ),
                 new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), firePos.x, firePos.y, firePos.z, 32)
         );

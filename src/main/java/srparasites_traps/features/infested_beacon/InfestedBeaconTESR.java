@@ -31,51 +31,28 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
         return true;
     }
 
-    @Override
-    public void render(
-            @Nonnull InfestedBeaconTileEntity te,
-            double x,
-            double y,
-            double z,
-            float partialTicks,
-            int destroyStage,
-            float alpha
+    private void drawGlow(
+            int heightRemaining,
+            InfestedBeaconTileEntity te,
+            BufferBuilder buffer,
+            Tessellator tessellator
     ) {
-        if (te.getTotalPower() == 0) return;
-
-        World world = this.getWorld();
-        int heightRemaining = world.getHeight() - te.getPos().getY();
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
-
         GlStateManager.pushMatrix();
+
+        GlStateManager.enableBlend();
         GlStateManager.disableLighting();
-        GlStateManager.disableCull();
         GlStateManager.depthMask(true);
         GlStateManager.enableTexture2D();
+        GlStateManager.disableCull();
         GlStateManager.tryBlendFuncSeparate(
                 GlStateManager.SourceFactor.SRC_ALPHA,
                 GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
                 GlStateManager.SourceFactor.ONE,
                 GlStateManager.DestFactor.ZERO
         );
-        GlStateManager.translate(x + 0.5D, y + 0.9D, z + 0.5D);
-        this.bindTexture(TEXTURE);
 
-        float continuousTime = (float) world.getTotalWorldTime() + partialTicks;
-        float rotationAngle = continuousTime * 2.0F;
-        double scrollOffset = continuousTime * 0.1;
-        double uMin = 0.0D;
-        double uMax = 1.0D;
-        double vMin = 0.0D - scrollOffset;
-        double vMax = heightRemaining - scrollOffset;
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableBlend();
-        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-
-        // Draw the glow
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         Vec3d dirToCam = new Vec3d(
                 player.posX - (te.getPos().getX() + 0.5D),
@@ -89,6 +66,7 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
                         0,
                         perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
+                .tex(0, 0)
                 .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
         buffer.pos(
@@ -96,6 +74,7 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
                         heightRemaining,
                         perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
+                .tex(0, 1)
                 .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
         buffer.pos(
@@ -103,6 +82,7 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
                         heightRemaining,
                         -perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
+                .tex(1, 1)
                 .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
         buffer.pos(
@@ -110,13 +90,36 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
                         0,
                         -perpendicularToCam.z * (BEAM_THICKNESS + GLOW_THICKNESS)
                 )
+                .tex(1, 0)
                 .color(0.0F, 0.0F, 0.0F, 0.5F)
                 .endVertex();
 
         tessellator.draw();
 
+        GlStateManager.depthMask(true);
+        GlStateManager.enableCull();
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
+        GlStateManager.enableTexture2D();
+
+        GlStateManager.popMatrix();
+    }
+
+    private void drawBeam(
+            float partialTicks,
+            int heightRemaining,
+            BufferBuilder buffer,
+            Tessellator tessellator
+    ) {
         float radius = BEAM_THICKNESS / 2.0F;
 
+        float continuousTime = (float) this.getWorld().getTotalWorldTime() + partialTicks;
+        float rotationAngle = continuousTime * 2.0F;
+        double scrollOffset = continuousTime * 0.1;
+        double uMin = 0.0D;
+        double uMax = 1.0D;
+        double vMin = 0.0D - scrollOffset;
+        double vMax = heightRemaining - scrollOffset;
         double minX = -radius;
         double maxX = radius;
         double minY = 0;
@@ -126,6 +129,9 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
 
         GlStateManager.disableBlend();
         GlStateManager.enableTexture2D();
+        GlStateManager.depthMask(true);
+        GlStateManager.disableLighting();
+        GlStateManager.disableCull();
         GlStateManager.rotate(rotationAngle, 0.0F, 1.0F, 0.0F);
 
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
@@ -156,11 +162,44 @@ public class InfestedBeaconTESR extends TileEntitySpecialRenderer<InfestedBeacon
 
         tessellator.draw();
 
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+    }
+
+    @Override
+    public void render(
+            @Nonnull InfestedBeaconTileEntity te,
+            double x,
+            double y,
+            double z,
+            float partialTicks,
+            int destroyStage,
+            float alpha
+    ) {
+        if (te.getTotalPower() == 0) return;
+
+        World world = this.getWorld();
+        int heightRemaining = world.getHeight() - te.getPos().getY();
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+
+        GlStateManager.tryBlendFuncSeparate(
+                GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                GlStateManager.SourceFactor.ONE,
+                GlStateManager.DestFactor.ZERO
+        );
+        GlStateManager.translate(x + 0.5D, y + 0.85, z + 0.5D);
+        this.bindTexture(TEXTURE);
+
+        this.drawGlow(heightRemaining, te, buffer, tessellator);
+        this.drawBeam(partialTicks, heightRemaining, buffer, tessellator);
+
         GlStateManager.enableTexture2D();
         GlStateManager.enableLighting();
         GlStateManager.enableCull();
         GlStateManager.enableBlend();
         GlStateManager.depthMask(true);
-        GlStateManager.popMatrix();
     }
 }

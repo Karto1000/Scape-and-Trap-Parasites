@@ -57,8 +57,10 @@ public class ClientProxy extends CommonProxy {
                     world,
                     new Vec3d(packet.fromX, packet.fromY, packet.fromZ),
                     new Vec3d(packet.toX, packet.toY, packet.toZ),
-                    20 + packet.intensity * 5,
-                    packet.intensity
+                    20 + packet.intensity,
+                    packet.intensity,
+                    packet.primaryColor,
+                    packet.secondaryColor
             );
             Minecraft.getMinecraft().effectRenderer.addEffect(p);
         });
